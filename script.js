@@ -1,21 +1,15 @@
-// ============================================================
-// PLOTTWISTED — FIREBASE + FIRESTORE
-// Community History + Confessions + Hugots + Unsent Messages
-// ============================================================
+// =====================================================
+// PLOTTWISTED — FINAL FIRESTORE SCRIPT
+// GitHub Pages + Firebase Firestore
+// =====================================================
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-    getAnalytics
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
     getFirestore,
     collection,
     addDoc,
-    onSnapshot,
+    getDocs,
     query,
     orderBy,
     serverTimestamp,
@@ -25,9 +19,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-// ============================================================
+// =====================================================
 // FIREBASE CONFIG
-// ============================================================
+// =====================================================
 
 const firebaseConfig = {
     apiKey: "AIzaSyCJ59V5ioK4DWpM_jYFy7NMMPPgjiHNeAE",
@@ -41,64 +35,28 @@ const firebaseConfig = {
 };
 
 
-// ============================================================
-// INITIALIZE
-// ============================================================
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
 const app = initializeApp(firebaseConfig);
-
-try {
-    getAnalytics(app);
-} catch (error) {
-    console.warn("Analytics unavailable:", error);
-}
-
 const db = getFirestore(app);
 
-console.log("🔥 PlotTwisted Firebase connected.");
-console.log("🔥 Firestore connected.");
 
-
-// ============================================================
+// =====================================================
 // COLLECTION NAMES
-// ============================================================
+// =====================================================
 
-const CONFESSIONS = "confessions";
-const HUGOTS = "hugots";
-const UNSENT = "unsentMessages";
-
-
-// ============================================================
-// ELEMENT HELPER
-// ============================================================
-
-function $(id) {
-    return document.getElementById(id);
-}
+const COLLECTIONS = {
+    confessions: "confessions",
+    hugots: "hugots",
+    unsent: "unsentMessages"
+};
 
 
-// ============================================================
-// ESCAPE HTML
-// ============================================================
-
-function escapeHTML(text) {
-
-    if (text === null || text === undefined) {
-        return "";
-    }
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-// ============================================================
-// DATE FORMAT
-// ============================================================
+// =====================================================
+// SAFE DATE FORMAT
+// =====================================================
 
 function formatDate(timestamp) {
 
@@ -109,13 +67,9 @@ function formatDate(timestamp) {
     try {
 
         const date =
-            typeof timestamp.toDate === "function"
+            timestamp.toDate
                 ? timestamp.toDate()
                 : new Date(timestamp);
-
-        if (isNaN(date.getTime())) {
-            return "Recently posted";
-        }
 
         return date.toLocaleString("en-PH", {
             month: "short",
@@ -125,810 +79,669 @@ function formatDate(timestamp) {
             minute: "2-digit"
         });
 
-    } catch {
-        return "Recently posted";
+    } catch (error) {
+
+        return "Recently";
+
     }
 }
 
 
-// ============================================================
-// GET TEXT
-// ============================================================
+// =====================================================
+// ESCAPE HTML
+// Prevents user-submitted HTML from being rendered
+// =====================================================
 
-function getText(data) {
+function escapeHTML(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent =
+        value == null ? "" : String(value);
+
+    return div.innerHTML;
+}
+
+
+// =====================================================
+// GET TEXT FROM FIRESTORE
+// Supports different field names from older posts
+// =====================================================
+
+function getPostText(data) {
 
     return (
         data.text ??
         data.message ??
         data.content ??
+        data.confession ??
+        data.hugot ??
+        data.body ??
         ""
     );
 
 }
 
 
-// ============================================================
-// CREATE POST CARD
-// ============================================================
+// =====================================================
+// GET LIKES
+// =====================================================
 
-function createCard(data, id, type) {
-
-    const text =
-        escapeHTML(getText(data));
+function getLikes(data) {
 
     const likes =
         Number(data.likes ?? 0);
 
-    const date =
-        formatDate(data.createdAt);
+    return Number.isFinite(likes)
+        ? likes
+        : 0;
+
+}
+
+
+// =====================================================
+// CREATE POST CARD
+// =====================================================
+
+function createPostCard(
+    id,
+    data,
+    type,
+    collectionName
+) {
+
+    const text =
+        getPostText(data);
+
+    const likes =
+        getLikes(data);
 
     const card =
-        document.createElement("article");
+        document.createElement("div");
 
-    card.className = "post-card";
+    card.className =
+        "post-card";
 
     card.innerHTML = `
 
         <div class="post-type">
-            ${type}
+            ${escapeHTML(type)}
         </div>
 
         <div class="post-message">
-            ${text || "No message."}
+            ${escapeHTML(text)}
         </div>
 
         <div class="post-date">
-            ${escapeHTML(date)}
+            ${escapeHTML(
+                formatDate(data.createdAt)
+            )}
         </div>
 
         <div class="post-actions">
 
             <button
-                type="button"
                 class="like-button"
+                type="button"
                 data-id="${escapeHTML(id)}"
-                data-collection="${escapeHTML(
-                    type === "CONFESSION"
-                        ? CONFESSIONS
-                        : type === "HUGOT"
-                            ? HUGOTS
-                            : UNSENT
-                )}">
+                data-collection="${escapeHTML(collectionName)}">
 
                 ♡ ${likes}
 
             </button>
 
             <button
+                class="report-button"
                 type="button"
-                class="report-button">
+                onclick="alert('Thank you. Please report inappropriate content to the PlotTwisted administrator.')">
 
-                ⚑ Report
+                ⚑ REPORT
 
             </button>
 
         </div>
-
     `;
+
+
+    const likeButton =
+        card.querySelector(".like-button");
+
+
+    likeButton.addEventListener(
+        "click",
+        async function () {
+
+            if (
+                likeButton.dataset.liked === "true"
+            ) {
+                return;
+            }
+
+            likeButton.disabled = true;
+
+            try {
+
+                const postRef =
+                    doc(
+                        db,
+                        collectionName,
+                        id
+                    );
+
+                await updateDoc(
+                    postRef,
+                    {
+                        likes: increment(1)
+                    }
+                );
+
+                const currentLikes =
+                    likes + 1;
+
+                likeButton.textContent =
+                    `♡ ${currentLikes}`;
+
+                likeButton.dataset.liked =
+                    "true";
+
+            } catch (error) {
+
+                console.error(
+                    "Like error:",
+                    error
+                );
+
+                likeButton.disabled =
+                    false;
+
+                alert(
+                    "Unable to like this story right now."
+                );
+
+            }
+
+        }
+    );
+
 
     return card;
 }
 
 
-// ============================================================
-// SHOW ERROR
-// ============================================================
+// =====================================================
+// LOAD ONE COLLECTION
+// =====================================================
 
-function showError(container, error) {
-
-    if (!container) return;
-
-    container.innerHTML = `
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                Unable to load stories.
-            </div>
-
-            <div class="post-date">
-                ${escapeHTML(
-                    error?.message ||
-                    "Firestore error"
-                )}
-            </div>
-
-        </div>
-
-    `;
-}
-
-
-// ============================================================
-// SHOW EMPTY
-// ============================================================
-
-function showEmpty(
-    container,
-    message
-) {
-
-    if (!container) return;
-
-    container.innerHTML = `
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                ${escapeHTML(message)}
-            </div>
-
-        </div>
-
-    `;
-}
-
-
-// ============================================================
-// LISTEN TO COLLECTION
-// ============================================================
-
-function listenToCollection(
+async function loadCollection(
     collectionName,
-    containerIds,
-    type,
-    emptyMessage
+    elementId,
+    type
 ) {
 
-    const containers =
-        containerIds
-            .map(id => $(id))
-            .filter(Boolean);
+    const container =
+        document.getElementById(elementId);
 
-    if (!containers.length) {
+    if (!container) {
         return;
     }
 
-    console.log(
-        "📖 Listening to:",
-        collectionName
-    );
 
+    // Loading state
 
-    const collectionRef =
-        collection(
-            db,
-            collectionName
-        );
+    container.innerHTML = `
 
+        <div class="post-card">
 
-    // --------------------------------------------------------
-    // Try newest-first using createdAt
-    // --------------------------------------------------------
+            <div class="post-type">
+                PLOTTWISTED
+            </div>
 
-    const orderedQuery =
-        query(
-            collectionRef,
-            orderBy(
-                "createdAt",
-                "desc"
-            )
-        );
+            <div class="post-message">
+                Loading stories...
+            </div>
 
+        </div>
 
-    onSnapshot(
+    `;
 
-        orderedQuery,
-
-        snapshot => {
-
-            console.log(
-                `✅ ${collectionName}: ${snapshot.size} document(s)`
-            );
-
-
-            containers.forEach(
-                container => {
-
-                    container.innerHTML = "";
-
-                    if (snapshot.empty) {
-
-                        showEmpty(
-                            container,
-                            emptyMessage
-                        );
-
-                        return;
-                    }
-
-
-                    snapshot.forEach(
-                        firestoreDoc => {
-
-                            const card =
-                                createCard(
-                                    firestoreDoc.data(),
-                                    firestoreDoc.id,
-                                    type
-                                );
-
-                            container.appendChild(
-                                card
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-        },
-
-        error => {
-
-            console.error(
-                `❌ ${collectionName} error:`,
-                error
-            );
-
-
-            containers.forEach(
-                container => {
-
-                    showError(
-                        container,
-                        error
-                    );
-
-                }
-            );
-
-        }
-
-    );
-
-}
-
-
-// ============================================================
-// LOAD COMMUNITY
-// ============================================================
-
-function loadCommunity() {
-
-    // CONFESSIONS
-    listenToCollection(
-
-        CONFESSIONS,
-
-        [
-            "communityConfessions",
-            "confessionList"
-        ],
-
-        "CONFESSION",
-
-        "No confessions have been posted yet."
-
-    );
-
-
-    // HUGOTS
-    listenToCollection(
-
-        HUGOTS,
-
-        [
-            "communityHugots",
-            "hugotList"
-        ],
-
-        "HUGOT",
-
-        "No hugots have been posted yet."
-
-    );
-
-
-    // UNSENT
-    listenToCollection(
-
-        UNSENT,
-
-        [
-            "communityUnsent",
-            "unsentList"
-        ],
-
-        "UNSENT MESSAGE",
-
-        "No unsent messages have been posted yet."
-
-    );
-
-}
-
-
-// ============================================================
-// ADD CONFESSION
-// ============================================================
-
-async function saveConfession(text) {
-
-    if (!text.trim()) return;
 
     try {
 
-        await addDoc(
+        const collectionRef =
             collection(
                 db,
-                CONFESSIONS
-            ),
-            {
-                text: text.trim(),
-                likes: 0,
-                createdAt: serverTimestamp()
-            }
-        );
-
-        console.log(
-            "✅ Confession saved."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "❌ Confession save error:",
-            error
-        );
-
-        alert(
-            "Could not save confession.\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-// ============================================================
-// ADD HUGOT
-// ============================================================
-
-async function saveHugot(text) {
-
-    if (!text.trim()) return;
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                HUGOTS
-            ),
-            {
-                text: text.trim(),
-                likes: 0,
-                createdAt: serverTimestamp()
-            }
-        );
-
-        console.log(
-            "✅ Hugot saved."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "❌ Hugot save error:",
-            error
-        );
-
-        alert(
-            "Could not save hugot.\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-// ============================================================
-// ADD UNSENT MESSAGE
-// ============================================================
-
-async function saveUnsent(text) {
-
-    if (!text.trim()) return;
-
-    try {
-
-        await addDoc(
-            collection(
-                db,
-                UNSENT
-            ),
-            {
-                text: text.trim(),
-                likes: 0,
-                createdAt: serverTimestamp()
-            }
-        );
-
-        console.log(
-            "✅ Unsent message saved."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "❌ Unsent message save error:",
-            error
-        );
-
-        alert(
-            "Could not save message.\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-// ============================================================
-// FORM HANDLERS
-// ============================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-
-        // ----------------------------------------------------
-        // CONFESSION
-        // ----------------------------------------------------
-
-        const confessionForm =
-            $("confessionForm");
-
-        const confessionInput =
-            $("confessionInput");
-
-
-        if (
-            confessionForm &&
-            confessionInput
-        ) {
-
-            confessionForm.addEventListener(
-                "submit",
-                async function(event) {
-
-                    event.preventDefault();
-
-                    const text =
-                        confessionInput.value.trim();
-
-                    if (!text) return;
-
-
-                    const button =
-                        confessionForm.querySelector(
-                            "button[type='submit']"
-                        );
-
-
-                    if (button) {
-
-                        button.disabled = true;
-
-                        button.textContent =
-                            "SAVING...";
-
-                    }
-
-
-                    await saveConfession(
-                        text
-                    );
-
-
-                    confessionInput.value = "";
-
-
-                    if (button) {
-
-                        button.disabled = false;
-
-                        button.textContent =
-                            "♡ SEAL THIS CONFESSION";
-
-                    }
-
-                }
+                collectionName
             );
+
+
+        // First try newest-first.
+
+        let snapshot;
+
+        try {
+
+            const orderedQuery =
+                query(
+                    collectionRef,
+                    orderBy(
+                        "createdAt",
+                        "desc"
+                    )
+                );
+
+            snapshot =
+                await getDocs(
+                    orderedQuery
+                );
+
+        } catch (orderError) {
+
+            console.warn(
+                "Ordered query failed. Loading without order:",
+                orderError
+            );
+
+            // Important:
+            // This allows older documents with missing
+            // createdAt fields to still appear.
+
+            snapshot =
+                await getDocs(
+                    collectionRef
+                );
 
         }
 
 
-        // ----------------------------------------------------
-        // HUGOT
-        // ----------------------------------------------------
+        container.innerHTML = "";
 
-        const hugotForm =
-            $("hugotForm");
 
-        const hugotInput =
-            $("hugotInput");
+        if (snapshot.empty) {
 
+            container.innerHTML = `
 
-        if (
-            hugotForm &&
-            hugotInput
-        ) {
+                <div class="post-card">
 
-            hugotForm.addEventListener(
-                "submit",
-                async function(event) {
+                    <div class="post-type">
+                        PLOTTWISTED
+                    </div>
 
-                    event.preventDefault();
+                    <div class="post-message">
+                        No stories yet.
+                        Be the first to share one.
+                    </div>
 
-                    const text =
-                        hugotInput.value.trim();
+                </div>
 
-                    if (!text) return;
+            `;
 
-
-                    const button =
-                        hugotForm.querySelector(
-                            "button[type='submit']"
-                        );
-
-
-                    if (button) {
-
-                        button.disabled = true;
-
-                        button.textContent =
-                            "SAVING...";
-
-                    }
-
-
-                    await saveHugot(
-                        text
-                    );
-
-
-                    hugotInput.value = "";
-
-
-                    if (button) {
-
-                        button.disabled = false;
-
-                        button.textContent =
-                            "✦ SEND THIS HUGOT";
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        // ----------------------------------------------------
-        // UNSENT
-        // ----------------------------------------------------
-
-        const unsentForm =
-            $("unsentForm");
-
-        const unsentInput =
-            $("unsentInput");
-
-
-        if (
-            unsentForm &&
-            unsentInput
-        ) {
-
-            unsentForm.addEventListener(
-                "submit",
-                async function(event) {
-
-                    event.preventDefault();
-
-                    const text =
-                        unsentInput.value.trim();
-
-                    if (!text) return;
-
-
-                    const button =
-                        unsentForm.querySelector(
-                            "button[type='submit']"
-                        );
-
-
-                    if (button) {
-
-                        button.disabled = true;
-
-                        button.textContent =
-                            "SAVING...";
-
-                    }
-
-
-                    await saveUnsent(
-                        text
-                    );
-
-
-                    unsentInput.value = "";
-
-
-                    if (button) {
-
-                        button.disabled = false;
-
-                        button.textContent =
-                            "✉ SEND TO THE VOID";
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        // ----------------------------------------------------
-        // START FIRESTORE
-        // ----------------------------------------------------
-
-        loadCommunity();
-
-    }
-);
-
-
-// ============================================================
-// LIKE BUTTON
-// ============================================================
-
-document.addEventListener(
-    "click",
-    async function(event) {
-
-        const button =
-            event.target.closest(
-                ".like-button"
-            );
-
-        if (!button) return;
-
-
-        const id =
-            button.dataset.id;
-
-        const collectionName =
-            button.dataset.collection;
-
-
-        if (
-            !id ||
-            !collectionName
-        ) {
             return;
         }
 
 
-        button.disabled = true;
+        const posts = [];
 
 
-        try {
+        snapshot.forEach(
+            documentSnapshot => {
 
-            await updateDoc(
+                const data =
+                    documentSnapshot.data();
 
-                doc(
-                    db,
-                    collectionName,
-                    id
-                ),
+                posts.push({
+                    id: documentSnapshot.id,
+                    data
+                });
 
-                {
-                    likes:
-                        increment(1)
-                }
-
-            );
+            }
+        );
 
 
-            console.log(
-                "♡ Like added."
-            );
+        // Sort locally as an extra safety measure.
 
-        } catch (error) {
+        posts.sort(
+            (a, b) => {
 
-            console.error(
-                "❌ Like error:",
-                error
-            );
+                const aTime =
+                    a.data.createdAt?.toMillis
+                        ? a.data.createdAt.toMillis()
+                        : 0;
 
-        } finally {
+                const bTime =
+                    b.data.createdAt?.toMillis
+                        ? b.data.createdAt.toMillis()
+                        : 0;
 
-            button.disabled = false;
+                return bTime - aTime;
 
-        }
+            }
+        );
+
+
+        posts.forEach(
+            post => {
+
+                const card =
+                    createPostCard(
+                        post.id,
+                        post.data,
+                        type,
+                        collectionName
+                    );
+
+                container.appendChild(card);
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            `Error loading ${collectionName}:`,
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="post-card">
+
+                <div class="post-type">
+                    PLOTTWISTED
+                </div>
+
+                <div class="post-message">
+                    Unable to load stories right now.
+                </div>
+
+                <div class="post-date">
+                    Please check your Firestore rules.
+                </div>
+
+            </div>
+
+        `;
 
     }
-);
+
+}
 
 
-// ============================================================
-// REPORT BUTTON
-// ============================================================
+// =====================================================
+// LOAD ALL COMMUNITY STORIES
+// =====================================================
+
+async function loadCommunityStories() {
+
+    await Promise.all([
+        loadCollection(
+            COLLECTIONS.confessions,
+            "communityConfessions",
+            "CONFESSION"
+        ),
+
+        loadCollection(
+            COLLECTIONS.hugots,
+            "communityHugots",
+            "HUGOT"
+        ),
+
+        loadCollection(
+            COLLECTIONS.unsent,
+            "communityUnsent",
+            "UNSENT MESSAGE"
+        )
+    ]);
+
+}
+
+
+// =====================================================
+// LOAD INDIVIDUAL PAGE LISTS
+// =====================================================
+
+async function loadIndividualLists() {
+
+    await Promise.all([
+        loadCollection(
+            COLLECTIONS.confessions,
+            "confessionList",
+            "CONFESSION"
+        ),
+
+        loadCollection(
+            COLLECTIONS.hugots,
+            "hugotList",
+            "HUGOT"
+        ),
+
+        loadCollection(
+            COLLECTIONS.unsent,
+            "unsentList",
+            "UNSENT MESSAGE"
+        )
+    ]);
+
+}
+
+
+// =====================================================
+// SAVE POST
+// =====================================================
+
+async function savePost(
+    collectionName,
+    inputId,
+    formId
+) {
+
+    const form =
+        document.getElementById(formId);
+
+    const input =
+        document.getElementById(inputId);
+
+    if (!form || !input) {
+        return;
+    }
+
+
+    form.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const text =
+                input.value.trim();
+
+
+            if (!text) {
+
+                alert(
+                    "Please write something first."
+                );
+
+                return;
+            }
+
+
+            const button =
+                form.querySelector(
+                    "button[type='submit']"
+                );
+
+
+            if (button) {
+                button.disabled = true;
+                button.textContent =
+                    "SENDING...";
+            }
+
+
+            try {
+
+                await addDoc(
+                    collection(
+                        db,
+                        collectionName
+                    ),
+                    {
+                        text: text,
+                        likes: 0,
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                input.value = "";
+
+
+                alert(
+                    "Your story has been posted."
+                );
+
+
+                // Refresh all feeds.
+
+                await Promise.all([
+                    loadCommunityStories(),
+                    loadIndividualLists()
+                ]);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Save error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to post your story right now. Please check your Firestore rules."
+                );
+
+
+            } finally {
+
+                if (button) {
+
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        formId === "confessionForm"
+                            ? "♡ SEAL THIS CONFESSION"
+                            : formId === "hugotForm"
+                                ? "✦ SEND THIS HUGOT"
+                                : "✉ SEND TO THE VOID";
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// INITIALIZE
+// =====================================================
 
 document.addEventListener(
-    "click",
-    function(event) {
+    "DOMContentLoaded",
+    async function () {
 
-        const button =
-            event.target.closest(
-                ".report-button"
-            );
-
-        if (!button) return;
+        console.log(
+            "✦ PlotTwisted Firebase starting..."
+        );
 
 
-        alert(
-            "Thank you for reporting this post. " +
-            "Please contact the PlotTwisted administrator."
+        // Forms
+
+        await savePost(
+            COLLECTIONS.confessions,
+            "confessionInput",
+            "confessionForm"
+        );
+
+        await savePost(
+            COLLECTIONS.hugots,
+            "hugotInput",
+            "hugotForm"
+        );
+
+        await savePost(
+            COLLECTIONS.unsent,
+            "unsentInput",
+            "unsentForm"
+        );
+
+
+        // Load existing Firestore data.
+
+        await Promise.all([
+            loadCommunityStories(),
+            loadIndividualLists()
+        ]);
+
+
+        console.log(
+            "✦ PlotTwisted Firebase ready."
         );
 
     }
 );
 
 
-// ============================================================
-// GLOBAL FUNCTIONS
-// ============================================================
+// =====================================================
+// RELOAD COMMUNITY WHEN COMMUNITY PAGE OPENS
+// =====================================================
 
-window.loadCommunity =
-    loadCommunity;
-
-window.saveConfession =
-    saveConfession;
-
-window.saveHugot =
-    saveHugot;
-
-window.saveUnsent =
-    saveUnsent;
+const originalShowPage =
+    window.showPage;
 
 
-// ============================================================
-// IMPORTANT:
-// DO NOT PUT spinRoulette() HERE.
-// Your HTML already contains spinRoulette().
-// This script does NOT replace or remove it.
-// ============================================================
+if (typeof originalShowPage === "function") {
 
-console.log(
-    "✦ PlotTwisted Firestore script loaded."
-);
+    window.showPage =
+        function (id) {
+
+            originalShowPage(id);
+
+            if (
+                id === "community" ||
+                id === "confessions" ||
+                id === "hugot" ||
+                id === "unsent"
+            ) {
+
+                setTimeout(
+                    function () {
+
+                        loadCommunityStories();
+                        loadIndividualLists();
+
+                    },
+                    100
+                );
+
+            }
+
+        };
+
+}
+
+
+// =====================================================
+// IMPORTANT
+// Roulette is NOT touched here.
+// Your existing spinRoulette() in index.html
+// remains active.
+// =====================================================
