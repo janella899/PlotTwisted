@@ -1134,3 +1134,135 @@ console.log(
 console.log(
     "Every story has a twist."
 );
+
+
+/* =========================================================
+   PLOTTWISTED PAGE NAVIGATION
+========================================================= */
+
+function showSection(sectionID) {
+
+    const sections =
+        document.querySelectorAll(".page-section");
+
+    const target =
+        document.getElementById(sectionID);
+
+    if (!target) return;
+
+
+    /* Remove current section */
+
+    sections.forEach(section => {
+
+        section.classList.remove(
+            "active-section"
+        );
+
+    });
+
+
+    /*
+       Small delay creates a smoother
+       transition between sections.
+    */
+
+    setTimeout(() => {
+
+        target.classList.add(
+            "active-section"
+        );
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }, 80);
+
+
+    /* Update browser history */
+
+    history.pushState(
+        { section: sectionID },
+        "",
+        "#" + sectionID
+    );
+
+}
+
+
+/* =========================================================
+   BROWSER BACK BUTTON
+========================================================= */
+
+window.addEventListener(
+    "popstate",
+    () => {
+
+        const sectionID =
+            location.hash.replace("#", "") ||
+            "home";
+
+        showSectionWithoutHistory(
+            sectionID
+        );
+
+    }
+);
+
+
+function showSectionWithoutHistory(sectionID) {
+
+    const sections =
+        document.querySelectorAll(".page-section");
+
+    const target =
+        document.getElementById(sectionID);
+
+    if (!target) return;
+
+    sections.forEach(section => {
+
+        section.classList.remove(
+            "active-section"
+        );
+
+    });
+
+    target.classList.add(
+        "active-section"
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   OPEN CORRECT SECTION WHEN LINK IS SHARED
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const sectionID =
+            location.hash.replace("#", "");
+
+        if (
+            sectionID &&
+            document.getElementById(sectionID)
+        ) {
+
+            showSectionWithoutHistory(
+                sectionID
+            );
+
+        }
+
+    }
+);
