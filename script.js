@@ -14,65 +14,103 @@ import {
 
 
 /* =====================================================
+   PLOTTWISTED
+   COMMUNITY SCRIPT
+===================================================== */
+
+
+/* =====================================================
    NAVIGATION
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const buttons = document.querySelectorAll("[data-slide]");
-    const sections = document.querySelectorAll(".page-section");
+    const buttons =
+        document.querySelectorAll("[data-slide]");
+
+    const sections =
+        document.querySelectorAll(".page-section");
 
 
     function openSlide(id) {
 
-        const target = document.getElementById(id);
+        const target =
+            document.getElementById(id);
 
         if (!target) return;
 
-        sections.forEach(function (section) {
-            section.classList.remove("active-section");
+
+        sections.forEach(section => {
+
+            section.classList.remove(
+                "active-section"
+            );
+
         });
 
-        target.classList.add("active-section");
+
+        target.classList.add(
+            "active-section"
+        );
+
 
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
 
-        history.replaceState(null, "", "#" + id);
+
+        history.replaceState(
+            null,
+            "",
+            "#" + id
+        );
+
     }
 
 
-    buttons.forEach(function (button) {
+    buttons.forEach(button => {
 
-        button.addEventListener("click", function () {
+        button.addEventListener(
+            "click",
+            () => {
 
-            openSlide(
-                button.getAttribute("data-slide")
-            );
+                openSlide(
+                    button.dataset.slide
+                );
 
-        });
+            }
+        );
 
     });
 
 
     const hash =
-        window.location.hash.replace("#", "");
+        window.location.hash.replace(
+            "#",
+            ""
+        );
+
 
     if (
         hash &&
         document.getElementById(hash)
     ) {
+
         openSlide(hash);
+
     }
 
 
-    /* LOAD FIREBASE CONTENT */
+    /* LOAD PUBLIC CONTENT */
 
     loadConfessions();
+
     loadHugots();
+
     loadUnsent();
+
+    loadSignDelusion();
 
 
     /* =================================================
@@ -80,21 +118,25 @@ document.addEventListener("DOMContentLoaded", function () {
     ================================================= */
 
     const confessionForm =
-        document.getElementById("confessionForm");
+        document.getElementById(
+            "confessionForm"
+        );
 
 
     if (confessionForm) {
 
         confessionForm.addEventListener(
             "submit",
-            async function (event) {
+            async event => {
 
                 event.preventDefault();
+
 
                 const input =
                     document.getElementById(
                         "confessionInput"
                     );
+
 
                 const message =
                     input.value.trim();
@@ -103,10 +145,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!message) {
 
                     alert(
-                        "Please write your confession first. ♡"
+                        "Write your confession first. ♡"
                     );
 
                     return;
+
                 }
 
 
@@ -118,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "confessions"
                         ),
                         {
-                            message: message,
+                            message,
                             likes: 0,
                             reports: 0,
                             createdAt:
@@ -129,9 +172,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     input.value = "";
 
+
                     alert(
-                        "♡ Your confession is now public anonymously!"
+                        "♡ Confession posted anonymously!"
                     );
+
 
                     loadConfessions();
 
@@ -158,21 +203,25 @@ document.addEventListener("DOMContentLoaded", function () {
     ================================================= */
 
     const hugotForm =
-        document.getElementById("hugotForm");
+        document.getElementById(
+            "hugotForm"
+        );
 
 
     if (hugotForm) {
 
         hugotForm.addEventListener(
             "submit",
-            async function (event) {
+            async event => {
 
                 event.preventDefault();
+
 
                 const input =
                     document.getElementById(
                         "hugotInput"
                     );
+
 
                 const message =
                     input.value.trim();
@@ -185,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
+
                 }
 
 
@@ -196,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "hugots"
                         ),
                         {
-                            message: message,
+                            message,
                             likes: 0,
                             reports: 0,
                             createdAt:
@@ -207,9 +257,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     input.value = "";
 
+
                     alert(
-                        "✦ Your hugot is now public!"
+                        "✦ Hugot posted!"
                     );
+
 
                     loadHugots();
 
@@ -232,25 +284,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       UNSENT MESSAGE FORM
+       UNSENT MESSAGE
     ================================================= */
 
     const unsentForm =
-        document.getElementById("unsentForm");
+        document.getElementById(
+            "unsentForm"
+        );
 
 
     if (unsentForm) {
 
         unsentForm.addEventListener(
             "submit",
-            async function (event) {
+            async event => {
 
                 event.preventDefault();
+
 
                 const input =
                     document.getElementById(
                         "unsentInput"
                     );
+
 
                 const message =
                     input.value.trim();
@@ -263,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
+
                 }
 
 
@@ -274,7 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             "unsentMessages"
                         ),
                         {
-                            message: message,
+                            message,
                             likes: 0,
                             reports: 0,
                             createdAt:
@@ -285,9 +342,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     input.value = "";
 
+
                     alert(
-                        "✉ Your message has been sent to the void."
+                        "✉ Message sent anonymously."
                     );
+
 
                     loadUnsent();
 
@@ -308,158 +367,115 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-});
+
+    /* =================================================
+       SIGN OR DELUSION FORM
+    ================================================= */
+
+    const signForm =
+        document.getElementById(
+            "signDelusionForm"
+        );
 
 
+    if (signForm) {
 
-/* =====================================================
-   DATE
-===================================================== */
+        signForm.addEventListener(
+            "submit",
+            async event => {
 
-function formatDate(timestamp) {
+                event.preventDefault();
 
-    if (!timestamp) {
-        return "Just now";
-    }
 
-    try {
+                const input =
+                    document.getElementById(
+                        "signDelusionInput"
+                    );
 
-        return timestamp
-            .toDate()
-            .toLocaleString(
-                "en-US",
-                {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit"
+
+                if (!input) return;
+
+
+                const situation =
+                    input.value.trim();
+
+
+                if (!situation) {
+
+                    alert(
+                        "Tell us what happened first! 👀"
+                    );
+
+                    return;
+
                 }
-            );
+
+
+                if (situation.length > 500) {
+
+                    alert(
+                        "Keep your story under 500 characters."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "signDelusionPosts"
+                        ),
+                        {
+
+                            situation,
+
+                            sign: 0,
+
+                            maybe: 0,
+
+                            delulu: 0,
+
+                            reports: 0,
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    input.value = "";
+
+
+                    alert(
+                        "👀 Your situation is now public!"
+                    );
+
+
+                    loadSignDelusion();
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "Unable to post. Check your Firebase Rules."
+                    );
+
+                }
+
+            }
+        );
 
     }
 
-    catch {
-
-        return "Just now";
-
-    }
-
-}
-
-
-
-/* =====================================================
-   CREATE POST CARD
-===================================================== */
-
-function createPostCard(
-    data,
-    id,
-    type
-) {
-
-    const card =
-        document.createElement("article");
-
-
-    card.className = "post-card";
-
-
-    const symbol =
-        type === "CONFESSION"
-            ? "♡"
-            : type === "HUGOT"
-                ? "✦"
-                : "✉";
-
-
-    const likes =
-        Number(data.likes || 0);
-
-
-    card.innerHTML = `
-
-        <div class="post-type">
-            ${symbol} ${type}
-        </div>
-
-        <div class="post-message"></div>
-
-        <div class="post-date">
-            Anonymous · ${formatDate(data.createdAt)}
-        </div>
-
-        <div class="post-actions">
-
-            <button
-                class="like-button">
-
-                ♡ ${likes}
-
-            </button>
-
-            <button
-                class="report-button">
-
-                ⚑ Report
-
-            </button>
-
-        </div>
-
-    `;
-
-
-    card.querySelector(
-        ".post-message"
-    ).textContent =
-        '"' + data.message + '"';
-
-
-    const likeButton =
-        card.querySelector(
-            ".like-button"
-        );
-
-
-    likeButton.addEventListener(
-        "click",
-        async function () {
-
-            await likePost(
-                id,
-                type,
-                likes,
-                likeButton
-            );
-
-        }
-    );
-
-
-    const reportButton =
-        card.querySelector(
-            ".report-button"
-        );
-
-
-    reportButton.addEventListener(
-        "click",
-        async function () {
-
-            await reportPost(
-                id,
-                type
-            );
-
-        }
-    );
-
-
-    return card;
-
-}
+});
 
 
 
@@ -489,14 +505,13 @@ async function getPosts(
 
 
     return snapshot.docs.map(
-        function (document) {
+        document => ({
 
-            return {
-                id: document.id,
-                ...document.data()
-            };
+            id: document.id,
 
-        }
+            ...document.data()
+
+        })
     );
 
 }
@@ -504,29 +519,32 @@ async function getPosts(
 
 
 /* =====================================================
-   CONFESSIONS
+   SIGN OR DELUSION
 ===================================================== */
 
-async function loadConfessions() {
+async function loadSignDelusion() {
 
     const container =
         document.getElementById(
-            "confessionList"
+            "signDelusionList"
         );
 
 
     if (!container) return;
 
 
-    container.innerHTML =
-        "<p>Loading anonymous stories...</p>";
+    container.innerHTML = `
+        <p class="loading">
+            Loading everyone's situations...
+        </p>
+    `;
 
 
     try {
 
         const posts =
             await getPosts(
-                "confessions"
+                "signDelusionPosts"
             );
 
 
@@ -540,12 +558,13 @@ async function loadConfessions() {
                 <div class="post-card">
 
                     <div class="post-type">
-                        ♡ FIRST STORY
+                        👀 FIRST PLOT
                     </div>
 
                     <div class="post-message">
-                        Be the first person
-                        to leave a confession.
+                        No situations yet.
+                        Be the first to ask
+                        the community!
                     </div>
 
                 </div>
@@ -553,25 +572,17 @@ async function loadConfessions() {
             `;
 
             return;
+
         }
 
 
-        posts.forEach(
-            function (post) {
+        posts.forEach(post => {
 
-                container.appendChild(
-                    createPostCard(
-                        post,
-                        post.id,
-                        "CONFESSION"
-                    )
-                );
+            container.appendChild(
+                createSignPost(post)
+            );
 
-            }
-        );
-
-
-        showRecommendation(posts);
+        });
 
     }
 
@@ -579,10 +590,17 @@ async function loadConfessions() {
 
         console.error(error);
 
+
         container.innerHTML = `
-            <p>
-                Unable to load confessions.
-            </p>
+
+            <div class="post-card">
+
+                <div class="post-message">
+                    Unable to load public situations.
+                </div>
+
+            </div>
+
         `;
 
     }
@@ -592,347 +610,366 @@ async function loadConfessions() {
 
 
 /* =====================================================
-   HUGOTS
+   CREATE SIGN POST
 ===================================================== */
 
-async function loadHugots() {
+function createSignPost(post) {
 
-    const container =
-        document.getElementById(
-            "hugotList"
+    const card =
+        document.createElement(
+            "article"
         );
 
 
-    if (!container) return;
+    card.className =
+        "post-card sign-post";
 
 
-    container.innerHTML =
-        "<p>Loading community hugots...</p>";
+    const sign =
+        Number(post.sign || 0);
 
 
-    try {
+    const maybe =
+        Number(post.maybe || 0);
 
-        const posts =
-            await getPosts(
-                "hugots"
+
+    const delulu =
+        Number(post.delulu || 0);
+
+
+    const total =
+        sign +
+        maybe +
+        delulu;
+
+
+    let signPercent = 0;
+
+    let maybePercent = 0;
+
+    let deluluPercent = 0;
+
+
+    if (total > 0) {
+
+        signPercent =
+            Math.round(
+                sign / total * 100
             );
 
 
-        container.innerHTML = "";
-
-
-        if (posts.length === 0) {
-
-            container.innerHTML = `
-
-                <div class="post-card">
-
-                    <div class="post-type">
-                        ✦ EMPTY CORNER
-                    </div>
-
-                    <div class="post-message">
-                        Be the first to drop a hugot.
-                    </div>
-
-                </div>
-
-            `;
-
-            return;
-        }
-
-
-        posts.forEach(
-            function (post) {
-
-                container.appendChild(
-                    createPostCard(
-                        post,
-                        post.id,
-                        "HUGOT"
-                    )
-                );
-
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-    }
-
-}
-
-
-
-/* =====================================================
-   UNSENT
-===================================================== */
-
-async function loadUnsent() {
-
-    const container =
-        document.getElementById(
-            "unsentList"
-        );
-
-
-    if (!container) return;
-
-
-    container.innerHTML =
-        "<p>Opening the drafts...</p>";
-
-
-    try {
-
-        const posts =
-            await getPosts(
-                "unsentMessages"
+        maybePercent =
+            Math.round(
+                maybe / total * 100
             );
 
 
-        container.innerHTML = "";
+        deluluPercent =
+            100 -
+            signPercent -
+            maybePercent;
+
+    }
 
 
-        if (posts.length === 0) {
+    card.innerHTML = `
 
-            container.innerHTML = `
+        <div class="post-type">
+            👀 SIGN OR DELUSION
+        </div>
 
-                <div class="post-card">
 
-                    <div class="post-type">
-                        ✉ THE VOID IS QUIET
+        <div class="sign-situation"></div>
+
+
+        <div class="post-date">
+            Anonymous · Public
+        </div>
+
+
+        <div class="vote-buttons">
+
+            <button
+                class="sign-btn">
+
+                💗 SIGN
+
+            </button>
+
+
+            <button
+                class="maybe-btn">
+
+                🤔 MAYBE
+
+            </button>
+
+
+            <button
+                class="delulu-btn">
+
+                💀 DELULU
+
+            </button>
+
+        </div>
+
+
+        <div class="vote-results">
+
+            <div class="vote-row">
+
+                <span>
+                    💗 Sign
+                </span>
+
+                <div class="vote-bar">
+                    <div
+                        class="vote-fill sign-fill"
+                        style="width:${signPercent}%">
                     </div>
-
-                    <div class="post-message">
-                        Leave the first
-                        unsent message.
-                    </div>
-
                 </div>
 
-            `;
+                <strong>
+                    ${signPercent}%
+                </strong>
 
-            return;
-        }
+            </div>
 
 
-        posts.forEach(
-            function (post) {
+            <div class="vote-row">
 
-                container.appendChild(
-                    createPostCard(
-                        post,
-                        post.id,
-                        "UNSENT"
-                    )
-                );
+                <span>
+                    🤔 Maybe
+                </span>
 
-            }
-        );
+                <div class="vote-bar">
+                    <div
+                        class="vote-fill maybe-fill"
+                        style="width:${maybePercent}%">
+                    </div>
+                </div>
 
-    }
+                <strong>
+                    ${maybePercent}%
+                </strong>
 
-    catch (error) {
+            </div>
 
-        console.error(error);
 
-    }
+            <div class="vote-row">
 
-}
+                <span>
+                    💀 Delulu
+                </span>
 
+                <div class="vote-bar">
+                    <div
+                        class="vote-fill delulu-fill"
+                        style="width:${deluluPercent}%">
+                    </div>
+                </div>
 
+                <strong>
+                    ${deluluPercent}%
+                </strong>
 
-/* =====================================================
-   LIKE
-===================================================== */
+            </div>
 
-async function likePost(
-    id,
-    type,
-    currentLikes,
-    button
-) {
+        </div>
 
-    let collectionName;
 
+        <div class="vote-count">
 
-    if (type === "CONFESSION") {
+            ${total} total vote${total === 1 ? "" : "s"}
 
-        collectionName =
-            "confessions";
+        </div>
 
-    }
 
-    else if (type === "HUGOT") {
+        <button class="report-button">
+            ⚑ Report
+        </button>
 
-        collectionName =
-            "hugots";
+    `;
 
-    }
 
-    else {
-
-        collectionName =
-            "unsentMessages";
-
-    }
-
-
-    try {
-
-        await updateDoc(
-            doc(
-                db,
-                collectionName,
-                id
-            ),
-            {
-                likes:
-                    increment(1)
-            }
-        );
-
-
-        const newLikes =
-            Number(currentLikes || 0) + 1;
-
-
-        button.textContent =
-            "♡ " + newLikes;
-
-
-        button.style.color =
-            "#e29aab";
-
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to react right now."
-        );
-
-    }
-
-}
-
-
-
-/* =====================================================
-   REPORT
-===================================================== */
-
-async function reportPost(
-    id,
-    type
-) {
-
-    if (
-        !confirm(
-            "Report this anonymous post?"
-        )
-    ) {
-        return;
-    }
-
-
-    let collectionName;
-
-
-    if (type === "CONFESSION") {
-
-        collectionName =
-            "confessions";
-
-    }
-
-    else if (type === "HUGOT") {
-
-        collectionName =
-            "hugots";
-
-    }
-
-    else {
-
-        collectionName =
-            "unsentMessages";
-
-    }
-
-
-    try {
-
-        await updateDoc(
-            doc(
-                db,
-                collectionName,
-                id
-            ),
-            {
-                reports:
-                    increment(1)
-            }
-        );
-
-
-        alert(
-            "Thank you. The post has been reported."
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to report this post."
-        );
-
-    }
-
-}
-
-
-
-/* =====================================================
-   RECOMMENDATIONS
-===================================================== */
-
-function showRecommendation(posts) {
-
-    const box =
-        document.querySelector(
-            ".recommendation-box p"
-        );
-
-
-    if (!box || !posts.length) return;
-
-
-    const random =
-        posts[
-            Math.floor(
-                Math.random() *
-                posts.length
-            )
-        ];
-
-
-    box.textContent =
-        '✦ "' +
-        random.message +
+    card.querySelector(
+        ".sign-situation"
+    ).textContent =
+        '"' +
+        post.situation +
         '"';
+
+
+    /* SIGN */
+
+    card.querySelector(
+        ".sign-btn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            voteCommunity(
+                post.id,
+                "sign"
+            );
+
+        }
+    );
+
+
+    /* MAYBE */
+
+    card.querySelector(
+        ".maybe-btn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            voteCommunity(
+                post.id,
+                "maybe"
+            );
+
+        }
+    );
+
+
+    /* DELULU */
+
+    card.querySelector(
+        ".delulu-btn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            voteCommunity(
+                post.id,
+                "delulu"
+            );
+
+        }
+    );
+
+
+    /* REPORT */
+
+    card.querySelector(
+        ".report-button"
+    ).addEventListener(
+        "click",
+        async () => {
+
+            if (
+                !confirm(
+                    "Report this post?"
+                )
+            ) return;
+
+
+            try {
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "signDelusionPosts",
+                        post.id
+                    ),
+                    {
+                        reports:
+                            increment(1)
+                    }
+                );
+
+
+                alert(
+                    "Thank you for reporting this post."
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to report."
+                );
+
+            }
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+
+/* =====================================================
+   COMMUNITY VOTING
+===================================================== */
+
+async function voteCommunity(
+    id,
+    choice
+) {
+
+    try {
+
+        const update = {};
+
+
+        if (choice === "sign") {
+
+            update.sign =
+                increment(1);
+
+        }
+
+
+        if (choice === "maybe") {
+
+            update.maybe =
+                increment(1);
+
+        }
+
+
+        if (choice === "delulu") {
+
+            update.delulu =
+                increment(1);
+
+        }
+
+
+        await updateDoc(
+            doc(
+                db,
+                "signDelusionPosts",
+                id
+            ),
+            update
+        );
+
+
+        loadSignDelusion();
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to record your vote."
+        );
+
+    }
 
 }
 
@@ -940,32 +977,242 @@ function showRecommendation(posts) {
 
 /* =====================================================
    PLOT TWIST ROULETTE
+   100+ RESULTS
 ===================================================== */
 
 const plotTwists = [
 
-    "Someone secretly likes their best friend.",
+    "Someone secretly likes your best friend.",
+
+    "Your crush already knows you like them.",
 
     "Your old crush suddenly messages you.",
 
-    "The person you thought hated you actually likes you.",
+    "Someone has been checking your stories every day.",
 
-    "Your best friend has been hiding a secret.",
+    "Your best friend has a secret crush.",
+
+    "The person you thought hated you actually likes you.",
 
     "Someone is writing anonymous confessions about you.",
 
-    "The person you least expected becomes your closest friend.",
-
-    "Your next plot twist starts with a simple 'hi'.",
+    "Your next plot twist starts with a simple hello.",
 
     "Someone from your past comes back.",
 
-    "The person you've been looking for has been beside you all along.",
+    "Your biggest delusion might actually be true.",
 
-    "Your biggest delusion might actually be true."
+    "Someone you barely talk to thinks you're interesting.",
+
+    "Your crush accidentally reveals their feelings.",
+
+    "A random friendship becomes your favorite friendship.",
+
+    "Someone wants to apologize but is too shy.",
+
+    "The person you least expected becomes important to you.",
+
+    "You reconnect with someone you haven't talked to in years.",
+
+    "Your next best friend is someone you haven't met yet.",
+
+    "Someone has been waiting for you to make the first move.",
+
+    "A simple conversation changes everything.",
+
+    "Someone secretly admires your confidence.",
+
+    "Your quietest friend knows your biggest secret.",
+
+    "Your crush asks about you when you're not around.",
+
+    "Someone saves your messages.",
+
+    "A friendship unexpectedly turns into something deeper.",
+
+    "Someone is nervous every time they talk to you.",
+
+    "Your next adventure starts unexpectedly.",
+
+    "Someone remembers the smallest thing you told them.",
+
+    "You meet someone who completely changes your perspective.",
+
+    "An old misunderstanding finally gets cleared up.",
+
+    "Someone you miss is thinking about you too.",
+
+    "Your next favorite memory happens on an ordinary day.",
+
+    "Someone wants to be friends but doesn't know how to approach you.",
+
+    "A person you overlooked becomes important.",
+
+    "Your crush starts noticing the little things about you.",
+
+    "Someone is secretly rooting for you.",
+
+    "You receive a message you never expected.",
+
+    "Someone remembers your birthday without being reminded.",
+
+    "Your friendship circle is about to change.",
+
+    "A random coincidence introduces you to someone new.",
+
+    "Someone has a completely different impression of you.",
+
+    "Your next chapter begins with an unexpected invitation.",
+
+    "Someone who seemed distant actually cares a lot.",
+
+    "You discover someone has been supporting you quietly.",
+
+    "An accidental conversation becomes unforgettable.",
+
+    "Someone finally tells you what they really think.",
+
+    "Your crush gets jealous but tries to hide it.",
+
+    "Someone sends you a message at the perfect time.",
+
+    "You become closer to someone through a shared secret.",
+
+    "A forgotten friendship gets another chance.",
+
+    "Someone unexpectedly defends you.",
+
+    "You find out that someone has been talking positively about you.",
+
+    "Your next school day contains an unexpected surprise.",
+
+    "Someone notices when you're having a bad day.",
+
+    "A stranger becomes a familiar face.",
+
+    "Someone you thought forgot about you remembers everything.",
+
+    "Your crush asks your friend about you.",
+
+    "A random seat assignment changes your social life.",
+
+    "Someone wants to tell you something important.",
+
+    "Your next group project introduces you to someone special.",
+
+    "Someone secretly thinks you're funnier than you realize.",
+
+    "An old photo brings back an important memory.",
+
+    "Someone unexpectedly compliments you.",
+
+    "You discover that someone shares the same interests as you.",
+
+    "Your next conversation lasts much longer than expected.",
+
+    "Someone is waiting for the right moment to approach you.",
+
+    "A misunderstanding turns into a funny memory.",
+
+    "Someone you haven't noticed has noticed you.",
+
+    "Your next friendship starts through a mutual friend.",
+
+    "Someone wants to become closer to you.",
+
+    "Your crush accidentally likes an old post.",
+
+    "Someone sends you a message and immediately regrets it.",
+
+    "You hear something surprising about yourself.",
+
+    "A random decision leads to a great memory.",
+
+    "Someone who rarely talks suddenly opens up to you.",
+
+    "Your next laugh comes from the most unexpected person.",
+
+    "Someone secretly hopes you'll notice them.",
+
+    "A forgotten promise comes back into your life.",
+
+    "You meet someone with the same chaotic energy as you.",
+
+    "Someone starts a conversation because they wanted an excuse to talk.",
+
+    "Your crush remembers a tiny detail about you.",
+
+    "Someone unexpectedly asks for your opinion.",
+
+    "A friendship becomes stronger after a difficult day.",
+
+    "Someone is happier when you're around.",
+
+    "Your next inside joke begins today.",
+
+    "Someone you've been avoiding finally talks to you.",
+
+    "A simple compliment turns into a meaningful conversation.",
+
+    "Someone secretly thinks you're approachable.",
+
+    "You discover an unexpected shared connection.",
+
+    "Someone sends you something that reminds them of you.",
+
+    "Your next group hangout becomes unforgettable.",
+
+    "Someone who seemed intimidating turns out to be really nice.",
+
+    "Your crush notices when you change something small.",
+
+    "Someone has been waiting for you to reply.",
+
+    "An unexpected apology fixes an old friendship.",
+
+    "You accidentally become someone's favorite person to talk to.",
+
+    "Someone starts trusting you with their secrets.",
+
+    "A random conversation reveals a surprising connection.",
+
+    "Your next plot twist happens when you stop expecting one.",
+
+    "Someone finally gathers the courage to say hello.",
+
+    "You discover that you're someone's inspiration.",
+
+    "A person from your past becomes part of your future.",
+
+    "Someone secretly hopes you'll stay in their life.",
+
+    "Your next chapter is better than the one you planned.",
+
+    "Someone notices your absence more than you think.",
+
+    "A small decision creates a huge memory.",
+
+    "The person you least expect sends the message you've been waiting for.",
+
+    "Someone is quietly cheering you on.",
+
+    "Your next unexpected friendship becomes a favorite.",
+
+    "A coincidence makes you question whether it was really a coincidence.",
+
+    "Someone finally admits they missed talking to you.",
+
+    "Your biggest plot twist hasn't happened yet.",
+
+    "Someone is about to enter your life at exactly the right time."
 
 ];
 
+
+
+/* =====================================================
+   SPIN ROULETTE
+===================================================== */
 
 function spinRoulette() {
 
@@ -995,13 +1242,10 @@ function spinRoulette() {
     }
 
 
-    text.style.transition =
-        "opacity .3s ease";
-
     text.style.opacity = "0";
 
 
-    setTimeout(function () {
+    setTimeout(() => {
 
         const random =
             plotTwists[
@@ -1033,181 +1277,8 @@ function spinRoulette() {
 
 
 /* =====================================================
-   SIGN OR DELUSION
-===================================================== */
-
-let signVotes = 62;
-let maybeVotes = 25;
-let deluluVotes = 13;
-
-
-function voteSign(choice) {
-
-    if (choice === "sign") {
-
-        signVotes++;
-
-    }
-
-    else if (choice === "maybe") {
-
-        maybeVotes++;
-
-    }
-
-    else if (choice === "delulu") {
-
-        deluluVotes++;
-
-    }
-
-
-    const total =
-        signVotes +
-        maybeVotes +
-        deluluVotes;
-
-
-    const signPercent =
-        Math.round(
-            (signVotes / total) * 100
-        );
-
-
-    const maybePercent =
-        Math.round(
-            (maybeVotes / total) * 100
-        );
-
-
-    const deluluPercent =
-        100 -
-        signPercent -
-        maybePercent;
-
-
-    const signBar =
-        document.getElementById(
-            "signBar"
-        );
-
-    const maybeBar =
-        document.getElementById(
-            "maybeBar"
-        );
-
-    const deluluBar =
-        document.getElementById(
-            "deluluBar"
-        );
-
-
-    const signText =
-        document.getElementById(
-            "signPercent"
-        );
-
-    const maybeText =
-        document.getElementById(
-            "maybePercent"
-        );
-
-    const deluluText =
-        document.getElementById(
-            "deluluPercent"
-        );
-
-
-    if (signBar)
-        signBar.style.width =
-            signPercent + "%";
-
-
-    if (maybeBar)
-        maybeBar.style.width =
-            maybePercent + "%";
-
-
-    if (deluluBar)
-        deluluBar.style.width =
-            deluluPercent + "%";
-
-
-    if (signText)
-        signText.textContent =
-            signPercent + "%";
-
-
-    if (maybeText)
-        maybeText.textContent =
-            maybePercent + "%";
-
-
-    if (deluluText)
-        deluluText.textContent =
-            deluluPercent + "%";
-
-
-    /* BUTTON ANIMATION */
-
-    const buttons =
-        document.querySelectorAll(
-            ".vote-buttons button"
-        );
-
-
-    buttons.forEach(
-        function (button) {
-
-            button.style.transform =
-                "scale(1)";
-
-        }
-    );
-
-
-    if (
-        choice === "sign" &&
-        buttons[0]
-    ) {
-
-        buttons[0].style.transform =
-            "scale(1.05)";
-
-    }
-
-
-    if (
-        choice === "maybe" &&
-        buttons[1]
-    ) {
-
-        buttons[1].style.transform =
-            "scale(1.05)";
-
-    }
-
-
-    if (
-        choice === "delulu" &&
-        buttons[2]
-    ) {
-
-        buttons[2].style.transform =
-            "scale(1.05)";
-
-    }
-
-}
-
-
-
-/* =====================================================
-   MAKE FUNCTIONS AVAILABLE TO HTML
+   MAKE HTML BUTTONS WORK
 ===================================================== */
 
 window.spinRoulette =
     spinRoulette;
-
-window.voteSign =
-    voteSign;
