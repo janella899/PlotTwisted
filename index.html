@@ -4,39 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PlotTwisted — Anonymous Stories</title>
+<title>PlotTwisted — Vintage Stories</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
-/* =====================================================
-   PLOTTWISTED — SCRAPBOOK EDITION
-===================================================== */
+/* =========================================================
+   PLOTTWISTED — VINTAGE LOVE LETTER EDITION
+========================================================= */
 
 :root{
-    --black:#080607;
-    --dark:#10090b;
-    --dark2:#1b1012;
+    --black:#090607;
+    --dark:#11090c;
+    --dark2:#1b0d11;
+
     --wine:#641b2c;
-    --wine2:#8b3042;
-    --wine3:#3e121e;
-    --paper:#e8d7c2;
-    --paper2:#c9ad91;
-    --cream:#f4e9d8;
+    --wine2:#8b3045;
+    --wine3:#3b101c;
+
+    --cream:#f4e6d2;
+    --paper:#ead7bc;
+    --paper2:#c7a889;
+    --ink:#27181a;
+
     --gold:#c9a05d;
-    --gold2:#e0bd78;
-    --muted:#a99a8c;
-    --line:rgba(201,160,93,.30);
+    --gold2:#e2c17e;
+
+    --muted:#a99686;
+    --line:rgba(201,160,93,.28);
 }
 
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html{
@@ -45,88 +54,156 @@ html{
 
 body{
     min-height:100vh;
-    background:
-        radial-gradient(circle at 15% 15%,rgba(100,27,44,.22),transparent 25%),
-        radial-gradient(circle at 85% 60%,rgba(201,160,93,.07),transparent 28%),
-        var(--black);
-    color:var(--cream);
-    font-family:"Poppins",sans-serif;
     overflow-x:hidden;
+
+    color:var(--cream);
+
+    font-family:"Poppins",sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(100,27,44,.30),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(201,160,93,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #090607,
+            #14090c 50%,
+            #080506
+        );
 }
 
-/* =====================================================
-   DECORATIONS
-===================================================== */
+/* =========================================================
+   VINTAGE GRAIN
+========================================================= */
 
 body::before{
-    content:"✦     ✧       ✦       ♡       ✧";
+    content:"";
     position:fixed;
-    top:110px;
-    left:2%;
-    color:rgba(201,160,93,.12);
-    font-size:22px;
-    letter-spacing:28px;
+    inset:0;
+
     pointer-events:none;
-    z-index:0;
+
+    opacity:.07;
+
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 2px,
+            rgba(255,255,255,.08) 3px
+        );
+
+    z-index:9999;
 }
 
-body::after{
-    content:"✧       ✦      ♡       ✧";
+/* =========================================================
+   ROSE DECORATIONS
+========================================================= */
+
+.rose{
     position:fixed;
-    bottom:100px;
-    right:2%;
-    color:rgba(201,160,93,.10);
-    font-size:22px;
-    letter-spacing:25px;
-    pointer-events:none;
     z-index:0;
-}
 
-.floating{
-    position:fixed;
+    color:#7d2638;
+
+    opacity:.20;
+
+    font-size:75px;
+
     pointer-events:none;
-    color:rgba(201,160,93,.16);
-    z-index:0;
-    animation:float 7s ease-in-out infinite;
+
+    filter:
+        drop-shadow(
+            0 8px 12px rgba(0,0,0,.6)
+        );
+
+    animation:roseFloat 8s ease-in-out infinite;
 }
 
-.float1{
-    top:18%;
-    left:3%;
-    font-size:34px;
+.rose1{
+    top:90px;
+    left:-12px;
+    transform:rotate(-18deg);
 }
 
-.float2{
-    top:43%;
-    right:3%;
-    font-size:25px;
+.rose2{
+    right:-15px;
+    bottom:80px;
+    font-size:90px;
+    transform:rotate(20deg);
     animation-delay:2s;
 }
 
-.float3{
+.rose3{
+    left:4%;
     bottom:18%;
-    left:8%;
-    font-size:20px;
+    font-size:38px;
+    opacity:.14;
     animation-delay:4s;
 }
 
-@keyframes float{
+.rose4{
+    right:7%;
+    top:30%;
+    font-size:42px;
+    opacity:.12;
+    animation-delay:5s;
+}
+
+@keyframes roseFloat{
+
     0%,100%{
-        transform:translateY(0) rotate(0);
+        transform:translateY(0) rotate(-10deg);
     }
+
     50%{
-        transform:translateY(-18px) rotate(8deg);
+        transform:translateY(-12px) rotate(5deg);
     }
 }
 
-/* =====================================================
+/* =========================================================
+   PETALS
+========================================================= */
+
+.petal{
+    position:fixed;
+    color:#9a344a;
+    opacity:.20;
+    pointer-events:none;
+    z-index:0;
+}
+
+.petal1{
+    top:25%;
+    left:20%;
+}
+
+.petal2{
+    top:65%;
+    right:20%;
+}
+
+.petal3{
+    bottom:15%;
+    left:40%;
+}
+
+/* =========================================================
    NAVBAR
-===================================================== */
+========================================================= */
 
 .navbar{
     position:fixed;
     top:0;
     left:0;
+
     width:100%;
     height:72px;
 
@@ -136,111 +213,115 @@ body::after{
 
     padding:0 5%;
 
-    background:rgba(7,5,6,.94);
+    background:rgba(7,4,5,.93);
+
     backdrop-filter:blur(14px);
 
-    border-bottom:1px solid rgba(201,160,93,.25);
+    border-bottom:1px solid var(--line);
 
     z-index:1000;
 }
 
 .logo{
-    font-family:"Cormorant Garamond",serif;
-    font-size:32px;
-    font-weight:500;
+    font-family:"DM Serif Display",serif;
+
+    font-size:30px;
+
     letter-spacing:1px;
-    white-space:nowrap;
+
+    color:var(--cream);
 }
 
 .logo span{
     color:var(--gold);
-    font-style:italic;
-    font-weight:400;
+    font-family:"Great Vibes",cursive;
+    font-size:35px;
+    margin-left:3px;
 }
 
 .logo::before{
     content:"✦";
     color:var(--gold);
-    font-size:13px;
-    margin-right:14px;
+    font-size:11px;
+    margin-right:12px;
 }
 
 .nav-links{
     display:flex;
-    align-items:center;
-    gap:25px;
+    gap:24px;
 }
 
 .nav-button{
-    position:relative;
-    border:none;
     background:none;
-    color:#ddd0c2;
-    cursor:pointer;
-    font-family:"Cormorant Garamond",serif;
-    font-size:15px;
-    transition:.3s;
-}
+    border:0;
 
-.nav-button::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:-10px;
-    width:0;
-    height:1px;
-    background:var(--gold);
+    color:#cdbdae;
+
+    cursor:pointer;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:16px;
+
     transition:.3s;
-    transform:translateX(-50%);
 }
 
 .nav-button:hover{
     color:var(--gold2);
 }
 
-.nav-button:hover::after{
-    width:70%;
-}
-
 .moon{
     border:0;
     background:none;
+
     color:var(--gold);
+
     font-size:20px;
+
     cursor:pointer;
 }
 
-/* =====================================================
-   PAGE SECTIONS
-===================================================== */
+/* =========================================================
+   PAGE SYSTEM
+========================================================= */
 
 .page-section{
     display:none;
+
     min-height:100vh;
-    padding:105px 6% 80px;
+
+    padding:
+        115px
+        6%
+        80px;
+
     position:relative;
-    z-index:1;
+
+    z-index:2;
 }
 
 .page-section.active-section{
     display:block;
+
     animation:pageIn .55s ease;
 }
 
 @keyframes pageIn{
+
     from{
         opacity:0;
-        transform:translateY(18px);
+        transform:translateY(20px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
-/* =====================================================
+/* =========================================================
    HOME
-===================================================== */
+========================================================= */
 
 .home-wrap{
     max-width:1200px;
@@ -248,400 +329,774 @@ body::after{
 }
 
 .hero{
-    min-height:70vh;
+    min-height:65vh;
 
     display:grid;
+
     grid-template-columns:1.1fr .9fr;
-    gap:60px;
+
     align-items:center;
+
+    gap:70px;
 }
 
-.hero-content{
-    position:relative;
-}
+/* =========================================================
+   HERO
+========================================================= */
 
 .eyebrow{
     color:var(--gold);
+
     font-size:10px;
+
     letter-spacing:3px;
+
     text-transform:uppercase;
 }
 
 .hero h1{
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(65px,9vw,115px);
-    line-height:.78;
-    font-weight:500;
-    margin:22px 0 30px;
-    letter-spacing:-4px;
+    margin:22px 0;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:
+        clamp(
+            60px,
+            9vw,
+            115px
+        );
+
+    line-height:.82;
+
+    font-weight:400;
+
+    letter-spacing:-3px;
 }
 
 .hero h1 em{
     color:var(--gold);
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:1.05em;
+
     font-weight:400;
 }
 
 .hero-text{
-    max-width:520px;
-    color:#b9aa9b;
-    line-height:1.8;
+    max-width:540px;
+
+    color:#b9a99a;
+
+    line-height:1.9;
+
     font-size:13px;
 }
 
 .hero-actions{
     display:flex;
-    gap:14px;
+
+    gap:12px;
+
     margin-top:30px;
+
     flex-wrap:wrap;
 }
 
+/* =========================================================
+   BUTTONS
+========================================================= */
+
 .primary-btn,
 .secondary-btn{
-    padding:13px 25px;
+    padding:13px 24px;
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
-    font-size:11px;
-    letter-spacing:.5px;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
     transition:.3s;
 }
 
 .primary-btn{
     background:var(--wine);
+
     color:var(--cream);
-    border:1px solid #a54a5c;
+
+    border:1px solid #a34a5e;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.3);
 }
 
 .secondary-btn{
     background:transparent;
+
     color:var(--cream);
+
     border:1px solid var(--line);
 }
 
 .primary-btn:hover,
 .secondary-btn:hover{
-    transform:translateY(-3px);
+    transform:translateY(-4px);
+
     border-color:var(--gold);
-    box-shadow:0 10px 25px rgba(0,0,0,.4);
-}
-
-/* =====================================================
-   REMINDER PAPER
-===================================================== */
-
-.reminder{
-    position:relative;
-    max-width:360px;
-    margin:auto;
-}
-
-.paper{
-    position:relative;
-    padding:55px 35px;
-    min-height:330px;
-
-    background:
-        linear-gradient(135deg,#21191a,#171011);
-
-    border:1px solid rgba(232,215,194,.35);
 
     box-shadow:
-        12px 16px 0 rgba(201,160,93,.08),
-        0 20px 45px rgba(0,0,0,.5);
-
-    text-align:center;
+        0 12px 25px rgba(0,0,0,.45);
 }
 
-.paper::before{
-    content:"";
-    position:absolute;
-    top:-18px;
-    left:-12px;
-    width:75px;
-    height:25px;
-    background:rgba(232,215,194,.55);
-    transform:rotate(-5deg);
-}
+/* =========================================================
+   VINTAGE LETTER
+========================================================= */
 
-.paper::after{
-    content:"";
-    position:absolute;
-    top:-18px;
-    right:-12px;
-    width:75px;
-    height:25px;
-    background:rgba(232,215,194,.45);
-    transform:rotate(5deg);
-}
-
-.paper-label{
-    color:#988b7f;
-    font-size:9px;
-    letter-spacing:2px;
-}
-
-.paper h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:32px;
-    font-weight:400;
-    margin:30px 0;
-    line-height:1.25;
-}
-
-.paper-heart{
-    color:var(--gold);
-    font-size:30px;
-}
-
-/* =====================================================
-   HOME CATEGORY STRIP
-===================================================== */
-
-.category-strip{
-    max-width:1100px;
-    margin:0 auto 50px;
-
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.025);
-}
-
-.category{
-    padding:27px 15px;
-    text-align:center;
-    border-right:1px solid var(--line);
-    cursor:pointer;
-    transition:.3s;
-}
-
-.category:last-child{
-    border-right:none;
-}
-
-.category:hover{
-    background:rgba(100,27,44,.28);
-    transform:translateY(-4px);
-}
-
-.category-icon{
-    display:block;
-    color:var(--gold);
-    font-size:25px;
-    margin-bottom:12px;
-}
-
-.category strong{
-    display:block;
-    font-family:"Cormorant Garamond",serif;
-    font-size:18px;
-    font-weight:500;
-}
-
-.category small{
-    display:block;
-    color:#998d83;
-    font-size:9px;
-    line-height:1.6;
-    margin-top:5px;
-}
-
-/* =====================================================
-   COMMUNITY PREVIEW
-===================================================== */
-
-.community-preview{
-    max-width:1100px;
-    margin:auto;
-}
-
-.community-heading{
-    display:flex;
-    align-items:end;
-    justify-content:space-between;
-    margin-bottom:25px;
-}
-
-.community-heading h2{
-    font-family:"Cormorant Garamond",serif;
-    font-size:42px;
-    font-weight:500;
-}
-
-.community-heading p{
-    color:#95887c;
-    font-size:11px;
-}
-
-.view-button{
-    background:none;
-    border:0;
-    color:var(--gold);
-    cursor:pointer;
-    font-family:"Poppins",sans-serif;
-    font-size:10px;
-}
-
-.preview-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.preview-card{
-    min-height:200px;
-    padding:22px;
-    background:
-        linear-gradient(145deg,#241517,#120b0d);
-    border:1px solid rgba(201,160,93,.23);
+.letter{
     position:relative;
-    transition:.3s;
-}
 
-.preview-card:hover{
-    transform:translateY(-6px) rotate(.3deg);
-    border-color:var(--gold);
-}
+    max-width:390px;
 
-.preview-card::after{
-    content:"";
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:30px;
-    background:var(--paper);
-    clip-path:polygon(
-        0 25%,5% 15%,10% 25%,15% 10%,
-        20% 24%,25% 12%,30% 25%,35% 8%,
-        40% 22%,45% 10%,50% 25%,55% 12%,
-        60% 24%,65% 8%,70% 22%,75% 10%,
-        80% 25%,85% 13%,90% 24%,95% 8%,100% 20%,
-        100% 100%,0 100%
-    );
-}
+    margin:auto;
 
-.preview-type{
-    color:var(--gold);
-    font-size:9px;
-    letter-spacing:1px;
-}
+    padding:55px 40px;
 
-.preview-card p{
-    font-family:"Cormorant Garamond",serif;
-    font-size:20px;
-    line-height:1.25;
-    margin-top:18px;
-}
-
-/* =====================================================
-   TORN QUOTE
-===================================================== */
-
-.quote-strip{
-    max-width:1200px;
-    margin:55px auto 0;
-    padding:30px;
-    text-align:center;
+    color:var(--ink);
 
     background:
         linear-gradient(
-            90deg,
-            var(--wine3),
-            var(--wine),
-            var(--wine3)
+            135deg,
+            #f2dfc4,
+            #dfc4a1
         );
 
-    border-top:1px solid rgba(201,160,93,.25);
-    border-bottom:1px solid rgba(201,160,93,.25);
+    border:1px solid
+        rgba(80,45,30,.3);
 
+    box-shadow:
+        12px 14px 0
+            rgba(201,160,93,.10),
+        0 25px 45px
+            rgba(0,0,0,.55);
+
+    transform:rotate(1.5deg);
+}
+
+.letter::before{
+    content:"";
+
+    position:absolute;
+
+    top:-15px;
+    left:30px;
+
+    width:85px;
+    height:25px;
+
+    background:
+        rgba(242,225,198,.65);
+
+    transform:rotate(-5deg);
+}
+
+.letter::after{
+    content:"";
+
+    position:absolute;
+
+    bottom:-14px;
+    right:25px;
+
+    width:80px;
+    height:22px;
+
+    background:
+        rgba(242,225,198,.5);
+
+    transform:rotate(4deg);
+}
+
+.letter-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#725a48;
+
+    font-family:"Libre Baskerville",serif;
+
+    font-size:8px;
+
+    letter-spacing:1px;
+}
+
+.letter h2{
+    margin:35px 0 20px;
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:43px;
+
+    font-weight:400;
+
+    color:#4a2028;
+}
+
+.letter p{
     font-family:"Cormorant Garamond",serif;
-    font-size:28px;
-    color:#e5c995;
+
+    font-size:20px;
+
+    line-height:1.45;
+
+    color:#3d2928;
 }
 
-/* =====================================================
-   SECTION HEADINGS
-===================================================== */
+.signature{
+    margin-top:30px;
 
-.section-heading{
-    max-width:1000px;
-    margin:20px auto 40px;
+    text-align:right;
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:27px;
+
+    color:#6b2635;
 }
 
-.section-heading h2{
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(55px,8vw,90px);
-    line-height:.85;
-    font-weight:500;
-    margin:15px 0;
+.wax{
+    position:absolute;
+
+    width:55px;
+    height:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #a33b50,
+            #541322
+        );
+
+    color:#e9c982;
+
+    font-size:20px;
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,.35);
+
+    bottom:-25px;
+    left:50%;
+
+    transform:translateX(-50%);
 }
 
-.section-heading p:last-child{
-    color:#a89a8d;
+/* =========================================================
+   MAIN INTERFACE
+========================================================= */
+
+.interface-title{
+    text-align:center;
+
+    margin:20px auto 45px;
+
+    max-width:850px;
+}
+
+.interface-title h2{
+    margin:12px 0;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:
+        clamp(
+            50px,
+            8vw,
+            90px
+        );
+
+    font-weight:400;
+}
+
+.interface-title h2 span{
+    color:var(--gold);
+
+    font-family:"Great Vibes",cursive;
+}
+
+.interface-title p{
+    color:#a99a8b;
+
     font-size:12px;
+
+    line-height:1.8;
 }
 
-/* =====================================================
-   FORMS
-===================================================== */
+/* =========================================================
+   VINTAGE MENU
+========================================================= */
+
+.vintage-menu{
+    max-width:1050px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:15px;
+}
+
+.menu-card{
+    position:relative;
+
+    min-height:190px;
+
+    padding:30px 18px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            145deg,
+            #211315,
+            #10090b
+        );
+
+    border:1px solid var(--line);
+
+    transition:.35s;
+
+    overflow:hidden;
+}
+
+.menu-card::before{
+    content:"";
+
+    position:absolute;
+
+    inset:8px;
+
+    border:1px dashed
+        rgba(201,160,93,.14);
+
+    pointer-events:none;
+}
+
+.menu-card:hover{
+    transform:
+        translateY(-8px)
+        rotate(-1deg);
+
+    border-color:var(--gold);
+
+    background:
+        linear-gradient(
+            145deg,
+            #341620,
+            #14090d
+        );
+}
+
+.menu-icon{
+    display:block;
+
+    color:var(--gold);
+
+    font-size:32px;
+
+    margin-bottom:20px;
+}
+
+.menu-card h3{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:23px;
+
+    font-weight:500;
+}
+
+.menu-card p{
+    margin-top:8px;
+
+    color:#928377;
+
+    font-size:9px;
+
+    line-height:1.6;
+}
+
+/* =========================================================
+   SUB INTERFACE
+========================================================= */
+
+.sub-interface{
+    display:none;
+
+    max-width:1050px;
+
+    margin:0 auto;
+}
+
+.sub-interface.active{
+    display:block;
+
+    animation:pageIn .4s ease;
+}
+
+.back-button{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:25px;
+
+    padding:10px 18px;
+
+    background:transparent;
+
+    color:var(--gold);
+
+    border:1px solid var(--line);
+
+    cursor:pointer;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.back-button:hover{
+    background:var(--wine);
+
+    border-color:var(--gold);
+}
+
+/* =========================================================
+   OPTION CARDS
+========================================================= */
+
+.option-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.option-card{
+    min-height:190px;
+
+    padding:30px;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f0dec3,
+            #d8bb98
+        );
+
+    color:var(--ink);
+
+    border:
+        1px solid
+        rgba(201,160,93,.45);
+
+    box-shadow:
+        8px 9px 0
+            rgba(201,160,93,.08);
+
+    transition:.3s;
+
+    transform:rotate(-.5deg);
+}
+
+.option-card:nth-child(2){
+    transform:rotate(.6deg);
+}
+
+.option-card:nth-child(3){
+    transform:rotate(-.8deg);
+}
+
+.option-card:hover{
+    transform:
+        translateY(-7px)
+        rotate(0);
+}
+
+.option-card span{
+    color:#762638;
+
+    font-size:25px;
+}
+
+.option-card h3{
+    margin:16px 0 8px;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:27px;
+
+    font-weight:400;
+}
+
+.option-card p{
+    color:#654f43;
+
+    font-size:10px;
+
+    line-height:1.7;
+}
+
+/* =========================================================
+   COMMUNITY
+========================================================= */
+
+.feed-title{
+    max-width:1100px;
+
+    margin:55px auto 20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.feed-title h3{
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:36px;
+
+    font-weight:500;
+}
+
+.feed-title span{
+    color:var(--gold);
+
+    font-size:8px;
+
+    letter-spacing:2px;
+}
+
+.post-grid{
+    max-width:1100px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px,1fr)
+        );
+
+    gap:18px;
+}
+
+.post-card{
+    position:relative;
+
+    min-height:200px;
+
+    padding:25px 23px 48px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #241518,
+            #110a0c
+        );
+
+    border:1px solid var(--line);
+
+    transition:.3s;
+}
+
+.post-card:hover{
+    transform:
+        translateY(-5px)
+        rotate(.3deg);
+
+    border-color:var(--gold);
+}
+
+.post-type{
+    color:var(--gold);
+
+    font-size:9px;
+
+    letter-spacing:1px;
+}
+
+.post-message{
+    margin-top:18px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:23px;
+
+    line-height:1.25;
+}
+
+.post-date{
+    margin-top:20px;
+
+    color:#756961;
+
+    font-size:8px;
+}
+
+.post-actions{
+    position:absolute;
+
+    left:22px;
+    right:22px;
+
+    bottom:8px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    z-index:2;
+}
+
+.like-button,
+.report-button{
+    background:none;
+
+    border:0;
+
+    color:#76545b;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+.like-button:hover{
+    color:#d0778b;
+}
+
+.report-button:hover{
+    color:var(--gold);
+}
+
+/* =========================================================
+   FORM — OLD LETTER
+========================================================= */
 
 .form-card{
     max-width:850px;
+
     margin:auto;
-    padding:30px;
+
+    padding:32px;
+
     background:
-        linear-gradient(145deg,#201416,#100a0c);
-    border:1px solid var(--line);
-    position:relative;
-    box-shadow:10px 12px 0 rgba(201,160,93,.05);
+        linear-gradient(
+            135deg,
+            #e8d3b6,
+            #d1b18e
+        );
+
+    color:var(--ink);
+
+    border:1px solid
+        rgba(201,160,93,.4);
+
+    box-shadow:
+        10px 12px 0
+            rgba(201,160,93,.08);
 }
 
-.form-card::before{
-    content:"PLOTTWISTED";
-    position:absolute;
-    top:-8px;
-    left:25px;
-    background:var(--black);
-    padding:0 10px;
-    color:var(--gold);
-    font-size:8px;
-    letter-spacing:3px;
+.form-label{
+    display:block;
+
+    margin-bottom:15px;
+
+    color:#6a4b40;
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:28px;
 }
 
 textarea{
     width:100%;
-    min-height:160px;
-    padding:18px;
+
+    min-height:170px;
 
     resize:vertical;
 
-    background:#0b0809;
-    border:1px solid rgba(201,160,93,.25);
-    color:var(--cream);
+    padding:20px;
 
     outline:none;
 
-    font-family:"Poppins",sans-serif;
-    font-size:13px;
+    background:
+        repeating-linear-gradient(
+            #f0dfc5,
+            #f0dfc5 30px,
+            #d7bd9d 31px
+        );
+
+    color:#302020;
+
+    border:
+        1px solid
+        rgba(91,56,44,.35);
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:19px;
+
+    line-height:1.6;
 }
 
 textarea:focus{
-    border-color:var(--gold);
+    border-color:#8b3045;
 }
 
 .post-button{
-    margin-top:15px;
-    padding:14px 24px;
+    margin-top:16px;
+
+    padding:13px 23px;
 
     background:var(--wine);
-    border:1px solid #9f4657;
+
+    border:1px solid #a34a5d;
+
     color:var(--cream);
 
     cursor:pointer;
 
     font-family:"Poppins",sans-serif;
+
     font-size:10px;
+
     letter-spacing:1px;
 
     transition:.3s;
@@ -649,174 +1104,117 @@ textarea:focus{
 
 .post-button:hover{
     background:var(--wine2);
+
     border-color:var(--gold);
+
     transform:translateY(-3px);
 }
 
-/* =====================================================
-   FEED
-===================================================== */
+/* =========================================================
+   SECTION HEADING
+========================================================= */
 
-.feed-title{
-    max-width:1100px;
-    margin:55px auto 20px;
+.section-heading{
+    max-width:1000px;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    margin:20px auto 40px;
 }
 
-.feed-title h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:35px;
-    font-weight:500;
+.section-heading h2{
+    margin:15px 0;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            90px
+        );
+
+    font-weight:400;
+
+    line-height:.9;
 }
 
-.feed-title span{
+.section-heading h2 em{
     color:var(--gold);
-    font-size:8px;
-    letter-spacing:2px;
+
+    font-family:"Great Vibes",cursive;
 }
 
-.post-grid{
-    max-width:1100px;
-    margin:auto;
+.section-heading p:last-child{
+    color:#a89a8d;
 
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(250px,1fr));
-
-    gap:18px;
+    font-size:12px;
 }
 
-.post-card{
-    position:relative;
-    padding:25px 23px 45px;
-
-    min-height:200px;
-
-    background:
-        linear-gradient(145deg,#241517,#120b0d);
-
-    border:1px solid rgba(201,160,93,.25);
-
-    transition:.3s;
-}
-
-.post-card:hover{
-    transform:translateY(-5px) rotate(.2deg);
-    border-color:var(--gold);
-}
-
-.post-card::after{
-    content:"";
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:30px;
-    background:var(--paper);
-
-    clip-path:polygon(
-        0 30%,5% 12%,10% 25%,15% 8%,
-        20% 24%,25% 12%,30% 28%,35% 10%,
-        40% 23%,45% 8%,50% 25%,55% 12%,
-        60% 28%,65% 10%,70% 23%,75% 9%,
-        80% 26%,85% 11%,90% 24%,95% 8%,100% 22%,
-        100% 100%,0 100%
-    );
-}
-
-.post-type{
-    color:var(--gold);
-    font-size:9px;
-    letter-spacing:1px;
-}
-
-.post-message{
-    margin-top:18px;
-    font-family:"Cormorant Garamond",serif;
-    font-size:23px;
-    line-height:1.2;
-}
-
-.post-date{
-    margin-top:20px;
-    color:#776c64;
-    font-size:8px;
-}
-
-.post-actions{
-    position:absolute;
-    left:22px;
-    right:22px;
-    bottom:7px;
-    z-index:2;
-
-    display:flex;
-    justify-content:space-between;
-}
-
-.like-button,
-.report-button{
-    background:none;
-    border:0;
-    color:#624e4b;
-    cursor:pointer;
-    font-size:10px;
-}
-
-.like-button:hover{
-    color:#c97989;
-}
-
-.report-button:hover{
-    color:var(--gold);
-}
-
-/* =====================================================
-   SIGN / DELUSION
-===================================================== */
+/* =========================================================
+   SIGN OR DELUSION
+========================================================= */
 
 .vote-box{
     max-width:850px;
+
     margin:auto;
+
     padding:35px;
 
     background:
-        linear-gradient(145deg,#211416,#100a0c);
+        linear-gradient(
+            145deg,
+            #211416,
+            #10090b
+        );
 
     border:1px solid var(--line);
 }
 
 .vote-box h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:35px;
-    font-weight:500;
-    line-height:1.2;
     margin:20px 0 30px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:35px;
+
+    font-weight:500;
+
+    line-height:1.2;
 }
 
 .vote-buttons{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:12px;
 }
 
 .vote-buttons button{
     min-height:100px;
-    background:rgba(255,255,255,.025);
+
+    background:
+        rgba(255,255,255,.025);
+
     color:var(--cream);
+
     border:1px solid var(--line);
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
+
     font-size:10px;
+
     transition:.3s;
 }
 
 .vote-buttons button:hover{
     background:var(--wine);
+
     border-color:var(--gold);
+
     transform:translateY(-5px);
 }
 
@@ -826,223 +1224,310 @@ textarea:focus{
 
 .result{
     display:grid;
-    grid-template-columns:70px 1fr 45px;
+
+    grid-template-columns:
+        70px 1fr 45px;
+
     align-items:center;
+
     gap:12px;
+
     margin:14px 0;
+
     color:#9e9186;
+
     font-size:9px;
 }
 
 .bar{
     height:5px;
+
     background:#2b2020;
 }
 
 .bar div{
     height:100%;
-    background:linear-gradient(
-        90deg,
-        var(--wine),
-        var(--gold)
-    );
-    transition:width .5s ease;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--wine),
+            var(--gold)
+        );
 }
 
-/* =====================================================
+/* =========================================================
    ROULETTE
-===================================================== */
+========================================================= */
 
 .center-box{
     max-width:850px;
+
     margin:auto;
+
     padding:60px 30px;
+
     text-align:center;
 
     background:
         radial-gradient(
             circle,
-            rgba(100,27,44,.25),
+            rgba(100,27,44,.30),
             transparent 65%
         ),
-        #120b0d;
+        #120a0d;
 
     border:1px solid var(--line);
 }
 
 #rouletteIcon{
     font-size:65px;
+
     color:var(--gold);
+
     margin-bottom:25px;
-    transition:.5s;
 }
 
 .hugot-display{
     max-width:700px;
+
     margin:auto;
 
     font-family:"Cormorant Garamond",serif;
-    font-size:clamp(30px,5vw,50px);
+
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            50px
+        );
+
     font-style:italic;
+
     line-height:1.15;
-
-    transition:.4s;
 }
 
-/* =====================================================
+/* =========================================================
    RECOMMENDATIONS
-===================================================== */
-
-.recommendations{
-    max-width:1000px;
-    margin:auto;
-}
+========================================================= */
 
 .recommendation-grid{
+    max-width:1000px;
+
+    margin:auto;
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:18px;
 }
 
 .recommendation-card{
     padding:30px;
+
     min-height:190px;
 
-    background:#171011;
-    border:1px solid var(--line);
+    background:
+        linear-gradient(
+            135deg,
+            #ead7bb,
+            #cdb08e
+        );
+
+    color:var(--ink);
+
+    border:1px solid
+        rgba(201,160,93,.35);
 
     transition:.3s;
 }
 
 .recommendation-card:hover{
-    transform:translateY(-5px);
-    border-color:var(--gold);
+    transform:
+        translateY(-6px)
+        rotate(-.5deg);
 }
 
 .recommendation-card span{
-    color:var(--gold);
-    font-size:20px;
+    color:#762638;
+
+    font-size:22px;
 }
 
 .recommendation-card h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:25px;
     margin:15px 0 8px;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:25px;
+
+    font-weight:400;
 }
 
 .recommendation-card p{
-    color:#988b80;
+    color:#624e43;
+
     font-size:11px;
+
     line-height:1.7;
 }
 
-/* =====================================================
+/* =========================================================
    FAQ
-===================================================== */
+========================================================= */
 
 .faq-container{
     max-width:850px;
+
     margin:auto;
 }
 
 .faq-item{
     margin-bottom:12px;
+
     border:1px solid var(--line);
+
     background:#130c0e;
 }
 
 .faq-item summary{
     padding:20px;
+
     cursor:pointer;
+
     list-style:none;
 
     font-family:"Cormorant Garamond",serif;
+
     font-size:21px;
 }
 
 .faq-item summary::after{
     content:"+";
+
     float:right;
+
     color:var(--gold);
 }
 
-.faq-item[open] summary::after{
+.faq-item[open]
+summary::after{
     content:"−";
 }
 
 .faq-answer{
-    padding:0 20px 20px;
+    padding:
+        0 20px 20px;
+
     color:#a49689;
+
     font-size:11px;
+
     line-height:1.8;
 }
 
-/* =====================================================
+/* =========================================================
    ABOUT
-===================================================== */
+========================================================= */
 
 .about{
     max-width:850px;
+
     margin:auto;
+
     min-height:65vh;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
     text-align:center;
 }
 
 .about h2{
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(60px,9vw,100px);
-    line-height:.8;
-    font-weight:500;
     margin:20px 0 35px;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:
+        clamp(
+            60px,
+            9vw,
+            100px
+        );
+
+    line-height:.8;
+
+    font-weight:400;
+}
+
+.about h2 em{
+    color:var(--gold);
+
+    font-family:"Great Vibes",cursive;
 }
 
 .about p{
     max-width:650px;
+
     color:#a99b8e;
+
     font-size:13px;
+
     line-height:1.9;
 }
 
-/* =====================================================
+/* =========================================================
    CONTACT
-===================================================== */
+========================================================= */
 
 .contact-box{
     max-width:750px;
+
     margin:auto;
+
     padding:45px 30px;
+
     text-align:center;
 
     border:1px solid var(--line);
+
     background:#140d0f;
 }
 
 .contact-box h2{
-    font-family:"Cormorant Garamond",serif;
-    font-size:50px;
-    font-weight:500;
     margin:15px 0;
+
+    font-family:"DM Serif Display",serif;
+
+    font-size:50px;
+
+    font-weight:400;
 }
 
 .contact-box p{
     color:#9e9187;
+
     font-size:12px;
+
     line-height:1.8;
 }
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer{
     margin-top:70px;
-    padding:45px 7% 30px;
+
+    padding:
+        45px 7% 30px;
 
     border-top:1px solid var(--line);
 
@@ -1051,43 +1536,62 @@ footer{
 
 .footer-grid{
     max-width:1100px;
+
     margin:auto;
 
     display:grid;
-    grid-template-columns:1.3fr 1fr 1fr;
+
+    grid-template-columns:
+        1.3fr 1fr 1fr;
+
     gap:40px;
 }
 
 .footer-title{
-    font-family:"Cormorant Garamond",serif;
+    font-family:"DM Serif Display",serif;
+
     font-size:27px;
 }
 
 .footer-title span{
     color:var(--gold);
-    font-style:italic;
+
+    font-family:"Great Vibes",cursive;
+
+    font-size:30px;
 }
 
 footer p{
     color:#82766d;
+
     font-size:10px;
+
     line-height:1.8;
+
     margin-top:12px;
 }
 
 .footer-links{
     display:flex;
+
     flex-direction:column;
+
     gap:10px;
 }
 
 .footer-links button{
     background:none;
+
     border:0;
+
     text-align:left;
+
     color:#95877d;
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
+
     font-size:10px;
 }
 
@@ -1097,17 +1601,25 @@ footer p{
 
 .copyright{
     max-width:1100px;
+
     margin:35px auto 0;
+
     padding-top:20px;
-    border-top:1px solid rgba(201,160,93,.12);
+
+    border-top:
+        1px solid
+        rgba(201,160,93,.12);
+
     text-align:center;
+
     color:#5d534e;
+
     font-size:8px;
 }
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media(max-width:900px){
 
@@ -1117,24 +1629,16 @@ footer p{
 
     .hero{
         grid-template-columns:1fr;
-        gap:40px;
-        padding-top:20px;
+        gap:45px;
     }
 
-    .hero h1{
-        font-size:75px;
+    .vintage-menu{
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .category-strip{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .category{
-        border-bottom:1px solid var(--line);
-    }
-
-    .preview-grid{
-        grid-template-columns:1fr 1fr;
+    .option-grid{
+        grid-template-columns:1fr;
     }
 
     .recommendation-grid{
@@ -1150,31 +1654,28 @@ footer p{
     }
 
     .logo{
-        font-size:25px;
+        font-size:24px;
+    }
+
+    .logo span{
+        font-size:29px;
     }
 
     .page-section{
-        padding:90px 5% 60px;
+        padding:
+            90px 5% 60px;
     }
 
     .hero h1{
         font-size:65px;
     }
 
-    .hero-text{
-        font-size:12px;
-    }
-
-    .category-strip{
+    .vintage-menu{
         grid-template-columns:1fr;
     }
 
-    .category{
-        border-right:none;
-    }
-
-    .preview-grid{
-        grid-template-columns:1fr;
+    .letter{
+        padding:45px 28px;
     }
 
     .vote-buttons{
@@ -1191,13 +1692,14 @@ footer p{
         grid-template-columns:1fr;
     }
 
-    .community-heading{
-        display:block;
-    }
+}
 
-    .community-heading p{
-        margin-top:8px;
-    }
+/* =========================================================
+   HIDE SUB INTERFACES
+========================================================= */
+
+#homeMenu{
+    display:block;
 }
 
 </style>
@@ -1205,11 +1707,18 @@ footer p{
 
 <body>
 
-<!-- FLOATING SCRAPBOOK DETAILS -->
+<!-- =====================================================
+     VINTAGE DECOR
+===================================================== -->
 
-<div class="floating float1">✦</div>
-<div class="floating float2">♡</div>
-<div class="floating float3">✧</div>
+<div class="rose rose1">🌹</div>
+<div class="rose rose2">🌹</div>
+<div class="rose rose3">🥀</div>
+<div class="rose rose4">🌹</div>
+
+<div class="petal petal1">✿</div>
+<div class="petal petal2">✧</div>
+<div class="petal petal3">♡</div>
 
 
 <!-- =====================================================
@@ -1224,31 +1733,45 @@ footer p{
 
     <div class="nav-links">
 
-        <button class="nav-button" data-slide="home">
+        <button
+            class="nav-button"
+            data-slide="home">
             HOME
         </button>
 
-        <button class="nav-button" data-slide="community">
+        <button
+            class="nav-button"
+            data-slide="community">
             COMMUNITY
         </button>
 
-        <button class="nav-button" data-slide="roulette">
+        <button
+            class="nav-button"
+            data-slide="roulette">
             ROULETTE
         </button>
 
-        <button class="nav-button" data-slide="recommendations">
+        <button
+            class="nav-button"
+            data-slide="recommendations">
             RECOMMENDATIONS
         </button>
 
-        <button class="nav-button" data-slide="about">
+        <button
+            class="nav-button"
+            data-slide="about">
             ABOUT
         </button>
 
-        <button class="nav-button" data-slide="faq">
+        <button
+            class="nav-button"
+            data-slide="faq">
             FAQ
         </button>
 
-        <button class="nav-button" data-slide="contact">
+        <button
+            class="nav-button"
+            data-slide="contact">
             CONTACT
         </button>
 
@@ -1256,11 +1779,8 @@ footer p{
 
     <button
         class="moon"
-        type="button"
-        onclick="document.body.classList.toggle('moon-mode')">
-
+        type="button">
         ☾
-
     </button>
 
 </nav>
@@ -1281,7 +1801,7 @@ footer p{
             <div class="hero-content">
 
                 <p class="eyebrow">
-                    ✦ ANONYMOUS. HONEST. REAL. ✦
+                    ✦ ANONYMOUS • HONEST • REAL ✦
                 </p>
 
                 <h1>
@@ -1291,9 +1811,14 @@ footer p{
 
                 <p class="hero-text">
 
-                    Share the words you can't say out loud.
-                    Read the stories you didn't see coming.
-                    Welcome to <i>PlotTwisted.</i>
+                    Welcome to a little corner of secrets,
+                    feelings, letters, confessions and
+                    unexpected plot twists.
+
+                    <br><br>
+
+                    Write what you cannot say.
+                    Read what someone else couldn't say.
 
                 </p>
 
@@ -1301,17 +1826,17 @@ footer p{
 
                     <button
                         class="primary-btn"
-                        data-slide="confessions">
+                        onclick="openInterface('storyMenu')">
 
-                        SHARE YOURS &nbsp; ✎
+                        ✎ OPEN THE LETTER
 
                     </button>
 
                     <button
                         class="secondary-btn"
-                        data-slide="community">
+                        onclick="showPage('community')">
 
-                        EXPLORE STORIES &nbsp; ✦
+                        ✦ READ STORIES
 
                     </button>
 
@@ -1320,24 +1845,177 @@ footer p{
             </div>
 
 
-            <div class="reminder">
+            <!-- VINTAGE LETTER -->
 
-                <div class="paper">
+            <div class="letter">
 
-                    <p class="paper-label">
-                        TODAY'S REMINDER
-                    </p>
+                <div class="letter-top">
+
+                    <span>
+                        PLOTTWISTED ARCHIVES
+                    </span>
+
+                    <span>
+                        2026
+                    </span>
+
+                </div>
+
+                <h2>
+                    Dear Stranger,
+                </h2>
+
+                <p>
+                    Maybe you came here because
+                    there are words you don't know
+                    where to put.
+                </p>
+
+                <br>
+
+                <p>
+                    So leave them here.
+                    Let them become part of
+                    someone else's story.
+                </p>
+
+                <div class="signature">
+                    — PlotTwisted
+                </div>
+
+                <div class="wax">
+                    ✦
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAIN INTERFACE
+        ================================================= -->
+
+        <div
+            id="storyMenu"
+            class="sub-interface active">
+
+            <div class="interface-title">
+
+                <p class="eyebrow">
+                    ✦ OPEN THE ARCHIVES ✦
+                </p>
+
+                <h2>
+                    Choose your <span>chapter.</span>
+                </h2>
+
+                <p>
+                    Every button opens another little
+                    corner of the PlotTwisted archive.
+                </p>
+
+            </div>
+
+
+            <div class="vintage-menu">
+
+                <div
+                    class="menu-card"
+                    onclick="openInterface('feelingsMenu')">
+
+                    <span class="menu-icon">
+                        ♡
+                    </span>
 
                     <h3>
-                        Your feelings<br>
-                        are valid.<br>
-                        Your story<br>
-                        matters.
+                        Feelings
                     </h3>
 
-                    <div class="paper-heart">
-                        ♡
-                    </div>
+                    <p>
+                        Confessions, hugots,
+                        and words from the heart.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="menu-card"
+                    onclick="openInterface('lettersMenu')">
+
+                    <span class="menu-icon">
+                        ✉
+                    </span>
+
+                    <h3>
+                        Letters
+                    </h3>
+
+                    <p>
+                        Messages that were
+                        never sent.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="menu-card"
+                    onclick="openInterface('mysteryMenu')">
+
+                    <span class="menu-icon">
+                        ?
+                    </span>
+
+                    <h3>
+                        Mysteries
+                    </h3>
+
+                    <p>
+                        Signs, delusions,
+                        and uncertain stories.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="menu-card"
+                    onclick="openInterface('twistMenu')">
+
+                    <span class="menu-icon">
+                        ✦
+                    </span>
+
+                    <h3>
+                        Plot Twists
+                    </h3>
+
+                    <p>
+                        Spin the roulette
+                        and see what happens.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="menu-card"
+                    onclick="showPage('recommendations')">
+
+                    <span class="menu-icon">
+                        ❧
+                    </span>
+
+                    <h3>
+                        Little Things
+                    </h3>
+
+                    <p>
+                        Recommendations,
+                        thoughts and reminders.
+                    </p>
 
                 </div>
 
@@ -1346,202 +2024,359 @@ footer p{
         </div>
 
 
-        <!-- CATEGORY BUTTONS -->
+        <!-- =================================================
+             FEELINGS MENU
+        ================================================= -->
 
-        <div class="category-strip">
+        <div
+            id="feelingsMenu"
+            class="sub-interface">
 
-            <div
-                class="category"
-                data-slide="confessions">
+            <button
+                class="back-button"
+                onclick="openInterface('storyMenu')">
 
-                <span class="category-icon">♡</span>
+                ← Back to Archives
 
-                <strong>
-                    CONFESSIONS
-                </strong>
+            </button>
 
-                <small>
-                    Share your<br>
-                    untold stories.
-                </small>
+            <div class="interface-title">
 
-            </div>
+                <p class="eyebrow">
+                    THE FEELINGS DEPARTMENT
+                </p>
 
-
-            <div
-                class="category"
-                data-slide="hugot">
-
-                <span class="category-icon">✦</span>
-
-                <strong>
-                    HUGOT CORNER
-                </strong>
-
-                <small>
-                    Drop your<br>
-                    feelings here.
-                </small>
+                <h2>
+                    What is on your <span>heart?</span>
+                </h2>
 
             </div>
 
+            <div class="option-grid">
 
-            <div
-                class="category"
-                data-slide="signs">
+                <div
+                    class="option-card"
+                    onclick="showPage('confessions')">
 
-                <span class="category-icon">?</span>
+                    <span>♡</span>
 
-                <strong>
-                    SIGN OR DELUSION?
-                </strong>
+                    <h3>
+                        Confessions
+                    </h3>
 
-                <small>
-                    Post your situation.<br>
-                    Let everyone decide.
-                </small>
-
-            </div>
-
-
-            <div
-                class="category"
-                data-slide="unsent">
-
-                <span class="category-icon">✉</span>
-
-                <strong>
-                    UNSENT MESSAGES
-                </strong>
-
-                <small>
-                    Words you never<br>
-                    sent.
-                </small>
-
-            </div>
-
-
-            <div
-                class="category"
-                data-slide="roulette">
-
-                <span class="category-icon">⚄</span>
-
-                <strong>
-                    PLOT TWIST ROULETTE
-                </strong>
-
-                <small>
-                    Let fate give you<br>
-                    a twist.
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <!-- COMMUNITY PREVIEW -->
-
-        <div class="community-preview">
-
-            <div class="community-heading">
-
-                <div>
-
-                    <p class="eyebrow">
-                        FROM THE COMMUNITY
+                    <p>
+                        Say the thing you've
+                        been keeping inside.
                     </p>
-
-                    <h2>
-                        Real people.<br>
-                        Real stories.
-                    </h2>
 
                 </div>
 
-                <button
-                    class="view-button"
-                    data-slide="community">
 
-                    VIEW ALL STORIES →
-                    
-                </button>
+                <div
+                    class="option-card"
+                    onclick="showPage('hugot')">
 
-            </div>
+                    <span>✦</span>
 
-
-            <div class="preview-grid">
-
-                <article class="preview-card">
-
-                    <div class="preview-type">
-                        ♥ CONFESSION
-                    </div>
+                    <h3>
+                        Hugot Corner
+                    </h3>
 
                     <p>
-                        I still think about you
-                        even though we haven't
-                        talked in months.
+                        One line.
+                        A thousand feelings.
                     </p>
 
-                </article>
+                </div>
 
 
-                <article class="preview-card">
+                <div
+                    class="option-card"
+                    onclick="showPage('community')">
 
-                    <div class="preview-type">
-                        ✦ HUGOT
-                    </div>
+                    <span>❧</span>
+
+                    <h3>
+                        Read Others
+                    </h3>
 
                     <p>
-                        Minsan, mas masakit
-                        yung "seen" kesa
-                        sa "not replied."
+                        Maybe someone's story
+                        sounds like yours.
                     </p>
 
-                </article>
-
-
-                <article class="preview-card">
-
-                    <div class="preview-type">
-                        ✉ UNSENT
-                    </div>
-
-                    <p>
-                        Sana sinabi ko
-                        na lang nung kaya
-                        ko pa.
-                    </p>
-
-                </article>
-
-
-                <article class="preview-card">
-
-                    <div class="preview-type">
-                        ? SIGN OR DELUSION
-                    </div>
-
-                    <p>
-                        He always finds
-                        a reason to talk
-                        to me...
-                    </p>
-
-                </article>
+                </div>
 
             </div>
 
         </div>
 
 
-        <div class="quote-strip">
+        <!-- =================================================
+             LETTERS MENU
+        ================================================= -->
 
-            ✦ We're all just chapters
-            in someone else's plot twist. ✦
+        <div
+            id="lettersMenu"
+            class="sub-interface">
+
+            <button
+                class="back-button"
+                onclick="openInterface('storyMenu')">
+
+                ← Back to Archives
+
+            </button>
+
+            <div class="interface-title">
+
+                <p class="eyebrow">
+                    NEVER SENT
+                </p>
+
+                <h2>
+                    Letters that stayed in the <span>drafts.</span>
+                </h2>
+
+            </div>
+
+            <div class="option-grid">
+
+                <div
+                    class="option-card"
+                    onclick="showPage('unsent')">
+
+                    <span>✉</span>
+
+                    <h3>
+                        Unsent Messages
+                    </h3>
+
+                    <p>
+                        Write the words you
+                        never got to send.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('community')">
+
+                    <span>♡</span>
+
+                    <h3>
+                        Read Letters
+                    </h3>
+
+                    <p>
+                        Open anonymous messages
+                        from the community.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('contact')">
+
+                    <span>✦</span>
+
+                    <h3>
+                        Need Help?
+                    </h3>
+
+                    <p>
+                        Report something
+                        or contact the admin.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MYSTERY MENU
+        ================================================= -->
+
+        <div
+            id="mysteryMenu"
+            class="sub-interface">
+
+            <button
+                class="back-button"
+                onclick="openInterface('storyMenu')">
+
+                ← Back to Archives
+
+            </button>
+
+            <div class="interface-title">
+
+                <p class="eyebrow">
+                    THE INVESTIGATION
+                </p>
+
+                <h2>
+                    Sign or <span>Delusion?</span>
+                </h2>
+
+                <p>
+                    Sometimes it's a sign.
+                    Sometimes you're just overthinking.
+                </p>
+
+            </div>
+
+            <div class="option-grid">
+
+                <div
+                    class="option-card"
+                    onclick="showPage('signs')">
+
+                    <span>?</span>
+
+                    <h3>
+                        Sign or Delusion
+                    </h3>
+
+                    <p>
+                        Present the case.
+                        Let everyone vote.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('community')">
+
+                    <span>✦</span>
+
+                    <h3>
+                        Community Verdicts
+                    </h3>
+
+                    <p>
+                        See what other people
+                        think about the stories.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('roulette')">
+
+                    <span>⚄</span>
+
+                    <h3>
+                        Random Twist
+                    </h3>
+
+                    <p>
+                        Stop thinking.
+                        Let fate decide.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PLOT TWIST MENU
+        ================================================= -->
+
+        <div
+            id="twistMenu"
+            class="sub-interface">
+
+            <button
+                class="back-button"
+                onclick="openInterface('storyMenu')">
+
+                ← Back to Archives
+
+            </button>
+
+            <div class="interface-title">
+
+                <p class="eyebrow">
+                    THE UNEXPECTED CHAPTER
+                </p>
+
+                <h2>
+                    Choose your <span>twist.</span>
+                </h2>
+
+            </div>
+
+            <div class="option-grid">
+
+                <div
+                    class="option-card"
+                    onclick="showPage('roulette')">
+
+                    <span>⚄</span>
+
+                    <h3>
+                        Plot Twist Roulette
+                    </h3>
+
+                    <p>
+                        Spin the wheel and
+                        receive a random scenario.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('hugot')">
+
+                    <span>✦</span>
+
+                    <h3>
+                        Random Hugot
+                    </h3>
+
+                    <p>
+                        Enter the feelings
+                        department.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="option-card"
+                    onclick="showPage('community')">
+
+                    <span>♡</span>
+
+                    <h3>
+                        Other Stories
+                    </h3>
+
+                    <p>
+                        You never know what
+                        story you'll find next.
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -1576,15 +2411,8 @@ footer p{
 
 
     <div class="feed-title">
-
-        <h3>
-            Confessions
-        </h3>
-
-        <span>
-            PUBLIC
-        </span>
-
+        <h3>Confessions</h3>
+        <span>PUBLIC</span>
     </div>
 
     <div
@@ -1598,7 +2426,8 @@ footer p{
             </div>
 
             <div class="post-message">
-                Your community confessions will appear here.
+                Your community confessions
+                will appear here.
             </div>
 
         </div>
@@ -1607,15 +2436,8 @@ footer p{
 
 
     <div class="feed-title">
-
-        <h3>
-            Hugots
-        </h3>
-
-        <span>
-            PUBLIC
-        </span>
-
+        <h3>Hugots</h3>
+        <span>PUBLIC</span>
     </div>
 
     <div
@@ -1629,7 +2451,8 @@ footer p{
             </div>
 
             <div class="post-message">
-                Your community hugots will appear here.
+                Your community hugots
+                will appear here.
             </div>
 
         </div>
@@ -1638,15 +2461,8 @@ footer p{
 
 
     <div class="feed-title">
-
-        <h3>
-            Unsent Messages
-        </h3>
-
-        <span>
-            PUBLIC
-        </span>
-
+        <h3>Unsent Messages</h3>
+        <span>PUBLIC</span>
     </div>
 
     <div
@@ -1660,7 +2476,8 @@ footer p{
             </div>
 
             <div class="post-message">
-                Anonymous unsent messages will appear here.
+                Anonymous unsent messages
+                will appear here.
             </div>
 
         </div>
@@ -1697,6 +2514,10 @@ footer p{
 
     <div class="form-card">
 
+        <label class="form-label">
+            Dear Stranger...
+        </label>
+
         <form id="confessionForm">
 
             <textarea
@@ -1709,7 +2530,7 @@ footer p{
                 class="post-button"
                 type="submit">
 
-                ♡ POST CONFESSION
+                ♡ SEAL THIS CONFESSION
 
             </button>
 
@@ -1719,17 +2540,9 @@ footer p{
 
 
     <div class="feed-title">
-
-        <h3>
-            Public Stories
-        </h3>
-
-        <span>
-            EVERYONE CAN SEE
-        </span>
-
+        <h3>Public Stories</h3>
+        <span>EVERYONE CAN SEE</span>
     </div>
-
 
     <div
         id="confessionList"
@@ -1766,6 +2579,10 @@ footer p{
 
     <div class="form-card">
 
+        <label class="form-label">
+            Dear Heart...
+        </label>
+
         <form id="hugotForm">
 
             <textarea
@@ -1778,7 +2595,7 @@ footer p{
                 class="post-button"
                 type="submit">
 
-                ✦ POST HUGOT
+                ✦ SEND THIS HUGOT
 
             </button>
 
@@ -1788,17 +2605,9 @@ footer p{
 
 
     <div class="feed-title">
-
-        <h3>
-            Community Hugots
-        </h3>
-
-        <span>
-            PUBLIC
-        </span>
-
+        <h3>Community Hugots</h3>
+        <span>PUBLIC</span>
     </div>
-
 
     <div
         id="hugotList"
@@ -1819,7 +2628,7 @@ footer p{
     <div class="section-heading">
 
         <p class="eyebrow">
-            THE INVESTIGATION
+            CASE FILE
         </p>
 
         <h2>
@@ -1854,26 +2663,18 @@ footer p{
         <div class="vote-buttons">
 
             <button type="button">
-
                 ✦<br><br>
                 DEFINITELY A SIGN
-
             </button>
 
-
             <button type="button">
-
                 ?<br><br>
                 MAYBE
-
             </button>
 
-
             <button type="button">
-
                 ♡<br><br>
                 YOU'RE DELULU
-
             </button>
 
         </div>
@@ -1883,9 +2684,7 @@ footer p{
 
             <div class="result">
 
-                <span>
-                    Sign
-                </span>
+                <span>Sign</span>
 
                 <div class="bar">
                     <div
@@ -1903,9 +2702,7 @@ footer p{
 
             <div class="result">
 
-                <span>
-                    Maybe
-                </span>
+                <span>Maybe</span>
 
                 <div class="bar">
                     <div
@@ -1923,9 +2720,7 @@ footer p{
 
             <div class="result">
 
-                <span>
-                    Delulu
-                </span>
+                <span>Delulu</span>
 
                 <div class="bar">
                     <div
@@ -1966,7 +2761,7 @@ footer p{
         </h2>
 
         <p>
-            Mostly friendship, crush, signs and unexpected plot twists.
+            Let fate give you a twist.
         </p>
 
     </div>
@@ -1978,7 +2773,6 @@ footer p{
             ✧
         </div>
 
-
         <p
             id="rouletteText"
             class="hugot-display">
@@ -1987,7 +2781,6 @@ footer p{
             their best friend.”
 
         </p>
-
 
         <button
             class="post-button"
@@ -2029,6 +2822,10 @@ footer p{
 
 
     <div class="form-card">
+
+        <label class="form-label">
+            Dear You...
+        </label>
 
         <form id="unsentForm">
 
@@ -2091,111 +2888,113 @@ footer p{
         </h2>
 
         <p>
-            Things to read, watch, listen to, or think about.
+            Little reminders for your chapter.
         </p>
 
     </div>
 
 
-    <div class="recommendations">
+    <div class="recommendation-grid">
 
-        <div class="recommendation-grid">
+        <article class="recommendation-card">
 
-            <article class="recommendation-card">
+            <span>♡</span>
 
-                <span>♡</span>
+            <h3>
+                When You Miss Someone
+            </h3>
 
-                <h3>
-                    When You Miss Someone
-                </h3>
+            <p>
+                Write the message,
+                but don't send it.
+                Sometimes writing is enough.
+            </p>
 
-                <p>
-                    Write the message, but don't send it.
-                    Sometimes writing is enough.
-                </p>
-
-            </article>
-
-
-            <article class="recommendation-card">
-
-                <span>✦</span>
-
-                <h3>
-                    Main Character Moment
-                </h3>
-
-                <p>
-                    Put your phone down, listen to your
-                    favorite song, and enjoy your own story.
-                </p>
-
-            </article>
+        </article>
 
 
-            <article class="recommendation-card">
+        <article class="recommendation-card">
 
-                <span>✧</span>
+            <span>✦</span>
 
-                <h3>
-                    Friend Crush?
-                </h3>
+            <h3>
+                Main Character Moment
+            </h3>
 
-                <p>
-                    Before overthinking every little sign,
-                    remember that friendship itself is valuable.
-                </p>
+            <p>
+                Put your phone down,
+                listen to your favorite song,
+                and enjoy your own story.
+            </p>
 
-            </article>
-
-
-            <article class="recommendation-card">
-
-                <span>☾</span>
-
-                <h3>
-                    Late Night Thoughts
-                </h3>
-
-                <p>
-                    Not every thought needs an answer tonight.
-                </p>
-
-            </article>
+        </article>
 
 
-            <article class="recommendation-card">
+        <article class="recommendation-card">
 
-                <span>✉</span>
+            <span>✧</span>
 
-                <h3>
-                    Unsent Letter
-                </h3>
+            <h3>
+                Friend Crush?
+            </h3>
 
-                <p>
-                    Say everything you wanted to say.
-                    Keep it private if you want.
-                </p>
+            <p>
+                Before overthinking every sign,
+                remember that friendship itself
+                is valuable.
+            </p>
 
-            </article>
+        </article>
 
 
-            <article class="recommendation-card">
+        <article class="recommendation-card">
 
-                <span>?</span>
+            <span>☾</span>
 
-                <h3>
-                    Plot Twist
-                </h3>
+            <h3>
+                Late Night Thoughts
+            </h3>
 
-                <p>
-                    Sometimes the person you thought was
-                    a side character becomes part of the story.
-                </p>
+            <p>
+                Not every thought needs
+                an answer tonight.
+            </p>
 
-            </article>
+        </article>
 
-        </div>
+
+        <article class="recommendation-card">
+
+            <span>✉</span>
+
+            <h3>
+                Unsent Letter
+            </h3>
+
+            <p>
+                Say everything you wanted
+                to say. Keep it private
+                if you want.
+            </p>
+
+        </article>
+
+
+        <article class="recommendation-card">
+
+            <span>?</span>
+
+            <h3>
+                Plot Twist
+            </h3>
+
+            <p>
+                Sometimes the story becomes
+                better when it doesn't go
+                according to plan.
+            </p>
+
+        </article>
 
     </div>
 
@@ -2221,7 +3020,7 @@ footer p{
         </h2>
 
         <p>
-            Everything you need to know about PlotTwisted.
+            Everything you need to know.
         </p>
 
     </div>
@@ -2236,8 +3035,8 @@ footer p{
             </summary>
 
             <div class="faq-answer">
-                Yes. Posts are designed to be shared without displaying
-                the poster's name.
+                Yes. Posts are designed to be shared
+                without displaying the poster's name.
             </div>
 
         </details>
@@ -2250,8 +3049,8 @@ footer p{
             </summary>
 
             <div class="faq-answer">
-                Posts submitted to the public community feed can be
-                viewed by other visitors.
+                Posts submitted to the public community
+                feed can be viewed by other visitors.
             </div>
 
         </details>
@@ -2264,8 +3063,8 @@ footer p{
             </summary>
 
             <div class="faq-answer">
-                Yes. Go to Hugot Corner, write your message, and press
-                POST HUGOT.
+                Yes. Go to Hugot Corner,
+                write your message, and post it.
             </div>
 
         </details>
@@ -2278,8 +3077,8 @@ footer p{
             </summary>
 
             <div class="faq-answer">
-                Read the situation and choose Sign, Maybe, or Delulu.
-                The community results update based on submitted votes.
+                Read the situation and choose
+                Sign, Maybe, or Delulu.
             </div>
 
         </details>
@@ -2288,12 +3087,12 @@ footer p{
         <details class="faq-item">
 
             <summary>
-                Is the roulette actually random?
+                Is the roulette random?
             </summary>
 
             <div class="faq-answer">
-                Yes. The roulette chooses a random entry from the
-                PlotTwisted plot-twist collection.
+                Yes. The roulette chooses a random
+                entry from the PlotTwisted collection.
             </div>
 
         </details>
@@ -2306,8 +3105,8 @@ footer p{
             </summary>
 
             <div class="faq-answer">
-                Keep your posts respectful and avoid sharing private
-                information about yourself or other people.
+                Keep your posts respectful and avoid
+                sharing private information.
             </div>
 
         </details>
@@ -2337,9 +3136,10 @@ footer p{
         </h2>
 
         <p>
-            PlotTwisted is an anonymous community where people can
-            share confessions, hugots, unsent messages, and unexpected
-            stories without revealing their identity.
+            PlotTwisted is an anonymous community where
+            people can share confessions, hugots,
+            unsent messages, and unexpected stories
+            without revealing their identity.
         </p>
 
         <br>
@@ -2398,8 +3198,9 @@ footer p{
         </h2>
 
         <p>
-            If you notice inappropriate content or have a suggestion
-            for PlotTwisted, please contact the website administrator.
+            If you notice inappropriate content or
+            have a suggestion for PlotTwisted,
+            please contact the website administrator.
         </p>
 
         <br>
@@ -2464,23 +3265,28 @@ footer p{
 
             <div class="footer-links">
 
-                <button data-slide="community">
+                <button
+                    onclick="showPage('community')">
                     Community Feed
                 </button>
 
-                <button data-slide="roulette">
+                <button
+                    onclick="showPage('roulette')">
                     Plot Twist Roulette
                 </button>
 
-                <button data-slide="recommendations">
+                <button
+                    onclick="showPage('recommendations')">
                     Recommendations
                 </button>
 
-                <button data-slide="faq">
+                <button
+                    onclick="showPage('faq')">
                     FAQ
                 </button>
 
-                <button data-slide="contact">
+                <button
+                    onclick="showPage('contact')">
                     Report / Contact
                 </button>
 
@@ -2493,7 +3299,8 @@ footer p{
 
     <div class="copyright">
 
-        ✦ © 2026 PlotTwisted. Your story doesn't always go as planned. ✦
+        ✦ © 2026 PlotTwisted.
+        Your story doesn't always go as planned. ✦
 
     </div>
 
@@ -2501,14 +3308,229 @@ footer p{
 
 
 <!-- =====================================================
-     FIREBASE / SCRIPT
+     INTERFACE / NAVIGATION SCRIPT
+     Firebase script remains separate.
+===================================================== -->
+
+<script>
+
+/* =========================================================
+   SHOW NORMAL PAGE
+========================================================= */
+
+function showPage(id){
+
+    document
+        .querySelectorAll(".page-section")
+        .forEach(section => {
+
+            section.classList.remove(
+                "active-section"
+            );
+
+        });
+
+    const target =
+        document.getElementById(id);
+
+    if(target){
+
+        target.classList.add(
+            "active-section"
+        );
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }
+}
+
+
+/* =========================================================
+   OPEN HOME INTERFACE
+========================================================= */
+
+function openInterface(id){
+
+    showPage("home");
+
+    document
+        .querySelectorAll(".sub-interface")
+        .forEach(item => {
+
+            item.classList.remove("active");
+
+        });
+
+    const target =
+        document.getElementById(id);
+
+    if(target){
+
+        target.classList.add("active");
+
+        target.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   NAVBAR BUTTONS
+========================================================= */
+
+document
+    .querySelectorAll("[data-slide]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const page =
+                    this.dataset.slide;
+
+                showPage(page);
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   MOON BUTTON
+========================================================= */
+
+const moon =
+    document.querySelector(".moon");
+
+if(moon){
+
+    moon.addEventListener(
+        "click",
+        function(){
+
+            document.body.classList.toggle(
+                "moon-mode"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ROULETTE
+========================================================= */
+
+function spinRoulette(){
+
+    const stories = [
+
+        "Someone secretly likes their best friend.",
+
+        "The person you stopped talking to still remembers you.",
+
+        "Your crush may be waiting for you to make the first move.",
+
+        "A random conversation could become an important memory.",
+
+        "The person you least expected may become part of your story.",
+
+        "Someone is probably overthinking the same conversation you are.",
+
+        "Your next plot twist might come from an unexpected friendship.",
+
+        "Sometimes the ending you wanted isn't the ending you needed.",
+
+        "Someone remembers a small thing you thought they forgot.",
+
+        "A chapter can end without meaning the whole story is over."
+
+    ];
+
+    const icon =
+        document.getElementById(
+            "rouletteIcon"
+        );
+
+    const text =
+        document.getElementById(
+            "rouletteText"
+        );
+
+    if(!text) return;
+
+    let count = 0;
+
+    const interval =
+        setInterval(() => {
+
+            const random =
+                stories[
+                    Math.floor(
+                        Math.random()
+                        * stories.length
+                    )
+                ];
+
+            text.textContent =
+                "“" + random + "”";
+
+            if(icon){
+
+                icon.style.transform =
+                    "rotate(" +
+                    (count * 45) +
+                    "deg)";
+
+            }
+
+            count++;
+
+            if(count >= 12){
+
+                clearInterval(interval);
+
+            }
+
+        },120);
+
+}
+
+
+/* =========================================================
+   START HOME ARCHIVE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        openInterface("storyMenu");
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+     FIREBASE / MAIN SCRIPT
 ===================================================== -->
 
 <script
     type="module"
     src="./script.js">
 </script>
-
 
 </body>
    </html>
