@@ -738,6 +738,225 @@ if (typeof originalShowPage === "function") {
 
 }
 
+// =====================================================
+// SIGN OR DELUSION — FIRESTORE VOTING
+// =====================================================
+
+const voteButtons = document.querySelectorAll(
+    ".vote-buttons button"
+);
+
+const signBar = document.getElementById("signBar");
+const maybeBar = document.getElementById("maybeBar");
+const deluluBar = document.getElementById("deluluBar");
+
+const signPercent = document.getElementById("signPercent");
+const maybePercent = document.getElementById("maybePercent");
+const deluluPercent = document.getElementById("deluluPercent");
+
+async function loadVotes() {
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "signVotes")
+        );
+
+        let sign = 0;
+        let maybe = 0;
+        let delulu = 0;
+
+        snapshot.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            if (data.vote === "sign") {
+                sign++;
+            }
+
+            if (data.vote === "maybe") {
+                maybe++;
+            }
+
+            if (data.vote === "delulu") {
+                delulu++;
+            }
+
+        });
+
+        const total =
+            sign + maybe + delulu;
+
+        if (total === 0) {
+            updateVoteDisplay(62, 25, 13);
+            return;
+        }
+
+        const signPct =
+            Math.round((sign / total) * 100);
+
+        const maybePct =
+            Math.round((maybe / total) * 100);
+
+        const deluluPct =
+            100 - signPct - maybePct;
+
+        updateVoteDisplay(
+            signPct,
+            maybePct,
+            deluluPct
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load votes:",
+            error
+        );
+
+    }
+
+}
+
+
+function updateVoteDisplay(
+    sign,
+    maybe,
+    delulu
+) {
+
+    if (signBar) {
+        signBar.style.width =
+            sign + "%";
+    }
+
+    if (maybeBar) {
+        maybeBar.style.width =
+            maybe + "%";
+    }
+
+    if (deluluBar) {
+        deluluBar.style.width =
+            delulu + "%";
+    }
+
+    if (signPercent) {
+        signPercent.textContent =
+            sign + "%";
+    }
+
+    if (maybePercent) {
+        maybePercent.textContent =
+            maybe + "%";
+    }
+
+    if (deluluPercent) {
+        deluluPercent.textContent =
+            delulu + "%";
+    }
+
+}
+
+
+voteButtons.forEach(
+    (button, index) => {
+
+        button.addEventListener(
+            "click",
+            async () => {
+
+                let vote;
+
+                if (index === 0) {
+                    vote = "sign";
+                }
+
+                if (index === 1) {
+                    vote = "maybe";
+                }
+
+                if (index === 2) {
+                    vote = "delulu";
+                }
+
+                if (!vote) return;
+
+                // Prevent multiple votes
+                const alreadyVoted =
+                    localStorage.getItem(
+                        "plottwisted_vote_001"
+                    );
+
+                if (alreadyVoted) {
+
+                    alert(
+                        "You already voted on this case."
+                    );
+
+                    return;
+
+                }
+
+                try {
+
+                    button.disabled = true;
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "signVotes"
+                        ),
+                        {
+                            vote: vote,
+                            caseId: "001",
+                            createdAt:
+                                serverTimestamp()
+                        }
+                    );
+
+                    localStorage.setItem(
+                        "plottwisted_vote_001",
+                        "true"
+                    );
+
+                    voteButtons.forEach(
+                        btn => {
+                            btn.disabled = true;
+                        }
+                    );
+
+                    await loadVotes();
+
+                    alert(
+                        "Your verdict has been recorded! ✦"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Vote error:",
+                        error
+                    );
+
+                    button.disabled =
+                        false;
+
+                    alert(
+                        "Unable to record your vote right now."
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+// Load existing votes
+loadVotes();
+
 
 // =====================================================
 // IMPORTANT
