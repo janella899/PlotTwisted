@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PlotTwisted — Your Story, Your Secret</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>PlotTwisted</title>
 
 <style>
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+
 :root {
-    --black: #100b0d;
-    --dark: #180d11;
-    --wine: #68152d;
-    --deep-wine: #320b18;
-    --cream: #f4ead8;
-    --gold: #c9a66b;
-    --muted: #aa9b8a;
-    --line: rgba(201,166,107,.25);
+    --black: #10090d;
+    --dark: #1a0b11;
+    --wine: #6b1028;
+    --wine2: #8c1837;
+    --cream: #f5ead8;
+    --gold: #d1ae70;
+    --muted: #b9a99a;
+    --line: rgba(209,174,112,.25);
 }
+
 
 * {
     box-sizing: border-box;
@@ -30,430 +33,1018 @@
     padding: 0;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
     min-height: 100vh;
+
     background:
-        radial-gradient(circle at 15% 20%, rgba(104,21,45,.35), transparent 30%),
-        radial-gradient(circle at 85% 70%, rgba(201,166,107,.08), transparent 25%),
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(107,16,40,.4),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(209,174,112,.08),
+            transparent 25%
+        ),
         var(--black);
+
     color: var(--cream);
+
     font-family: "Poppins", sans-serif;
+
     overflow-x: hidden;
 }
 
-/* NAVIGATION */
+
+/* =========================
+   DECORATIONS
+========================= */
+
+body::before {
+
+    content: "✦   ♡   ✧   ♡   ✦";
+
+    position: fixed;
+
+    top: 15%;
+    left: 3%;
+
+    color: rgba(209,174,112,.15);
+
+    font-size: 20px;
+
+    letter-spacing: 15px;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+body::after {
+
+    content: "♡   ✧   ✦";
+
+    position: fixed;
+
+    bottom: 15%;
+    right: 3%;
+
+    color: rgba(209,174,112,.13);
+
+    font-size: 25px;
+
+    letter-spacing: 15px;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
 
 .navbar {
+
     position: fixed;
+
     top: 0;
     left: 0;
     right: 0;
+
     height: 70px;
-    z-index: 100;
+
     display: flex;
-    align-items: center;
+
     justify-content: space-between;
+
+    align-items: center;
+
     padding: 0 7%;
-    background: rgba(16,11,13,.88);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--line);
+
+    background:
+        rgba(16,9,13,.88);
+
+    backdrop-filter: blur(15px);
+
+    border-bottom:
+        1px solid var(--line);
+
+    z-index: 1000;
 }
 
+
 .logo {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 27px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 29px;
+
     letter-spacing: 2px;
 }
 
+
 .logo span {
+
     color: var(--gold);
+
 }
+
 
 .home-button {
-    border: 1px solid var(--line);
+
     background: transparent;
+
+    border:
+        1px solid var(--line);
+
     color: var(--cream);
-    padding: 8px 18px;
+
+    padding:
+        8px 20px;
+
     cursor: pointer;
+
     transition: .3s;
+
 }
+
 
 .home-button:hover {
-    border-color: var(--gold);
+
     color: var(--gold);
+
+    border-color: var(--gold);
+
 }
 
-/* SECTIONS */
+
+/* =========================
+   SECTIONS
+========================= */
 
 .page-section {
+
     display: none;
+
     min-height: 100vh;
-    padding: 110px 8% 70px;
+
+    padding:
+        110px 7% 70px;
+
 }
+
 
 .page-section.active-section {
+
     display: block;
-    animation: pageIn .6s ease;
+
+    animation:
+        pageEnter .65s ease;
+
 }
 
-@keyframes pageIn {
+
+@keyframes pageEnter {
+
     from {
+
         opacity: 0;
-        transform: translateY(25px);
+
+        transform:
+            translateY(25px)
+            scale(.98);
+
     }
 
     to {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0)
+            scale(1);
+
     }
+
 }
 
-/* HOME */
+
+/* =========================
+   HOME
+========================= */
 
 .hero {
-    min-height: 80vh;
+
     max-width: 1200px;
+
+    min-height: 80vh;
+
     margin: auto;
+
     display: grid;
-    grid-template-columns: 1fr .8fr;
+
+    grid-template-columns:
+        1fr .9fr;
+
     align-items: center;
-    gap: 70px;
+
+    gap: 60px;
+
 }
+
 
 .eyebrow {
+
     color: var(--gold);
+
     font-size: 10px;
+
     letter-spacing: 4px;
+
     text-transform: uppercase;
+
 }
+
 
 .hero h1 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(70px, 10vw, 130px);
-    line-height: .78;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(70px,10vw,130px);
+
+    line-height: .75;
+
     letter-spacing: -5px;
-    margin: 15px 0 25px;
+
+    margin:
+        20px 0 30px;
+
 }
+
 
 .hero h1 span {
+
     color: transparent;
-    -webkit-text-stroke: 1px var(--gold);
+
+    -webkit-text-stroke:
+        1px var(--gold);
+
 }
+
 
 .hero-description {
-    max-width: 550px;
+
+    max-width: 520px;
+
     color: var(--muted);
+
     font-size: 13px;
+
     line-height: 1.9;
+
 }
+
+
+/* =========================
+   MENU BUTTONS
+========================= */
 
 .menu {
+
     display: flex;
+
     flex-direction: column;
+
     gap: 13px;
+
 }
+
 
 .story-button {
-    position: relative;
+
     width: 100%;
+
     display: grid;
-    grid-template-columns: 45px 1fr 25px;
+
+    grid-template-columns:
+        45px 1fr 25px;
+
     align-items: center;
+
     gap: 15px;
-    padding: 17px;
+
+    padding: 16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--line);
+
     color: var(--cream);
+
     text-align: left;
-    background: rgba(255,255,255,.035);
-    border: 1px solid var(--line);
+
     cursor: pointer;
+
     transition: .35s;
+
 }
+
 
 .story-button:hover {
-    transform: translateX(10px);
-    border-color: var(--gold);
-    background: rgba(104,21,45,.4);
+
+    transform:
+        translateX(10px);
+
+    background:
+        rgba(107,16,40,.45);
+
+    border-color:
+        var(--gold);
+
 }
+
 
 .story-symbol {
+
     width: 43px;
+
     height: 43px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+    border:
+        1px solid var(--line);
+
     color: var(--gold);
-    border: 1px solid var(--line);
+
     font-size: 18px;
+
 }
+
 
 .story-button strong {
+
     display: block;
-    font-family: "Cormorant Garamond", serif;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
     font-size: 21px;
+
 }
+
 
 .story-button small {
+
     color: var(--muted);
+
     font-size: 9px;
+
 }
+
 
 .story-button b {
+
     color: var(--gold);
+
 }
 
-/* HEADINGS */
+
+/* =========================
+   HEADINGS
+========================= */
 
 .section-heading {
+
     max-width: 900px;
-    margin: 0 auto 40px;
+
+    margin:
+        0 auto 40px;
+
 }
+
 
 .section-heading h2 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(50px, 8vw, 85px);
-    line-height: .9;
-    margin: 12px 0;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(55px,8vw,90px);
+
+    line-height: .85;
+
+    margin:
+        15px 0 20px;
+
 }
 
-.section-heading p:not(.eyebrow) {
+
+.section-heading p:last-child {
+
     color: var(--muted);
+
     font-size: 13px;
+
 }
 
-/* CARDS */
 
-.confession-grid,
-.unsent-grid {
-    max-width: 1100px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 20px;
+/* =========================
+   FORMS
+========================= */
+
+.form-card {
+
+    max-width: 850px;
+
+    margin:
+        0 auto 40px;
+
+    padding: 30px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid var(--line);
+
 }
 
-.card {
-    padding: 28px;
-    background: rgba(255,255,255,.045);
-    border: 1px solid var(--line);
-    transition: .35s;
+
+textarea {
+
+    width: 100%;
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    background:
+        rgba(0,0,0,.3);
+
+    border:
+        1px solid var(--line);
+
+    color: var(--cream);
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    outline: none;
+
 }
 
-.card:hover {
-    transform: translateY(-7px) rotate(.4deg);
-    border-color: var(--gold);
+
+textarea:focus {
+
+    border-color:
+        var(--gold);
+
 }
 
-.card-label {
-    color: var(--gold);
-    font-size: 9px;
-    letter-spacing: 2px;
+
+textarea::placeholder {
+
+    color:
+        #81766c;
+
 }
 
-.card p {
-    margin-top: 20px;
-    font-family: "Cormorant Garamond", serif;
-    font-size: 24px;
-    line-height: 1.2;
-}
-
-/* BUTTON */
 
 .primary-button {
-    padding: 13px 25px;
-    border: 1px solid var(--gold);
-    background: var(--wine);
-    color: var(--cream);
-    cursor: pointer;
-    transition: .3s;
+
+    margin-top: 15px;
+
+    padding:
+        13px 25px;
+
+    border:
+        1px solid var(--gold);
+
+    background:
+        var(--wine);
+
+    color:
+        var(--cream);
+
+    cursor:
+        pointer;
+
+    transition:
+        .3s;
+
 }
+
 
 .primary-button:hover {
-    transform: translateY(-3px);
-    background: var(--deep-wine);
+
+    background:
+        var(--wine2);
+
+    transform:
+        translateY(-3px);
+
 }
 
-/* HUGOT */
 
-.hugot-box,
-.roulette-box,
-.sign-box {
-    max-width: 850px;
+/* =========================
+   CARDS
+========================= */
+
+.post-grid {
+
+    max-width: 1100px;
+
     margin: auto;
-    padding: 60px 35px;
-    text-align: center;
-    background: rgba(255,255,255,.04);
-    border: 1px solid var(--line);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(260px,1fr)
+        );
+
+    gap: 20px;
+
 }
 
-.hugot-box p,
-.roulette-box p {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(28px, 4vw, 43px);
-    font-style: italic;
-    line-height: 1.2;
-    margin-bottom: 35px;
+
+.card {
+
+    padding: 28px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid var(--line);
+
+    transition:
+        .35s;
+
 }
 
-/* SIGNS */
 
-.sign-box {
-    text-align: left;
+.card:hover {
+
+    transform:
+        translateY(-7px)
+        rotate(.4deg);
+
+    border-color:
+        var(--gold);
+
 }
 
-.sign-box h3 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 32px;
-    margin: 15px 0 30px;
+
+.card-label {
+
+    color:
+        var(--gold);
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        2px;
+
 }
+
+
+.card p {
+
+    margin-top:
+        20px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        24px;
+
+    line-height:
+        1.2;
+
+}
+
+
+/* =========================
+   HUGOT
+========================= */
+
+.center-box {
+
+    max-width:
+        850px;
+
+    margin:
+        auto;
+
+    padding:
+        55px 30px;
+
+    text-align:
+        center;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid var(--line);
+
+}
+
+
+.hugot-display {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(28px,5vw,48px);
+
+    font-style:
+        italic;
+
+    line-height:
+        1.2;
+
+    margin-bottom:
+        30px;
+
+}
+
+
+/* =========================
+   VOTING
+========================= */
+
+.vote-box {
+
+    max-width:
+        850px;
+
+    margin:
+        auto;
+
+    padding:
+        40px 30px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid var(--line);
+
+}
+
+
+.vote-box h3 {
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        32px;
+
+    margin:
+        15px 0 30px;
+
+}
+
 
 .vote-buttons {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 10px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:
+        10px;
+
 }
+
 
 .vote-buttons button {
-    min-height: 100px;
-    background: rgba(255,255,255,.035);
-    border: 1px solid var(--line);
-    color: var(--cream);
-    cursor: pointer;
-    transition: .3s;
+
+    min-height:
+        90px;
+
+    background:
+        rgba(255,255,255,.03);
+
+    border:
+        1px solid var(--line);
+
+    color:
+        var(--cream);
+
+    cursor:
+        pointer;
+
+    transition:
+        .3s;
+
 }
+
 
 .vote-buttons button:hover {
-    border-color: var(--gold);
-    background: var(--wine);
+
+    background:
+        var(--wine);
+
+    border-color:
+        var(--gold);
+
 }
+
 
 .results {
-    margin-top: 30px;
+
+    margin-top:
+        30px;
+
 }
+
 
 .result {
-    display: grid;
-    grid-template-columns: 70px 1fr 45px;
-    gap: 10px;
-    align-items: center;
-    margin: 13px 0;
-    color: var(--muted);
-    font-size: 9px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        70px 1fr 45px;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    margin:
+        14px 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        9px;
+
 }
+
 
 .bar {
-    height: 5px;
-    background: rgba(255,255,255,.08);
+
+    height:
+        5px;
+
+    background:
+        rgba(255,255,255,.08);
+
 }
+
 
 .bar div {
-    height: 100%;
-    background: linear-gradient(90deg,var(--wine),var(--gold));
+
+    height:
+        100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--wine),
+            var(--gold)
+        );
+
 }
 
-/* UNSENT */
 
-.unsent-card {
-    min-height: 220px;
-}
-
-/* ABOUT */
+/* =========================
+   ABOUT
+========================= */
 
 .about {
-    max-width: 800px;
-    min-height: 70vh;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+
+    max-width:
+        800px;
+
+    min-height:
+        70vh;
+
+    margin:
+        auto;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    text-align:
+        center;
+
 }
+
 
 .about h2 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(60px,9vw,100px);
-    line-height: .85;
-    margin: 15px 0 30px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(60px,9vw,100px);
+
+    line-height:
+        .85;
+
+    margin:
+        15px 0 30px;
+
 }
+
 
 .about p {
-    max-width: 650px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.9;
+
+    color:
+        var(--muted);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.9;
+
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
-    text-align: center;
-    padding: 40px 20px;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 9px;
+
+    text-align:
+        center;
+
+    padding:
+        35px 20px;
+
+    border-top:
+        1px solid var(--line);
+
+    color:
+        var(--muted);
+
+    font-size:
+        9px;
+
 }
 
-/* MOBILE */
 
-@media (max-width: 800px) {
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:800px) {
 
     .hero {
-        grid-template-columns: 1fr;
-        gap: 45px;
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            45px;
+
     }
 
 }
 
-@media (max-width: 600px) {
+
+@media (max-width:600px) {
 
     .navbar {
-        padding: 0 5%;
+
+        padding:
+            0 5%;
+
     }
+
 
     .page-section {
-        padding: 95px 5% 60px;
+
+        padding:
+            95px 5% 55px;
+
     }
+
 
     .hero h1 {
-        font-size: 75px;
-        letter-spacing: -3px;
+
+        font-size:
+            75px;
+
+        letter-spacing:
+            -3px;
+
     }
+
 
     .story-button {
-        grid-template-columns: 40px 1fr 18px;
+
+        grid-template-columns:
+            40px 1fr 15px;
+
     }
+
 
     .story-symbol {
-        width: 38px;
-        height: 38px;
+
+        width:
+            38px;
+
+        height:
+            38px;
+
     }
+
 
     .story-button strong {
-        font-size: 17px;
+
+        font-size:
+            17px;
+
     }
+
 
     .vote-buttons {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    .hugot-box,
-    .roulette-box,
-    .sign-box {
-        padding: 35px 20px;
+
+    .form-card,
+    .center-box,
+    .vote-box {
+
+        padding:
+            25px 18px;
+
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<!-- NAVBAR -->
+
+<!-- =========================
+     NAVBAR
+========================= -->
 
 <nav class="navbar">
 
@@ -461,52 +1052,77 @@ footer {
         Plot<span>Twisted</span>
     </div>
 
-    <button class="home-button" data-slide="home">
+    <button
+        class="home-button"
+        data-slide="home">
+
         Home
+
     </button>
 
 </nav>
+
 
 
 <!-- =========================
      HOME
 ========================= -->
 
-<section id="home" class="page-section active-section">
+<section
+    id="home"
+    class="page-section active-section">
+
 
     <div class="hero">
+
 
         <div>
 
             <p class="eyebrow">
-                Welcome to your little secret
+                YOUR LITTLE SECRET
             </p>
+
 
             <h1>
                 Plot
                 <span>Twisted.</span>
             </h1>
 
+
             <p class="hero-description">
+
                 A place for the things you never said,
                 the feelings you can't explain,
                 the signs you're overthinking,
                 and the stories that deserve another chapter.
+
             </p>
 
         </div>
 
 
+
         <div class="menu">
 
-            <button class="story-button"
-                    data-slide="confessions">
 
-                <div class="story-symbol">♡</div>
+            <button
+                class="story-button"
+                data-slide="confessions">
+
+                <div class="story-symbol">
+                    ♡
+                </div>
 
                 <div>
-                    <strong>Anonymous Confessions</strong>
-                    <small>Say what you can't say.</small>
+
+                    <strong>
+                        Anonymous Confessions
+                    </strong>
+
+                    <small>
+                        Say what you can't say.
+                    </small>
+
                 </div>
 
                 <b>→</b>
@@ -514,14 +1130,25 @@ footer {
             </button>
 
 
-            <button class="story-button"
-                    data-slide="hugot">
 
-                <div class="story-symbol">✦</div>
+            <button
+                class="story-button"
+                data-slide="hugot">
+
+                <div class="story-symbol">
+                    ✦
+                </div>
 
                 <div>
-                    <strong>Hugot Corner</strong>
-                    <small>For feelings with no filter.</small>
+
+                    <strong>
+                        Hugot Corner
+                    </strong>
+
+                    <small>
+                        Drop your deepest hugot.
+                    </small>
+
                 </div>
 
                 <b>→</b>
@@ -529,14 +1156,25 @@ footer {
             </button>
 
 
-            <button class="story-button"
-                    data-slide="signs">
 
-                <div class="story-symbol">?</div>
+            <button
+                class="story-button"
+                data-slide="signs">
+
+                <div class="story-symbol">
+                    ?
+                </div>
 
                 <div>
-                    <strong>Sign or Delusion?</strong>
-                    <small>Is it a sign or are we delulu?</small>
+
+                    <strong>
+                        Sign or Delusion?
+                    </strong>
+
+                    <small>
+                        Is it a sign or are we delulu?
+                    </small>
+
                 </div>
 
                 <b>→</b>
@@ -544,14 +1182,25 @@ footer {
             </button>
 
 
-            <button class="story-button"
-                    data-slide="roulette">
 
-                <div class="story-symbol">✧</div>
+            <button
+                class="story-button"
+                data-slide="roulette">
+
+                <div class="story-symbol">
+                    ✧
+                </div>
 
                 <div>
-                    <strong>Plot Twist Roulette</strong>
-                    <small>Let fate choose a story.</small>
+
+                    <strong>
+                        Plot Twist Roulette
+                    </strong>
+
+                    <small>
+                        Let fate choose a story.
+                    </small>
+
                 </div>
 
                 <b>→</b>
@@ -559,14 +1208,25 @@ footer {
             </button>
 
 
-            <button class="story-button"
-                    data-slide="unsent">
 
-                <div class="story-symbol">✉</div>
+            <button
+                class="story-button"
+                data-slide="unsent">
+
+                <div class="story-symbol">
+                    ✉
+                </div>
 
                 <div>
-                    <strong>Unsent Messages</strong>
-                    <small>Things left in the drafts.</small>
+
+                    <strong>
+                        Unsent Messages
+                    </strong>
+
+                    <small>
+                        Things left in the drafts.
+                    </small>
+
                 </div>
 
                 <b>→</b>
@@ -574,19 +1234,31 @@ footer {
             </button>
 
 
-            <button class="story-button"
-                    data-slide="about">
 
-                <div class="story-symbol">i</div>
+            <button
+                class="story-button"
+                data-slide="about">
+
+                <div class="story-symbol">
+                    i
+                </div>
 
                 <div>
-                    <strong>About PlotTwisted</strong>
-                    <small>Behind the little secret.</small>
+
+                    <strong>
+                        About PlotTwisted
+                    </strong>
+
+                    <small>
+                        Behind the little secret.
+                    </small>
+
                 </div>
 
                 <b>→</b>
 
             </button>
+
 
         </div>
 
@@ -595,16 +1267,20 @@ footer {
 </section>
 
 
+
 <!-- =========================
      CONFESSIONS
 ========================= -->
 
-<section id="confessions" class="page-section">
+<section
+    id="confessions"
+    class="page-section">
+
 
     <div class="section-heading">
 
         <p class="eyebrow">
-            Anonymous corner
+            ANONYMOUS CORNER
         </p>
 
         <h2>
@@ -612,82 +1288,60 @@ footer {
         </h2>
 
         <p>
-            Say it without revealing who you are.
+            Say what you can't say out loud.
         </p>
 
     </div>
 
 
-    <div style="text-align:center;margin-bottom:35px;">
+    <div class="form-card">
 
-        <button class="primary-button"
-                onclick="alert('Your confession feature is ready for Firebase later!')">
+        <form id="confessionForm">
 
-            + Leave a Confession
+            <textarea
+                id="confessionInput"
+                maxlength="500"
+                placeholder="Write your anonymous confession..."
+                required></textarea>
 
-        </button>
+
+            <button
+                class="primary-button"
+                type="submit">
+
+                POST CONFESSION ♡
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div
+        id="confessionList"
+        class="post-grid">
 
     </div>
 
-
-    <div class="confession-grid">
-
-        <div class="card">
-
-            <span class="card-label">
-                ANONYMOUS #001
-            </span>
-
-            <p>
-                "I think I like someone I promised myself
-                I would never fall for."
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <span class="card-label">
-                ANONYMOUS #002
-            </span>
-
-            <p>
-                "We talk every day but somehow
-                I still don't know what we are."
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <span class="card-label">
-                ANONYMOUS #003
-            </span>
-
-            <p>
-                "I wonder if they know that every
-                song I post is secretly about them."
-            </p>
-
-        </div>
-
-    </div>
 
 </section>
+
 
 
 <!-- =========================
      HUGOT
 ========================= -->
 
-<section id="hugot" class="page-section">
+<section
+    id="hugot"
+    class="page-section">
+
 
     <div class="section-heading">
 
         <p class="eyebrow">
-            Feelings department
+            FEELINGS DEPARTMENT
         </p>
 
         <h2>
@@ -695,40 +1349,60 @@ footer {
         </h2>
 
         <p>
-            Press the button. Let the universe speak.
+            Say it. Feel it. Let it go.
         </p>
 
     </div>
 
 
-    <div class="hugot-box">
+    <div class="form-card">
 
-        <p id="hugotText">
-            "Maybe the plot twist is choosing yourself."
-        </p>
+        <form id="hugotForm">
 
-        <button class="primary-button"
-                onclick="newHugot()">
+            <textarea
+                id="hugotInput"
+                maxlength="400"
+                placeholder="Drop your hugot here..."
+                required></textarea>
 
-            Give Me Another One
 
-        </button>
+            <button
+                class="primary-button"
+                type="submit">
+
+                POST HUGOT ✦
+
+            </button>
+
+        </form>
 
     </div>
+
+
+    <div
+        id="hugotList"
+        class="post-grid">
+
+    </div>
+
 
 </section>
+
 
 
 <!-- =========================
      SIGNS
 ========================= -->
 
-<section id="signs" class="page-section">
+<section
+    id="signs"
+    class="page-section">
+
 
     <div class="section-heading">
 
         <p class="eyebrow">
-            The investigation
+            THE INVESTIGATION
         </p>
 
         <h2>
@@ -742,48 +1416,84 @@ footer {
     </div>
 
 
-    <div class="sign-box">
+    <div class="vote-box">
+
 
         <span class="eyebrow">
             CASE #001
         </span>
 
+
         <h3>
-            They always find a reason to talk to you.
+
+            They always find a reason
+            to talk to you.
+
+            <br>
+
             Is that a sign?
+
         </h3>
 
 
         <div class="vote-buttons">
 
-            <button onclick="voteSign('sign')">
-                ✦<br>
+
+            <button
+                onclick="voteSign('sign')">
+
+                ✦
+
+                <br>
+
                 Definitely a sign
+
             </button>
 
-            <button onclick="voteSign('maybe')">
-                ?<br>
+
+            <button
+                onclick="voteSign('maybe')">
+
+                ?
+
+                <br>
+
                 Maybe
+
             </button>
 
-            <button onclick="voteSign('delulu')">
-                ♡<br>
+
+            <button
+                onclick="voteSign('delulu')">
+
+                ♡
+
+                <br>
+
                 You're delulu
+
             </button>
+
 
         </div>
 
 
         <div class="results">
 
+
             <div class="result">
 
-                <span>Sign</span>
+                <span>
+                    Sign
+                </span>
 
                 <div class="bar">
-                    <div id="signBar"
-                         style="width:62%">
+
+                    <div
+                        id="signBar"
+                        style="width:62%">
                     </div>
+
                 </div>
 
                 <strong id="signPercent">
@@ -795,12 +1505,17 @@ footer {
 
             <div class="result">
 
-                <span>Maybe</span>
+                <span>
+                    Maybe
+                </span>
 
                 <div class="bar">
-                    <div id="maybeBar"
-                         style="width:25%">
+
+                    <div
+                        id="maybeBar"
+                        style="width:25%">
                     </div>
+
                 </div>
 
                 <strong id="maybePercent">
@@ -812,12 +1527,17 @@ footer {
 
             <div class="result">
 
-                <span>Delulu</span>
+                <span>
+                    Delulu
+                </span>
 
                 <div class="bar">
-                    <div id="deluluBar"
-                         style="width:13%">
+
+                    <div
+                        id="deluluBar"
+                        style="width:13%">
                     </div>
+
                 </div>
 
                 <strong id="deluluPercent">
@@ -826,23 +1546,29 @@ footer {
 
             </div>
 
+
         </div>
+
 
     </div>
 
 </section>
 
 
+
 <!-- =========================
      ROULETTE
 ========================= -->
 
-<section id="roulette" class="page-section">
+<section
+    id="roulette"
+    class="page-section">
+
 
     <div class="section-heading">
 
         <p class="eyebrow">
-            Spin the story
+            SPIN THE STORY
         </p>
 
         <h2>
@@ -850,55 +1576,66 @@ footer {
         </h2>
 
         <p>
-            You never know what story comes next.
+            Let fate decide.
         </p>
 
     </div>
 
 
-    <div class="roulette-box">
+    <div class="center-box">
 
-        <div id="rouletteIcon"
-             style="
-             font-size:55px;
-             color:#c9a66b;
-             margin-bottom:25px;
-             ">
+
+        <div
+            id="rouletteIcon"
+            style="
+            font-size:60px;
+            color:#d1ae70;
+            margin-bottom:25px;
+            ">
 
             ✧
 
         </div>
 
 
-        <p id="rouletteText">
+        <p
+            id="rouletteText"
+            class="hugot-display">
 
-            "Someone secretly likes their best friend."
+            "Someone secretly likes
+            their best friend."
 
         </p>
 
 
-        <button class="primary-button"
-                onclick="spinRoulette()">
+        <button
+            class="primary-button"
+            onclick="spinRoulette()">
 
             SPIN THE PLOT
 
         </button>
+
 
     </div>
 
 </section>
 
 
+
 <!-- =========================
      UNSENT
 ========================= -->
 
-<section id="unsent" class="page-section">
+<section
+    id="unsent"
+    class="page-section">
+
 
     <div class="section-heading">
 
         <p class="eyebrow">
-            Never sent
+            NEVER SENT
         </p>
 
         <h2>
@@ -906,124 +1643,153 @@ footer {
         </h2>
 
         <p>
-            Messages that stayed in the drafts.
+            For everything that stayed in your drafts.
         </p>
 
     </div>
 
 
-    <div class="unsent-grid">
+    <div class="form-card">
 
-        <div class="card unsent-card">
+        <form id="unsentForm">
 
-            <span class="card-label">
-                DRAFT #01
-            </span>
-
-            <p>
-                "I wish I told you how I felt
-                before everything changed."
-            </p>
-
-        </div>
+            <textarea
+                id="unsentInput"
+                maxlength="500"
+                placeholder="Write the message you never sent..."
+                required></textarea>
 
 
-        <div class="card unsent-card">
+            <button
+                class="primary-button"
+                type="submit">
 
-            <span class="card-label">
-                DRAFT #02
-            </span>
+                SEND TO THE VOID ✉
 
-            <p>
-                "I still check if you've viewed
-                my story."
-            </p>
+            </button>
 
-        </div>
-
-
-        <div class="card unsent-card">
-
-            <span class="card-label">
-                DRAFT #03
-            </span>
-
-            <p>
-                "Maybe in another timeline,
-                we actually said what we meant."
-            </p>
-
-        </div>
+        </form>
 
     </div>
 
+
+    <div
+        id="unsentList"
+        class="post-grid">
+
+    </div>
+
+
 </section>
+
 
 
 <!-- =========================
      ABOUT
 ========================= -->
 
-<section id="about" class="page-section">
+<section
+    id="about"
+    class="page-section">
+
 
     <div class="about">
 
+
         <p class="eyebrow">
-            Behind the plot
+            BEHIND THE PLOT
         </p>
+
 
         <h2>
+
             About<br>
             PlotTwisted.
+
         </h2>
 
+
         <p>
-            PlotTwisted is a creative anonymous space where
-            people can share confessions, hugot lines,
-            unsent messages, relationship signs, and
-            unexpected plot twists.
+
+            PlotTwisted is an anonymous space
+            where people can share confessions,
+            hugot lines, unsent messages,
+            relationship signs, and unexpected
+            plot twists.
+
         </p>
+
 
         <br>
 
+
         <p>
-            Sometimes we just need somewhere to say
-            what we cannot say out loud.
+
+            No names.
+            No judgment.
+            Just stories.
+
         </p>
+
 
         <br>
 
-        <p style="color:#c9a66b;">
-            Your story. Your secret. Your plot twist.
+
+        <p
+            style="
+            color:#d1ae70;
+            ">
+
+            Your story.
+            Your secret.
+            Your plot twist.
+
         </p>
+
 
     </div>
 
 </section>
 
 
-<!-- FOOTER -->
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
-    <strong style="
+    <strong
+        style="
         font-family:'Cormorant Garamond',serif;
         font-size:22px;
-        color:#f4ead8;
-    ">
+        color:#f5ead8;
+        ">
+
         PlotTwisted
+
     </strong>
+
 
     <br><br>
 
-    Your story doesn't always go as planned.
+
+    Your story doesn't always
+    go as planned.
+
 
 </footer>
 
 
-<!-- SCRIPT -->
 
-<script type="module" src="./script.js"></script>
+<!-- FIREBASE / SCRIPT -->
+
+<script
+    type="module"
+    src="./script.js">
+</script>
+
 
 </body>
+
     </html>
