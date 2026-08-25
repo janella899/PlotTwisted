@@ -6,1030 +6,1629 @@
 
 <title>PlotTwisted — Your Story, Your Secret</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Poppins:wght@300;400;500;600&display=swap');
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-:root{
-    --black:#08070a;
-    --dark:#100b0f;
-    --dark2:#171017;
-    --wine:#64142d;
-    --wine2:#8e2444;
-    --gold:#d8b36b;
-    --gold2:#f0d59b;
-    --cream:#f5ecdc;
-    --muted:#a89d91;
-    --line:rgba(216,179,107,.25);
-    --glass:rgba(255,255,255,.045);
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =====================================================
+   PLOTTWISTED — SECRET SCRAPBOOK
+===================================================== */
+
+:root {
+    --ink:#171013;
+    --wine:#5d162b;
+    --wine-dark:#310d1b;
+    --wine-light:#8c3049;
+    --cream:#f3e7d2;
+    --paper:#eadcc4;
+    --paper-dark:#d6c4a5;
+    --gold:#c9a45d;
+    --gold-light:#e3c987;
+    --brown:#806c58;
+    --muted:#a99b8c;
+    --line:rgba(201,164,93,.30);
+    --shadow:rgba(0,0,0,.45);
 }
 
-*{
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
-html{
+html {
     scroll-behavior:smooth;
 }
 
-body{
+body {
     min-height:100vh;
-    background:
-        radial-gradient(circle at 10% 15%,rgba(100,20,45,.38),transparent 28%),
-        radial-gradient(circle at 90% 75%,rgba(216,179,107,.08),transparent 25%),
-        linear-gradient(135deg,#08070a,#120b10 55%,#090709);
     color:var(--cream);
-    font-family:Poppins,sans-serif;
+    font-family:"Poppins",sans-serif;
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(140,48,73,.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(201,164,93,.10),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #10090d,
+            #1a0c12 50%,
+            #0b0709
+        );
     overflow-x:hidden;
 }
 
-/* =========================
-   ART BACKGROUND
-========================= */
 
-body::before{
+/* =====================================================
+   PAPER GRAIN
+===================================================== */
+
+body::before {
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
-    opacity:.15;
+    opacity:.035;
+    z-index:9999;
+
     background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-    background-size:45px 45px;
-    z-index:-3;
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            #fff 4px
+        );
 }
 
-.orbit{
+
+/* =====================================================
+   DECORATIONS
+===================================================== */
+
+.decor {
     position:fixed;
-    width:350px;
-    height:350px;
-    border:1px solid rgba(216,179,107,.08);
-    border-radius:50%;
-    right:-160px;
-    top:130px;
     pointer-events:none;
-    animation:rotate 25s linear infinite;
+    z-index:0;
+    color:rgba(201,164,93,.18);
+    animation:float 7s ease-in-out infinite;
 }
 
-.orbit::before,
-.orbit::after{
-    content:"";
-    position:absolute;
-    border:1px solid rgba(142,36,68,.15);
-    border-radius:50%;
+.decor.one {
+    top:17%;
+    left:3%;
+    font-size:34px;
 }
 
-.orbit::before{
-    inset:35px;
+.decor.two {
+    top:72%;
+    right:4%;
+    font-size:29px;
+    animation-delay:2s;
 }
 
-.orbit::after{
-    inset:80px;
+.decor.three {
+    bottom:12%;
+    left:15%;
+    font-size:22px;
+    animation-delay:4s;
 }
 
-@keyframes rotate{
-    to{transform:rotate(360deg)}
+.decor.four {
+    top:35%;
+    right:13%;
+    font-size:17px;
+    animation-delay:1s;
 }
 
-.star{
-    position:fixed;
-    color:var(--gold);
-    opacity:.35;
-    pointer-events:none;
-    z-index:-1;
-    animation:float 5s ease-in-out infinite;
+@keyframes float {
+
+    0%,100% {
+        transform:translateY(0) rotate(0);
+    }
+
+    50% {
+        transform:translateY(-17px) rotate(8deg);
+    }
+
 }
 
-.star.s1{top:18%;left:5%;font-size:22px}
-.star.s2{top:70%;right:7%;font-size:15px;animation-delay:1s}
-.star.s3{bottom:12%;left:17%;font-size:12px;animation-delay:2s}
-.star.s4{top:35%;right:17%;font-size:9px;animation-delay:3s}
 
-@keyframes float{
-    0%,100%{transform:translateY(0) rotate(0)}
-    50%{transform:translateY(-14px) rotate(15deg)}
-}
-
-/* =========================
+/* =====================================================
    NAVIGATION
-========================= */
+===================================================== */
 
-.navbar{
+.navbar {
     position:fixed;
     top:0;
     left:0;
     right:0;
+
     height:76px;
+
+    padding:0 6%;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 6%;
-    background:rgba(8,7,10,.82);
+
+    background:rgba(13,7,10,.88);
     backdrop-filter:blur(18px);
+
     border-bottom:1px solid var(--line);
+
     z-index:1000;
 }
 
-.logo{
-    font-family:"Cormorant Garamond",serif;
-    font-size:30px;
-    letter-spacing:2px;
-}
-
-.logo span{
-    color:var(--gold);
-}
-
-.nav-links{
-    display:flex;
-    gap:7px;
-}
-
-.nav-links button{
-    border:1px solid transparent;
-    background:transparent;
-    color:var(--muted);
-    padding:9px 13px;
-    font-family:DM Mono,monospace;
-    font-size:9px;
+.logo {
+    font-family:"Playfair Display",serif;
+    font-size:28px;
     letter-spacing:1px;
-    cursor:pointer;
-    transition:.3s;
 }
 
-.nav-links button:hover{
+.logo span {
+    color:var(--gold);
+    font-style:italic;
+}
+
+.logo-small {
+    display:block;
+    color:var(--muted);
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:3px;
+    margin-top:-4px;
+}
+
+.nav-button {
+    position:relative;
+
+    padding:10px 20px;
+
+    background:transparent;
     color:var(--cream);
-    border-color:var(--line);
-    background:rgba(100,20,45,.25);
+
+    border:1px solid var(--line);
+
+    font-family:"DM Mono",monospace;
+    font-size:9px;
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    overflow:hidden;
 }
 
-/* =========================
-   SLIDES
-========================= */
+.nav-button::before {
+    content:"";
+    position:absolute;
+    inset:0;
 
-.page{
+    background:var(--wine);
+
+    transform:translateY(100%);
+    transition:.35s;
+
+    z-index:-1;
+}
+
+.nav-button:hover::before {
+    transform:translateY(0);
+}
+
+.nav-button:hover {
+    border-color:var(--gold);
+    transform:translateY(-2px);
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+.page-section {
     display:none;
     min-height:100vh;
-    padding:120px 7% 70px;
+    padding:120px 7% 80px;
+    position:relative;
+    z-index:1;
 }
 
-.page.active{
+.page-section.active-section {
     display:block;
-    animation:slideIn .55s ease;
+    animation:sectionIn .65s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes slideIn{
-    from{
+@keyframes sectionIn {
+
+    from {
         opacity:0;
-        transform:translateY(25px);
+        transform:translateY(30px) scale(.985);
     }
-    to{
+
+    to {
         opacity:1;
-        transform:translateY(0);
+        transform:translateY(0) scale(1);
     }
+
 }
 
-/* =========================
-   HOME
-========================= */
 
-.hero{
-    max-width:1200px;
+/* =====================================================
+   HOME
+===================================================== */
+
+.home-wrapper {
+    max-width:1250px;
+    min-height:82vh;
     margin:auto;
-    min-height:78vh;
+
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1.05fr .95fr;
     align-items:center;
+
     gap:70px;
 }
 
-.eyebrow{
-    font-family:DM Mono,monospace;
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero-label {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
     color:var(--gold);
+
+    font-family:"DM Mono",monospace;
     font-size:9px;
     letter-spacing:4px;
 }
 
-.hero h1{
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(75px,11vw,145px);
-    line-height:.72;
-    letter-spacing:-6px;
-    margin:25px 0 35px;
-}
-
-.hero h1 span{
-    display:block;
-    color:transparent;
-    -webkit-text-stroke:1px var(--gold);
-}
-
-.hero-description{
-    max-width:520px;
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.9;
-}
-
-/* =========================
-   CREATIVE MAP
-========================= */
-
-.feature-map{
-    position:relative;
-    min-height:520px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.center-node{
-    width:170px;
-    height:170px;
-    border:1px solid var(--gold);
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background:
-        radial-gradient(circle,rgba(100,20,45,.6),rgba(8,7,10,.8));
-    box-shadow:
-        0 0 45px rgba(100,20,45,.3),
-        inset 0 0 30px rgba(216,179,107,.05);
-    position:relative;
-    z-index:3;
-}
-
-.center-node::before{
+.hero-label::before {
     content:"";
-    position:absolute;
-    inset:-12px;
-    border:1px dashed rgba(216,179,107,.25);
-    border-radius:50%;
-    animation:rotate 18s linear infinite;
-}
-
-.center-node strong{
-    font-family:"Cormorant Garamond",serif;
-    font-size:27px;
-}
-
-.center-node small{
-    color:var(--gold);
-    font-family:DM Mono,monospace;
-    font-size:7px;
-    letter-spacing:2px;
-    margin-top:6px;
-}
-
-/* lines */
-
-.connector{
-    position:absolute;
+    width:35px;
     height:1px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-    opacity:.4;
-    transform-origin:center;
-}
-
-.c1{
-    width:210px;
-    transform:rotate(25deg);
-}
-
-.c2{
-    width:210px;
-    transform:rotate(-25deg);
-}
-
-.c3{
-    width:210px;
-    transform:rotate(155deg);
-}
-
-.c4{
-    width:210px;
-    transform:rotate(-155deg);
-}
-
-/* nodes */
-
-.feature{
-    position:absolute;
-    width:150px;
-    min-height:105px;
-    padding:17px;
-    background:rgba(20,12,17,.92);
-    border:1px solid var(--line);
-    cursor:pointer;
-    text-align:left;
-    transition:.35s;
-}
-
-.feature:hover{
-    transform:translateY(-7px);
-    border-color:var(--gold);
-    box-shadow:0 15px 35px rgba(0,0,0,.35);
-}
-
-.feature::before{
-    content:"";
-    position:absolute;
-    width:7px;
-    height:7px;
-    border-radius:50%;
     background:var(--gold);
-    box-shadow:0 0 12px var(--gold);
 }
 
-.feature:nth-of-type(1){top:5%;left:2%}
-.feature:nth-of-type(2){top:5%;right:2%}
-.feature:nth-of-type(3){bottom:7%;left:2%}
-.feature:nth-of-type(4){bottom:7%;right:2%}
+.hero-title {
+    margin:20px 0;
 
-.feature:nth-of-type(1)::before,
-.feature:nth-of-type(3)::before{
-    right:-4px;
-    top:50%;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(70px,10vw,140px);
+
+    line-height:.78;
+    letter-spacing:-7px;
 }
 
-.feature:nth-of-type(2)::before,
-.feature:nth-of-type(4)::before{
-    left:-4px;
-    top:50%;
-}
-
-.feature-icon{
-    color:var(--gold);
-    font-size:20px;
-    margin-bottom:8px;
-}
-
-.feature strong{
+.hero-title span {
     display:block;
-    font-family:"Cormorant Garamond",serif;
-    font-size:19px;
-}
 
-.feature small{
-    color:var(--muted);
-    font-size:8px;
-    line-height:1.5;
-}
+    color:transparent;
 
-/* =========================
-   SECTION HEADINGS
-========================= */
+    -webkit-text-stroke:1px var(--gold);
 
-.heading{
-    max-width:1050px;
-    margin:0 auto 35px;
-}
-
-.heading h2{
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(60px,9vw,100px);
-    line-height:.8;
-    margin:18px 0 20px;
-}
-
-.heading p:last-child{
-    color:var(--muted);
-    font-size:13px;
-}
-
-/* =========================
-   FORMS
-========================= */
-
-.form-card{
-    max-width:850px;
-    margin:0 auto 45px;
-    padding:30px;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.035);
-    position:relative;
-}
-
-.form-card::before{
-    content:"PLOTTWISTED / PRIVATE CORNER";
-    position:absolute;
-    top:-8px;
-    left:25px;
-    padding:0 8px;
-    background:var(--black);
-    color:var(--gold);
-    font-family:DM Mono,monospace;
-    font-size:7px;
-    letter-spacing:2px;
-}
-
-textarea{
-    width:100%;
-    min-height:150px;
-    padding:18px;
-    resize:vertical;
-    outline:none;
-    background:rgba(0,0,0,.35);
-    color:var(--cream);
-    border:1px solid var(--line);
-    font-family:Poppins,sans-serif;
-    font-size:13px;
-}
-
-textarea:focus{
-    border-color:var(--gold);
-}
-
-.action{
-    margin-top:14px;
-    padding:13px 23px;
-    background:var(--wine);
-    border:1px solid var(--gold);
-    color:var(--cream);
-    cursor:pointer;
-    font-family:DM Mono,monospace;
-    font-size:9px;
-    letter-spacing:1px;
-    transition:.3s;
-}
-
-.action:hover{
-    background:var(--wine2);
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(100,20,45,.35);
-}
-
-/* =========================
-   PUBLIC POSTS
-========================= */
-
-.feed-header{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.feed-header h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:34px;
-}
-
-.feed-header span{
-    color:var(--gold);
-    font-family:DM Mono,monospace;
-    font-size:8px;
-}
-
-.post-grid{
-    max-width:1100px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:18px;
-}
-
-.post-card{
-    padding:24px;
-    background:
-        linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
-    border:1px solid var(--line);
-    transition:.35s;
-}
-
-.post-card:hover{
-    transform:translateY(-6px) rotate(.2deg);
-    border-color:var(--gold);
-}
-
-.post-type{
-    color:var(--gold);
-    font-family:DM Mono,monospace;
-    font-size:8px;
-    letter-spacing:2px;
-}
-
-.post-message{
-    margin-top:15px;
-    font-family:"Cormorant Garamond",serif;
-    font-size:24px;
-    line-height:1.2;
-}
-
-.post-date{
-    color:#766d65;
-    font-family:DM Mono,monospace;
-    font-size:7px;
-    margin-top:18px;
-}
-
-.post-actions{
-    display:flex;
-    justify-content:space-between;
-    margin-top:18px;
-}
-
-.post-actions button{
-    border:0;
-    background:none;
-    color:var(--muted);
-    cursor:pointer;
-}
-
-.post-actions button:hover{
-    color:var(--gold);
-}
-
-/* =========================
-   ROULETTE
-========================= */
-
-.roulette-box{
-    max-width:850px;
-    min-height:500px;
-    margin:auto;
-    border:1px solid var(--line);
-    background:
-        radial-gradient(circle at center,rgba(100,20,45,.25),transparent 60%);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px;
-    position:relative;
-    overflow:hidden;
-}
-
-.roulette-box::before{
-    content:"✦  ✧  ✦  ✧  ✦";
-    position:absolute;
-    top:25px;
-    color:var(--gold);
-    opacity:.3;
-    letter-spacing:25px;
-}
-
-.roulette-symbol{
-    font-size:70px;
-    color:var(--gold);
-    animation:float 3s ease-in-out infinite;
-}
-
-.roulette-result{
-    max-width:650px;
-    margin:25px 0;
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(30px,5vw,50px);
     font-style:italic;
 }
 
-.spin{
-    padding:15px 30px;
-}
+.hero-description {
+    max-width:520px;
 
-/* =========================
-   SIGN / DELUSION
-========================= */
-
-.vote-box{
-    max-width:850px;
-    margin:auto;
-    padding:35px;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.035);
-}
-
-.case{
-    color:var(--gold);
-    font-family:DM Mono,monospace;
-    font-size:8px;
-    letter-spacing:3px;
-}
-
-.vote-box h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:34px;
-    line-height:1.2;
-    margin:20px 0 30px;
-}
-
-.vote-buttons{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.vote-buttons button{
-    min-height:95px;
-    background:rgba(255,255,255,.025);
-    color:var(--cream);
-    border:1px solid var(--line);
-    cursor:pointer;
-    transition:.3s;
-}
-
-.vote-buttons button:hover{
-    background:var(--wine);
-    border-color:var(--gold);
-    transform:translateY(-5px);
-}
-
-/* =========================
-   RECOMMENDATIONS
-========================= */
-
-.recommendations{
-    max-width:1100px;
-    margin:55px auto;
-}
-
-.recommendations h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:38px;
-    margin-bottom:20px;
-}
-
-.rec-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-}
-
-.rec{
-    padding:25px;
-    border:1px dashed var(--line);
-    background:rgba(100,20,45,.12);
-}
-
-.rec span{
-    color:var(--gold);
-    font-size:20px;
-}
-
-.rec p{
-    margin-top:12px;
-    font-family:"Cormorant Garamond",serif;
-    font-size:20px;
-}
-
-/* =========================
-   ABOUT / FAQ
-========================= */
-
-.about-box{
-    max-width:850px;
-    margin:auto;
-    text-align:center;
-    padding:55px 30px;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.035);
-}
-
-.about-box h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:50px;
-    margin-bottom:25px;
-}
-
-.about-box p{
     color:var(--muted);
+
     font-size:13px;
     line-height:2;
 }
 
-.faq{
-    max-width:850px;
-    margin:auto;
+
+/* =====================================================
+   LITTLE PAPER NOTE
+===================================================== */
+
+.paper-note {
+    width:230px;
+
+    margin-top:35px;
+    padding:20px;
+
+    color:#382a20;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1e4ca,
+            #d8c6a5
+        );
+
+    box-shadow:
+        8px 10px 0 rgba(0,0,0,.25);
+
+    transform:rotate(-3deg);
+
+    position:relative;
 }
 
-.faq details{
-    border-bottom:1px solid var(--line);
-    padding:20px 0;
+.paper-note::before {
+    content:"";
+
+    position:absolute;
+
+    top:-10px;
+    left:35%;
+
+    width:70px;
+    height:20px;
+
+    background:rgba(210,190,151,.55);
+
+    transform:rotate(-2deg);
 }
 
-.faq summary{
-    cursor:pointer;
-    font-family:"Cormorant Garamond",serif;
-    font-size:22px;
+.paper-note small {
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:2px;
+    color:#806c58;
 }
 
-.faq p{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.8;
-    margin-top:12px;
+.paper-note p {
+    margin-top:9px;
+
+    font-family:"Playfair Display",serif;
+    font-style:italic;
+
+    font-size:17px;
 }
 
-/* =========================
-   CONTACT
-========================= */
 
-.contact-card{
-    max-width:850px;
-    margin:auto;
-    padding:40px;
-    border:1px solid var(--line);
-    text-align:center;
-    background:rgba(255,255,255,.035);
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-.contact-card h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:45px;
-    margin-bottom:15px;
-}
 
-.contact-card p{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.8;
-}
+/* =====================================================
+   SCRAPBOOK BUTTON
+===================================================== */
 
-/* =========================
-   FOOTER
-========================= */
+.story-button {
+    width:100%;
+    min-height:72px;
 
-footer{
-    padding:40px 20px;
-    text-align:center;
-    border-top:1px solid var(--line);
-    color:var(--muted);
-    font-size:8px;
-    font-family:DM Mono,monospace;
-}
+    display:grid;
+    grid-template-columns:52px 1fr 30px;
+    align-items:center;
 
-footer strong{
-    font-family:"Cormorant Garamond",serif;
-    font-size:25px;
+    gap:15px;
+
+    padding:10px 16px;
+
+    position:relative;
+    overflow:hidden;
+
     color:var(--cream);
+
+    background:
+        linear-gradient(
+            105deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.018)
+        );
+
+    border:1px solid var(--line);
+
+    cursor:pointer;
+
+    text-align:left;
+
+    transition:
+        transform .35s,
+        border-color .35s,
+        background .35s,
+        box-shadow .35s;
 }
 
-/* =========================
+.story-button::before {
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:3px;
+
+    background:var(--gold);
+
+    transform:scaleY(0);
+
+    transition:.35s;
+}
+
+.story-button::after {
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.08),
+            transparent
+        );
+
+    transition:.6s;
+}
+
+.story-button:hover::after {
+    left:100%;
+}
+
+.story-button:hover {
+    transform:translateX(9px);
+    border-color:var(--gold);
+    background:rgba(93,22,43,.55);
+
+    box-shadow:
+        -7px 8px 0 rgba(201,164,93,.08);
+}
+
+.story-button:hover::before {
+    transform:scaleY(1);
+}
+
+.story-symbol {
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--gold);
+
+    border:1px solid var(--line);
+
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+
+    background:rgba(0,0,0,.15);
+
+    transition:.35s;
+}
+
+.story-button:hover .story-symbol {
+    transform:rotate(-5deg) scale(1.05);
+    background:var(--wine);
+}
+
+.story-button strong {
+    display:block;
+
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+    font-weight:500;
+}
+
+.story-button small {
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:1px;
+}
+
+.story-arrow {
+    color:var(--gold);
+    font-size:19px;
+    transition:.35s;
+}
+
+.story-button:hover .story-arrow {
+    transform:translateX(7px);
+}
+
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.section-heading {
+    max-width:1000px;
+    margin:0 auto 40px;
+}
+
+.section-heading .eyebrow {
+    color:var(--gold);
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+    letter-spacing:4px;
+}
+
+.section-heading h2 {
+    margin:15px 0;
+
+    font-family:"Playfair Display",serif;
+    font-size:clamp(55px,8vw,100px);
+
+    line-height:.8;
+    letter-spacing:-4px;
+}
+
+.section-heading p:last-child {
+    color:var(--muted);
+    font-size:12px;
+}
+
+
+/* =====================================================
+   FORM PAPER
+===================================================== */
+
+.form-card {
+    max-width:850px;
+    margin:0 auto 45px;
+
+    padding:34px;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(234,220,196,.08),
+            rgba(234,220,196,.025)
+        );
+
+    border:1px solid var(--line);
+
+    box-shadow:
+        12px 15px 0 rgba(0,0,0,.13);
+}
+
+.form-card::before {
+    content:"PLOTTWISTED / PRIVATE";
+
+    position:absolute;
+
+    top:-9px;
+    left:25px;
+
+    padding:2px 10px;
+
+    color:var(--gold);
+
+    background:#160a0f;
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:2px;
+}
+
+.form-card::after {
+    content:"✦";
+
+    position:absolute;
+
+    right:20px;
+    bottom:15px;
+
+    color:rgba(201,164,93,.25);
+
+    font-size:30px;
+}
+
+
+/* =====================================================
+   TEXTAREA
+===================================================== */
+
+textarea {
+    width:100%;
+    min-height:160px;
+
+    padding:20px;
+
+    resize:vertical;
+
+    background:
+        repeating-linear-gradient(
+            transparent,
+            transparent 29px,
+            rgba(201,164,93,.08) 30px
+        );
+
+    color:var(--cream);
+
+    border:none;
+    border-bottom:1px solid var(--line);
+
+    outline:none;
+
+    font-family:"Playfair Display",serif;
+    font-size:19px;
+
+    line-height:30px;
+}
+
+textarea::placeholder {
+    color:#766b61;
+    font-style:italic;
+}
+
+textarea:focus {
+    border-color:var(--gold);
+}
+
+
+/* =====================================================
+   GOLD BUTTON
+===================================================== */
+
+.post-button {
+    margin-top:18px;
+
+    padding:13px 24px;
+
+    color:var(--cream);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--wine),
+            var(--wine-dark)
+        );
+
+    border:1px solid var(--gold);
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.post-button:hover {
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.3);
+
+    background:var(--wine-light);
+}
+
+.post-button:active {
+    transform:scale(.96);
+}
+
+
+/* =====================================================
+   PUBLIC WALL
+===================================================== */
+
+.feed-title {
+    max-width:1100px;
+    margin:0 auto 20px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+}
+
+.feed-title h3 {
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+}
+
+.feed-title span {
+    color:var(--gold);
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:2px;
+}
+
+
+/* =====================================================
+   POST GRID
+===================================================== */
+
+.post-grid {
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(260px,1fr));
+
+    gap:22px;
+}
+
+
+/* =====================================================
+   POST CARD
+===================================================== */
+
+.post-card {
+    position:relative;
+
+    min-height:210px;
+
+    padding:27px;
+
+    color:#30231d;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f0e2c9,
+            #dfccb0
+        );
+
+    box-shadow:
+        6px 8px 0 rgba(0,0,0,.22);
+
+    transition:.35s;
+
+    transform:rotate(-.4deg);
+}
+
+.post-card:nth-child(2n) {
+    transform:rotate(.7deg);
+}
+
+.post-card:nth-child(3n) {
+    transform:rotate(-1deg);
+}
+
+.post-card:hover {
+    transform:
+        translateY(-8px)
+        rotate(0deg);
+
+    box-shadow:
+        10px 16px 0 rgba(0,0,0,.28);
+}
+
+.post-card::before {
+    content:"";
+
+    position:absolute;
+
+    top:-9px;
+    left:28%;
+
+    width:80px;
+    height:18px;
+
+    background:
+        rgba(201,164,93,.55);
+
+    transform:rotate(-2deg);
+}
+
+.post-type {
+    color:#806044;
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:2px;
+}
+
+.post-message {
+    margin-top:18px;
+
+    font-family:"Playfair Display",serif;
+    font-size:23px;
+
+    line-height:1.25;
+}
+
+.post-date {
+    margin-top:22px;
+
+    color:#8d7965;
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+}
+
+.post-actions {
+    margin-top:17px;
+
+    display:flex;
+    justify-content:space-between;
+}
+
+.like-button,
+.report-button {
+    background:none;
+    border:none;
+
+    color:#806c58;
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.like-button:hover {
+    color:#8c3049;
+}
+
+.report-button:hover {
+    color:#5d162b;
+}
+
+
+/* =====================================================
+   RECOMMENDATIONS
+===================================================== */
+
+.recommendations {
+    max-width:1100px;
+    margin:65px auto 0;
+}
+
+.recommendations h3 {
+    margin-bottom:18px;
+
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+}
+
+.recommendation-box {
+    position:relative;
+
+    padding:28px;
+
+    border:1px dashed var(--line);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(93,22,43,.22),
+            rgba(201,164,93,.05)
+        );
+}
+
+.recommendation-box p {
+    font-family:"Playfair Display",serif;
+    font-size:24px;
+    font-style:italic;
+}
+
+
+/* =====================================================
+   SIGN OR DELUSION
+===================================================== */
+
+.vote-box {
+    max-width:900px;
+    margin:auto;
+
+    padding:40px;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(234,220,196,.08),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid var(--line);
+
+    box-shadow:
+        10px 12px 0 rgba(0,0,0,.15);
+}
+
+.vote-box::before {
+    content:"CASE FILE";
+
+    position:absolute;
+
+    top:15px;
+    right:20px;
+
+    color:var(--gold);
+
+    font-family:"DM Mono",monospace;
+    font-size:7px;
+    letter-spacing:2px;
+}
+
+.vote-box h3 {
+    margin:18px 0 35px;
+
+    font-family:"Playfair Display",serif;
+    font-size:34px;
+    font-weight:500;
+    line-height:1.25;
+}
+
+.vote-buttons {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.vote-buttons button {
+    min-height:120px;
+
+    padding:15px;
+
+    color:var(--cream);
+
+    background:
+        rgba(0,0,0,.18);
+
+    border:1px solid var(--line);
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.vote-buttons button:first-child:hover {
+    background:var(--wine);
+}
+
+.vote-buttons button:nth-child(2):hover {
+    background:#6c583c;
+}
+
+.vote-buttons button:nth-child(3):hover {
+    background:#3d1727;
+}
+
+.vote-buttons button:hover {
+    transform:translateY(-7px);
+    border-color:var(--gold);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.3);
+}
+
+
+/* =====================================================
+   RESULTS
+===================================================== */
+
+.results {
+    margin-top:35px;
+}
+
+.result {
+    display:grid;
+    grid-template-columns:70px 1fr 45px;
+    gap:12px;
+    align-items:center;
+
+    margin:15px 0;
+
+    color:var(--muted);
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+}
+
+.bar {
+    height:5px;
+
+    background:rgba(255,255,255,.08);
+}
+
+.bar div {
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--wine),
+            var(--gold)
+        );
+
+    transition:width .6s ease;
+}
+
+
+/* =====================================================
+   ROULETTE
+===================================================== */
+
+.center-box {
+    max-width:900px;
+    margin:auto;
+
+    min-height:460px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:55px 30px;
+
+    position:relative;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(93,22,43,.38),
+            transparent 65%
+        );
+
+    border:1px solid var(--line);
+
+    overflow:hidden;
+}
+
+.center-box::before,
+.center-box::after {
+    content:"✦";
+
+    position:absolute;
+
+    color:rgba(201,164,93,.25);
+
+    font-size:60px;
+}
+
+.center-box::before {
+    top:25px;
+    left:30px;
+}
+
+.center-box::after {
+    bottom:20px;
+    right:30px;
+}
+
+#rouletteIcon {
+    font-size:75px !important;
+
+    color:var(--gold);
+
+    margin-bottom:25px;
+
+    transition:
+        transform .5s ease;
+}
+
+.hugot-display {
+    max-width:750px;
+
+    margin-bottom:35px;
+
+    font-family:"Playfair Display",serif;
+    font-size:clamp(28px,5vw,52px);
+
+    line-height:1.15;
+
+    font-style:italic;
+
+    transition:
+        opacity .35s,
+        transform .35s;
+}
+
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+.about {
+    max-width:850px;
+    min-height:75vh;
+
+    margin:auto;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.about h2 {
+    margin:18px 0 30px;
+
+    font-family:"Playfair Display",serif;
+    font-size:clamp(65px,9vw,110px);
+
+    line-height:.78;
+    letter-spacing:-5px;
+}
+
+.about p {
+    max-width:650px;
+
+    color:var(--muted);
+
+    font-size:13px;
+    line-height:2;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    padding:45px 20px;
+
+    text-align:center;
+
+    border-top:1px solid var(--line);
+
+    color:var(--muted);
+
+    font-family:"DM Mono",monospace;
+    font-size:8px;
+    letter-spacing:1px;
+}
+
+.footer-title {
+    color:var(--cream);
+
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+
+/* =====================================================
    MOBILE
-========================= */
+===================================================== */
 
-@media(max-width:850px){
+@media(max-width:850px) {
 
-    .navbar{
-        height:auto;
-        min-height:70px;
-        padding:12px 5%;
-        flex-wrap:wrap;
-        gap:8px;
-    }
-
-    .nav-links{
-        width:100%;
-        overflow-x:auto;
-        padding-bottom:3px;
-    }
-
-    .nav-links button{
-        white-space:nowrap;
-    }
-
-    .page{
-        padding:120px 5% 55px;
-    }
-
-    .hero{
+    .home-wrapper {
         grid-template-columns:1fr;
-        gap:25px;
+        gap:50px;
     }
 
-    .feature-map{
-        min-height:620px;
-        transform:scale(.9);
+    .hero-title {
+        font-size:82px;
     }
 
-    .hero h1{
-        font-size:80px;
-    }
 }
 
-@media(max-width:600px){
 
-    .feature-map{
-        transform:scale(.72);
-        margin-left:-15%;
-        width:130%;
+@media(max-width:600px) {
+
+    .navbar {
+        height:65px;
+        padding:0 5%;
     }
 
-    .hero h1{
+    .logo {
+        font-size:23px;
+    }
+
+    .nav-button {
+        padding:8px 12px;
+        font-size:7px;
+    }
+
+    .page-section {
+        padding:
+            95px 5% 55px;
+    }
+
+    .hero-title {
         font-size:70px;
-        letter-spacing:-4px;
+        letter-spacing:-5px;
     }
 
-    .heading h2{
-        font-size:65px;
+    .hero-description {
+        font-size:12px;
+    }
+
+    .paper-note {
+        width:200px;
+    }
+
+    .story-button {
+        grid-template-columns:
+            43px 1fr 20px;
+
+        min-height:70px;
+    }
+
+    .story-symbol {
+        width:40px;
+        height:40px;
+    }
+
+    .story-button strong {
+        font-size:16px;
+    }
+
+    .story-button small {
+        font-size:6px;
+    }
+
+    .section-heading h2 {
+        font-size:58px;
     }
 
     .form-card,
-    .vote-box,
-    .about-box,
-    .contact-card{
-        padding:23px 17px;
+    .vote-box {
+        padding:25px 18px;
     }
 
-    .vote-buttons{
+    .vote-box h3 {
+        font-size:27px;
+    }
+
+    .vote-buttons {
         grid-template-columns:1fr;
     }
 
-    .post-grid{
+    .vote-buttons button {
+        min-height:85px;
+    }
+
+    .feed-title {
+        align-items:flex-start;
+        flex-direction:column;
+        gap:7px;
+    }
+
+    .recommendation-box p {
+        font-size:20px;
+    }
+
+    .post-grid {
         grid-template-columns:1fr;
+    }
+
+    .center-box {
+        min-height:400px;
+        padding:40px 18px;
+    }
+
+    .hugot-display {
+        font-size:30px;
+    }
+
+    .about h2 {
+        font-size:70px;
     }
 
 }
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media(prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- ART DETAILS -->
-<div class="orbit"></div>
 
-<div class="star s1">✦</div>
-<div class="star s2">✧</div>
-<div class="star s3">✦</div>
-<div class="star s4">·</div>
+<!-- =====================================================
+     FLOATING DECOR
+===================================================== -->
+
+<div class="decor one">✦</div>
+<div class="decor two">♡</div>
+<div class="decor three">✧</div>
+<div class="decor four">❦</div>
 
 
-<!-- =========================
+<!-- =====================================================
      NAVBAR
-========================= -->
+===================================================== -->
 
 <nav class="navbar">
 
     <div class="logo">
+
         Plot<span>Twisted</span>
-    </div>
 
-    <div class="nav-links">
-
-        <button onclick="showPage('home')">HOME</button>
-
-        <button onclick="showPage('community')">
-            COMMUNITY
-        </button>
-
-        <button onclick="showPage('roulette')">
-            ROULETTE
-        </button>
-
-        <button onclick="showPage('recommendations')">
-            RECS
-        </button>
-
-        <button onclick="showPage('about')">
-            ABOUT
-        </button>
-
-        <button onclick="showPage('faq')">
-            FAQ
-        </button>
+        <small class="logo-small">
+            STORIES • SECRETS • PLOT TWISTS
+        </small>
 
     </div>
+
+    <button
+        class="nav-button"
+        data-slide="home">
+
+        ✦ HOME
+
+    </button>
 
 </nav>
 
 
-<!-- =========================
+<!-- =====================================================
      HOME
-========================= -->
+===================================================== -->
 
-<section id="home" class="page active">
+<section
+    id="home"
+    class="page-section active-section">
 
-    <div class="hero">
+    <div class="home-wrapper">
+
 
         <div>
 
-            <p class="eyebrow">
-                // YOUR LITTLE SECRET
-            </p>
+            <div class="hero-label">
+                WELCOME TO THE SECRET SIDE
+            </div>
 
-            <h1>
+
+            <h1 class="hero-title">
+
                 Plot
+
                 <span>Twisted.</span>
+
             </h1>
 
+
             <p class="hero-description">
-                A little corner of the internet for
-                anonymous confessions, questionable
-                signs, unforgettable hugots,
-                unsent messages, and stories waiting
-                for their plot twist.
+
+                A little corner of the internet
+                for confessions, hugots, unsent
+                messages, questionable signs,
+                and stories that took a turn
+                nobody expected.
+
             </p>
+
+
+            <div class="paper-note">
+
+                <small>
+                    NOTE #001
+                </small>
+
+                <p>
+                    “Every story has a secret
+                    nobody knows.”
+                </p>
+
+            </div>
 
         </div>
 
 
-        <div class="feature-map">
-
-            <div class="connector c1"></div>
-            <div class="connector c2"></div>
-            <div class="connector c3"></div>
-            <div class="connector c4"></div>
-
-
-            <div class="center-node">
-
-                <strong>
-                    PlotTwisted
-                </strong>
-
-                <small>
-                    YOUR STORY
-                </small>
-
-            </div>
+        <div class="menu">
 
 
             <button
-                class="feature"
-                onclick="showPage('community')">
+                class="story-button"
+                data-slide="confessions">
 
-                <div class="feature-icon">
+                <div class="story-symbol">
                     ♡
                 </div>
 
-                <strong>
-                    Confessions
-                </strong>
+                <div>
 
-                <small>
-                    Say it without
-                    saying your name.
-                </small>
+                    <strong>
+                        Anonymous Confessions
+                    </strong>
+
+                    <small>
+                        SAY IT WITHOUT YOUR NAME
+                    </small>
+
+                </div>
+
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
 
             <button
-                class="feature"
-                onclick="showPage('community')">
+                class="story-button"
+                data-slide="hugot">
 
-                <div class="feature-icon">
+                <div class="story-symbol">
                     ✦
                 </div>
 
-                <strong>
-                    Hugot Corner
-                </strong>
+                <div>
 
-                <small>
-                    Leave a line
-                    someone may need.
-                </small>
+                    <strong>
+                        Hugot Corner
+                    </strong>
 
-            </button>
+                    <small>
+                        FEELINGS GO HERE
+                    </small>
 
-
-            <button
-                class="feature"
-                onclick="showPage('roulette')">
-
-                <div class="feature-icon">
-                    ✧
                 </div>
 
-                <strong>
-                    Plot Roulette
-                </strong>
-
-                <small>
-                    Let fate decide
-                    what happens next.
-                </small>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
 
             <button
-                class="feature"
-                onclick="showPage('community')">
+                class="story-button"
+                data-slide="signs">
 
-                <div class="feature-icon">
+                <div class="story-symbol">
                     ?
                 </div>
 
-                <strong>
-                    Sign or Delusion
-                </strong>
+                <div>
 
-                <small>
-                    You decide
-                    the verdict.
-                </small>
+                    <strong>
+                        Sign or Delusion?
+                    </strong>
+
+                    <small>
+                        YOU DECIDE THE VERDICT
+                    </small>
+
+                </div>
+
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
+
+
+            <button
+                class="story-button"
+                data-slide="roulette">
+
+                <div class="story-symbol">
+                    ✧
+                </div>
+
+                <div>
+
+                    <strong>
+                        Plot Twist Roulette
+                    </strong>
+
+                    <small>
+                        LET FATE CHOOSE YOUR STORY
+                    </small>
+
+                </div>
+
+                <span class="story-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="story-button"
+                data-slide="unsent">
+
+                <div class="story-symbol">
+                    ✉
+                </div>
+
+                <div>
+
+                    <strong>
+                        Unsent Messages
+                    </strong>
+
+                    <small>
+                        WORDS THAT NEVER LEFT
+                    </small>
+
+                </div>
+
+                <span class="story-arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <button
+                class="story-button"
+                data-slide="about">
+
+                <div class="story-symbol">
+                    i
+                </div>
+
+                <div>
+
+                    <strong>
+                        About PlotTwisted
+                    </strong>
+
+                    <small>
+                        BEHIND THE STORY
+                    </small>
+
+                </div>
+
+                <span class="story-arrow">
+                    →
+                </span>
+
+            </button>
+
 
         </div>
 
@@ -1038,31 +1637,32 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     COMMUNITY
-========================= -->
+<!-- =====================================================
+     CONFESSIONS
+===================================================== -->
 
-<section id="community" class="page">
+<section
+    id="confessions"
+    class="page-section">
 
-    <div class="heading">
 
-        <p class="eyebrow">
-            // THE COMMUNITY
-        </p>
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            ✦ ANONYMOUS CORNER
+        </div>
 
         <h2>
-            Say It.
+            Confessions.
         </h2>
 
         <p>
-            Share something anonymously and
-            let everyone experience your story.
+            Say the thing you were too scared
+            to say out loud.
         </p>
 
     </div>
 
-
-    <!-- CONFESSION -->
 
     <div class="form-card">
 
@@ -1071,12 +1671,12 @@ footer strong{
             <textarea
                 id="confessionInput"
                 maxlength="500"
-                required
-                placeholder="Write your anonymous confession...">
-            </textarea>
+                placeholder="Dear PlotTwisted... I need to tell you something..."
+                required></textarea>
+
 
             <button
-                class="action"
+                class="post-button"
                 type="submit">
 
                 ♡ POST CONFESSION
@@ -1088,66 +1688,14 @@ footer strong{
     </div>
 
 
-    <!-- HUGOT -->
-
-    <div class="form-card">
-
-        <form id="hugotForm">
-
-            <textarea
-                id="hugotInput"
-                maxlength="400"
-                required
-                placeholder="Drop your hugot here...">
-            </textarea>
-
-            <button
-                class="action"
-                type="submit">
-
-                ✦ POST HUGOT
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <!-- UNSENT -->
-
-    <div class="form-card">
-
-        <form id="unsentForm">
-
-            <textarea
-                id="unsentInput"
-                maxlength="500"
-                required
-                placeholder="Write what you never sent...">
-            </textarea>
-
-            <button
-                class="action"
-                type="submit">
-
-                ✉ SEND TO THE VOID
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="feed-header">
+    <div class="feed-title">
 
         <h3>
             Public Stories
         </h3>
 
         <span>
-            EVERYONE CAN SEE
+            ✦ EVERYONE CAN READ
         </span>
 
     </div>
@@ -1159,415 +1707,496 @@ footer strong{
     </div>
 
 
-    <div
-        id="hugotList"
-        class="post-grid"
-        style="margin-top:18px;">
-    </div>
+    <div class="recommendations">
 
+        <h3>
+            ✦ A little recommendation
+        </h3>
 
-    <div
-        id="unsentList"
-        class="post-grid"
-        style="margin-top:18px;">
+        <div class="recommendation-box">
+
+            <p>
+                “Sometimes the person you talk
+                to every day is the plot twist
+                you never expected.”
+            </p>
+
+        </div>
+
     </div>
 
 </section>
 
 
-<!-- =========================
-     ROULETTE
-========================= -->
+<!-- =====================================================
+     HUGOT
+===================================================== -->
 
-<section id="roulette" class="page">
+<section
+    id="hugot"
+    class="page-section">
 
-    <div class="heading">
 
-        <p class="eyebrow">
-            // LET FATE DECIDE
-        </p>
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            ♡ FEELINGS DEPARTMENT
+        </div>
 
         <h2>
-            Plot Twist.
+            Hugot Corner.
         </h2>
 
         <p>
-            Spin the wheel and discover
-            your next unexpected storyline.
+            Leave a line. Maybe someone out
+            there needs to read it.
         </p>
 
     </div>
 
 
-    <div class="roulette-box">
+    <div class="form-card">
 
-        <div class="roulette-symbol">
+        <form id="hugotForm">
+
+            <textarea
+                id="hugotInput"
+                maxlength="400"
+                placeholder="Write the hugot you never got to say..."
+                required></textarea>
+
+
+            <button
+                class="post-button"
+                type="submit">
+
+                ✦ POST HUGOT
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="feed-title">
+
+        <h3>
+            Community Hugots
+        </h3>
+
+        <span>
+            ✦ PUBLIC WALL
+        </span>
+
+    </div>
+
+
+    <div
+        id="hugotList"
+        class="post-grid">
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SIGN OR DELUSION
+===================================================== -->
+
+<section
+    id="signs"
+    class="page-section">
+
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            ? CASE FILE
+        </div>
+
+        <h2>
+            Sign or<br>
+            Delusion?
+        </h2>
+
+        <p>
+            Your friend keeps finding reasons
+            to talk to you. Coincidence?
+        </p>
+
+    </div>
+
+
+    <div class="vote-box">
+
+        <span class="eyebrow">
+            CASE #001
+        </span>
+
+
+        <h3>
+
+            “They always find a reason
+            to talk to you.”
+
+            <br><br>
+
+            Is that a sign?
+
+        </h3>
+
+
+        <div class="vote-buttons">
+
+
+            <button type="button">
+
+                ✦
+                <br><br>
+
+                DEFINITELY A SIGN
+
+            </button>
+
+
+            <button type="button">
+
+                ?
+                <br><br>
+
+                MAYBE
+
+            </button>
+
+
+            <button type="button">
+
+                ♡
+                <br><br>
+
+                YOU'RE DELULU
+
+            </button>
+
+
+        </div>
+
+
+        <div class="results">
+
+
+            <div class="result">
+
+                <span>
+                    SIGN
+                </span>
+
+                <div class="bar">
+
+                    <div
+                        id="signBar"
+                        style="width:62%">
+                    </div>
+
+                </div>
+
+                <strong id="signPercent">
+                    62%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    MAYBE
+                </span>
+
+                <div class="bar">
+
+                    <div
+                        id="maybeBar"
+                        style="width:25%">
+                    </div>
+
+                </div>
+
+                <strong id="maybePercent">
+                    25%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    DELULU
+                </span>
+
+                <div class="bar">
+
+                    <div
+                        id="deluluBar"
+                        style="width:13%">
+                    </div>
+
+                </div>
+
+                <strong id="deluluPercent">
+                    13%
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ROULETTE
+===================================================== -->
+
+<section
+    id="roulette"
+    class="page-section">
+
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            ✧ SPIN THE STORY
+        </div>
+
+        <h2>
+            Plot Twist<br>
+            Roulette.
+        </h2>
+
+        <p>
+            Mostly about that friend
+            you probably shouldn't have
+            feelings for.
+        </p>
+
+    </div>
+
+
+    <div class="center-box">
+
+
+        <div id="rouletteIcon">
+
             ✧
+
         </div>
 
-        <div
+
+        <p
             id="rouletteText"
-            class="roulette-result">
+            class="hugot-display">
 
-            “Someone you least expect
-            knows your biggest secret.”
+            “Someone secretly likes
+            their best friend.”
 
-        </div>
+        </p>
+
 
         <button
-            class="action spin"
+            class="post-button"
+            type="button"
             onclick="spinRoulette()">
 
             ✧ SPIN THE PLOT
 
         </button>
 
+
     </div>
 
 </section>
 
 
-<!-- =========================
-     RECOMMENDATIONS
-========================= -->
+<!-- =====================================================
+     UNSENT
+===================================================== -->
 
-<section id="recommendations" class="page">
-
-    <div class="heading">
-
-        <p class="eyebrow">
-            // HANDPICKED STORIES
-        </p>
-
-        <h2>
-            Recommendations.
-        </h2>
-
-        <p>
-            Little reminders, thoughts,
-            and stories worth reading.
-        </p>
-
-    </div>
+<section
+    id="unsent"
+    class="page-section">
 
 
-    <div class="recommendations">
+    <div class="section-heading">
 
-        <div class="rec-grid">
-
-            <div class="rec">
-
-                <span>✦</span>
-
-                <p>
-                    Sometimes the person you
-                    talk to every day is the
-                    plot twist you never expected.
-                </p>
-
-            </div>
-
-
-            <div class="rec">
-
-                <span>♡</span>
-
-                <p>
-                    Maybe closure isn't a
-                    conversation. Maybe it's
-                    finally choosing yourself.
-                </p>
-
-            </div>
-
-
-            <div class="rec">
-
-                <span>✧</span>
-
-                <p>
-                    Not every delayed reply
-                    is a sign. Sometimes,
-                    they're just busy.
-                </p>
-
-            </div>
-
-
-            <div class="rec">
-
-                <span>?</span>
-
-                <p>
-                    Your story doesn't have
-                    to make sense to everyone
-                    to be worth telling.
-                </p>
-
-            </div>
-
+        <div class="eyebrow">
+            ✉ NEVER SENT
         </div>
 
+        <h2>
+            Unsent<br>
+            Messages.
+        </h2>
+
+        <p>
+            For the words that stayed in your
+            drafts forever.
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <form id="unsentForm">
+
+            <textarea
+                id="unsentInput"
+                maxlength="500"
+                placeholder="Dear you... I never sent this because..."
+                required></textarea>
+
+
+            <button
+                class="post-button"
+                type="submit">
+
+                ✉ SEND TO THE VOID
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="feed-title">
+
+        <h3>
+            Letters Never Sent
+        </h3>
+
+        <span>
+            ✦ PUBLIC ARCHIVE
+        </span>
+
+    </div>
+
+
+    <div
+        id="unsentList"
+        class="post-grid">
     </div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      ABOUT
-========================= -->
+===================================================== -->
 
-<section id="about" class="page">
+<section
+    id="about"
+    class="page-section">
 
-    <div class="heading">
 
-        <p class="eyebrow">
-            // BEHIND THE STORY
-        </p>
+    <div class="about">
+
+
+        <div class="hero-label">
+            BEHIND THE PLOT
+        </div>
+
 
         <h2>
-            About Us.
+
+            About<br>
+            PlotTwisted.
+
         </h2>
 
-    </div>
-
-
-    <div class="about-box">
-
-        <h3>
-            Why PlotTwisted?
-        </h3>
 
         <p>
-            PlotTwisted is an anonymous community
-            space where people can share confessions,
-            hugots, unsent messages, and unexpected
-            stories without having to reveal their
-            identity.
+
+            PlotTwisted is a little anonymous
+            corner where stories can be shared
+            without names attached to them.
+
         </p>
+
 
         <br>
 
+
         <p>
-            It is a place to express thoughts,
-            discover different perspectives,
-            have fun with plot twists, and connect
-            through stories.
+
+            Confessions.
+            Hugots.
+            Unsent messages.
+            Questionable signs.
+            Unexpected plot twists.
+
         </p>
 
+
         <br>
+
+
+        <p>
+
+            Everyone has a story.
+            Some stories just need
+            somewhere to land.
+
+        </p>
+
+
+        <br>
+
 
         <p style="color:var(--gold);">
-            Your story. Your secret.
+
+            Your story.
+            Your secret.
             Your plot twist.
+
         </p>
+
 
     </div>
 
 </section>
 
 
-<!-- =========================
-     FAQ
-========================= -->
-
-<section id="faq" class="page">
-
-    <div class="heading">
-
-        <p class="eyebrow">
-            // FREQUENTLY ASKED
-        </p>
-
-        <h2>
-            FAQ.
-        </h2>
-
-        <p>
-            A few things you might want to know.
-        </p>
-
-    </div>
-
-
-    <div class="faq">
-
-        <details>
-
-            <summary>
-                Are my posts anonymous?
-            </summary>
-
-            <p>
-                PlotTwisted is designed for anonymous
-                sharing. Avoid putting your real name,
-                address, phone number, or other private
-                information in a post.
-            </p>
-
-        </details>
-
-
-        <details>
-
-            <summary>
-                Who can see my posts?
-            </summary>
-
-            <p>
-                Posts marked as public can be displayed
-                in the community feed for other visitors
-                to see.
-            </p>
-
-        </details>
-
-
-        <details>
-
-            <summary>
-                Can I post a confession?
-            </summary>
-
-            <p>
-                Yes. Use the confession box in the
-                Community section and submit your story.
-            </p>
-
-        </details>
-
-
-        <details>
-
-            <summary>
-                What is Sign or Delusion?
-            </summary>
-
-            <p>
-                It is a community voting feature where
-                people can decide whether a situation
-                looks like a sign, maybe, or simply
-                delusion.
-            </p>
-
-        </details>
-
-
-        <details>
-
-            <summary>
-                What should I avoid posting?
-            </summary>
-
-            <p>
-                Do not post private information about
-                yourself or someone else, threats,
-                harassment, or content intended to harm
-                another person.
-            </p>
-
-        </details>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section id="contact" class="page">
-
-    <div class="heading">
-
-        <p class="eyebrow">
-            // REACH OUT
-        </p>
-
-        <h2>
-            Contact.
-        </h2>
-
-    </div>
-
-
-    <div class="contact-card">
-
-        <h3>
-            Something to report?
-        </h3>
-
-        <p>
-            If you see a post that should not be
-            on the community feed, contact the
-            PlotTwisted administrators.
-        </p>
-
-        <br>
-
-        <button class="action">
-            ✉ CONTACT ADMIN
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
+<!-- =====================================================
      FOOTER
-========================= -->
+===================================================== -->
 
 <footer>
 
-    <strong>
-        PlotTwisted
-    </strong>
+    <div class="footer-title">
+        PlotTwisted.
+    </div>
+
+    <br>
+
+    STORIES • SECRETS • PLOT TWISTS
 
     <br><br>
 
     Your story doesn't always go as planned.
 
-    <br><br>
-
-    ✦ ♡ ✧
-
 </footer>
 
 
-<!-- =========================
-     PAGE NAVIGATION
-========================= -->
-
-<script>
-
-function showPage(pageId){
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(page => {
-        page.classList.remove("active");
-    });
-
-    const selected =
-        document.getElementById(pageId);
-
-    if(selected){
-        selected.classList.add("active");
-        window.scrollTo({
-            top:0,
-            behavior:"smooth"
-        });
-    }
-
-}
-
-</script>
-
-
-<!-- YOUR FIREBASE SCRIPT -->
+<!-- =====================================================
+     FIREBASE / SCRIPT
+===================================================== -->
 
 <script
     type="module"
