@@ -1,5 +1,8 @@
 // =====================================================
 // PLOTTWISTED — FINAL SCRIPT.JS
+// Loads existing Firestore history from:
+// confessions, hugots, posts, signDelusionPosts,
+// signVotes, unsentMessages
 // =====================================================
 
 import {
@@ -19,6 +22,7 @@ import {
     increment
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+
 // =====================================================
 // FIREBASE
 // =====================================================
@@ -36,15 +40,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
 // =====================================================
-// COLLECTIONS
+// FIRESTORE COLLECTIONS
 // =====================================================
 
-const POSTS_COLLECTION = "posts";
-const CONFESSIONS_COLLECTION = "confessions";
-const HUGOTS_COLLECTION = "hugots";
-const UNSENT_COLLECTION = "unsentMessages";
-const VOTES_COLLECTION = "signVotes";
+const COLLECTIONS = {
+    confessions: "confessions",
+    hugots: "hugots",
+    posts: "posts",
+    signDelusionPosts: "signDelusionPosts",
+    signVotes: "signVotes",
+    unsentMessages: "unsentMessages"
+};
+
 
 // =====================================================
 // PAGE NAVIGATION
@@ -61,12 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (interfaceCard && interfaceButtons) {
 
         interfaceCard.addEventListener("click", () => {
-
             interfaceButtons.classList.toggle("show-menu");
-
         });
 
     }
+
 
     const buttons =
         document.querySelectorAll("[data-slide]");
@@ -84,12 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
-    setupForms();
 
-    loadPosts();
+    // LOAD EVERYTHING
+    loadAllHistory();
     loadVotes();
 
 });
+
 
 // =====================================================
 // OPEN SLIDE
@@ -101,17 +110,18 @@ function openSlide(id) {
         document.querySelectorAll(".page-section");
 
     sections.forEach(section => {
-
         section.classList.remove("active-section");
-
     });
+
 
     const target =
         document.getElementById(id);
 
     if (!target) return;
 
+
     target.classList.add("active-section");
+
 
     window.scrollTo({
         top: 0,
@@ -119,6 +129,7 @@ function openSlide(id) {
     });
 
 }
+
 
 // =====================================================
 // HTML SECURITY
@@ -129,14 +140,15 @@ function escapeHTML(text) {
     const div =
         document.createElement("div");
 
-    div.textContent = String(text);
+    div.textContent =
+        String(text ?? "");
 
     return div.innerHTML;
-
 }
 
+
 // =====================================================
-// DATE
+// DATE FORMAT
 // =====================================================
 
 function formatDate(timestamp) {
@@ -155,6 +167,14 @@ function formatDate(timestamp) {
 
         }
 
+        if (timestamp.seconds) {
+
+            return new Date(
+                timestamp.seconds * 1000
+            ).toLocaleString();
+
+        }
+
         return "JUST NOW";
 
     } catch {
@@ -165,195 +185,148 @@ function formatDate(timestamp) {
 
 }
 
+
 // =====================================================
-// SETUP FORMS
+// GET TEXT FROM DIFFERENT FIRESTORE FORMATS
 // =====================================================
 
-function setupForms() {
+function getPostText(data) {
 
-    // ---------------------------------------------
-    // CONFESSION
-    // ---------------------------------------------
-
-    const confessionForm =
-        document.getElementById("confessionForm");
-
-    if (confessionForm) {
-
-        confessionForm.addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-                const input =
-                    document.getElementById(
-                        "confessionInput"
-                    );
-
-                if (!input) return;
-
-                const success =
-                    await createPost(
-                        "CONFESSION",
-                        input.value,
-                        CONFESSIONS_COLLECTION
-                    );
-
-                if (success) {
-                    input.value = "";
-                }
-
-            }
-        );
-
+    // Your old database uses "text"
+    if (data.text !== undefined && data.text !== null) {
+        return String(data.text);
     }
 
-
-    // ---------------------------------------------
-    // HUGOT
-    // ---------------------------------------------
-
-    const hugotForm =
-        document.getElementById("hugotForm");
-
-    if (hugotForm) {
-
-        hugotForm.addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-                const input =
-                    document.getElementById(
-                        "hugotInput"
-                    );
-
-                if (!input) return;
-
-                const success =
-                    await createPost(
-                        "HUGOT",
-                        input.value,
-                        HUGOTS_COLLECTION
-                    );
-
-                if (success) {
-                    input.value = "";
-                }
-
-            }
-        );
-
+    // Your newer database uses "message"
+    if (data.message !== undefined && data.message !== null) {
+        return String(data.message);
     }
 
-
-    // ---------------------------------------------
-    // UNSENT MESSAGE
-    // ---------------------------------------------
-
-    const unsentForm =
-        document.getElementById("unsentForm");
-
-    if (unsentForm) {
-
-        unsentForm.addEventListener(
-            "submit",
-            async event => {
-
-                event.preventDefault();
-
-                const input =
-                    document.getElementById(
-                        "unsentInput"
-                    );
-
-                if (!input) return;
-
-                const success =
-                    await createPost(
-                        "UNSENT MESSAGE",
-                        input.value,
-                        UNSENT_COLLECTION
-                    );
-
-                if (success) {
-                    input.value = "";
-                }
-
-            }
-        );
-
+    // Other possible field names
+    if (data.content !== undefined && data.content !== null) {
+        return String(data.content);
     }
 
+    if (data.confession !== undefined && data.confession !== null) {
+        return String(data.confession);
+    }
+
+    if (data.hugot !== undefined && data.hugot !== null) {
+        return String(data.hugot);
+    }
+
+    return "";
 }
 
+
 // =====================================================
-// CREATE POST
+// GET LIKES
 // =====================================================
 
-async function createPost(
-    type,
-    message,
-    collectionName
-) {
+function getLikes(data) {
+
+    if (
+        data.likes !== undefined &&
+        data.likes !== null
+    ) {
+        return Number(data.likes) || 0;
+    }
+
+    return 0;
+}
+
+
+// =====================================================
+// CREATE NEW POST
+// =====================================================
+
+async function createPost(type, message) {
 
     const cleanMessage =
         String(message || "").trim();
 
+
     if (!cleanMessage) {
 
-        alert(
-            "Write something first. ♡"
-        );
+        alert("Write something first. ♡");
 
         return false;
 
     }
 
+
     try {
+
+        let targetCollection;
+
+
+        if (type === "CONFESSION") {
+
+            targetCollection =
+                COLLECTIONS.confessions;
+
+        }
+
+        else if (type === "HUGOT") {
+
+            targetCollection =
+                COLLECTIONS.hugots;
+
+        }
+
+        else if (type === "UNSENT MESSAGE") {
+
+            targetCollection =
+                COLLECTIONS.unsentMessages;
+
+        }
+
+        else {
+
+            targetCollection =
+                COLLECTIONS.posts;
+
+        }
+
 
         await addDoc(
             collection(
                 db,
-                collectionName
+                targetCollection
             ),
             {
-
                 type: type,
-
                 text: cleanMessage,
-
                 message: cleanMessage,
-
                 likes: 0,
-
-                createdAt:
-                    serverTimestamp()
-
+                createdAt: serverTimestamp()
             }
         );
+
 
         alert(
             "Posted successfully! ✦\n\nEveryone can now see your post."
         );
 
-        await loadPosts();
+
+        await loadAllHistory();
 
         return true;
+
 
     } catch (error) {
 
         console.error(
-            "Firebase error:",
+            "UPLOAD ERROR:",
             error
         );
 
+
         alert(
-            "The post could not be uploaded.\n\n" +
-            "Please check your Firestore Rules."
+            "Upload failed.\n\n" +
+            error.message
         );
+
 
         return false;
 
@@ -361,285 +334,480 @@ async function createPost(
 
 }
 
+
 // =====================================================
-// LOAD ALL PUBLIC POSTS
+// CONFESSION FORM
 // =====================================================
 
-async function loadPosts() {
+const confessionForm =
+    document.getElementById("confessionForm");
 
-    try {
+if (confessionForm) {
 
-        const confessionList =
-            document.getElementById(
-                "confessionList"
-            );
+    confessionForm.addEventListener(
+        "submit",
+        async event => {
 
-        const hugotList =
-            document.getElementById(
-                "hugotList"
-            );
-
-        const unsentList =
-            document.getElementById(
-                "unsentList"
-            );
+            event.preventDefault();
 
 
-        if (confessionList) {
-            confessionList.innerHTML = "";
+            const input =
+                document.getElementById(
+                    "confessionInput"
+                );
+
+
+            if (!input) return;
+
+
+            const success =
+                await createPost(
+                    "CONFESSION",
+                    input.value
+                );
+
+
+            if (success) {
+                input.value = "";
+            }
+
         }
-
-        if (hugotList) {
-            hugotList.innerHTML = "";
-        }
-
-        if (unsentList) {
-            unsentList.innerHTML = "";
-        }
-
-
-        // =================================================
-        // CONFESSIONS
-        // =================================================
-
-        await loadCollection(
-            CONFESSIONS_COLLECTION,
-            "CONFESSION",
-            confessionList
-        );
-
-
-        // =================================================
-        // HUGOTS
-        // =================================================
-
-        await loadCollection(
-            HUGOTS_COLLECTION,
-            "HUGOT",
-            hugotList
-        );
-
-
-        // =================================================
-        // UNSENT MESSAGES
-        // =================================================
-
-        await loadCollection(
-            UNSENT_COLLECTION,
-            "UNSENT MESSAGE",
-            unsentList
-        );
-
-
-        // =================================================
-        // POSTS
-        // =================================================
-
-        await loadPostsCollection(
-            confessionList,
-            hugotList,
-            unsentList
-        );
-
-
-        console.log(
-            "PLOTTWISTED: ALL POSTS LOADED"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Loading posts failed:",
-            error
-        );
-
-        showFirebaseError();
-
-    }
+    );
 
 }
 
+
 // =====================================================
-// LOAD OLD COLLECTION
+// HUGOT FORM
+// =====================================================
+
+const hugotForm =
+    document.getElementById("hugotForm");
+
+if (hugotForm) {
+
+    hugotForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const input =
+                document.getElementById(
+                    "hugotInput"
+                );
+
+
+            if (!input) return;
+
+
+            const success =
+                await createPost(
+                    "HUGOT",
+                    input.value
+                );
+
+
+            if (success) {
+                input.value = "";
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// UNSENT MESSAGE FORM
+// =====================================================
+
+const unsentForm =
+    document.getElementById("unsentForm");
+
+if (unsentForm) {
+
+    unsentForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const input =
+                document.getElementById(
+                    "unsentInput"
+                );
+
+
+            if (!input) return;
+
+
+            const success =
+                await createPost(
+                    "UNSENT MESSAGE",
+                    input.value
+                );
+
+
+            if (success) {
+                input.value = "";
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// LOAD ALL FIRESTORE HISTORY
+// =====================================================
+
+async function loadAllHistory() {
+
+    console.log(
+        "Loading PlotTwisted history..."
+    );
+
+
+    clearPostLists();
+
+
+    // ---------------------------------------------
+    // CONFESSIONS
+    // ---------------------------------------------
+
+    await loadCollection(
+        COLLECTIONS.confessions,
+        "CONFESSION",
+        "confessionList"
+    );
+
+
+    // ---------------------------------------------
+    // HUGOTS
+    // ---------------------------------------------
+
+    await loadCollection(
+        COLLECTIONS.hugots,
+        "HUGOT",
+        "hugotList"
+    );
+
+
+    // ---------------------------------------------
+    // UNSENT MESSAGES
+    // ---------------------------------------------
+
+    await loadCollection(
+        COLLECTIONS.unsentMessages,
+        "UNSENT MESSAGE",
+        "unsentList"
+    );
+
+
+    // ---------------------------------------------
+    // POSTS
+    // ---------------------------------------------
+
+    await loadCollection(
+        COLLECTIONS.posts,
+        "POST",
+        null
+    );
+
+
+    // ---------------------------------------------
+    // SIGN / DELUSION POSTS
+    // ---------------------------------------------
+
+    await loadCollection(
+        COLLECTIONS.signDelusionPosts,
+        "SIGN / DELUSION",
+        null
+    );
+
+
+    console.log(
+        "PlotTwisted history loaded."
+    );
+
+}
+
+
+// =====================================================
+// CLEAR LISTS
+// =====================================================
+
+function clearPostLists() {
+
+    const lists = [
+        "confessionList",
+        "hugotList",
+        "unsentList"
+    ];
+
+
+    lists.forEach(id => {
+
+        const list =
+            document.getElementById(id);
+
+        if (list) {
+            list.innerHTML = "";
+        }
+
+    });
+
+}
+
+
+// =====================================================
+// LOAD ONE COLLECTION
 // =====================================================
 
 async function loadCollection(
     collectionName,
     defaultType,
-    listElement
+    listId
 ) {
-
-    if (!listElement) return;
 
     try {
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    collectionName
-                )
+        const collectionRef =
+            collection(
+                db,
+                collectionName
             );
 
-        snapshot.forEach(postDoc => {
 
-            const data =
-                postDoc.data();
+        let snapshot;
 
-            const convertedData = {
 
-                type:
-                    data.type ||
-                    defaultType,
+        // Try newest first
+        try {
 
-                message:
-                    data.message ||
-                    data.text ||
-                    "",
-
-                likes:
-                    Number(
-                        data.likes || 0
-                    ),
-
-                createdAt:
-                    data.createdAt ||
-                    null
-
-            };
-
-            const card =
-                createPostCard(
-                    postDoc.id,
-                    convertedData
+            const postsQuery =
+                query(
+                    collectionRef,
+                    orderBy(
+                        "createdAt",
+                        "desc"
+                    )
                 );
 
-            listElement.appendChild(card);
+            snapshot =
+                await getDocs(postsQuery);
 
-        });
+        } catch (orderError) {
+
+            // If old documents don't have createdAt,
+            // load them without orderBy.
+
+            console.warn(
+                "Ordering failed for",
+                collectionName,
+                "Loading without order."
+            );
+
+            snapshot =
+                await getDocs(
+                    collectionRef
+                );
+
+        }
+
+
+        console.log(
+            collectionName,
+            "documents:",
+            snapshot.size
+        );
+
+
+        snapshot.forEach(
+            postDoc => {
+
+                const data =
+                    postDoc.data();
+
+
+                const text =
+                    getPostText(data);
+
+
+                // Skip completely empty documents
+                if (!text.trim()) {
+                    return;
+                }
+
+
+                const type =
+                    String(
+                        data.type ||
+                        defaultType
+                    ).toUpperCase();
+
+
+                const card =
+                    createPostCard(
+                        postDoc.id,
+                        data,
+                        type,
+                        collectionName
+                    );
+
+
+                // If this collection has its own list
+                if (listId) {
+
+                    const list =
+                        document.getElementById(
+                            listId
+                        );
+
+
+                    if (list) {
+
+                        list.appendChild(card);
+
+                    }
+
+                }
+
+                // Otherwise try to put generic posts
+                // into a matching available list
+                else {
+
+                    appendGenericPost(
+                        card,
+                        type
+                    );
+
+                }
+
+            }
+        );
+
 
     } catch (error) {
 
         console.error(
-            "Collection loading error:",
+            "FAILED TO LOAD:",
             collectionName,
             error
         );
 
+
+        // Don't stop the other collections
+        // from loading.
+
     }
 
 }
 
+
 // =====================================================
-// LOAD POSTS COLLECTION
+// APPEND GENERIC POST
 // =====================================================
 
-async function loadPostsCollection(
-    confessionList,
-    hugotList,
-    unsentList
+function appendGenericPost(
+    card,
+    type
 ) {
 
-    try {
+    const upper =
+        String(type).toUpperCase();
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    POSTS_COLLECTION
-                )
+
+    if (
+        upper.includes("CONFESSION")
+    ) {
+
+        const list =
+            document.getElementById(
+                "confessionList"
             );
 
-        snapshot.forEach(postDoc => {
+        if (list) {
+            list.appendChild(card);
+        }
 
-            const data =
-                postDoc.data();
+        return;
 
-            const type =
-                String(
-                    data.type || ""
-                ).toUpperCase();
-
-            const convertedData = {
-
-                type:
-                    type ||
-                    "POST",
-
-                message:
-                    data.message ||
-                    data.text ||
-                    "",
-
-                likes:
-                    Number(
-                        data.likes || 0
-                    ),
-
-                createdAt:
-                    data.createdAt ||
-                    null
-
-            };
-
-            const card =
-                createPostCard(
-                    postDoc.id,
-                    convertedData
-                );
+    }
 
 
-            if (
-                type === "CONFESSION" &&
-                confessionList
-            ) {
+    if (
+        upper.includes("HUGOT")
+    ) {
 
-                confessionList.appendChild(card);
+        const list =
+            document.getElementById(
+                "hugotList"
+            );
 
-            }
+        if (list) {
+            list.appendChild(card);
+        }
 
-            else if (
-                type === "HUGOT" &&
-                hugotList
-            ) {
+        return;
 
-                hugotList.appendChild(card);
+    }
 
-            }
 
-            else if (
-                (
-                    type === "UNSENT MESSAGE" ||
-                    type === "UNSENT"
-                ) &&
-                unsentList
-            ) {
+    if (
+        upper.includes("UNSENT")
+    ) {
 
-                unsentList.appendChild(card);
+        const list =
+            document.getElementById(
+                "unsentList"
+            );
 
-            }
+        if (list) {
+            list.appendChild(card);
+        }
 
-        });
+        return;
 
-    } catch (error) {
+    }
 
-        console.error(
-            "Posts collection error:",
-            error
+
+    // If there is a general post list
+    const genericList =
+        document.getElementById(
+            "postList"
         );
+
+
+    if (genericList) {
+
+        genericList.appendChild(card);
 
     }
 
 }
 
+
 // =====================================================
-// POST CARD
+// CREATE POST CARD
 // =====================================================
 
-function createPostCard(id, data) {
+function createPostCard(
+    id,
+    data,
+    defaultType,
+    collectionName
+) {
 
     const card =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
+
 
     card.className =
         "post-card";
@@ -648,22 +816,19 @@ function createPostCard(id, data) {
     const type =
         escapeHTML(
             data.type ||
+            defaultType ||
             "STORY"
         );
 
 
     const message =
         escapeHTML(
-            data.message ||
-            data.text ||
-            ""
+            getPostText(data)
         );
 
 
     const likes =
-        Number(
-            data.likes || 0
-        );
+        getLikes(data);
 
 
     card.innerHTML = `
@@ -703,96 +868,72 @@ function createPostCard(id, data) {
     `;
 
 
+    // LIKE
     const likeButton =
         card.querySelector(
             ".like-button"
         );
 
 
-    likeButton.addEventListener(
-        "click",
-        async () => {
+    if (likeButton) {
 
-            await likePost(
-                id,
-                likeButton,
-                likes,
-                data
-            );
+        likeButton.addEventListener(
+            "click",
+            async () => {
 
-        }
-    );
+                await likePost(
+                    id,
+                    collectionName,
+                    likeButton,
+                    likes
+                );
+
+            }
+        );
+
+    }
 
 
+    // REPORT
     const reportButton =
         card.querySelector(
             ".report-button"
         );
 
 
-    reportButton.addEventListener(
-        "click",
-        () => {
+    if (reportButton) {
 
-            alert(
-                "Thank you for reporting this post."
-            );
+        reportButton.addEventListener(
+            "click",
+            () => {
 
-        }
-    );
+                alert(
+                    "Thank you for reporting this post. ♡"
+                );
+
+            }
+        );
+
+    }
 
 
     return card;
 
 }
 
+
 // =====================================================
-// LIKE
+// LIKE POST
 // =====================================================
 
 async function likePost(
     id,
+    collectionName,
     button,
-    currentLikes,
-    data
+    currentLikes
 ) {
 
     try {
-
-        let collectionName =
-            POSTS_COLLECTION;
-
-
-        const type =
-            String(
-                data.type || ""
-            ).toUpperCase();
-
-
-        if (type === "CONFESSION") {
-
-            collectionName =
-                CONFESSIONS_COLLECTION;
-
-        }
-
-        else if (type === "HUGOT") {
-
-            collectionName =
-                HUGOTS_COLLECTION;
-
-        }
-
-        else if (
-            type === "UNSENT MESSAGE" ||
-            type === "UNSENT"
-        ) {
-
-            collectionName =
-                UNSENT_COLLECTION;
-
-        }
-
 
         const postRef =
             doc(
@@ -814,7 +955,9 @@ async function likePost(
         button.textContent =
             `♡ ${currentLikes + 1}`;
 
-        button.disabled = true;
+
+        button.disabled =
+            true;
 
 
     } catch (error) {
@@ -828,8 +971,9 @@ async function likePost(
 
 }
 
+
 // =====================================================
-// SIGN OR DELUSION
+// SIGN OR DELUSION BUTTONS
 // =====================================================
 
 const voteButtons =
@@ -837,52 +981,59 @@ const voteButtons =
         ".vote-buttons button"
     );
 
-voteButtons.forEach(button => {
 
-    button.addEventListener(
-        "click",
-        async () => {
+voteButtons.forEach(
+    button => {
 
-            const text =
-                button.textContent
-                    .toLowerCase();
+        button.addEventListener(
+            "click",
+            async () => {
 
-            let choice;
+                const text =
+                    button.textContent
+                        .toLowerCase();
 
 
-            if (
-                text.includes(
-                    "definitely"
-                )
-            ) {
+                let choice;
 
-                choice = "sign";
+
+                if (
+                    text.includes(
+                        "definitely"
+                    )
+                ) {
+
+                    choice = "sign";
+
+                }
+
+                else if (
+                    text.includes(
+                        "maybe"
+                    )
+                ) {
+
+                    choice = "maybe";
+
+                }
+
+                else {
+
+                    choice = "delulu";
+
+                }
+
+
+                await saveVote(
+                    choice
+                );
 
             }
+        );
 
-            else if (
-                text.includes(
-                    "maybe"
-                )
-            ) {
+    }
+);
 
-                choice = "maybe";
-
-            }
-
-            else {
-
-                choice = "delulu";
-
-            }
-
-
-            await saveVote(choice);
-
-        }
-    );
-
-});
 
 // =====================================================
 // SAVE VOTE
@@ -895,11 +1046,12 @@ async function saveVote(choice) {
         await addDoc(
             collection(
                 db,
-                VOTES_COLLECTION
+                COLLECTIONS.signVotes
             ),
             {
 
-                choice: choice,
+                choice:
+                    choice,
 
                 createdAt:
                     serverTimestamp()
@@ -915,6 +1067,7 @@ async function saveVote(choice) {
 
         loadVotes();
 
+
     } catch (error) {
 
         console.error(
@@ -924,12 +1077,14 @@ async function saveVote(choice) {
 
 
         alert(
-            "Vote failed. Check Firestore Rules."
+            "Vote failed.\n\n" +
+            error.message
         );
 
     }
 
 }
+
 
 // =====================================================
 // LOAD VOTES
@@ -943,7 +1098,7 @@ async function loadVotes() {
             await getDocs(
                 collection(
                     db,
-                    VOTES_COLLECTION
+                    COLLECTIONS.signVotes
                 )
             );
 
@@ -953,39 +1108,35 @@ async function loadVotes() {
         let delulu = 0;
 
 
-        snapshot.forEach(vote => {
+        snapshot.forEach(
+            vote => {
 
-            const data =
-                vote.data();
-
-
-            if (
-                data.choice === "sign"
-            ) {
-
-                sign++;
-
-            }
+                const data =
+                    vote.data();
 
 
-            if (
-                data.choice === "maybe"
-            ) {
-
-                maybe++;
-
-            }
+                if (
+                    data.choice === "sign"
+                ) {
+                    sign++;
+                }
 
 
-            if (
-                data.choice === "delulu"
-            ) {
+                if (
+                    data.choice === "maybe"
+                ) {
+                    maybe++;
+                }
 
-                delulu++;
+
+                if (
+                    data.choice === "delulu"
+                ) {
+                    delulu++;
+                }
 
             }
-
-        });
+        );
 
 
         const total =
@@ -1009,13 +1160,17 @@ async function loadVotes() {
 
         const signPercent =
             Math.round(
-                sign / total * 100
+                sign /
+                total *
+                100
             );
 
 
         const maybePercent =
             Math.round(
-                maybe / total * 100
+                maybe /
+                total *
+                100
             );
 
 
@@ -1043,6 +1198,7 @@ async function loadVotes() {
 
 }
 
+
 // =====================================================
 // UPDATE VOTE UI
 // =====================================================
@@ -1058,10 +1214,12 @@ function updateVoteUI(
             "signBar"
         );
 
+
     const maybeBar =
         document.getElementById(
             "maybeBar"
         );
+
 
     const deluluBar =
         document.getElementById(
@@ -1074,10 +1232,12 @@ function updateVoteUI(
             "signPercent"
         );
 
+
     const maybePercent =
         document.getElementById(
             "maybePercent"
         );
+
 
     const deluluPercent =
         document.getElementById(
@@ -1116,6 +1276,7 @@ function updateVoteUI(
 
 }
 
+
 // =====================================================
 // PLOT TWIST ROULETTE
 // =====================================================
@@ -1128,190 +1289,67 @@ const plotTwists = [
     "Your friend starts treating you differently.",
     "Your friend remembers the smallest things you tell them.",
     "Your friend always finds a reason to talk to you.",
-    "Your friend may be more interested in you than they admit.",
     "Your friend suddenly becomes shy around you.",
     "Your friend might be waiting for you to make the first move.",
-    "Your friend chooses to sit beside you even when there are other seats.",
-    "Your friend starts looking for you whenever you enter the room.",
-    "Your friend notices when your mood changes.",
-    "Your friend remembers your favorite things.",
-    "Your friend might secretly check if you're okay.",
-    "Your friend laughs harder at your jokes than everyone else.",
-    "Your friend may be trying to spend more time with you.",
-    "Your friend suddenly starts asking about your love life.",
     "Your friend asks who your crush is. Suspicious.",
     "Your friend gets curious whenever you mention someone else.",
     "Your friend may secretly get jealous.",
     "Your friend might be hiding their feelings behind jokes.",
     "Your friend suddenly compliments you more often.",
     "Your friend starts teasing you about having a crush.",
-    "Your friend might be trying to figure out if you like them.",
-    "Your friend remembers conversations you already forgot.",
     "Your friend finds random reasons to message you.",
-    "Your friend sends you something because it reminded them of you.",
-    "Your friend may be thinking about you more than you realize.",
-    "Your friend becomes unusually protective of you.",
-    "Your friend notices things about you that nobody else notices.",
-    "Your friend may have a nickname for you that means more than you think.",
-    "Your friend suddenly becomes nervous when you're alone together.",
-    "Your friend may be waiting for the perfect moment.",
-    "Your friend acts differently when other people mention your name.",
-    "Your friend might secretly save your messages.",
-    "Your friend may remember your birthday without a reminder.",
-    "Your friend may have already noticed your feelings.",
-    "Your friend might be pretending not to notice your hints.",
-    "Your friend could be waiting for you to confess first.",
-    "They look at you, then immediately look away.",
     "They reply quickly but pretend they weren't waiting.",
     "They say you're just a friend, but act differently.",
     "They tease you more than everyone else.",
-    "They suddenly become quiet when you compliment them.",
-    "They always seem to appear wherever you are.",
-    "They ask about your plans for no obvious reason.",
-    "They suddenly want to know who you're talking to.",
-    "They send random messages just to start a conversation.",
-    "They remember something you mentioned weeks ago.",
-    "They keep finding reasons to continue the conversation.",
-    "They act normal in front of everyone but different when you're alone.",
-    "They may be giving you hints that you're too scared to believe.",
-    "They might be waiting for you to notice.",
-    "They say they aren't interested in anyone. Suspicious.",
     "They ask about your type.",
-    "They suddenly want to know your ideal person.",
     "They ask whether you're talking to someone.",
     "They might be testing your reaction.",
-    "They may be hiding their feelings behind playful teasing.",
     "You accidentally make eye contact and neither looks away.",
-    "You both reach for the same thing at the same time.",
-    "You laugh at the exact same moment.",
-    "You accidentally wear matching colors.",
     "You get paired together unexpectedly.",
-    "You end up sitting beside each other again.",
-    "You accidentally call each other at the same time.",
-    "You both remember the same funny memory.",
-    "They smile the moment they see you.",
     "You catch them looking at you.",
-    "They notice your new hairstyle immediately.",
-    "They compliment you when you least expect it.",
+    "They smile the moment they see you.",
     "They save you a seat.",
     "They wait for you before leaving.",
     "They ask if you've already eaten.",
     "They offer to help even when you didn't ask.",
-    "They make you laugh when you're having a bad day.",
     "They remember something important to you.",
-    "They message you after noticing you were quiet.",
-    "They choose you as their partner.",
     "Maybe it's a sign. Maybe you're just hopeful.",
-    "You have evidence, but your heart wants more.",
     "The signs are there. The question is whether they're intentional.",
-    "Your friends think there's something going on.",
     "You might be overthinking it... or maybe you're not.",
-    "Three people noticed the chemistry before you did.",
-    "Your friend says it's nothing. Your heart disagrees.",
-    "Maybe they're friendly with everyone, but why especially you?",
-    "You could be delusional, but the coincidence is suspicious.",
-    "The universe is giving hints. Your brain wants proof.",
     "Maybe it's friendship. Maybe it's the beginning of something else.",
-    "You don't know if it's a sign or wishful thinking.",
     "Your heart says yes. Your logic says wait.",
-    "You might be reading too much into one small moment.",
     "Or maybe that small moment meant everything.",
     "You almost confess but chicken out.",
     "Your friend almost tells you something important.",
     "You accidentally reveal your feelings.",
     "Someone asks you directly if you like your friend.",
-    "Your friend asks, 'What if we dated?' as a joke... maybe.",
-    "You almost send the message you've been writing for weeks.",
-    "Your friend discovers your crush accidentally.",
-    "Someone exposes your crush in front of them.",
     "You finally get the courage to say something.",
-    "You decide to keep it a secret a little longer.",
     "Your friend might confess before you do.",
-    "A simple conversation turns unexpectedly serious.",
-    "You finally ask what your friend really thinks.",
-    "The question you've been avoiding finally gets asked.",
-    "You find out whether your feelings are mutual.",
     "Your friendship slowly starts feeling different.",
-    "You realize they're the first person you want to tell everything to.",
     "They become your favorite notification.",
     "You start missing them even when you just saw them.",
-    "Your favorite memories include them.",
     "Your friendship becomes deeper than you expected.",
-    "You start wondering what dating your friend would be like.",
-    "You catch yourself imagining a future with them.",
-    "You realize your 'friend' is actually your favorite person.",
     "You start seeing them differently.",
-    "They become the person you look for in every room.",
-    "Their happiness matters to you more than you expected.",
-    "Your friendship may be turning into something neither planned.",
-    "You may have fallen for the person who was already closest to you.",
-    "The person you thought would stay a friend may become something more.",
     "Your best friendship could become your biggest plot twist.",
     "You didn't plan to fall for your friend... but here you are.",
     "Maybe your favorite person has been beside you all along.",
     "Sometimes the best love story starts with friendship.",
     "Maybe friendship was only the beginning.",
-    "You practice what to say, then forget everything when they appear.",
-    "You pretend not to care when they talk to someone else.",
-    "You check your phone hoping it's them.",
-    "You reread their message way too many times.",
+    "Your heart already decided before your brain caught up.",
     "You tell your friends you don't like them for the 50th time.",
     "You accidentally smile at your phone because of their message.",
-    "You say 'just friends' while writing a whole romance novel in your head.",
     "Your friends already know who you're talking about.",
     "You deny everything while your face says otherwise.",
-    "You suddenly become an expert at analyzing their messages.",
-    "One 'good morning' has you thinking about it all day.",
-    "They send one emoji and you start investigating.",
-    "They reply with 'haha' and you analyze the punctuation.",
-    "Your friends are tired of hearing their name.",
-    "You claim you're not delulu, then analyze everything.",
-    "You accidentally make eye contact and forget how to act.",
-    "You see their name pop up and suddenly your day is better.",
-    "You tell yourself not to catch feelings. Too late.",
-    "Your heart already decided before your brain caught up.",
-    "They suddenly message you tonight.",
-    "You'll have an unexpected conversation with them.",
-    "You'll discover something surprising about your friend.",
-    "A simple hangout becomes a core memory.",
-    "Someone accidentally reveals a secret.",
-    "You'll hear something that changes how you see them.",
-    "Your friend surprises you with an unexpected gesture.",
-    "You'll get closer because of a random coincidence.",
-    "A normal school day suddenly feels special.",
-    "You'll have a conversation you'll remember for a long time.",
-    "Someone finally explains their confusing behavior.",
-    "A random question reveals someone's true feelings.",
-    "You'll discover someone has been rooting for you.",
-    "An ordinary moment becomes your favorite memory.",
-    "Someone unexpected becomes important to you.",
-    "A friendship becomes stronger after one honest conversation.",
-    "Your next conversation may change everything.",
-    "Something you've been waiting for may finally happen.",
-    "A coincidence makes you question everything.",
-    "Your story isn't finished yet.",
-    "Maybe your friend is your plot twist.",
-    "Maybe you're not imagining the connection.",
+    "Maybe they're friendly with everyone, but why especially you?",
+    "Maybe the person you're looking for is already beside you.",
     "Maybe they're waiting for you too.",
     "Maybe the signs were real after all.",
-    "Maybe the person you're looking for is already beside you.",
-    "Maybe your best friend is secretly your biggest love story.",
-    "Maybe the person you keep thinking about is thinking about you too.",
-    "Maybe you should stop overthinking and enjoy the moment.",
-    "Maybe the answer isn't yes or no yet.",
     "Maybe your story needs one more chapter.",
     "Maybe the biggest plot twist is that you both feel the same.",
-    "Maybe someday you'll laugh about how scared you were to confess.",
-    "Maybe the person you call 'just a friend' won't always be just a friend.",
-    "Maybe your friendship is already becoming something beautiful.",
-    "Maybe the universe really is trying to tell you something.",
-    "Maybe you found your favorite person without looking for them.",
     "Maybe this isn't delusion. Maybe it's the beginning.",
-    "Maybe your friend is the plot twist you've been waiting for.",
-    "Maybe the person beside you is the person you've been waiting for.",
-    "Maybe your crush story is only getting started."
-
+    "Maybe your friend is the plot twist you've been waiting for."
 ];
+
 
 // =====================================================
 // ROULETTE
@@ -1324,14 +1362,19 @@ function spinRoulette() {
             "rouletteText"
         );
 
+
     const icon =
         document.getElementById(
             "rouletteIcon"
         );
 
+
     if (!text) return;
 
-    text.style.opacity = "0";
+
+    text.style.opacity =
+        "0";
+
 
     if (icon) {
 
@@ -1343,6 +1386,7 @@ function spinRoulette() {
 
     }
 
+
     setTimeout(() => {
 
         const random =
@@ -1351,12 +1395,16 @@ function spinRoulette() {
                 plotTwists.length
             );
 
+
         text.textContent =
             "“" +
             plotTwists[random] +
             "”";
 
-        text.style.opacity = "1";
+
+        text.style.opacity =
+            "1";
+
 
         if (icon) {
 
@@ -1369,56 +1417,15 @@ function spinRoulette() {
 
 }
 
+
 window.spinRoulette =
     spinRoulette;
 
+
 // =====================================================
-// FIREBASE ERROR
+// END
 // =====================================================
 
-function showFirebaseError() {
-
-    const lists = [
-
-        document.getElementById(
-            "confessionList"
-        ),
-
-        document.getElementById(
-            "hugotList"
-        ),
-
-        document.getElementById(
-            "unsentList"
-        )
-
-    ];
-
-    lists.forEach(list => {
-
-        if (!list) return;
-
-        list.innerHTML = `
-
-            <div class="post-card">
-
-                <div class="post-type">
-                    PLOTTWISTED
-                </div>
-
-                <div class="post-message">
-                    Public stories could not
-                    be loaded right now.
-                </div>
-
-                <div class="post-date">
-                    CHECK FIRESTORE RULES
-                </div>
-
-            </div>
-
-        `;
-
-    });
-
-        }
+console.log(
+    "♡ PLOTTWISTED SCRIPT LOADED SUCCESSFULLY ♡"
+);
