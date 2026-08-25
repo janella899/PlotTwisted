@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PlotTwisted — Every Story Has a Twist</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- =========================
+     LOADING SCREEN
+========================= -->
+
+<div id="loadingScreen">
+
+    <div class="loading-card">
+
+        <div class="loading-symbol">✦</div>
+
+        <h2>PLOTTWISTED</h2>
+
+        <p>Every story has a twist...</p>
+
+        <div class="loading-line">
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>✦</span>
+        PlotTwisted
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#confessions">Confessions</a>
+        <a href="#signs">Signs</a>
+        <a href="#hugot">Hugot</a>
+        <a href="#roulette">Roulette</a>
+    </nav>
+
+    <button
+        class="nav-button"
+        onclick="openModal('confessionModal')">
+        Confess
+    </button>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-decoration decoration-one">✦</div>
+    <div class="hero-decoration decoration-two">♡</div>
+    <div class="hero-decoration decoration-three">✧</div>
+    <div class="hero-decoration decoration-four">☾</div>
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            ANONYMOUS • UNFILTERED • UNEXPECTED
+        </p>
+
+        <h1>
+            You thought you knew
+            <span>the story.</span>
+        </h1>
+
+        <p class="hero-description">
+            Confessions, secrets, hugot, signs and stories
+            with endings you never saw coming.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="primary-button"
+                onclick="document.getElementById('confessions').scrollIntoView({behavior:'smooth'})">
+                Explore Stories
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="openModal('confessionModal')">
+                Leave a Secret
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO STORY CARD -->
+
+    <div class="hero-card">
+
+        <div class="card-tape"></div>
+
+        <div class="card-top">
+
+            <span>
+                ANONYMOUS #4821
+            </span>
+
+            <span>
+                ♡
+            </span>
+
+        </div>
+
+        <div class="story-preview">
+
+            <p>
+                "I've been wanting to tell them
+                how I feel for months..."
+            </p>
+
+        </div>
+
+        <div
+            class="hidden-twist"
+            id="heroTwist">
+
+            <span>
+                THE PLOT TWIST
+            </span>
+
+            <strong>
+                They already knew.
+            </strong>
+
+        </div>
+
+        <button
+            onclick="revealHeroTwist()"
+            id="heroTwistButton">
+            Reveal Plot Twist
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEATURE CARDS
+========================= -->
+
+<section class="feature-section">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            EXPLORE PLOTTWISTED
+        </p>
+
+        <h2>
+            Every story has another side.
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <button
+            class="feature-card"
+            onclick="document.getElementById('confessions').scrollIntoView({behavior:'smooth'})">
+
+            <span class="feature-icon">
+                ♡
+            </span>
+
+            <h3>
+                Confessions
+            </h3>
+
+            <p>
+                Say what you can't say out loud.
+            </p>
+
+        </button>
+
+
+        <button
+            class="feature-card"
+            onclick="document.getElementById('signs').scrollIntoView({behavior:'smooth'})">
+
+            <span class="feature-icon">
+                ◌
+            </span>
+
+            <h3>
+                Signs or Delusion?
+            </h3>
+
+            <p>
+                Is it actually a sign?
+            </p>
+
+        </button>
+
+
+        <button
+            class="feature-card"
+            onclick="document.getElementById('hugot').scrollIntoView({behavior:'smooth'})">
+
+            <span class="feature-icon">
+                ✦
+            </span>
+
+            <h3>
+                Hugot Corner
+            </h3>
+
+            <p>
+                Feel it. Write it. Let it out.
+            </p>
+
+        </button>
+
+
+        <button
+            class="feature-card"
+            onclick="document.getElementById('roulette').scrollIntoView({behavior:'smooth'})">
+
+            <span class="feature-icon">
+                ✧
+            </span>
+
+            <h3>
+                Confession Roulette
+            </h3>
+
+            <p>
+                Let fate choose a secret.
+            </p>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     DAILY PLOT TWIST
+========================= -->
+
+<section class="daily-section">
+
+    <div class="daily-card">
+
+        <div class="daily-label">
+            ✦ TODAY'S PLOT TWIST
+        </div>
+
+        <h2 id="dailyTwist">
+
+            "Maybe they weren't ignoring you.
+            Maybe they were waiting for you to notice."
+
+        </h2>
+
+        <button
+            class="outline-button"
+            onclick="newDailyTwist()">
+
+            Give Me Another
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONFESSIONS
+========================= -->
+
+<section
+    id="confessions"
+    class="content-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            THE WALL
+        </p>
+
+        <h2>
+            Anonymous Confessions
+        </h2>
+
+        <p>
+            No names. No identities.
+            Just things people needed to say.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-container">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search confessions..."
+            oninput="searchConfessions()">
+
+        <span>
+            ⌕
+        </span>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="filter-bar">
+
+        <button
+            class="filter active"
+            onclick="filterConfessions('all', this)">
+            All
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterConfessions('crush', this)">
+            Crush
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterConfessions('friendship', this)">
+            Friendship
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterConfessions('heartbreak', this)">
+            Heartbreak
+        </button>
+
+        <button
+            class="filter"
+            onclick="filterConfessions('school', this)">
+            School
+        </button>
+
+    </div>
+
+
+    <!-- CONFESSION CARDS -->
+
+    <div
+        id="confessionList"
+        class="confession-grid">
+
+
+        <article
+            class="confession-card"
+            data-category="crush">
+
+            <div class="post-header">
+
+                <span>
+                    ANONYMOUS #4821
+                </span>
+
+                <span class="post-category">
+                    CRUSH
+                </span>
+
+            </div>
+
+            <p>
+                "I always find a reason to walk past
+                their classroom. I wonder if they noticed."
+            </p>
+
+            <div class="post-footer">
+
+                <button onclick="react(this)">
+                    ♡ <span>24</span>
+                </button>
+
+                <span>
+                    2h ago
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="confession-card"
+            data-category="friendship">
+
+            <div class="post-header">
+
+                <span>
+                    ANONYMOUS #7192
+                </span>
+
+                <span class="post-category">
+                    FRIENDSHIP
+                </span>
+
+            </div>
+
+            <p>
+                "I miss how close we used to be.
+                I just don't know how to say it."
+            </p>
+
+            <div class="post-footer">
+
+                <button onclick="react(this)">
+                    ♡ <span>31</span>
+                </button>
+
+                <span>
+                    4h ago
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="confession-card"
+            data-category="heartbreak">
+
+            <div class="post-header">
+
+                <span>
+                    ANONYMOUS #1038
+                </span>
+
+                <span class="post-category">
+                    HEARTBREAK
+                </span>
+
+            </div>
+
+            <p>
+                "I said I was okay because I didn't
+                want them to feel guilty."
+            </p>
+
+            <div class="post-footer">
+
+                <button onclick="react(this)">
+                    ♡ <span>48</span>
+                </button>
+
+                <span>
+                    7h ago
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="confession-card"
+            data-category="school">
+
+            <div class="post-header">
+
+                <span>
+                    ANONYMOUS #5501
+                </span>
+
+                <span class="post-category">
+                    SCHOOL
+                </span>
+
+            </div>
+
+            <p>
+                "I pretend I don't care about my grades
+                but honestly, I really want to make my
+                parents proud."
+            </p>
+
+            <div class="post-footer">
+
+                <button onclick="react(this)">
+                    ♡ <span>19</span>
+                </button>
+
+                <span>
+                    1d ago
+                </span>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <div class="center-button">
+
+        <button
+            class="primary-button"
+            onclick="openModal('confessionModal')">
+
+            + Leave an Anonymous Confession
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SIGNS OR DELUSION
+========================= -->
+
+<section
+    id="signs"
+    class="game-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            THE BIG QUESTION
+        </p>
+
+        <h2>
+            Signs or Delusion?
+        </h2>
+
+        <p>
+            You tell us the situation.
+            Everyone decides.
+        </p>
+
+    </div>
+
+
+    <div class="sign-card">
+
+        <div class="situation-label">
+            SITUATION #018
+        </div>
+
+        <h3 id="situationText">
+
+            "They remember tiny details
+            about things I told them months ago."
+
+        </h3>
+
+
+        <div class="vote-buttons">
+
+            <button onclick="voteSign('sign')">
+
+                ♡
+
+                <strong>
+                    It's a Sign
+                </strong>
+
+            </button>
+
+
+            <button onclick="voteSign('maybe')">
+
+                ◌
+
+                <strong>
+                    Maybe
+                </strong>
+
+            </button>
+
+
+            <button onclick="voteSign('delulu')">
+
+                ✦
+
+                <strong>
+                    Delulu
+                </strong>
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="voteResults"
+            class="vote-results">
+
+            <div class="result">
+
+                <span>
+                    It's a Sign
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="signBar"
+                        style="width:62%">
+                    </div>
+                </div>
+
+                <strong id="signPercent">
+                    62%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    Maybe
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="maybeBar"
+                        style="width:25%">
+                    </div>
+                </div>
+
+                <strong id="maybePercent">
+                    25%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    Delulu
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="deluluBar"
+                        style="width:13%">
+                    </div>
+                </div>
+
+                <strong id="deluluPercent">
+                    13%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PLOT TWIST STORIES
+========================= -->
+
+<section class="content-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            WAIT FOR IT...
+        </p>
+
+        <h2>
+            Plot Twist Stories
+        </h2>
+
+    </div>
+
+
+    <div class="twist-grid">
+
+
+        <article class="twist-card">
+
+            <span class="story-number">
+                01
+            </span>
+
+            <p>
+                "I thought my friend was avoiding me
+                because they suddenly stopped replying..."
+            </p>
+
+            <button onclick="revealTwist(this)">
+                Reveal Plot Twist
+            </button>
+
+            <div class="twist-answer">
+                They were planning a surprise for me.
+            </div>
+
+        </article>
+
+
+        <article class="twist-card">
+
+            <span class="story-number">
+                02
+            </span>
+
+            <p>
+                "I thought my crush liked someone else
+                because they kept talking about that person..."
+            </p>
+
+            <button onclick="revealTwist(this)">
+                Reveal Plot Twist
+            </button>
+
+            <div class="twist-answer">
+                The person they kept talking about was me.
+            </div>
+
+        </article>
+
+
+        <article class="twist-card">
+
+            <span class="story-number">
+                03
+            </span>
+
+            <p>
+                "I thought they forgot my birthday..."
+            </p>
+
+            <button onclick="revealTwist(this)">
+                Reveal Plot Twist
+            </button>
+
+            <div class="twist-answer">
+                They were secretly organizing something.
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     HUGOT
+========================= -->
+
+<section
+    id="hugot"
+    class="hugot-section">
+
+    <div class="hugot-box">
+
+        <p class="eyebrow">
+            HUGOT CORNER
+        </p>
+
+        <h2 id="hugotText">
+
+            "Sometimes you don't miss the person.
+            You miss who you were when they were around."
+
+        </h2>
+
+        <button
+            class="primary-button"
+            onclick="newHugot()">
+
+            Another Hugot
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CONFESSION ROULETTE
+========================= -->
+
+<section
+    id="roulette"
+    class="roulette-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            LET FATE DECIDE
+        </p>
+
+        <h2>
+            Confession Roulette
+        </h2>
+
+        <p>
+            Spin the story and discover
+            a random anonymous thought.
+        </p>
+
+    </div>
+
+
+    <div class="roulette-card">
+
+        <div
+            id="rouletteIcon"
+            class="roulette-icon">
+
+            ✦
+
+        </div>
+
+        <p id="rouletteText">
+            Ready?
+        </p>
+
+        <button
+            class="primary-button"
+            onclick="spinRoulette()">
+
+            SPIN THE STORY
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        ✦ PlotTwisted
+    </div>
+
+    <p>
+        Anonymous stories. Unexpected endings.
+    </p>
+
+    <small>
+        © 2026 PlotTwisted
+    </small>
+
+</footer>
+
+
+<!-- =========================
+     CONFESSION MODAL
+========================= -->
+
+<div
+    id="confessionModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <button
+            class="close-button"
+            onclick="closeModal('confessionModal')">
+
+            ×
+
+        </button>
+
+
+        <p class="eyebrow">
+            ANONYMOUSLY
+        </p>
+
+        <h2>
+            Leave a Confession
+        </h2>
+
+        <p class="modal-description">
+            Your identity will not be displayed.
+        </p>
+
+
+        <label>
+            Category
+        </label>
+
+        <select id="confessionCategory">
+
+            <option value="crush">
+                Crush
+            </option>
+
+            <option value="friendship">
+                Friendship
+            </option>
+
+            <option value="heartbreak">
+                Heartbreak
+            </option>
+
+            <option value="school">
+                School
+            </option>
+
+            <option value="random">
+                Random
+            </option>
+
+        </select>
+
+
+        <label>
+            Your confession
+        </label>
+
+        <textarea
+            id="confessionInput"
+            placeholder="Write what you've been keeping to yourself..."
+            maxlength="500">
+        </textarea>
+
+
+        <div class="character-count">
+
+            <span id="characterCount">
+                0
+            </span>/500
+
+        </div>
+
+
+        <button
+            class="primary-button full"
+            onclick="submitConfession()">
+
+            Submit Anonymously
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+    id="toast"
+    class="toast">
+
+    <span>
+        ✦
+    </span>
+
+    <p id="toastMessage">
+        Done!
+    </p>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
