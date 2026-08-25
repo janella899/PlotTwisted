@@ -385,24 +385,213 @@ async function loadPosts() {
 
     try {
 
-        const postsQuery =
-            query(
-                collection(
-                    db,
-                    POSTS_COLLECTION
-                ),
-                orderBy(
-                    "createdAt",
-                    "desc"
+        console.log("Loading posts from Firestore...");
+
+        const postsRef = collection(
+            db,
+            POSTS_COLLECTION
+        );
+
+        const snapshot = await getDocs(postsRef);
+
+        console.log(
+            "Number of posts found:",
+            snapshot.size
+        );
+
+        const confessionList =
+            document.getElementById("confessionList");
+
+        const hugotList =
+            document.getElementById("hugotList");
+
+        const unsentList =
+            document.getElementById("unsentList");
+
+
+        // Clear existing posts
+
+        if (confessionList) {
+            confessionList.innerHTML = "";
+        }
+
+        if (hugotList) {
+            hugotList.innerHTML = "";
+        }
+
+        if (unsentList) {
+            unsentList.innerHTML = "";
+        }
+
+
+        // No posts
+
+        if (snapshot.empty) {
+
+            console.log(
+                "No posts found."
+            );
+
+            if (confessionList) {
+                confessionList.innerHTML = `
+                    <div class="post-card">
+                        <div class="post-type">
+                            PLOTTWISTED
+                        </div>
+                        <div class="post-message">
+                            No confessions uploaded yet.
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (hugotList) {
+                hugotList.innerHTML = `
+                    <div class="post-card">
+                        <div class="post-type">
+                            PLOTTWISTED
+                        </div>
+                        <div class="post-message">
+                            No hugot lines uploaded yet.
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (unsentList) {
+                unsentList.innerHTML = `
+                    <div class="post-card">
+                        <div class="post-type">
+                            PLOTTWISTED
+                        </div>
+                        <div class="post-message">
+                            No unsent messages uploaded yet.
+                        </div>
+                    </div>
+                `;
+            }
+
+            return;
+        }
+
+
+        // Convert Firestore documents
+
+        const posts = [];
+
+        snapshot.forEach(postDoc => {
+
+            const data = postDoc.data();
+
+            console.log(
+                "Post found:",
+                postDoc.id,
+                data
+            );
+
+            posts.push({
+                id: postDoc.id,
+                data: data
+            });
+
+        });
+
+
+        // Sort newest first
+
+        posts.sort((a, b) => {
+
+            const timeA =
+                a.data.createdAt &&
+                typeof a.data.createdAt.toMillis === "function"
+                    ? a.data.createdAt.toMillis()
+                    : 0;
+
+            const timeB =
+                b.data.createdAt &&
+                typeof b.data.createdAt.toMillis === "function"
+                    ? b.data.createdAt.toMillis()
+                    : 0;
+
+            return timeB - timeA;
+
+        });
+
+
+        // Display every post
+
+        posts.forEach(post => {
+
+            const card =
+                createPostCard(
+                    post.id,
+                    post.data
+                );
+
+            const type =
+                String(
+                    post.data.type || ""
                 )
-            );
+                .trim()
+                .toUpperCase();
 
 
-        const snapshot =
-            await getDocs(
-                postsQuery
-            );
+            if (
+                type === "CONFESSION"
+                && confessionList
+            ) {
 
+                confessionList.appendChild(card);
+
+            }
+
+            else if (
+                type === "HUGOT"
+                && hugotList
+            ) {
+
+                hugotList.appendChild(card);
+
+            }
+
+            else if (
+                type === "UNSENT MESSAGE"
+                && unsentList
+            ) {
+
+                unsentList.appendChild(card);
+
+            }
+
+            else {
+
+                console.log(
+                    "Unknown post type:",
+                    type
+                );
+
+            }
+
+        });
+
+
+        console.log(
+            "Posts displayed successfully!"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "LOADING POSTS FAILED:",
+            error
+        );
+
+        showFirebaseError();
+
+    }
+
+}
 
         // =============================================
         // INDIVIDUAL PAGE LISTS
