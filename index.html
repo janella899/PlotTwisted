@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>PlotTwisted</title>
+<title>PlotTwisted — Anonymous Stories</title>
 
 <style>
 
@@ -16,830 +13,1003 @@ content="width=device-width, initial-scale=1.0">
 
 
 :root {
-    --black: #10090d;
-    --dark: #1a0b11;
-    --wine: #6b1028;
-    --wine2: #8c1837;
-    --cream: #f5ead8;
-    --gold: #d1ae70;
-    --muted: #b9a99a;
-    --line: rgba(209,174,112,.25);
+    --black:#0d080b;
+    --dark:#170b10;
+    --wine:#68152d;
+    --wine2:#8d2040;
+    --cream:#f4ead9;
+    --gold:#d2ae6d;
+    --muted:#aa9c8d;
+    --line:rgba(210,174,109,.25);
 }
 
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior:smooth;
 }
 
 
 body {
-    min-height: 100vh;
+
+    min-height:100vh;
 
     background:
         radial-gradient(
-            circle at 15% 20%,
-            rgba(107,16,40,.4),
+            circle at 10% 10%,
+            rgba(104,21,45,.35),
             transparent 30%
         ),
         radial-gradient(
-            circle at 85% 75%,
-            rgba(209,174,112,.08),
+            circle at 90% 80%,
+            rgba(210,174,109,.08),
             transparent 25%
         ),
         var(--black);
 
-    color: var(--cream);
+    color:var(--cream);
 
-    font-family: "Poppins", sans-serif;
+    font-family:"Poppins",sans-serif;
 
-    overflow-x: hidden;
+    overflow-x:hidden;
+
 }
 
 
-/* =========================
-   DECORATIONS
-========================= */
+/* =====================================
+   FLOATING DECORATIONS
+===================================== */
 
-body::before {
+.decor {
 
-    content: "✦   ♡   ✧   ♡   ✦";
+    position:fixed;
 
-    position: fixed;
+    color:rgba(210,174,109,.12);
 
-    top: 15%;
-    left: 3%;
+    pointer-events:none;
 
-    color: rgba(209,174,112,.15);
+    z-index:-1;
 
-    font-size: 20px;
+    animation:float 6s ease-in-out infinite;
 
-    letter-spacing: 15px;
-
-    pointer-events: none;
-
-    z-index: -1;
 }
 
 
-body::after {
+.decor.one {
 
-    content: "♡   ✧   ✦";
+    top:15%;
+    left:4%;
+    font-size:30px;
 
-    position: fixed;
-
-    bottom: 15%;
-    right: 3%;
-
-    color: rgba(209,174,112,.13);
-
-    font-size: 25px;
-
-    letter-spacing: 15px;
-
-    pointer-events: none;
-
-    z-index: -1;
 }
 
 
-/* =========================
+.decor.two {
+
+    top:65%;
+    right:5%;
+    font-size:25px;
+
+    animation-delay:2s;
+
+}
+
+
+.decor.three {
+
+    bottom:10%;
+    left:12%;
+    font-size:18px;
+
+    animation-delay:4s;
+
+}
+
+
+@keyframes float {
+
+    0%,100% {
+        transform:translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform:translateY(-15px) rotate(8deg);
+    }
+
+}
+
+
+/* =====================================
    NAVBAR
-========================= */
+===================================== */
 
 .navbar {
 
-    position: fixed;
+    position:fixed;
 
-    top: 0;
-    left: 0;
-    right: 0;
+    top:0;
+    left:0;
+    right:0;
 
-    height: 70px;
+    height:72px;
 
-    display: flex;
+    display:flex;
 
-    justify-content: space-between;
+    align-items:center;
 
-    align-items: center;
+    justify-content:space-between;
 
-    padding: 0 7%;
+    padding:0 7%;
 
-    background:
-        rgba(16,9,13,.88);
+    background:rgba(13,8,11,.9);
 
-    backdrop-filter: blur(15px);
+    backdrop-filter:blur(15px);
 
-    border-bottom:
-        1px solid var(--line);
+    border-bottom:1px solid var(--line);
 
-    z-index: 1000;
+    z-index:1000;
+
 }
 
 
 .logo {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size: 29px;
+    font-size:30px;
 
-    letter-spacing: 2px;
+    letter-spacing:2px;
+
 }
 
 
 .logo span {
+    color:var(--gold);
+}
 
-    color: var(--gold);
+
+/* =====================================
+   CREATIVE HOME BUTTON
+===================================== */
+
+.nav-button {
+
+    position:relative;
+
+    padding:9px 19px;
+
+    color:var(--cream);
+
+    background:transparent;
+
+    border:1px solid var(--line);
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:.35s;
 
 }
 
 
-.home-button {
+.nav-button::before {
 
-    background: transparent;
+    content:"";
 
-    border:
-        1px solid var(--line);
+    position:absolute;
 
-    color: var(--cream);
+    left:0;
+    bottom:0;
 
-    padding:
-        8px 20px;
+    width:100%;
+    height:0;
 
-    cursor: pointer;
+    background:var(--wine);
 
-    transition: .3s;
+    transition:.35s;
 
-}
-
-
-.home-button:hover {
-
-    color: var(--gold);
-
-    border-color: var(--gold);
+    z-index:-1;
 
 }
 
 
-/* =========================
+.nav-button:hover::before {
+
+    height:100%;
+
+}
+
+
+.nav-button:hover {
+
+    border-color:var(--gold);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =====================================
    SECTIONS
-========================= */
+===================================== */
 
 .page-section {
 
-    display: none;
+    display:none;
 
-    min-height: 100vh;
+    min-height:100vh;
 
-    padding:
-        110px 7% 70px;
+    padding:110px 7% 70px;
 
 }
 
 
 .page-section.active-section {
 
-    display: block;
+    display:block;
 
-    animation:
-        pageEnter .65s ease;
+    animation:pageIn .6s ease;
 
 }
 
 
-@keyframes pageEnter {
+@keyframes pageIn {
 
     from {
-
-        opacity: 0;
-
-        transform:
-            translateY(25px)
-            scale(.98);
-
+        opacity:0;
+        transform:translateY(25px);
     }
 
     to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
+        opacity:1;
+        transform:translateY(0);
     }
 
 }
 
 
-/* =========================
-   HOME
-========================= */
+/* =====================================
+   HERO
+===================================== */
 
 .hero {
 
-    max-width: 1200px;
+    max-width:1200px;
 
-    min-height: 80vh;
+    min-height:80vh;
 
-    margin: auto;
+    margin:auto;
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns:
-        1fr .9fr;
+    grid-template-columns:1fr .9fr;
 
-    align-items: center;
+    align-items:center;
 
-    gap: 60px;
+    gap:60px;
 
 }
 
 
 .eyebrow {
 
-    color: var(--gold);
+    color:var(--gold);
 
-    font-size: 10px;
+    font-size:9px;
 
-    letter-spacing: 4px;
-
-    text-transform: uppercase;
+    letter-spacing:4px;
 
 }
 
 
 .hero h1 {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        clamp(70px,10vw,130px);
+    font-size:clamp(75px,10vw,135px);
 
-    line-height: .75;
+    line-height:.75;
 
-    letter-spacing: -5px;
+    letter-spacing:-5px;
 
-    margin:
-        20px 0 30px;
+    margin:20px 0 30px;
 
 }
 
 
 .hero h1 span {
 
-    color: transparent;
+    color:transparent;
 
-    -webkit-text-stroke:
-        1px var(--gold);
-
-}
-
-
-.hero-description {
-
-    max-width: 520px;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.9;
+    -webkit-text-stroke:1px var(--gold);
 
 }
 
 
-/* =========================
-   MENU BUTTONS
-========================= */
+.hero-text {
+
+    max-width:520px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.9;
+
+}
+
+
+/* =====================================
+   SCRAPBOOK BUTTONS
+===================================== */
 
 .menu {
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 13px;
+    gap:12px;
 
 }
 
 
 .story-button {
 
-    width: 100%;
+    position:relative;
 
-    display: grid;
+    width:100%;
 
-    grid-template-columns:
-        45px 1fr 25px;
+    min-height:68px;
 
-    align-items: center;
+    display:grid;
 
-    gap: 15px;
+    grid-template-columns:45px 1fr 25px;
 
-    padding: 16px;
+    align-items:center;
+
+    gap:15px;
+
+    padding:12px 16px;
+
+    color:var(--cream);
 
     background:
-        rgba(255,255,255,.035);
 
-    border:
-        1px solid var(--line);
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
 
-    color: var(--cream);
+    border:1px solid var(--line);
 
-    text-align: left;
+    cursor:pointer;
 
-    cursor: pointer;
+    text-align:left;
 
-    transition: .35s;
+    transition:.35s;
+
+    overflow:hidden;
+
+}
+
+
+.story-button::after {
+
+    content:"";
+
+    position:absolute;
+
+    left:-100%;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(210,174,109,.08),
+            transparent
+        );
+
+    transition:.5s;
+
+}
+
+
+.story-button:hover::after {
+
+    left:100%;
 
 }
 
 
 .story-button:hover {
 
-    transform:
-        translateX(10px);
+    transform:translateX(10px);
+
+    border-color:var(--gold);
 
     background:
-        rgba(107,16,40,.45);
-
-    border-color:
-        var(--gold);
+        rgba(104,21,45,.45);
 
 }
 
 
 .story-symbol {
 
-    width: 43px;
+    width:43px;
 
-    height: 43px;
+    height:43px;
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    border:
-        1px solid var(--line);
+    border:1px solid var(--line);
 
-    color: var(--gold);
+    color:var(--gold);
 
-    font-size: 18px;
+    font-size:18px;
 
 }
 
 
 .story-button strong {
 
-    display: block;
+    display:block;
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size: 21px;
+    font-size:21px;
 
 }
 
 
 .story-button small {
 
-    color: var(--muted);
+    color:var(--muted);
 
-    font-size: 9px;
-
-}
-
-
-.story-button b {
-
-    color: var(--gold);
+    font-size:9px;
 
 }
 
 
-/* =========================
+.story-arrow {
+
+    color:var(--gold);
+
+    transition:.3s;
+
+}
+
+
+.story-button:hover .story-arrow {
+
+    transform:translateX(5px);
+
+}
+
+
+/* =====================================
    HEADINGS
-========================= */
+===================================== */
 
 .section-heading {
 
-    max-width: 900px;
+    max-width:950px;
 
-    margin:
-        0 auto 40px;
+    margin:0 auto 35px;
 
 }
 
 
 .section-heading h2 {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        clamp(55px,8vw,90px);
+    font-size:clamp(55px,8vw,90px);
 
-    line-height: .85;
+    line-height:.85;
 
-    margin:
-        15px 0 20px;
+    margin:15px 0 20px;
 
 }
 
 
 .section-heading p:last-child {
 
-    color: var(--muted);
+    color:var(--muted);
 
-    font-size: 13px;
+    font-size:13px;
 
 }
 
 
-/* =========================
-   FORMS
-========================= */
+/* =====================================
+   FORM
+===================================== */
 
 .form-card {
 
-    max-width: 850px;
+    max-width:850px;
 
-    margin:
-        0 auto 40px;
+    margin:0 auto 40px;
 
-    padding: 30px;
+    padding:30px;
 
-    background:
-        rgba(255,255,255,.04);
+    background:rgba(255,255,255,.035);
 
-    border:
-        1px solid var(--line);
+    border:1px solid var(--line);
+
+    position:relative;
+
+}
+
+
+.form-card::before {
+
+    content:"PLOTTWISTED";
+
+    position:absolute;
+
+    top:-9px;
+
+    left:25px;
+
+    padding:0 8px;
+
+    background:var(--black);
+
+    color:var(--gold);
+
+    font-size:8px;
+
+    letter-spacing:3px;
 
 }
 
 
 textarea {
 
-    width: 100%;
+    width:100%;
 
-    min-height: 150px;
+    min-height:145px;
 
-    resize: vertical;
+    padding:18px;
 
-    padding: 18px;
+    resize:vertical;
 
-    background:
-        rgba(0,0,0,.3);
+    background:rgba(0,0,0,.3);
 
-    border:
-        1px solid var(--line);
+    color:var(--cream);
 
-    color: var(--cream);
+    border:1px solid var(--line);
 
-    font-family:
-        "Poppins",
-        sans-serif;
+    outline:none;
 
-    outline: none;
+    font-family:"Poppins",sans-serif;
 
 }
 
 
 textarea:focus {
 
-    border-color:
-        var(--gold);
+    border-color:var(--gold);
 
 }
 
 
-textarea::placeholder {
+/* =====================================
+   CREATIVE POST BUTTON
+===================================== */
 
-    color:
-        #81766c;
+.post-button {
 
-}
+    position:relative;
 
+    margin-top:15px;
 
-.primary-button {
+    padding:13px 24px;
 
-    margin-top: 15px;
+    background:var(--wine);
 
-    padding:
-        13px 25px;
+    color:var(--cream);
 
-    border:
-        1px solid var(--gold);
+    border:1px solid var(--gold);
 
-    background:
-        var(--wine);
+    cursor:pointer;
 
-    color:
-        var(--cream);
-
-    cursor:
-        pointer;
-
-    transition:
-        .3s;
+    transition:.3s;
 
 }
 
 
-.primary-button:hover {
+.post-button:hover {
 
-    background:
-        var(--wine2);
+    background:var(--wine2);
 
-    transform:
-        translateY(-3px);
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(104,21,45,.35);
 
 }
 
 
-/* =========================
-   CARDS
-========================= */
+.post-button:active {
+
+    transform:scale(.96);
+
+}
+
+
+/* =====================================
+   PUBLIC FEED
+===================================== */
+
+.feed-title {
+
+    max-width:1100px;
+
+    margin:0 auto 18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.feed-title h3 {
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:32px;
+
+}
+
+
+.feed-title span {
+
+    color:var(--gold);
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+}
+
 
 .post-grid {
 
-    max-width: 1100px;
+    max-width:1100px;
 
-    margin: auto;
+    margin:auto;
 
-    display: grid;
+    display:grid;
 
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(260px,1fr)
-        );
+        repeat(auto-fit,minmax(260px,1fr));
 
-    gap: 20px;
+    gap:20px;
 
 }
 
 
-.card {
+.post-card {
 
-    padding: 28px;
+    position:relative;
+
+    padding:25px;
 
     background:
-        rgba(255,255,255,.045);
 
-    border:
-        1px solid var(--line);
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.02)
+        );
 
-    transition:
-        .35s;
+    border:1px solid var(--line);
+
+    transition:.35s;
 
 }
 
 
-.card:hover {
+.post-card:hover {
 
     transform:
-        translateY(-7px)
-        rotate(.4deg);
+        translateY(-6px)
+        rotate(.3deg);
 
-    border-color:
-        var(--gold);
-
-}
-
-
-.card-label {
-
-    color:
-        var(--gold);
-
-    font-size:
-        9px;
-
-    letter-spacing:
-        2px;
+    border-color:var(--gold);
 
 }
 
 
-.card p {
+.post-type {
 
-    margin-top:
-        20px;
+    color:var(--gold);
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-size:9px;
 
-    font-size:
-        24px;
-
-    line-height:
-        1.2;
+    letter-spacing:2px;
 
 }
 
 
-/* =========================
-   HUGOT
-========================= */
+.post-message {
+
+    margin-top:17px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:24px;
+
+    line-height:1.2;
+
+}
+
+
+.post-date {
+
+    margin-top:18px;
+
+    color:#81766c;
+
+    font-size:8px;
+
+}
+
+
+.post-actions {
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.like-button,
+.report-button {
+
+    background:transparent;
+
+    border:none;
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    font-size:11px;
+
+}
+
+
+.like-button:hover {
+
+    color:#e29aab;
+
+}
+
+
+.report-button:hover {
+
+    color:var(--gold);
+
+}
+
+
+/* =====================================
+   RECOMMENDATIONS
+===================================== */
+
+.recommendations {
+
+    max-width:1100px;
+
+    margin:55px auto 0;
+
+}
+
+
+.recommendations h3 {
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:38px;
+
+    margin-bottom:20px;
+
+}
+
+
+.recommendation-box {
+
+    padding:22px;
+
+    border:1px dashed var(--line);
+
+    background:rgba(104,21,45,.15);
+
+}
+
+
+.recommendation-box p {
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:22px;
+
+}
+
+
+/* =====================================
+   HUGOT DISPLAY
+===================================== */
 
 .center-box {
 
-    max-width:
-        850px;
+    max-width:850px;
 
-    margin:
-        auto;
+    margin:auto;
 
-    padding:
-        55px 30px;
+    padding:55px 30px;
 
-    text-align:
-        center;
+    text-align:center;
 
-    background:
-        rgba(255,255,255,.04);
+    background:rgba(255,255,255,.035);
 
-    border:
-        1px solid var(--line);
+    border:1px solid var(--line);
 
 }
 
 
 .hugot-display {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        clamp(28px,5vw,48px);
+    font-size:clamp(28px,5vw,48px);
 
-    font-style:
-        italic;
+    font-style:italic;
 
-    line-height:
-        1.2;
+    line-height:1.2;
 
-    margin-bottom:
-        30px;
+    margin-bottom:30px;
 
 }
 
 
-/* =========================
+/* =====================================
    VOTING
-========================= */
+===================================== */
 
 .vote-box {
 
-    max-width:
-        850px;
+    max-width:850px;
 
-    margin:
-        auto;
+    margin:auto;
 
-    padding:
-        40px 30px;
+    padding:35px;
 
-    background:
-        rgba(255,255,255,.04);
+    background:rgba(255,255,255,.035);
 
-    border:
-        1px solid var(--line);
+    border:1px solid var(--line);
 
 }
 
 
 .vote-box h3 {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        32px;
+    font-size:32px;
 
-    margin:
-        15px 0 30px;
+    margin:15px 0 30px;
 
 }
 
 
 .vote-buttons {
 
-    display:
-        grid;
+    display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
-    gap:
-        10px;
+    gap:10px;
 
 }
 
 
 .vote-buttons button {
 
-    min-height:
-        90px;
+    min-height:90px;
 
-    background:
-        rgba(255,255,255,.03);
+    background:rgba(255,255,255,.03);
 
-    border:
-        1px solid var(--line);
+    color:var(--cream);
 
-    color:
-        var(--cream);
+    border:1px solid var(--line);
 
-    cursor:
-        pointer;
+    cursor:pointer;
 
-    transition:
-        .3s;
+    transition:.3s;
 
 }
 
 
 .vote-buttons button:hover {
 
-    background:
-        var(--wine);
+    background:var(--wine);
 
-    border-color:
-        var(--gold);
+    border-color:var(--gold);
+
+    transform:translateY(-4px);
 
 }
 
 
 .results {
 
-    margin-top:
-        30px;
+    margin-top:30px;
 
 }
 
 
 .result {
 
-    display:
-        grid;
+    display:grid;
 
-    grid-template-columns:
-        70px 1fr 45px;
+    grid-template-columns:70px 1fr 45px;
 
-    align-items:
-        center;
+    gap:10px;
 
-    gap:
-        10px;
+    align-items:center;
 
-    margin:
-        14px 0;
+    margin:14px 0;
 
-    color:
-        var(--muted);
+    color:var(--muted);
 
-    font-size:
-        9px;
+    font-size:9px;
 
 }
 
 
 .bar {
 
-    height:
-        5px;
+    height:5px;
 
-    background:
-        rgba(255,255,255,.08);
+    background:rgba(255,255,255,.08);
 
 }
 
 
 .bar div {
 
-    height:
-        100%;
+    height:100%;
 
     background:
         linear-gradient(
@@ -851,120 +1021,96 @@ textarea::placeholder {
 }
 
 
-/* =========================
+/* =====================================
    ABOUT
-========================= */
+===================================== */
 
 .about {
 
-    max-width:
-        800px;
+    max-width:800px;
 
-    min-height:
-        70vh;
+    min-height:70vh;
 
-    margin:
-        auto;
+    margin:auto;
 
-    display:
-        flex;
+    display:flex;
 
-    flex-direction:
-        column;
+    flex-direction:column;
 
-    align-items:
-        center;
+    align-items:center;
 
-    justify-content:
-        center;
+    justify-content:center;
 
-    text-align:
-        center;
+    text-align:center;
 
 }
 
 
 .about h2 {
 
-    font-family:
-        "Cormorant Garamond",
-        serif;
+    font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        clamp(60px,9vw,100px);
+    font-size:clamp(60px,9vw,100px);
 
-    line-height:
-        .85;
+    line-height:.85;
 
-    margin:
-        15px 0 30px;
+    margin:15px 0 30px;
 
 }
 
 
 .about p {
 
-    color:
-        var(--muted);
+    color:var(--muted);
 
-    font-size:
-        13px;
+    font-size:13px;
 
-    line-height:
-        1.9;
+    line-height:1.9;
 
 }
 
 
-/* =========================
+/* =====================================
    FOOTER
-========================= */
+===================================== */
 
 footer {
 
-    text-align:
-        center;
+    padding:35px 20px;
 
-    padding:
-        35px 20px;
+    text-align:center;
 
-    border-top:
-        1px solid var(--line);
+    border-top:1px solid var(--line);
 
-    color:
-        var(--muted);
+    color:var(--muted);
 
-    font-size:
-        9px;
+    font-size:9px;
 
 }
 
 
-/* =========================
+/* =====================================
    MOBILE
-========================= */
+===================================== */
 
-@media (max-width:800px) {
+@media(max-width:800px) {
 
     .hero {
 
-        grid-template-columns:
-            1fr;
+        grid-template-columns:1fr;
 
-        gap:
-            45px;
+        gap:45px;
 
     }
 
 }
 
 
-@media (max-width:600px) {
+@media(max-width:600px) {
 
     .navbar {
 
-        padding:
-            0 5%;
+        padding:0 5%;
 
     }
 
@@ -972,18 +1118,14 @@ footer {
     .page-section {
 
         padding:
-            95px 5% 55px;
+            100px 5% 55px;
 
     }
 
 
     .hero h1 {
 
-        font-size:
-            75px;
-
-        letter-spacing:
-            -3px;
+        font-size:75px;
 
     }
 
@@ -998,27 +1140,22 @@ footer {
 
     .story-symbol {
 
-        width:
-            38px;
-
-        height:
-            38px;
+        width:38px;
+        height:38px;
 
     }
 
 
     .story-button strong {
 
-        font-size:
-            17px;
+        font-size:17px;
 
     }
 
 
     .vote-buttons {
 
-        grid-template-columns:
-            1fr;
+        grid-template-columns:1fr;
 
     }
 
@@ -1027,8 +1164,7 @@ footer {
     .center-box,
     .vote-box {
 
-        padding:
-            25px 18px;
+        padding:25px 18px;
 
     }
 
@@ -1042,9 +1178,13 @@ footer {
 <body>
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<div class="decor one">✦</div>
+<div class="decor two">♡</div>
+<div class="decor three">✧</div>
+
+
+
+<!-- NAVBAR -->
 
 <nav class="navbar">
 
@@ -1053,10 +1193,10 @@ footer {
     </div>
 
     <button
-        class="home-button"
+        class="nav-button"
         data-slide="home">
 
-        Home
+        ✦ HOME
 
     </button>
 
@@ -1089,12 +1229,13 @@ footer {
             </h1>
 
 
-            <p class="hero-description">
+            <p class="hero-text">
 
-                A place for the things you never said,
-                the feelings you can't explain,
-                the signs you're overthinking,
-                and the stories that deserve another chapter.
+                Anonymous confessions,
+                questionable signs,
+                unforgettable hugots,
+                and stories that deserve
+                their own plot twist.
 
             </p>
 
@@ -1120,12 +1261,14 @@ footer {
                     </strong>
 
                     <small>
-                        Say what you can't say.
+                        Tell the story without the name.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1146,12 +1289,14 @@ footer {
                     </strong>
 
                     <small>
-                        Drop your deepest hugot.
+                        Drop your feelings here.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1172,12 +1317,14 @@ footer {
                     </strong>
 
                     <small>
-                        Is it a sign or are we delulu?
+                        You decide the verdict.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1198,12 +1345,14 @@ footer {
                     </strong>
 
                     <small>
-                        Let fate choose a story.
+                        Let fate choose.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1224,12 +1373,14 @@ footer {
                     </strong>
 
                     <small>
-                        Things left in the drafts.
+                        What you never sent.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1250,12 +1401,14 @@ footer {
                     </strong>
 
                     <small>
-                        Behind the little secret.
+                        The story behind the story.
                     </small>
 
                 </div>
 
-                <b>→</b>
+                <span class="story-arrow">
+                    →
+                </span>
 
             </button>
 
@@ -1288,10 +1441,11 @@ footer {
         </h2>
 
         <p>
-            Say what you can't say out loud.
+            Say it without revealing who you are.
         </p>
 
     </div>
+
 
 
     <div class="form-card">
@@ -1306,10 +1460,10 @@ footer {
 
 
             <button
-                class="primary-button"
+                class="post-button"
                 type="submit">
 
-                POST CONFESSION ♡
+                ♡ POST CONFESSION
 
             </button>
 
@@ -1318,9 +1472,44 @@ footer {
     </div>
 
 
+
+    <div class="feed-title">
+
+        <h3>
+            Public Stories
+        </h3>
+
+        <span>
+            EVERYONE CAN SEE
+        </span>
+
+    </div>
+
+
+
     <div
         id="confessionList"
         class="post-grid">
+
+    </div>
+
+
+
+    <div class="recommendations">
+
+        <h3>
+            ✦ Recommended for You
+        </h3>
+
+        <div class="recommendation-box">
+
+            <p>
+                “Sometimes the person you talk
+                to every day is the plot twist
+                you never expected.”
+            </p>
+
+        </div>
 
     </div>
 
@@ -1349,10 +1538,11 @@ footer {
         </h2>
 
         <p>
-            Say it. Feel it. Let it go.
+            Leave a line. Maybe someone needs it.
         </p>
 
     </div>
+
 
 
     <div class="form-card">
@@ -1362,21 +1552,36 @@ footer {
             <textarea
                 id="hugotInput"
                 maxlength="400"
-                placeholder="Drop your hugot here..."
+                placeholder="Write your hugot..."
                 required></textarea>
 
 
             <button
-                class="primary-button"
+                class="post-button"
                 type="submit">
 
-                POST HUGOT ✦
+                ✦ POST HUGOT
 
             </button>
 
         </form>
 
     </div>
+
+
+
+    <div class="feed-title">
+
+        <h3>
+            Community Hugots
+        </h3>
+
+        <span>
+            PUBLIC
+        </span>
+
+    </div>
+
 
 
     <div
@@ -1410,10 +1615,11 @@ footer {
         </h2>
 
         <p>
-            You decide.
+            Vote and see what everyone thinks.
         </p>
 
     </div>
+
 
 
     <div class="vote-box">
@@ -1429,11 +1635,12 @@ footer {
             They always find a reason
             to talk to you.
 
-            <br>
+            <br><br>
 
             Is that a sign?
 
         </h3>
+
 
 
         <div class="vote-buttons">
@@ -1446,7 +1653,7 @@ footer {
 
                 <br>
 
-                Definitely a sign
+                DEFINITELY A SIGN
 
             </button>
 
@@ -1458,7 +1665,7 @@ footer {
 
                 <br>
 
-                Maybe
+                MAYBE
 
             </button>
 
@@ -1470,12 +1677,13 @@ footer {
 
                 <br>
 
-                You're delulu
+                YOU'RE DELULU
 
             </button>
 
 
         </div>
+
 
 
         <div class="results">
@@ -1576,10 +1784,11 @@ footer {
         </h2>
 
         <p>
-            Let fate decide.
+            You never know what comes next.
         </p>
 
     </div>
+
 
 
     <div class="center-box">
@@ -1589,7 +1798,7 @@ footer {
             id="rouletteIcon"
             style="
             font-size:60px;
-            color:#d1ae70;
+            color:#d2ae6d;
             margin-bottom:25px;
             ">
 
@@ -1602,17 +1811,17 @@ footer {
             id="rouletteText"
             class="hugot-display">
 
-            "Someone secretly likes
-            their best friend."
+            “Someone secretly likes
+            their best friend.”
 
         </p>
 
 
         <button
-            class="primary-button"
+            class="post-button"
             onclick="spinRoulette()">
 
-            SPIN THE PLOT
+            ✧ SPIN THE PLOT
 
         </button>
 
@@ -1643,10 +1852,11 @@ footer {
         </h2>
 
         <p>
-            For everything that stayed in your drafts.
+            For the words that stayed in your drafts.
         </p>
 
     </div>
+
 
 
     <div class="form-card">
@@ -1656,21 +1866,36 @@ footer {
             <textarea
                 id="unsentInput"
                 maxlength="500"
-                placeholder="Write the message you never sent..."
+                placeholder="Write what you never sent..."
                 required></textarea>
 
 
             <button
-                class="primary-button"
+                class="post-button"
                 type="submit">
 
-                SEND TO THE VOID ✉
+                ✉ SEND TO THE VOID
 
             </button>
 
         </form>
 
     </div>
+
+
+
+    <div class="feed-title">
+
+        <h3>
+            Anonymous Messages
+        </h3>
+
+        <span>
+            PUBLIC
+        </span>
+
+    </div>
+
 
 
     <div
@@ -1711,11 +1936,10 @@ footer {
 
         <p>
 
-            PlotTwisted is an anonymous space
+            PlotTwisted is an anonymous community
             where people can share confessions,
-            hugot lines, unsent messages,
-            relationship signs, and unexpected
-            plot twists.
+            hugots, unsent messages, and unexpected
+            stories without revealing their identity.
 
         </p>
 
@@ -1735,10 +1959,7 @@ footer {
         <br>
 
 
-        <p
-            style="
-            color:#d1ae70;
-            ">
+        <p style="color:var(--gold);">
 
             Your story.
             Your secret.
@@ -1753,36 +1974,28 @@ footer {
 
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer>
 
     <strong
         style="
         font-family:'Cormorant Garamond',serif;
         font-size:22px;
-        color:#f5ead8;
+        color:var(--cream);
         ">
 
         PlotTwisted
 
     </strong>
 
-
     <br><br>
 
-
-    Your story doesn't always
-    go as planned.
-
+    Your story doesn't always go as planned.
 
 </footer>
 
 
 
-<!-- FIREBASE / SCRIPT -->
+<!-- FIREBASE SCRIPT -->
 
 <script
     type="module"
