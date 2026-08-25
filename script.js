@@ -52,7 +52,33 @@ const VOTES_COLLECTION = "signVotes";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const buttons = document.querySelectorAll("[data-slide]");
+    // ---------------------------------------------
+    // MAIN INTERFACE → SHOW / HIDE BUTTONS
+    // ---------------------------------------------
+
+    const interfaceCard =
+        document.getElementById("mainInterface");
+
+    const interfaceButtons =
+        document.getElementById("interfaceButtons");
+
+    if (interfaceCard && interfaceButtons) {
+
+        interfaceCard.addEventListener("click", () => {
+
+            interfaceButtons.classList.toggle("show-menu");
+
+        });
+
+    }
+
+
+    // ---------------------------------------------
+    // NAVIGATION BUTTONS
+    // ---------------------------------------------
+
+    const buttons =
+        document.querySelectorAll("[data-slide]");
 
     buttons.forEach(button => {
 
@@ -67,11 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 
+
     loadPosts();
     loadVotes();
 
 });
 
+
+// =====================================================
+// OPEN SLIDE
+// =====================================================
 
 function openSlide(id) {
 
@@ -1207,6 +1238,7 @@ function spinRoulette() {
 
     text.style.opacity = "0";
 
+
     if (icon) {
 
         icon.style.transform =
@@ -1303,4 +1335,4 @@ function showFirebaseError() {
 
     });
 
-   }
+        }
