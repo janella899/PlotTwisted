@@ -16,9 +16,9 @@
 
 <body>
 
-<!-- =========================
+<!-- =====================================================
      LOADING SCREEN
-========================= -->
+===================================================== -->
 
 <div id="loadingScreen">
 
@@ -26,7 +26,7 @@
 
         <div class="loading-symbol">✦</div>
 
-        <h2>PLOTTWISTED</h2>
+        <h2>PlotTwisted</h2>
 
         <p>Every story has a twist...</p>
 
@@ -39,9 +39,9 @@
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      NAVIGATION
-========================= -->
+===================================================== -->
 
 <header class="navbar">
 
@@ -55,6 +55,9 @@
         <a href="#confessions">Confessions</a>
         <a href="#signs">Signs</a>
         <a href="#hugot">Hugot</a>
+        <a href="#unsent">Unsent</a>
+        <a href="#flags">Flags</a>
+        <a href="#quiz">Quiz</a>
         <a href="#roulette">Roulette</a>
     </nav>
 
@@ -67,9 +70,9 @@
 </header>
 
 
-<!-- =========================
+<!-- =====================================================
      HERO
-========================= -->
+===================================================== -->
 
 <section id="home" class="hero">
 
@@ -113,7 +116,7 @@
     </div>
 
 
-    <!-- HERO STORY CARD -->
+    <!-- HERO STORY -->
 
     <div class="hero-card">
 
@@ -165,9 +168,9 @@
 </section>
 
 
-<!-- =========================
-     FEATURE CARDS
-========================= -->
+<!-- =====================================================
+     FEATURES
+===================================================== -->
 
 <section class="feature-section">
 
@@ -190,13 +193,9 @@
             class="feature-card"
             onclick="document.getElementById('confessions').scrollIntoView({behavior:'smooth'})">
 
-            <span class="feature-icon">
-                ♡
-            </span>
+            <span class="feature-icon">♡</span>
 
-            <h3>
-                Confessions
-            </h3>
+            <h3>Confessions</h3>
 
             <p>
                 Say what you can't say out loud.
@@ -209,13 +208,9 @@
             class="feature-card"
             onclick="document.getElementById('signs').scrollIntoView({behavior:'smooth'})">
 
-            <span class="feature-icon">
-                ◌
-            </span>
+            <span class="feature-icon">◌</span>
 
-            <h3>
-                Signs or Delusion?
-            </h3>
+            <h3>Signs or Delusion?</h3>
 
             <p>
                 Is it actually a sign?
@@ -228,13 +223,9 @@
             class="feature-card"
             onclick="document.getElementById('hugot').scrollIntoView({behavior:'smooth'})">
 
-            <span class="feature-icon">
-                ✦
-            </span>
+            <span class="feature-icon">✦</span>
 
-            <h3>
-                Hugot Corner
-            </h3>
+            <h3>Hugot Corner</h3>
 
             <p>
                 Feel it. Write it. Let it out.
@@ -247,13 +238,9 @@
             class="feature-card"
             onclick="document.getElementById('roulette').scrollIntoView({behavior:'smooth'})">
 
-            <span class="feature-icon">
-                ✧
-            </span>
+            <span class="feature-icon">✧</span>
 
-            <h3>
-                Confession Roulette
-            </h3>
+            <h3>Confession Roulette</h3>
 
             <p>
                 Let fate choose a secret.
@@ -266,9 +253,9 @@
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      DAILY PLOT TWIST
-========================= -->
+===================================================== -->
 
 <section class="daily-section">
 
@@ -279,10 +266,8 @@
         </div>
 
         <h2 id="dailyTwist">
-
             "Maybe they weren't ignoring you.
             Maybe they were waiting for you to notice."
-
         </h2>
 
         <button
@@ -298,9 +283,9 @@
 </section>
 
 
-<!-- =========================
-     CONFESSIONS
-========================= -->
+<!-- =====================================================
+     CONFESSION WALL
+===================================================== -->
 
 <section
     id="confessions"
@@ -334,9 +319,7 @@
             placeholder="Search confessions..."
             oninput="searchConfessions()">
 
-        <span>
-            ⌕
-        </span>
+        <span>⌕</span>
 
     </div>
 
@@ -378,7 +361,7 @@
     </div>
 
 
-    <!-- CONFESSION CARDS -->
+    <!-- CONFESSIONS -->
 
     <div
         id="confessionList"
@@ -547,9 +530,9 @@
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      SIGNS OR DELUSION
-========================= -->
+===================================================== -->
 
 <section
     id="signs"
@@ -580,10 +563,8 @@
         </div>
 
         <h3 id="situationText">
-
             "They remember tiny details
             about things I told them months ago."
-
         </h3>
 
 
@@ -630,9 +611,7 @@
 
             <div class="result">
 
-                <span>
-                    It's a Sign
-                </span>
+                <span>It's a Sign</span>
 
                 <div class="bar">
                     <div
@@ -650,9 +629,7 @@
 
             <div class="result">
 
-                <span>
-                    Maybe
-                </span>
+                <span>Maybe</span>
 
                 <div class="bar">
                     <div
@@ -670,9 +647,7 @@
 
             <div class="result">
 
-                <span>
-                    Delulu
-                </span>
+                <span>Delulu</span>
 
                 <div class="bar">
                     <div
@@ -694,9 +669,9 @@
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      PLOT TWIST STORIES
-========================= -->
+===================================================== -->
 
 <section class="content-section">
 
@@ -785,9 +760,9 @@
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      HUGOT
-========================= -->
+===================================================== -->
 
 <section
     id="hugot"
@@ -800,10 +775,8 @@
         </p>
 
         <h2 id="hugotText">
-
             "Sometimes you don't miss the person.
             You miss who you were when they were around."
-
         </h2>
 
         <button
@@ -819,9 +792,343 @@
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     UNSENT MESSAGES
+===================================================== -->
+
+<section
+    id="unsent"
+    class="content-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            NEVER SENT
+        </p>
+
+        <h2>
+            Unsent Messages
+        </h2>
+
+        <p>
+            Say the things you never had
+            the courage to send.
+        </p>
+
+    </div>
+
+
+    <div class="unsent-grid">
+
+
+        <article class="unsent-card">
+
+            <span>
+                ANONYMOUS #2048
+            </span>
+
+            <p>
+                "I hope you know that I never stopped
+                caring, even when we stopped talking."
+            </p>
+
+        </article>
+
+
+        <article class="unsent-card">
+
+            <span>
+                ANONYMOUS #7314
+            </span>
+
+            <p>
+                "I wish I had told you how important
+                you were to me before everything changed."
+            </p>
+
+        </article>
+
+
+        <article class="unsent-card">
+
+            <span>
+                ANONYMOUS #9152
+            </span>
+
+            <p>
+                "Maybe in another timeline,
+                I would've told you."
+            </p>
+
+        </article>
+
+    </div>
+
+
+    <div class="center-button">
+
+        <button
+            class="primary-button"
+            onclick="openModal('unsentModal')">
+
+            + Write an Unsent Message
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FLAG IT
+===================================================== -->
+
+<section
+    id="flags"
+    class="game-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            YOU DECIDE
+        </p>
+
+        <h2>
+            Flag It
+        </h2>
+
+        <p>
+            Green flag, beige flag,
+            or red flag?
+        </p>
+
+    </div>
+
+
+    <div class="flag-card">
+
+        <span class="situation-label">
+            SITUATION #027
+        </span>
+
+        <h3 id="flagSituation">
+            "They only message you
+            when they need something."
+        </h3>
+
+
+        <div class="flag-buttons">
+
+            <button
+                class="green-flag"
+                onclick="voteFlag('green')">
+
+                🟢
+
+                <strong>
+                    Green Flag
+                </strong>
+
+            </button>
+
+
+            <button
+                class="beige-flag"
+                onclick="voteFlag('beige')">
+
+                🟡
+
+                <strong>
+                    Beige Flag
+                </strong>
+
+            </button>
+
+
+            <button
+                class="red-flag"
+                onclick="voteFlag('red')">
+
+                🔴
+
+                <strong>
+                    Red Flag
+                </strong>
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="flagResults"
+            class="vote-results">
+
+            <div class="result">
+
+                <span>
+                    Green Flag
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="greenBar"
+                        style="width:15%">
+                    </div>
+                </div>
+
+                <strong id="greenPercent">
+                    15%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    Beige Flag
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="beigeBar"
+                        style="width:20%">
+                    </div>
+                </div>
+
+                <strong id="beigePercent">
+                    20%
+                </strong>
+
+            </div>
+
+
+            <div class="result">
+
+                <span>
+                    Red Flag
+                </span>
+
+                <div class="bar">
+                    <div
+                        id="redBar"
+                        style="width:65%">
+                    </div>
+                </div>
+
+                <strong id="redPercent">
+                    65%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ
+===================================================== -->
+
+<section
+    id="quiz"
+    class="content-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            JUST FOR FUN
+        </p>
+
+        <h2>
+            What Kind of Situation Are You In?
+        </h2>
+
+        <p>
+            Answer a few questions and discover
+            your PlotTwisted result.
+        </p>
+
+    </div>
+
+
+    <div class="quiz-card">
+
+        <div id="quizContent">
+
+            <span class="quiz-number">
+                QUESTION 1 OF 3
+            </span>
+
+            <h3 id="quizQuestion">
+                Who usually starts the conversation?
+            </h3>
+
+
+            <div class="quiz-options">
+
+                <button onclick="answerQuiz(2)">
+                    Me
+                </button>
+
+                <button onclick="answerQuiz(3)">
+                    Them
+                </button>
+
+                <button onclick="answerQuiz(1)">
+                    We both do
+                </button>
+
+                <button onclick="answerQuiz(0)">
+                    Nobody 😭
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="quizResult"
+            class="quiz-result"
+            style="display:none;">
+
+            <span class="eyebrow">
+                YOUR PLOTTWISTED RESULT
+            </span>
+
+            <h3 id="quizResultTitle">
+                It's Complicated
+            </h3>
+
+            <p id="quizResultText">
+                Maybe it's time to stop overthinking
+                and let things happen naturally.
+            </p>
+
+            <button
+                class="outline-button"
+                onclick="restartQuiz()">
+
+                Take Again
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
      CONFESSION ROULETTE
-========================= -->
+===================================================== -->
 
 <section
     id="roulette"
@@ -872,30 +1179,9 @@
 </section>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    <div class="footer-logo">
-        ✦ PlotTwisted
-    </div>
-
-    <p>
-        Anonymous stories. Unexpected endings.
-    </p>
-
-    <small>
-        © 2026 PlotTwisted
-    </small>
-
-</footer>
-
-
-<!-- =========================
+<!-- =====================================================
      CONFESSION MODAL
-========================= -->
+===================================================== -->
 
 <div
     id="confessionModal"
@@ -987,17 +1273,76 @@
 </div>
 
 
-<!-- =========================
-     TOAST
-========================= -->
+<!-- =====================================================
+     UNSENT MESSAGE MODAL
+===================================================== -->
+
+<div
+    id="unsentModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <button
+            class="close-button"
+            onclick="closeModal('unsentModal')">
+
+            ×
+
+        </button>
+
+
+        <p class="eyebrow">
+            NEVER SENT
+        </p>
+
+        <h2>
+            Write an Unsent Message
+        </h2>
+
+        <p class="modal-description">
+            No recipient name is needed.
+        </p>
+
+
+        <textarea
+            id="unsentInput"
+            placeholder="Dear someone..."
+            maxlength="500">
+        </textarea>
+
+
+        <div class="character-count">
+
+            <span id="unsentCharacterCount">
+                0
+            </span>/500
+
+        </div>
+
+
+        <button
+            class="primary-button full"
+            onclick="submitUnsent()">
+
+            Keep It Anonymous
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST NOTIFICATION
+===================================================== -->
 
 <div
     id="toast"
     class="toast">
 
-    <span>
-        ✦
-    </span>
+    <span>✦</span>
 
     <p id="toastMessage">
         Done!
@@ -1006,7 +1351,11 @@
 </div>
 
 
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
 <script src="script.js"></script>
 
 </body>
-</html>
+    </html>
