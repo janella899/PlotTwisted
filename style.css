@@ -1496,3 +1496,384 @@ select:focus-visible {
     background: var(--wine);
     color: white;
 }
+/* =========================================================
+   PLOTTWISTED INTERACTIVE PAGES
+========================================================= */
+
+.page-section {
+    display: none;
+    min-height: calc(100vh - 75px);
+    padding: 90px 8% 70px;
+
+    animation: sectionOut 0.35s ease;
+}
+
+.page-section.active-section {
+    display: block;
+    animation: sectionIn 0.65s cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes sectionIn {
+
+    0% {
+        opacity: 0;
+        transform: translateY(35px) scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+@keyframes sectionOut {
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+
+}
+
+
+/* HOME */
+
+.hero-home {
+    min-height: calc(100vh - 150px);
+
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+
+    align-items: center;
+
+    gap: 80px;
+}
+
+.home-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* INTERACTIVE BUTTONS */
+
+.story-button {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 45px 1fr 30px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 17px 20px;
+
+    background: rgba(255,255,255,0.035);
+
+    border: 1px solid var(--border);
+
+    color: var(--cream);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.story-button:hover {
+    transform: translateX(10px);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(125,23,57,0.3),
+            rgba(255,255,255,0.035)
+        );
+
+    border-color: rgba(201,166,107,0.45);
+
+    box-shadow:
+        -8px 0 25px rgba(125,23,57,0.15);
+}
+
+.story-button:active {
+    transform: translateX(5px) scale(0.98);
+}
+
+.button-symbol {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(201,166,107,0.3);
+
+    color: var(--gold);
+
+    font-size: 18px;
+}
+
+.story-button strong {
+    display: block;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 20px;
+
+    font-weight: 600;
+}
+
+.story-button small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 2px;
+}
+
+.story-button b {
+    color: var(--gold);
+
+    font-size: 18px;
+
+    transition: transform 0.3s ease;
+}
+
+.story-button:hover b {
+    transform: translateX(5px);
+}
+
+
+/* NAV HOME */
+
+.nav-home {
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding: 8px 18px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.nav-home:hover {
+    color: var(--gold);
+
+    border-color: var(--gold);
+}
+
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    max-width: 900px;
+
+    margin: 0 auto 50px;
+}
+
+.section-heading h2 {
+    margin: 10px 0 15px;
+}
+
+
+/* ACTION AREA */
+
+.action-area {
+    text-align: center;
+
+    margin: -20px 0 35px;
+}
+
+
+/* BACK BUTTON */
+
+.back-button {
+    display: block;
+
+    margin: 70px auto 0;
+
+    border: 1px solid var(--border);
+
+    background: transparent;
+
+    color: var(--muted);
+
+    padding: 12px 20px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.back-button:hover {
+    color: var(--gold);
+
+    border-color: var(--gold);
+
+    transform: translateX(-4px);
+}
+
+
+/* HUGOT */
+
+.hugot-box {
+    transition: 0.3s;
+}
+
+#hugotText {
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* ABOUT */
+
+.about-container {
+    max-width: 850px;
+
+    margin: auto;
+
+    min-height: 75vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+.about-container h2 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(45px, 7vw, 80px);
+
+    line-height: 1;
+
+    margin: 15px 0 30px;
+}
+
+.about-text {
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+}
+
+.about-divider {
+    color: var(--gold);
+
+    font-size: 25px;
+
+    margin: 25px 0;
+}
+
+.about-quote {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 28px;
+
+    font-style: italic;
+
+    max-width: 600px;
+
+    margin-bottom: 30px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+    .hero-home {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+
+        min-height: auto;
+    }
+
+    .home-menu {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .page-section {
+        padding:
+            60px 5%
+            60px;
+    }
+
+    .hero-home {
+        padding-top: 20px;
+    }
+
+    .story-button {
+        grid-template-columns:
+            40px 1fr 20px;
+
+        padding: 14px;
+    }
+
+    .story-button strong {
+        font-size: 17px;
+    }
+
+    .story-button small {
+        font-size: 8px;
+    }
+
+    .button-symbol {
+        width: 36px;
+        height: 36px;
+    }
+
+    .section-heading {
+        margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+        font-size: 42px;
+    }
+
+    .about-container {
+        min-height: 70vh;
+    }
+
+    .about-container h2 {
+        font-size: 50px;
+    }
+
+   }
