@@ -1,0 +1,1498 @@
+/* =========================================================
+   PLOTTWISTED
+   Main Website Styles
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(139, 28, 62, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(89, 24, 52, 0.15), transparent 30%),
+        #120c12;
+    color: #f4e8df;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+    --wine: #7d1739;
+    --wine-light: #a9365c;
+    --dark-wine: #3b0d20;
+    --cream: #f4e8df;
+    --muted: #bda9ad;
+    --gold: #c9a66b;
+    --dark: #120c12;
+    --card: rgba(255, 255, 255, 0.045);
+    --border: rgba(244, 232, 223, 0.12);
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #100a10;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--wine);
+    border-radius: 20px;
+}
+
+/* =========================================================
+   LOADING SCREEN
+========================================================= */
+
+#loadingScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #120c12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-card {
+    text-align: center;
+    animation: loadingFloat 2s ease-in-out infinite;
+}
+
+.loading-symbol {
+    font-size: 42px;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.loading-card h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 42px;
+    letter-spacing: 5px;
+}
+
+.loading-card p {
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.loading-line {
+    width: 180px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    margin: 25px auto 0;
+    overflow: hidden;
+}
+
+.loading-line span {
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: var(--gold);
+    animation: loadingLine 1.5s infinite;
+}
+
+@keyframes loadingLine {
+    0% {
+        transform: translateX(-120%);
+    }
+
+    100% {
+        transform: translateX(300%);
+    }
+}
+
+@keyframes loadingFloat {
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+    padding: 18px 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(18, 12, 18, 0.88);
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--gold);
+    margin-right: 5px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbar nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: var(--cream);
+}
+
+.nav-button {
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    padding: 9px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-button:hover {
+    background: var(--gold);
+    color: var(--dark);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 88vh;
+    padding: 90px 8%;
+
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 80px;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+
+    background: radial-gradient(
+        circle,
+        rgba(125, 23, 57, 0.35),
+        transparent 70%
+    );
+
+    top: -150px;
+    left: -150px;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(55px, 7vw, 100px);
+    line-height: 0.9;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.hero h1 span {
+    display: block;
+    color: var(--wine-light);
+    font-style: italic;
+}
+
+.hero-description {
+    max-width: 570px;
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary-button,
+.secondary-button,
+.outline-button {
+    padding: 13px 23px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.primary-button {
+    border: 1px solid var(--wine-light);
+    background: var(--wine);
+    color: white;
+}
+
+.primary-button:hover {
+    background: var(--wine-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(125, 23, 57, 0.3);
+}
+
+.secondary-button,
+.outline-button {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--cream);
+}
+
+.secondary-button:hover,
+.outline-button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.full {
+    width: 100%;
+}
+
+/* =========================================================
+   HERO CARD
+========================================================= */
+
+.hero-card {
+    position: relative;
+
+    padding: 35px;
+
+    min-height: 380px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.025)
+        );
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    transform: rotate(2deg);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.4);
+
+    transition: 0.5s;
+}
+
+.hero-card:hover {
+    transform: rotate(0deg) translateY(-8px);
+}
+
+.card-tape {
+    position: absolute;
+    width: 100px;
+    height: 28px;
+
+    background: rgba(201,166,107,0.35);
+
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+
+    opacity: 0.8;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.story-preview {
+    margin-top: 70px;
+}
+
+.story-preview p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 31px;
+    line-height: 1.3;
+}
+
+.hidden-twist {
+    margin-top: 35px;
+    padding: 20px;
+
+    background: rgba(125,23,57,0.15);
+
+    border-left: 2px solid var(--gold);
+
+    opacity: 0;
+    transform: translateY(10px);
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: 0.6s;
+}
+
+.hidden-twist.show {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 150px;
+}
+
+.hidden-twist span {
+    display: block;
+    color: var(--gold);
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.hidden-twist strong {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+}
+
+.hero-card > button {
+    position: absolute;
+    bottom: 30px;
+    left: 35px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--gold);
+
+    cursor: pointer;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 11px;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   HERO DECORATIONS
+========================================================= */
+
+.hero-decoration {
+    position: absolute;
+    color: rgba(201,166,107,0.35);
+    pointer-events: none;
+    animation: decorationFloat 5s ease-in-out infinite;
+}
+
+.decoration-one {
+    top: 20%;
+    left: 5%;
+    font-size: 25px;
+}
+
+.decoration-two {
+    top: 25%;
+    right: 8%;
+    font-size: 40px;
+}
+
+.decoration-three {
+    bottom: 15%;
+    left: 45%;
+    font-size: 20px;
+}
+
+.decoration-four {
+    top: 10%;
+    right: 40%;
+    font-size: 25px;
+}
+
+@keyframes decorationFloat {
+    50% {
+        transform: translateY(-15px) rotate(10deg);
+    }
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.feature-section,
+.content-section,
+.game-section,
+.daily-section,
+.hugot-section,
+.roulette-section {
+    padding: 100px 8%;
+}
+
+.section-heading {
+    margin-bottom: 45px;
+}
+
+.section-heading h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1;
+}
+
+.section-heading.centered {
+    text-align: center;
+}
+
+.section-heading.centered > p:last-child {
+    max-width: 600px;
+    margin: 15px auto 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================================================
+   FEATURE GRID
+========================================================= */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.feature-card {
+    text-align: left;
+
+    padding: 30px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    color: var(--cream);
+
+    cursor: pointer;
+
+    transition: 0.4s;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    background: rgba(125,23,57,0.15);
+    border-color: rgba(201,166,107,0.4);
+}
+
+.feature-icon {
+    display: block;
+    color: var(--gold);
+    font-size: 28px;
+    margin-bottom: 35px;
+}
+
+.feature-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =========================================================
+   DAILY
+========================================================= */
+
+.daily-section {
+    padding-top: 30px;
+}
+
+.daily-card {
+    max-width: 1000px;
+    margin: auto;
+
+    text-align: center;
+
+    padding: 70px 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(125,23,57,0.25),
+            rgba(255,255,255,0.03)
+        );
+
+    border: 1px solid var(--border);
+}
+
+.daily-label {
+    color: var(--gold);
+    letter-spacing: 3px;
+    font-size: 10px;
+    margin-bottom: 25px;
+}
+
+.daily-card h2 {
+    max-width: 750px;
+    margin: auto auto 30px;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(30px, 4vw, 50px);
+    line-height: 1.2;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 25px;
+    position: relative;
+}
+
+.search-container input {
+    width: 100%;
+
+    padding: 14px 45px 14px 20px;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+
+    color: white;
+
+    border-radius: 30px;
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.search-container input:focus {
+    border-color: var(--gold);
+}
+
+.search-container span {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: var(--gold);
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    margin-bottom: 35px;
+}
+
+.filter {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+    font-size: 11px;
+
+    transition: 0.3s;
+}
+
+.filter:hover,
+.filter.active {
+    background: var(--wine);
+    color: white;
+    border-color: var(--wine);
+}
+
+/* =========================================================
+   CONFESSIONS
+========================================================= */
+
+.confession-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.confession-card {
+    padding: 28px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    transition: 0.4s;
+}
+
+.confession-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(201,166,107,0.3);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.post-category {
+    color: var(--gold);
+}
+
+.confession-card > p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    line-height: 1.4;
+
+    margin: 30px 0;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.post-footer button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.post-footer button.liked {
+    color: #d96887;
+}
+
+.center-button {
+    text-align: center;
+    margin-top: 35px;
+}
+
+/* =========================================================
+   SIGNS / FLAGS
+========================================================= */
+
+.game-section {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.015),
+            rgba(125,23,57,0.05)
+        );
+}
+
+.sign-card,
+.flag-card {
+    max-width: 850px;
+    margin: auto;
+
+    padding: 50px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    text-align: center;
+}
+
+.situation-label {
+    color: var(--gold);
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.sign-card h3,
+.flag-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.25;
+
+    max-width: 700px;
+    margin: 25px auto 40px;
+}
+
+.vote-buttons,
+.flag-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.vote-buttons button,
+.flag-buttons button {
+    padding: 20px 10px;
+
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+
+    color: var(--cream);
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.vote-buttons button:hover,
+.flag-buttons button:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+}
+
+.vote-buttons button {
+    font-size: 25px;
+}
+
+.vote-buttons strong,
+.flag-buttons strong {
+    display: block;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.vote-results {
+    margin-top: 35px;
+    text-align: left;
+}
+
+.result {
+    display: grid;
+    grid-template-columns: 100px 1fr 45px;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 12px;
+
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.result strong {
+    color: var(--cream);
+}
+
+.bar {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar div {
+    height: 100%;
+    background: var(--wine-light);
+    border-radius: inherit;
+    transition: width 0.8s ease;
+}
+
+/* =========================================================
+   PLOT TWIST STORIES
+========================================================= */
+
+.twist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.twist-card {
+    padding: 30px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    position: relative;
+}
+
+.story-number {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+}
+
+.twist-card p {
+    margin: 35px 0;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 22px;
+    line-height: 1.4;
+}
+
+.twist-card button {
+    border: 1px solid var(--border);
+    background: transparent;
+
+    color: var(--gold);
+
+    padding: 10px 15px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.twist-answer {
+    display: none;
+
+    margin-top: 20px;
+    padding: 18px;
+
+    background: rgba(125,23,57,0.15);
+    border-left: 2px solid var(--gold);
+
+    color: var(--cream);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+}
+
+.twist-answer.show {
+    display: block;
+    animation: reveal 0.5s ease;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   HUGOT
+========================================================= */
+
+.hugot-section {
+    padding-top: 60px;
+}
+
+.hugot-box {
+    max-width: 900px;
+    margin: auto;
+
+    text-align: center;
+
+    padding: 80px 30px;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.hugot-box h2 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(32px, 5vw, 55px);
+
+    line-height: 1.2;
+
+    margin-bottom: 35px;
+}
+
+/* =========================================================
+   UNSENT
+========================================================= */
+
+.unsent-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.unsent-card {
+    padding: 30px;
+
+    min-height: 230px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.06),
+            rgba(255,255,255,0.02)
+        );
+
+    border: 1px solid var(--border);
+
+    transform: rotate(-1deg);
+
+    transition: 0.4s;
+}
+
+.unsent-card:nth-child(2) {
+    transform: rotate(1deg);
+}
+
+.unsent-card:nth-child(3) {
+    transform: rotate(-2deg);
+}
+
+.unsent-card:hover {
+    transform: rotate(0deg) translateY(-7px);
+}
+
+.unsent-card span {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold);
+}
+
+.unsent-card p {
+    margin-top: 30px;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    line-height: 1.4;
+}
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+.quiz-card {
+    max-width: 750px;
+    margin: auto;
+
+    padding: 50px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    text-align: center;
+}
+
+.quiz-number {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.quiz-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 35px;
+
+    margin: 20px 0 30px;
+}
+
+.quiz-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.quiz-options button {
+    padding: 15px;
+
+    background: transparent;
+    border: 1px solid var(--border);
+
+    color: var(--cream);
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.quiz-options button:hover {
+    background: var(--wine);
+    border-color: var(--wine);
+}
+
+.quiz-result h3 {
+    color: var(--gold);
+}
+
+/* =========================================================
+   ROULETTE
+========================================================= */
+
+.roulette-section {
+    text-align: center;
+}
+
+.roulette-card {
+    max-width: 700px;
+    min-height: 350px;
+
+    margin: auto;
+
+    padding: 60px 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(125,23,57,0.25),
+            transparent 60%
+        );
+
+    border: 1px solid var(--border);
+}
+
+.roulette-icon {
+    font-size: 55px;
+    color: var(--gold);
+
+    margin-bottom: 30px;
+
+    transition: 0.3s;
+}
+
+.roulette-icon.spin {
+    animation: rouletteSpin 0.8s linear infinite;
+}
+
+@keyframes rouletteSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.roulette-card p {
+    max-width: 550px;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+
+    margin-bottom: 30px;
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.75);
+
+    backdrop-filter: blur(10px);
+
+    z-index: 5000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+    animation: modalFade 0.3s ease;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    width: min(520px, 100%);
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    padding: 40px;
+
+    background: #1b111a;
+
+    border: 1px solid var(--border);
+
+    position: relative;
+
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+.modal-content h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 40px;
+}
+
+.modal-description {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.close-button {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    border: none;
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+.modal-content label {
+    display: block;
+
+    color: var(--gold);
+
+    font-size: 10px;
+    letter-spacing: 1px;
+
+    margin: 18px 0 7px;
+}
+
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+
+    background: rgba(255,255,255,0.04);
+
+    border: 1px solid var(--border);
+
+    color: var(--cream);
+
+    outline: none;
+
+    font-family: "Poppins", sans-serif;
+}
+
+.modal-content select {
+    padding: 12px;
+}
+
+.modal-content textarea {
+    min-height: 160px;
+
+    resize: vertical;
+
+    padding: 15px;
+}
+
+.modal-content textarea:focus,
+.modal-content select:focus {
+    border-color: var(--gold);
+}
+
+.character-count {
+    text-align: right;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin: 5px 0 20px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 6000;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 13px 18px;
+
+    background: #21131d;
+    border: 1px solid var(--border);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+
+    transform: translateY(120px);
+
+    transition: 0.4s;
+}
+
+.toast.show {
+    transform: translateY(0);
+}
+
+.toast span {
+    color: var(--gold);
+}
+
+.toast p {
+    font-size: 11px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    padding: 70px 8% 35px;
+
+    text-align: center;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+}
+
+.footer-logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 32px;
+
+    color: var(--cream);
+
+    margin-bottom: 10px;
+}
+
+footer p {
+    font-size: 11px;
+    margin-bottom: 25px;
+}
+
+footer small {
+    font-size: 9px;
+    opacity: 0.5;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .navbar nav {
+        display: none;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        padding-top: 70px;
+    }
+
+    .hero-card {
+        max-width: 550px;
+        width: 100%;
+        margin: auto;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .twist-grid,
+    .unsent-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .twist-card,
+    .unsent-card {
+        max-width: 600px;
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .nav-button {
+        padding: 8px 13px;
+        font-size: 10px;
+    }
+
+    .hero {
+        padding: 70px 6%;
+        min-height: auto;
+    }
+
+    .hero h1 {
+        font-size: 58px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+    .feature-section,
+    .content-section,
+    .game-section,
+    .daily-section,
+    .hugot-section,
+    .roulette-section {
+        padding: 75px 6%;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .confession-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vote-buttons,
+    .flag-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-options {
+        grid-template-columns: 1fr;
+    }
+
+    .sign-card,
+    .flag-card,
+    .quiz-card {
+        padding: 30px 20px;
+    }
+
+    .result {
+        grid-template-columns: 80px 1fr 40px;
+        font-size: 9px;
+    }
+
+    .modal-content {
+        padding: 30px 22px;
+    }
+
+    .hero-card {
+        min-height: 350px;
+        padding: 28px;
+    }
+
+    .story-preview {
+        margin-top: 55px;
+    }
+
+    .story-preview p {
+        font-size: 27px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+    background: var(--wine);
+    color: white;
+}
