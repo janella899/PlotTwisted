@@ -1,171 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PlotTwisted</title>
+<title>PlotTwisted — Your Story, Your Secret</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+<style>
+
+:root {
+    --black: #100b0d;
+    --dark: #180d11;
+    --wine: #68152d;
+    --deep-wine: #320b18;
+    --cream: #f4ead8;
+    --gold: #c9a66b;
+    --muted: #aa9b8a;
+    --line: rgba(201,166,107,.25);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(104,21,45,.35), transparent 30%),
+        radial-gradient(circle at 85% 70%, rgba(201,166,107,.08), transparent 25%),
+        var(--black);
+    color: var(--cream);
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    background: rgba(16,11,13,.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+}
+
+.logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 27px;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.home-button {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--cream);
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.home-button:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* SECTIONS */
+
+.page-section {
+    display: none;
+    min-height: 100vh;
+    padding: 110px 8% 70px;
+}
+
+.page-section.active-section {
+    display: block;
+    animation: pageIn .6s ease;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* HOME */
+
+.hero {
+    min-height: 80vh;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr .8fr;
+    align-items: center;
+    gap: 70px;
+}
+
+.eyebrow {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(70px, 10vw, 130px);
+    line-height: .78;
+    letter-spacing: -5px;
+    margin: 15px 0 25px;
+}
+
+.hero h1 span {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold);
+}
+
+.hero-description {
+    max-width: 550px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.story-button {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 45px 1fr 25px;
+    align-items: center;
+    gap: 15px;
+    padding: 17px;
+    color: var(--cream);
+    text-align: left;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: .35s;
+}
+
+.story-button:hover {
+    transform: translateX(10px);
+    border-color: var(--gold);
+    background: rgba(104,21,45,.4);
+}
+
+.story-symbol {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    border: 1px solid var(--line);
+    font-size: 18px;
+}
+
+.story-button strong {
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 21px;
+}
+
+.story-button small {
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.story-button b {
+    color: var(--gold);
+}
+
+/* HEADINGS */
+
+.section-heading {
+    max-width: 900px;
+    margin: 0 auto 40px;
+}
+
+.section-heading h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(50px, 8vw, 85px);
+    line-height: .9;
+    margin: 12px 0;
+}
+
+.section-heading p:not(.eyebrow) {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* CARDS */
+
+.confession-grid,
+.unsent-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 28px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid var(--line);
+    transition: .35s;
+}
+
+.card:hover {
+    transform: translateY(-7px) rotate(.4deg);
+    border-color: var(--gold);
+}
+
+.card-label {
+    color: var(--gold);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.card p {
+    margin-top: 20px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+/* BUTTON */
+
+.primary-button {
+    padding: 13px 25px;
+    border: 1px solid var(--gold);
+    background: var(--wine);
+    color: var(--cream);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.primary-button:hover {
+    transform: translateY(-3px);
+    background: var(--deep-wine);
+}
+
+/* HUGOT */
+
+.hugot-box,
+.roulette-box,
+.sign-box {
+    max-width: 850px;
+    margin: auto;
+    padding: 60px 35px;
+    text-align: center;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--line);
+}
+
+.hugot-box p,
+.roulette-box p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(28px, 4vw, 43px);
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 35px;
+}
+
+/* SIGNS */
+
+.sign-box {
+    text-align: left;
+}
+
+.sign-box h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 32px;
+    margin: 15px 0 30px;
+}
+
+.vote-buttons {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.vote-buttons button {
+    min-height: 100px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.vote-buttons button:hover {
+    border-color: var(--gold);
+    background: var(--wine);
+}
+
+.results {
+    margin-top: 30px;
+}
+
+.result {
+    display: grid;
+    grid-template-columns: 70px 1fr 45px;
+    gap: 10px;
+    align-items: center;
+    margin: 13px 0;
+    color: var(--muted);
+    font-size: 9px;
+}
+
+.bar {
+    height: 5px;
+    background: rgba(255,255,255,.08);
+}
+
+.bar div {
+    height: 100%;
+    background: linear-gradient(90deg,var(--wine),var(--gold));
+}
+
+/* UNSENT */
+
+.unsent-card {
+    min-height: 220px;
+}
+
+/* ABOUT */
+
+.about {
+    max-width: 800px;
+    min-height: 70vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(60px,9vw,100px);
+    line-height: .85;
+    margin: 15px 0 30px;
+}
+
+.about p {
+    max-width: 650px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 9px;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 5%;
+    }
+
+    .page-section {
+        padding: 95px 5% 60px;
+    }
+
+    .hero h1 {
+        font-size: 75px;
+        letter-spacing: -3px;
+    }
+
+    .story-button {
+        grid-template-columns: 40px 1fr 18px;
+    }
+
+    .story-symbol {
+        width: 38px;
+        height: 38px;
+    }
+
+    .story-button strong {
+        font-size: 17px;
+    }
+
+    .vote-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .hugot-box,
+    .roulette-box,
+    .sign-box {
+        padding: 35px 20px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<!-- ================================
-     LOADING
-================================ -->
+<!-- NAVBAR -->
 
-<div id="loadingScreen">
-
-    <div class="loading-card">
-
-        <div class="loading-symbol">✦</div>
-
-        <h2>PlotTwisted</h2>
-
-        <p>Every story has a twist.</p>
-
-        <div class="loading-line">
-            <span></span>
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- ================================
-     NAVBAR
-================================ -->
-
-<header class="navbar">
+<nav class="navbar">
 
     <div class="logo">
-        <span>✦</span> PlotTwisted
+        Plot<span>Twisted</span>
     </div>
 
-    <button class="nav-home" onclick="showSection('home')">
+    <button class="home-button" data-slide="home">
         Home
     </button>
 
-</header>
+</nav>
 
 
-<!-- ================================
+<!-- =========================
      HOME
-================================ -->
-
-<main>
+========================= -->
 
 <section id="home" class="page-section active-section">
 
-    <div class="hero-home">
+    <div class="hero">
 
-        <div class="hero-content">
+        <div>
 
             <p class="eyebrow">
-                WELCOME TO THE UNEXPECTED
+                Welcome to your little secret
             </p>
 
             <h1>
-                Plot<span>Twisted.</span>
+                Plot
+                <span>Twisted.</span>
             </h1>
 
             <p class="hero-description">
-                A little corner of the internet for the
-                things you never had the courage to say.
-                Confessions, hugot, signs, secrets,
-                and stories with unexpected endings.
+                A place for the things you never said,
+                the feelings you can't explain,
+                the signs you're overthinking,
+                and the stories that deserve another chapter.
             </p>
 
         </div>
 
 
-        <div class="home-menu">
+        <div class="menu">
 
-            <button class="story-button" onclick="showSection('confessions')">
+            <button class="story-button"
+                    data-slide="confessions">
 
-                <span class="button-symbol">♡</span>
+                <div class="story-symbol">♡</div>
 
-                <span>
+                <div>
                     <strong>Anonymous Confessions</strong>
                     <small>Say what you can't say.</small>
-                </span>
+                </div>
 
                 <b>→</b>
 
             </button>
 
 
-            <button class="story-button" onclick="showSection('hugot')">
+            <button class="story-button"
+                    data-slide="hugot">
 
-                <span class="button-symbol">✧</span>
+                <div class="story-symbol">✦</div>
 
-                <span>
+                <div>
                     <strong>Hugot Corner</strong>
-                    <small>For feelings without a name.</small>
-                </span>
+                    <small>For feelings with no filter.</small>
+                </div>
 
                 <b>→</b>
 
             </button>
 
 
-            <button class="story-button" onclick="showSection('signs')">
+            <button class="story-button"
+                    data-slide="signs">
 
-                <span class="button-symbol">?</span>
+                <div class="story-symbol">?</div>
 
-                <span>
-                    <strong>Signs or Delusion</strong>
-                    <small>Is it a sign or are you delulu?</small>
-                </span>
+                <div>
+                    <strong>Sign or Delusion?</strong>
+                    <small>Is it a sign or are we delulu?</small>
+                </div>
 
                 <b>→</b>
 
             </button>
 
 
-            <button class="story-button" onclick="showSection('roulette')">
+            <button class="story-button"
+                    data-slide="roulette">
 
-                <span class="button-symbol">✦</span>
+                <div class="story-symbol">✧</div>
 
-                <span>
+                <div>
                     <strong>Plot Twist Roulette</strong>
-                    <small>Let fate choose the story.</small>
-                </span>
+                    <small>Let fate choose a story.</small>
+                </div>
 
                 <b>→</b>
 
             </button>
 
 
-            <button class="story-button" onclick="showSection('unsent')">
+            <button class="story-button"
+                    data-slide="unsent">
 
-                <span class="button-symbol">⌁</span>
+                <div class="story-symbol">✉</div>
 
-                <span>
+                <div>
                     <strong>Unsent Messages</strong>
-                    <small>Words that stayed unsent.</small>
-                </span>
+                    <small>Things left in the drafts.</small>
+                </div>
 
                 <b>→</b>
 
             </button>
 
 
-            <button class="story-button" onclick="showSection('about')">
+            <button class="story-button"
+                    data-slide="about">
 
-                <span class="button-symbol">✿</span>
+                <div class="story-symbol">i</div>
 
-                <span>
-                    <strong>About Us</strong>
-                    <small>The story behind PlotTwisted.</small>
-                </span>
+                <div>
+                    <strong>About PlotTwisted</strong>
+                    <small>Behind the little secret.</small>
+                </div>
 
                 <b>→</b>
 
@@ -178,199 +595,108 @@
 </section>
 
 
-<!-- ================================
+<!-- =========================
      CONFESSIONS
-================================ -->
+========================= -->
 
 <section id="confessions" class="page-section">
 
     <div class="section-heading">
 
-        <p class="eyebrow">01 / CONFESSIONS</p>
+        <p class="eyebrow">
+            Anonymous corner
+        </p>
 
         <h2>
-            Say it anonymously.
+            Confessions.
         </h2>
 
         <p>
-            No names. No judgment. Just your story.
+            Say it without revealing who you are.
         </p>
 
     </div>
 
 
-    <div class="action-area">
+    <div style="text-align:center;margin-bottom:35px;">
 
         <button class="primary-button"
-                onclick="openModal('confessionModal')">
+                onclick="alert('Your confession feature is ready for Firebase later!')">
 
-            + Write a Confession
+            + Leave a Confession
 
         </button>
 
     </div>
 
 
-    <div class="search-container">
+    <div class="confession-grid">
 
-        <input
-            id="searchInput"
-            type="text"
-            placeholder="Search confessions..."
-            oninput="searchConfessions()"
-        >
+        <div class="card">
 
-        <span>⌕</span>
-
-    </div>
-
-
-    <div class="filter-bar">
-
-        <button
-            class="filter active"
-            onclick="filterConfessions('all', this)">
-            All
-        </button>
-
-        <button
-            class="filter"
-            onclick="filterConfessions('crush', this)">
-            Crush
-        </button>
-
-        <button
-            class="filter"
-            onclick="filterConfessions('friendship', this)">
-            Friendship
-        </button>
-
-        <button
-            class="filter"
-            onclick="filterConfessions('life', this)">
-            Life
-        </button>
-
-    </div>
-
-
-    <div class="confession-grid" id="confessionList">
-
-        <article class="confession-card" data-category="crush">
-
-            <div class="post-header">
-
-                <span>ANONYMOUS #2841</span>
-
-                <span class="post-category">
-                    CRUSH
-                </span>
-
-            </div>
+            <span class="card-label">
+                ANONYMOUS #001
+            </span>
 
             <p>
-                "I think I like them, but I'm scared
-                that knowing will change everything."
+                "I think I like someone I promised myself
+                I would never fall for."
             </p>
 
-            <div class="post-footer">
-
-                <button onclick="react(this)">
-                    ♡ <span>24</span>
-                </button>
-
-                <span>today</span>
-
-            </div>
-
-        </article>
+        </div>
 
 
-        <article class="confession-card" data-category="friendship">
+        <div class="card">
 
-            <div class="post-header">
-
-                <span>ANONYMOUS #7319</span>
-
-                <span class="post-category">
-                    FRIENDSHIP
-                </span>
-
-            </div>
+            <span class="card-label">
+                ANONYMOUS #002
+            </span>
 
             <p>
-                "I miss my old best friend but I don't
-                know how to start talking again."
+                "We talk every day but somehow
+                I still don't know what we are."
             </p>
 
-            <div class="post-footer">
-
-                <button onclick="react(this)">
-                    ♡ <span>18</span>
-                </button>
-
-                <span>yesterday</span>
-
-            </div>
-
-        </article>
+        </div>
 
 
-        <article class="confession-card" data-category="life">
+        <div class="card">
 
-            <div class="post-header">
-
-                <span>ANONYMOUS #4902</span>
-
-                <span class="post-category">
-                    LIFE
-                </span>
-
-            </div>
+            <span class="card-label">
+                ANONYMOUS #003
+            </span>
 
             <p>
-                "Maybe I'm not behind. Maybe my story
-                is simply taking a different route."
+                "I wonder if they know that every
+                song I post is secretly about them."
             </p>
 
-            <div class="post-footer">
-
-                <button onclick="react(this)">
-                    ♡ <span>31</span>
-                </button>
-
-                <span>2 days ago</span>
-
-            </div>
-
-        </article>
+        </div>
 
     </div>
-
-
-    <button class="back-button"
-            onclick="showSection('home')">
-
-        ← Back to PlotTwisted
-
-    </button>
 
 </section>
 
 
-<!-- ================================
+<!-- =========================
      HUGOT
-================================ -->
+========================= -->
 
 <section id="hugot" class="page-section">
 
-    <div class="section-heading centered">
+    <div class="section-heading">
 
-        <p class="eyebrow">02 / HUGOT CORNER</p>
+        <p class="eyebrow">
+            Feelings department
+        </p>
 
         <h2>
-            For feelings you can't explain.
+            Hugot Corner.
         </h2>
+
+        <p>
+            Press the button. Let the universe speak.
+        </p>
 
     </div>
 
@@ -378,92 +704,86 @@
     <div class="hugot-box">
 
         <p id="hugotText">
-            "Sometimes you don't miss the person.
-            You miss who you were when they were around."
+            "Maybe the plot twist is choosing yourself."
         </p>
 
-        <button
-            class="primary-button"
-            onclick="newHugot()">
+        <button class="primary-button"
+                onclick="newHugot()">
 
-            Give Me Another
+            Give Me Another One
 
         </button>
 
     </div>
 
-
-    <button class="back-button"
-            onclick="showSection('home')">
-
-        ← Back to PlotTwisted
-
-    </button>
-
 </section>
 
 
-<!-- ================================
+<!-- =========================
      SIGNS
-================================ -->
+========================= -->
 
 <section id="signs" class="page-section">
 
-    <div class="section-heading centered">
+    <div class="section-heading">
 
-        <p class="eyebrow">03 / SIGNS OR DELUSION</p>
+        <p class="eyebrow">
+            The investigation
+        </p>
 
         <h2>
-            Is it a sign?
+            Sign or Delusion?
         </h2>
 
         <p>
-            Or are you just writing the plot yourself?
+            You decide.
         </p>
 
     </div>
 
 
-    <div class="sign-card">
+    <div class="sign-box">
 
-        <span class="situation-label">
-            SITUATION
+        <span class="eyebrow">
+            CASE #001
         </span>
 
         <h3>
-            They remember tiny details about you
-            that you told them months ago.
+            They always find a reason to talk to you.
+            Is that a sign?
         </h3>
 
 
         <div class="vote-buttons">
 
             <button onclick="voteSign('sign')">
-                ✦
-                <strong>Definitely a sign</strong>
+                ✦<br>
+                Definitely a sign
             </button>
 
             <button onclick="voteSign('maybe')">
-                ?
-                <strong>Maybe</strong>
+                ?<br>
+                Maybe
             </button>
 
             <button onclick="voteSign('delulu')">
-                ◌
-                <strong>I'm delulu</strong>
+                ♡<br>
+                You're delulu
             </button>
 
         </div>
 
 
-        <div class="vote-results">
+        <div class="results">
 
             <div class="result">
 
                 <span>Sign</span>
 
                 <div class="bar">
-                    <div id="signBar" style="width:62%"></div>
+                    <div id="signBar"
+                         style="width:62%">
+                    </div>
                 </div>
 
                 <strong id="signPercent">
@@ -478,7 +798,9 @@
                 <span>Maybe</span>
 
                 <div class="bar">
-                    <div id="maybeBar" style="width:25%"></div>
+                    <div id="maybeBar"
+                         style="width:25%">
+                    </div>
                 </div>
 
                 <strong id="maybePercent">
@@ -493,7 +815,9 @@
                 <span>Delulu</span>
 
                 <div class="bar">
-                    <div id="deluluBar" style="width:13%"></div>
+                    <div id="deluluBar"
+                         style="width:13%">
+                    </div>
                 </div>
 
                 <strong id="deluluPercent">
@@ -506,387 +830,200 @@
 
     </div>
 
-
-    <button class="back-button"
-            onclick="showSection('home')">
-
-        ← Back to PlotTwisted
-
-    </button>
-
 </section>
 
 
-<!-- ================================
+<!-- =========================
      ROULETTE
-================================ -->
+========================= -->
 
 <section id="roulette" class="page-section">
 
-    <div class="section-heading centered">
+    <div class="section-heading">
 
-        <p class="eyebrow">04 / PLOT TWIST ROULETTE</p>
+        <p class="eyebrow">
+            Spin the story
+        </p>
 
         <h2>
-            Let fate choose.
+            Plot Twist Roulette.
         </h2>
+
+        <p>
+            You never know what story comes next.
+        </p>
 
     </div>
 
 
-    <div class="roulette-card">
+    <div class="roulette-box">
 
         <div id="rouletteIcon"
-             class="roulette-icon">
+             style="
+             font-size:55px;
+             color:#c9a66b;
+             margin-bottom:25px;
+             ">
 
-            ✦
+            ✧
 
         </div>
 
+
         <p id="rouletteText">
-            Spin the wheel and see what story
-            finds you.
+
+            "Someone secretly likes their best friend."
+
         </p>
 
-        <button
-            class="primary-button"
-            onclick="spinRoulette()">
 
-            Spin the Plot
+        <button class="primary-button"
+                onclick="spinRoulette()">
+
+            SPIN THE PLOT
 
         </button>
 
     </div>
-
-
-    <button class="back-button"
-            onclick="showSection('home')">
-
-        ← Back to PlotTwisted
-
-    </button>
 
 </section>
 
 
-<!-- ================================
+<!-- =========================
      UNSENT
-================================ -->
+========================= -->
 
 <section id="unsent" class="page-section">
 
-    <div class="section-heading centered">
+    <div class="section-heading">
 
-        <p class="eyebrow">05 / UNSENT MESSAGES</p>
+        <p class="eyebrow">
+            Never sent
+        </p>
 
         <h2>
-            What you never sent.
+            Unsent Messages.
         </h2>
 
         <p>
-            Some words are easier to write anonymously.
+            Messages that stayed in the drafts.
         </p>
-
-    </div>
-
-
-    <div class="action-area">
-
-        <button
-            class="primary-button"
-            onclick="openModal('unsentModal')">
-
-            + Write an Unsent Message
-
-        </button>
 
     </div>
 
 
     <div class="unsent-grid">
 
-        <article class="unsent-card">
+        <div class="card unsent-card">
 
-            <span>ANONYMOUS #1192</span>
-
-            <p>
-                "I hope you know that I was always
-                rooting for you."
-            </p>
-
-        </article>
-
-
-        <article class="unsent-card">
-
-            <span>ANONYMOUS #5831</span>
+            <span class="card-label">
+                DRAFT #01
+            </span>
 
             <p>
-                "I almost told you how I felt.
-                Almost."
+                "I wish I told you how I felt
+                before everything changed."
             </p>
 
-        </article>
+        </div>
 
 
-        <article class="unsent-card">
+        <div class="card unsent-card">
 
-            <span>ANONYMOUS #9044</span>
+            <span class="card-label">
+                DRAFT #02
+            </span>
 
             <p>
-                "Maybe in another version of our
-                story, we stayed friends."
+                "I still check if you've viewed
+                my story."
             </p>
 
-        </article>
+        </div>
+
+
+        <div class="card unsent-card">
+
+            <span class="card-label">
+                DRAFT #03
+            </span>
+
+            <p>
+                "Maybe in another timeline,
+                we actually said what we meant."
+            </p>
+
+        </div>
 
     </div>
-
-
-    <button class="back-button"
-            onclick="showSection('home')">
-
-        ← Back to PlotTwisted
-
-    </button>
 
 </section>
 
 
-<!-- ================================
-     ABOUT US
-================================ -->
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section id="about" class="page-section">
 
-    <div class="about-container">
+    <div class="about">
 
         <p class="eyebrow">
-            THE STORY BEHIND THE STORY
+            Behind the plot
         </p>
 
         <h2>
-            About PlotTwisted
+            About<br>
+            PlotTwisted.
         </h2>
 
-        <p class="about-text">
-
-            PlotTwisted was created as a little
-            digital space for thoughts, feelings,
-            stories, and questions that are sometimes
-            too awkward to say out loud.
-
+        <p>
+            PlotTwisted is a creative anonymous space where
+            people can share confessions, hugot lines,
+            unsent messages, relationship signs, and
+            unexpected plot twists.
         </p>
 
-        <p class="about-text">
+        <br>
 
-            Here, you don't have to reveal your name.
-            You can confess, share a hugot line,
-            wonder if something is a sign, or leave
-            behind words that were never sent.
-
+        <p>
+            Sometimes we just need somewhere to say
+            what we cannot say out loud.
         </p>
 
-        <div class="about-divider">
-            ✦
-        </div>
+        <br>
 
-        <p class="about-quote">
-            "Every story has a beginning,
-            a middle, and a plot twist."
+        <p style="color:#c9a66b;">
+            Your story. Your secret. Your plot twist.
         </p>
-
-
-        <button
-            class="primary-button"
-            onclick="showSection('home')">
-
-            Start Exploring
-
-        </button>
 
     </div>
-
 
 </section>
 
-</main>
 
-
-<!-- ================================
-     CONFESSION MODAL
-================================ -->
-
-<div id="confessionModal"
-     class="modal">
-
-    <div class="modal-content">
-
-        <button
-            class="close-button"
-            onclick="closeModal('confessionModal')">
-
-            ×
-
-        </button>
-
-        <h2>
-            Tell us your story.
-        </h2>
-
-        <p class="modal-description">
-            Your confession will appear anonymously.
-        </p>
-
-
-        <label>
-            CATEGORY
-        </label>
-
-        <select id="confessionCategory">
-
-            <option value="crush">
-                Crush
-            </option>
-
-            <option value="friendship">
-                Friendship
-            </option>
-
-            <option value="life">
-                Life
-            </option>
-
-            <option value="random">
-                Random
-            </option>
-
-        </select>
-
-
-        <label>
-            YOUR CONFESSION
-        </label>
-
-        <textarea
-            id="confessionInput"
-            maxlength="500"
-            placeholder="Write what you've never said..."
-        ></textarea>
-
-
-        <div class="character-count">
-
-            <span id="characterCount">0</span>/500
-
-        </div>
-
-
-        <button
-            class="primary-button full"
-            onclick="submitConfession()">
-
-            Post Anonymously
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================================
-     UNSENT MODAL
-================================ -->
-
-<div id="unsentModal"
-     class="modal">
-
-    <div class="modal-content">
-
-        <button
-            class="close-button"
-            onclick="closeModal('unsentModal')">
-
-            ×
-
-        </button>
-
-        <h2>
-            Unsent.
-        </h2>
-
-        <p class="modal-description">
-            Write the message you never sent.
-        </p>
-
-
-        <textarea
-            id="unsentInput"
-            maxlength="500"
-            placeholder="Dear..."
-        ></textarea>
-
-
-        <div class="character-count">
-
-            <span id="unsentCharacterCount">
-                0
-            </span>/500
-
-        </div>
-
-
-        <button
-            class="primary-button full"
-            onclick="submitUnsent()">
-
-            Leave It Here
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ================================
-     TOAST
-================================ -->
-
-<div id="toast" class="toast">
-
-    <span>✦</span>
-
-    <p id="toastMessage">
-        Done.
-    </p>
-
-</div>
-
-
-<!-- ================================
-     FOOTER
-================================ -->
+<!-- FOOTER -->
 
 <footer>
 
-    <div class="footer-logo">
+    <strong style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:22px;
+        color:#f4ead8;
+    ">
         PlotTwisted
-    </div>
+    </strong>
 
-    <p>
-        For the stories that don't follow the script.
-    </p>
+    <br><br>
 
-    <small>
-        © 2026 PlotTwisted
-    </small>
+    Your story doesn't always go as planned.
 
 </footer>
 
 
-<script src="script.js"></script>
+<!-- SCRIPT -->
+
+<script src="./script.js"></script>
 
 </body>
-        </html>
+    </html>
