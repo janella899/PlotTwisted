@@ -14,117 +14,73 @@ import {
 
 
 /* =====================================================
-   PLOTTWISTED
-   PUBLIC COMMUNITY SCRIPT
-===================================================== */
-
-
-/* =====================================================
    NAVIGATION
 ===================================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const buttons =
-        document.querySelectorAll("[data-slide]");
-
-    const sections =
-        document.querySelectorAll(".page-section");
+    const buttons = document.querySelectorAll("[data-slide]");
+    const sections = document.querySelectorAll(".page-section");
 
 
     function openSlide(id) {
 
-        const target =
-            document.getElementById(id);
+        const target = document.getElementById(id);
 
         if (!target) return;
 
-
         sections.forEach(function (section) {
-
-            section.classList.remove(
-                "active-section"
-            );
-
+            section.classList.remove("active-section");
         });
 
-
-        target.classList.add(
-            "active-section"
-        );
-
+        target.classList.add("active-section");
 
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
 
-
-        history.replaceState(
-            null,
-            "",
-            "#" + id
-        );
-
+        history.replaceState(null, "", "#" + id);
     }
 
 
     buttons.forEach(function (button) {
 
-        button.addEventListener(
-            "click",
-            function () {
+        button.addEventListener("click", function () {
 
-                openSlide(
-                    button.getAttribute(
-                        "data-slide"
-                    )
-                );
+            openSlide(
+                button.getAttribute("data-slide")
+            );
 
-            }
-        );
+        });
 
     });
 
 
-    /* Open page from URL */
-
     const hash =
-        window.location.hash.replace(
-            "#",
-            ""
-        );
-
+        window.location.hash.replace("#", "");
 
     if (
         hash &&
         document.getElementById(hash)
     ) {
-
         openSlide(hash);
-
     }
 
 
-    /* =================================================
-       LOAD PUBLIC CONTENT
-    ================================================= */
+    /* LOAD FIREBASE CONTENT */
 
     loadConfessions();
-
     loadHugots();
-
     loadUnsent();
 
 
     /* =================================================
-       CONFESSION SUBMISSION
+       CONFESSION FORM
     ================================================= */
 
     const confessionForm =
-        document.getElementById(
-            "confessionForm"
-        );
+        document.getElementById("confessionForm");
 
 
     if (confessionForm) {
@@ -135,12 +91,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 const input =
                     document.getElementById(
                         "confessionInput"
                     );
-
 
                 const message =
                     input.value.trim();
@@ -153,18 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
-
-                }
-
-
-                if (message.length > 500) {
-
-                    alert(
-                        "Your confession is too long."
-                    );
-
-                    return;
-
                 }
 
 
@@ -176,38 +118,31 @@ document.addEventListener("DOMContentLoaded", function () {
                             "confessions"
                         ),
                         {
-
                             message: message,
-
                             likes: 0,
-
                             reports: 0,
-
                             createdAt:
                                 serverTimestamp()
-
                         }
                     );
 
 
                     input.value = "";
 
-
                     alert(
                         "♡ Your confession is now public anonymously!"
                     );
 
-
                     loadConfessions();
 
+                }
 
-                } catch (error) {
+                catch (error) {
 
                     console.error(error);
 
-
                     alert(
-                        "Unable to post. Please check your Firebase settings."
+                        "Unable to post. Check your Firebase Rules."
                     );
 
                 }
@@ -219,13 +154,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       HUGOT SUBMISSION
+       HUGOT FORM
     ================================================= */
 
     const hugotForm =
-        document.getElementById(
-            "hugotForm"
-        );
+        document.getElementById("hugotForm");
 
 
     if (hugotForm) {
@@ -236,12 +169,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 const input =
                     document.getElementById(
                         "hugotInput"
                     );
-
 
                 const message =
                     input.value.trim();
@@ -254,18 +185,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
-
-                }
-
-
-                if (message.length > 400) {
-
-                    alert(
-                        "Your hugot is too long."
-                    );
-
-                    return;
-
                 }
 
 
@@ -277,35 +196,28 @@ document.addEventListener("DOMContentLoaded", function () {
                             "hugots"
                         ),
                         {
-
                             message: message,
-
                             likes: 0,
-
                             reports: 0,
-
                             createdAt:
                                 serverTimestamp()
-
                         }
                     );
 
 
                     input.value = "";
 
-
                     alert(
                         "✦ Your hugot is now public!"
                     );
 
-
                     loadHugots();
 
+                }
 
-                } catch (error) {
+                catch (error) {
 
                     console.error(error);
-
 
                     alert(
                         "Unable to post your hugot."
@@ -320,13 +232,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =================================================
-       UNSENT MESSAGE SUBMISSION
+       UNSENT MESSAGE FORM
     ================================================= */
 
     const unsentForm =
-        document.getElementById(
-            "unsentForm"
-        );
+        document.getElementById("unsentForm");
 
 
     if (unsentForm) {
@@ -337,12 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 const input =
                     document.getElementById(
                         "unsentInput"
                     );
-
 
                 const message =
                     input.value.trim();
@@ -355,18 +263,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
-
-                }
-
-
-                if (message.length > 500) {
-
-                    alert(
-                        "Your message is too long."
-                    );
-
-                    return;
-
                 }
 
 
@@ -378,35 +274,28 @@ document.addEventListener("DOMContentLoaded", function () {
                             "unsentMessages"
                         ),
                         {
-
                             message: message,
-
                             likes: 0,
-
                             reports: 0,
-
                             createdAt:
                                 serverTimestamp()
-
                         }
                     );
 
 
                     input.value = "";
 
-
                     alert(
                         "✉ Your message has been sent to the void."
                     );
 
-
                     loadUnsent();
 
+                }
 
-                } catch (error) {
+                catch (error) {
 
                     console.error(error);
-
 
                     alert(
                         "Unable to post your message."
@@ -424,36 +313,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =====================================================
-   DATE FORMATTER
+   DATE
 ===================================================== */
 
 function formatDate(timestamp) {
 
     if (!timestamp) {
-
         return "Just now";
-
     }
-
 
     try {
 
-        const date =
-            timestamp.toDate();
+        return timestamp
+            .toDate()
+            .toLocaleString(
+                "en-US",
+                {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            );
 
+    }
 
-        return date.toLocaleString(
-            "en-US",
-            {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
-
-    } catch {
+    catch {
 
         return "Just now";
 
@@ -464,7 +350,7 @@ function formatDate(timestamp) {
 
 
 /* =====================================================
-   CREATE PUBLIC POST CARD
+   CREATE POST CARD
 ===================================================== */
 
 function createPostCard(
@@ -477,22 +363,15 @@ function createPostCard(
         document.createElement("article");
 
 
-    card.className =
-        "post-card";
+    card.className = "post-card";
 
 
-    const typeSymbol =
+    const symbol =
         type === "CONFESSION"
             ? "♡"
             : type === "HUGOT"
                 ? "✦"
                 : "✉";
-
-
-    const date =
-        formatDate(
-            data.createdAt
-        );
 
 
     const likes =
@@ -502,34 +381,26 @@ function createPostCard(
     card.innerHTML = `
 
         <div class="post-type">
-            ${typeSymbol} ${type}
+            ${symbol} ${type}
         </div>
-
 
         <div class="post-message"></div>
 
-
         <div class="post-date">
-            Anonymous · ${date}
+            Anonymous · ${formatDate(data.createdAt)}
         </div>
-
 
         <div class="post-actions">
 
             <button
-                class="like-button"
-                data-like="${id}"
-                data-type="${type}">
+                class="like-button">
 
                 ♡ ${likes}
 
             </button>
 
-
             <button
-                class="report-button"
-                data-report="${id}"
-                data-type="${type}">
+                class="report-button">
 
                 ⚑ Report
 
@@ -540,17 +411,11 @@ function createPostCard(
     `;
 
 
-    /* Prevent submitted HTML from becoming HTML */
-
     card.querySelector(
         ".post-message"
     ).textContent =
-        '"' +
-        data.message +
-        '"';
+        '"' + data.message + '"';
 
-
-    /* LIKE */
 
     const likeButton =
         card.querySelector(
@@ -565,15 +430,13 @@ function createPostCard(
             await likePost(
                 id,
                 type,
-                data.likes || 0,
+                likes,
                 likeButton
             );
 
         }
     );
 
-
-    /* REPORT */
 
     const reportButton =
         card.querySelector(
@@ -601,7 +464,7 @@ function createPostCard(
 
 
 /* =====================================================
-   GET FIRESTORE COLLECTION
+   GET POSTS
 ===================================================== */
 
 async function getPosts(
@@ -629,11 +492,8 @@ async function getPosts(
         function (document) {
 
             return {
-
                 id: document.id,
-
                 ...document.data()
-
             };
 
         }
@@ -644,7 +504,7 @@ async function getPosts(
 
 
 /* =====================================================
-   LOAD CONFESSIONS
+   CONFESSIONS
 ===================================================== */
 
 async function loadConfessions() {
@@ -658,17 +518,8 @@ async function loadConfessions() {
     if (!container) return;
 
 
-    container.innerHTML = `
-
-        <div class="card">
-
-            <p>
-                Loading anonymous stories...
-            </p>
-
-        </div>
-
-    `;
+    container.innerHTML =
+        "<p>Loading anonymous stories...</p>";
 
 
     try {
@@ -686,23 +537,22 @@ async function loadConfessions() {
 
             container.innerHTML = `
 
-                <div class="card">
+                <div class="post-card">
 
-                    <span class="card-label">
-                        THE FIRST STORY
-                    </span>
+                    <div class="post-type">
+                        ♡ FIRST STORY
+                    </div>
 
-                    <p>
+                    <div class="post-message">
                         Be the first person
-                        to leave a confession. ♡
-                    </p>
+                        to leave a confession.
+                    </div>
 
                 </div>
 
             `;
 
             return;
-
         }
 
 
@@ -710,40 +560,29 @@ async function loadConfessions() {
             function (post) {
 
                 container.appendChild(
-
                     createPostCard(
                         post,
                         post.id,
                         "CONFESSION"
                     )
-
                 );
 
             }
         );
 
 
-        createRecommendations(
-            posts,
-            "confession"
-        );
+        showRecommendation(posts);
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(error);
 
-
         container.innerHTML = `
-
-            <div class="card">
-
-                <p>
-                    Unable to load confessions.
-                </p>
-
-            </div>
-
+            <p>
+                Unable to load confessions.
+            </p>
         `;
 
     }
@@ -753,7 +592,7 @@ async function loadConfessions() {
 
 
 /* =====================================================
-   LOAD HUGOTS
+   HUGOTS
 ===================================================== */
 
 async function loadHugots() {
@@ -767,17 +606,8 @@ async function loadHugots() {
     if (!container) return;
 
 
-    container.innerHTML = `
-
-        <div class="card">
-
-            <p>
-                Loading community hugots...
-            </p>
-
-        </div>
-
-    `;
+    container.innerHTML =
+        "<p>Loading community hugots...</p>";
 
 
     try {
@@ -795,23 +625,21 @@ async function loadHugots() {
 
             container.innerHTML = `
 
-                <div class="card">
+                <div class="post-card">
 
-                    <span class="card-label">
-                        EMPTY CORNER
-                    </span>
+                    <div class="post-type">
+                        ✦ EMPTY CORNER
+                    </div>
 
-                    <p>
-                        Be the first to drop
-                        a hugot. ✦
-                    </p>
+                    <div class="post-message">
+                        Be the first to drop a hugot.
+                    </div>
 
                 </div>
 
             `;
 
             return;
-
         }
 
 
@@ -819,20 +647,19 @@ async function loadHugots() {
             function (post) {
 
                 container.appendChild(
-
                     createPostCard(
                         post,
                         post.id,
                         "HUGOT"
                     )
-
                 );
 
             }
         );
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(error);
 
@@ -843,7 +670,7 @@ async function loadHugots() {
 
 
 /* =====================================================
-   LOAD UNSENT
+   UNSENT
 ===================================================== */
 
 async function loadUnsent() {
@@ -857,17 +684,8 @@ async function loadUnsent() {
     if (!container) return;
 
 
-    container.innerHTML = `
-
-        <div class="card">
-
-            <p>
-                Opening the drafts...
-            </p>
-
-        </div>
-
-    `;
+    container.innerHTML =
+        "<p>Opening the drafts...</p>";
 
 
     try {
@@ -885,23 +703,22 @@ async function loadUnsent() {
 
             container.innerHTML = `
 
-                <div class="card">
+                <div class="post-card">
 
-                    <span class="card-label">
-                        THE VOID IS QUIET
-                    </span>
+                    <div class="post-type">
+                        ✉ THE VOID IS QUIET
+                    </div>
 
-                    <p>
+                    <div class="post-message">
                         Leave the first
-                        unsent message. ✉
-                    </p>
+                        unsent message.
+                    </div>
 
                 </div>
 
             `;
 
             return;
-
         }
 
 
@@ -909,20 +726,19 @@ async function loadUnsent() {
             function (post) {
 
                 container.appendChild(
-
                     createPostCard(
                         post,
                         post.id,
                         "UNSENT"
                     )
-
                 );
 
             }
         );
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(error);
 
@@ -933,7 +749,7 @@ async function loadUnsent() {
 
 
 /* =====================================================
-   LIKE POST
+   LIKE
 ===================================================== */
 
 async function likePost(
@@ -943,48 +759,42 @@ async function likePost(
     button
 ) {
 
+    let collectionName;
+
+
+    if (type === "CONFESSION") {
+
+        collectionName =
+            "confessions";
+
+    }
+
+    else if (type === "HUGOT") {
+
+        collectionName =
+            "hugots";
+
+    }
+
+    else {
+
+        collectionName =
+            "unsentMessages";
+
+    }
+
+
     try {
 
-        let collectionName;
-
-
-        if (type === "CONFESSION") {
-
-            collectionName =
-                "confessions";
-
-        }
-
-        else if (type === "HUGOT") {
-
-            collectionName =
-                "hugots";
-
-        }
-
-        else {
-
-            collectionName =
-                "unsentMessages";
-
-        }
-
-
-        const postRef =
+        await updateDoc(
             doc(
                 db,
                 collectionName,
                 id
-            );
-
-
-        await updateDoc(
-            postRef,
+            ),
             {
-
                 likes:
                     increment(1)
-
             }
         );
 
@@ -1001,10 +811,11 @@ async function likePost(
             "#e29aab";
 
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(error);
-
 
         alert(
             "Unable to react right now."
@@ -1017,7 +828,7 @@ async function likePost(
 
 
 /* =====================================================
-   REPORT POST
+   REPORT
 ===================================================== */
 
 async function reportPost(
@@ -1025,57 +836,51 @@ async function reportPost(
     type
 ) {
 
-    const confirmed =
-        confirm(
+    if (
+        !confirm(
             "Report this anonymous post?"
-        );
+        )
+    ) {
+        return;
+    }
 
 
-    if (!confirmed) return;
+    let collectionName;
+
+
+    if (type === "CONFESSION") {
+
+        collectionName =
+            "confessions";
+
+    }
+
+    else if (type === "HUGOT") {
+
+        collectionName =
+            "hugots";
+
+    }
+
+    else {
+
+        collectionName =
+            "unsentMessages";
+
+    }
 
 
     try {
 
-        let collectionName;
-
-
-        if (type === "CONFESSION") {
-
-            collectionName =
-                "confessions";
-
-        }
-
-        else if (type === "HUGOT") {
-
-            collectionName =
-                "hugots";
-
-        }
-
-        else {
-
-            collectionName =
-                "unsentMessages";
-
-        }
-
-
-        const postRef =
+        await updateDoc(
             doc(
                 db,
                 collectionName,
                 id
-            );
-
-
-        await updateDoc(
-            postRef,
+            ),
             {
-
                 reports:
                     increment(1)
-
             }
         );
 
@@ -1084,11 +889,11 @@ async function reportPost(
             "Thank you. The post has been reported."
         );
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(error);
-
 
         alert(
             "Unable to report this post."
@@ -1104,28 +909,16 @@ async function reportPost(
    RECOMMENDATIONS
 ===================================================== */
 
-function createRecommendations(
-    posts,
-    type
-) {
+function showRecommendation(posts) {
 
-    const recommendation =
+    const box =
         document.querySelector(
-            ".recommendation-box"
+            ".recommendation-box p"
         );
 
 
-    if (!recommendation) return;
+    if (!box || !posts.length) return;
 
-
-    if (!posts || posts.length === 0) {
-
-        return;
-
-    }
-
-
-    /* Pick a random public post */
 
     const random =
         posts[
@@ -1136,74 +929,10 @@ function createRecommendations(
         ];
 
 
-    const message =
-        recommendation.querySelector("p");
-
-
-    if (!message) return;
-
-
-    message.textContent =
-        "✦ " +
-        '"' +
+    box.textContent =
+        '✦ "' +
         random.message +
         '"';
-
-}
-
-
-
-/* =====================================================
-   HUGOT RANDOMIZER
-===================================================== */
-
-const hugotLines = [
-
-    "Maybe the plot twist is choosing yourself.",
-
-    "Some people are chapters, not the whole story.",
-
-    "You can't force someone to read a story they never opened.",
-
-    "Sometimes closure is something you give yourself.",
-
-    "Maybe they weren't your forever. Maybe they were your lesson.",
-
-    "Not every almost deserves a second chance.",
-
-    "Some feelings are real even when the relationship isn't.",
-
-    "If they wanted to, they probably would.",
-
-    "The hardest goodbye is the one you never got to say.",
-
-    "Maybe the right person won't make you question where you stand."
-
-];
-
-
-function newHugot() {
-
-    const text =
-        document.getElementById(
-            "hugotText"
-        );
-
-
-    if (!text) return;
-
-
-    const random =
-        hugotLines[
-            Math.floor(
-                Math.random() *
-                hugotLines.length
-            )
-        ];
-
-
-    text.textContent =
-        '"' + random + '"';
 
 }
 
@@ -1255,47 +984,49 @@ function spinRoulette() {
     if (!text) return;
 
 
-    icon.style.transform =
-        "rotate(720deg)";
+    if (icon) {
+
+        icon.style.transition =
+            "transform 1s ease";
+
+        icon.style.transform =
+            "rotate(720deg)";
+
+    }
 
 
-    icon.style.transition =
-        "transform 1s ease";
+    text.style.transition =
+        "opacity .3s ease";
+
+    text.style.opacity = "0";
 
 
-    text.style.opacity =
-        "0";
+    setTimeout(function () {
+
+        const random =
+            plotTwists[
+                Math.floor(
+                    Math.random() *
+                    plotTwists.length
+                )
+            ];
 
 
-    setTimeout(
-        function () {
-
-            const random =
-                plotTwists[
-                    Math.floor(
-                        Math.random() *
-                        plotTwists.length
-                    )
-                ];
+        text.textContent =
+            '"' + random + '"';
 
 
-            text.textContent =
-                '"' +
-                random +
-                '"';
+        text.style.opacity = "1";
 
 
-            text.style.opacity =
-                "1";
-
+        if (icon) {
 
             icon.style.transform =
                 "rotate(0deg)";
 
+        }
 
-        },
-        600
-    );
+    }, 600);
 
 }
 
@@ -1306,9 +1037,7 @@ function spinRoulette() {
 ===================================================== */
 
 let signVotes = 62;
-
 let maybeVotes = 25;
-
 let deluluVotes = 13;
 
 
@@ -1326,7 +1055,7 @@ function voteSign(choice) {
 
     }
 
-    else {
+    else if (choice === "delulu") {
 
         deluluVotes++;
 
@@ -1357,39 +1086,128 @@ function voteSign(choice) {
         maybePercent;
 
 
-    document.getElementById(
-        "signBar"
-    ).style.width =
-        signPercent + "%";
+    const signBar =
+        document.getElementById(
+            "signBar"
+        );
+
+    const maybeBar =
+        document.getElementById(
+            "maybeBar"
+        );
+
+    const deluluBar =
+        document.getElementById(
+            "deluluBar"
+        );
 
 
-    document.getElementById(
-        "maybeBar"
-    ).style.width =
-        maybePercent + "%";
+    const signText =
+        document.getElementById(
+            "signPercent"
+        );
+
+    const maybeText =
+        document.getElementById(
+            "maybePercent"
+        );
+
+    const deluluText =
+        document.getElementById(
+            "deluluPercent"
+        );
 
 
-    document.getElementById(
-        "deluluBar"
-    ).style.width =
-        deluluPercent + "%";
+    if (signBar)
+        signBar.style.width =
+            signPercent + "%";
 
 
-    document.getElementById(
-        "signPercent"
-    ).textContent =
-        signPercent + "%";
+    if (maybeBar)
+        maybeBar.style.width =
+            maybePercent + "%";
 
 
-    document.getElementById(
-        "maybePercent"
-    ).textContent =
-        maybePercent + "%";
+    if (deluluBar)
+        deluluBar.style.width =
+            deluluPercent + "%";
 
 
-    document.getElementById(
-        "deluluPercent"
-    ).textContent =
-        deluluPercent + "%";
+    if (signText)
+        signText.textContent =
+            signPercent + "%";
 
-            }
+
+    if (maybeText)
+        maybeText.textContent =
+            maybePercent + "%";
+
+
+    if (deluluText)
+        deluluText.textContent =
+            deluluPercent + "%";
+
+
+    /* BUTTON ANIMATION */
+
+    const buttons =
+        document.querySelectorAll(
+            ".vote-buttons button"
+        );
+
+
+    buttons.forEach(
+        function (button) {
+
+            button.style.transform =
+                "scale(1)";
+
+        }
+    );
+
+
+    if (
+        choice === "sign" &&
+        buttons[0]
+    ) {
+
+        buttons[0].style.transform =
+            "scale(1.05)";
+
+    }
+
+
+    if (
+        choice === "maybe" &&
+        buttons[1]
+    ) {
+
+        buttons[1].style.transform =
+            "scale(1.05)";
+
+    }
+
+
+    if (
+        choice === "delulu" &&
+        buttons[2]
+    ) {
+
+        buttons[2].style.transform =
+            "scale(1.05)";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MAKE FUNCTIONS AVAILABLE TO HTML
+===================================================== */
+
+window.spinRoulette =
+    spinRoulette;
+
+window.voteSign =
+    voteSign;
