@@ -18,24 +18,24 @@
 ========================================================= */
 
 :root{
-    --black:#030712;
-    --dark:#071426;
-    --dark2:#0B1F38;
+    --black:#090607;
+    --dark:#11090c;
+    --dark2:#1b0d11;
 
-    --wine:#164A72;
-    --wine2:#246B9A;
-    --wine3:#0E3555;
+    --wine:#641b2c;
+    --wine2:#8b3045;
+    --wine3:#3b101c;
 
-    --cream:#EAF4FB;
-    --paper:#D7E8F2;
-    --paper2:#9DBDD1;
-    --ink:#102331;
+    --cream:#f4e6d2;
+    --paper:#ead7bc;
+    --paper2:#c7a889;
+    --ink:#27181a;
 
-    --gold:#8FC7E8;
-    --gold2:#C5E8FA;
+    --gold:#c9a05d;
+    --gold2:#e2c17e;
 
-    --muted:#91A9BA;
-    --line:rgba(143,199,232,.28);
+    --muted:#a99686;
+    --line:rgba(201,160,93,.28);
 }
 
 /* =========================================================
@@ -53,23 +53,31 @@ html{
 }
 
 body{
-background:
-    radial-gradient(
-        circle at 15% 20%,
-        rgba(36,107,154,.35),
-        transparent 27%
-    ),
-    radial-gradient(
-        circle at 85% 70%,
-        rgba(143,199,232,.10),
-        transparent 30%
-    ),
-    linear-gradient(
-        135deg,
-        #030712,
-        #071426 50%,
-        #0B1F38
-    );
+    min-height:100vh;
+    overflow-x:hidden;
+
+    color:var(--cream);
+
+    font-family:"Poppins",sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(100,27,44,.30),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(201,160,93,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #090607,
+            #14090c 50%,
+            #080506
+        );
+}
 
 /* =========================================================
    VINTAGE GRAIN
