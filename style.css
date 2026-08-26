@@ -3,14 +3,13 @@
 ========================================================= */
 
 :root {
-    --wine: #68152d;
-    --deep-wine: #320b18;
-    --black: #100b0d;
-    --paper: #eee3cf;
-    --cream: #f4ead8;
-    --gold: #c9a66b;
-    --muted: #aa9b8a;
-    --line: rgba(201,166,107,.25);
+    --background-color: #071A2B;
+    --dark-blue: #0D263D;
+    --card-color: #122F47;
+    --main-color: #234E70;
+    --accent-color: #C9A05D;
+    --text-color: #F4E6D2;
+    --muted-color: #9BAFBE;
 }
 
 * {
