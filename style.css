@@ -22,27 +22,31 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
-    min-height: 100vh;
+body{
+    min-height:100vh;
+    overflow-x:hidden;
 
-    color: var(--cream);
+    color:var(--text-color);
+
+    font-family:"Poppins",sans-serif;
 
     background:
         radial-gradient(
-            circle at 20% 20%,
-            rgba(104,21,45,.35),
-            transparent 30%
+            circle at 15% 20%,
+            rgba(35,78,112,.35),
+            transparent 27%
         ),
         radial-gradient(
-            circle at 80% 70%,
-            rgba(201,166,107,.08),
-            transparent 25%
+            circle at 85% 70%,
+            rgba(201,160,93,.08),
+            transparent 30%
         ),
-        var(--black);
-
-    font-family: "Poppins", sans-serif;
-
-    overflow-x: hidden;
+        linear-gradient(
+            135deg,
+            #050D16,
+            #071A2B 50%,
+            #030911
+        );
 }
 
 
