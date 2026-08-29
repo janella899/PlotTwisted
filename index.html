@@ -1469,7 +1469,46 @@ const plotTwists = [
 "Maybe the person beside you is the person you've been waiting for.",  
 "Maybe your crush story is only getting started."
 
-   }
+   ];
+
+
+// ROULETTE FUNCTION
+
+function spinRoulette() {
+
+    const text = document.getElementById("rouletteText");
+    const icon = document.getElementById("rouletteIcon");
+
+    if (!text) return;
+
+    // Animation
+    text.style.opacity = "0";
+    text.style.transform = "translateY(10px)";
+
+    if (icon) {
+        icon.style.transform = "rotate(720deg) scale(1.15)";
+        icon.style.transition = "transform 0.7s ease";
+    }
+
+    setTimeout(() => {
+
+        const randomIndex = Math.floor(
+            Math.random() * plotTwists.length
+        );
+
+        text.textContent = "“" + plotTwists[randomIndex] + "”";
+
+        text.style.opacity = "1";
+        text.style.transform = "translateY(0)";
+        text.style.transition = "all 0.4s ease";
+
+        if (icon) {
+            icon.style.transform = "rotate(0deg) scale(1)";
+        }
+
+    }, 700);
+
+       }
 
 /* =========================================================
    ROULETTE
