@@ -2662,20 +2662,23 @@ footer p{
 
         <div class="vote-buttons">
 
-            <button type="button">
-                ✦<br><br>
-                DEFINITELY A SIGN
-            </button>
+            <button type="button" class="sign-vote" data-choice="sign">
+    ✦
+    <br>
+    DEFINITELY A SIGN
+</button>
 
-            <button type="button">
-                ?<br><br>
-                MAYBE
-            </button>
+<button type="button" class="sign-vote" data-choice="maybe">
+    ?
+    <br>
+    MAYBE
+</button>
 
-            <button type="button">
-                ♡<br><br>
-                YOU'RE DELULU
-            </button>
+<button type="button" class="sign-vote" data-choice="delulu">
+    ♡
+    <br>
+    YOU'RE DELULU
+</button>
 
         </div>
 
@@ -3505,6 +3508,61 @@ function spinRoulette(){
         },120);
 
 }
+   // =====================================================
+// LIKE POST
+// =====================================================
+
+async function likePost(id, button, currentLikes) {
+
+    try {
+
+        const postRef = doc(
+            db,
+            POSTS_COLLECTION,
+            id
+        );
+
+
+        button.disabled = true;
+
+
+        await updateDoc(
+            postRef,
+            {
+                likes: increment(1)
+            }
+        );
+
+
+        const newLikes =
+            Number(currentLikes) + 1;
+
+
+        button.textContent =
+            `♡ ${newLikes}`;
+
+
+        button.classList.add("liked");
+
+
+    } catch (error) {
+
+        console.error("LIKE ERROR:", error);
+
+        alert(
+            "Like failed. Check your Firebase Firestore Rules."
+        );
+
+
+        button.disabled = false;
+
+
+        button.textContent =
+            `♡ ${currentLikes}`;
+
+    }
+
+           }
 
 
 /* =========================================================
