@@ -17,17 +17,22 @@
     --black:#090506;
     --dark:#12080b;
     --dark-wine:#210b12;
+
     --wine:#64192d;
     --wine-light:#8d354a;
     --wine-deep:#3a0c18;
+
     --gold:#c6a15e;
     --gold-light:#e6c77f;
     --gold-dark:#87622e;
+
     --cream:#f1e1c8;
     --paper:#e4cda9;
     --paper-dark:#caa77c;
+
     --ink:#281719;
     --muted:#a89787;
+
     --line:rgba(198,161,94,.32);
 }
 
@@ -44,6 +49,7 @@ html{
 body{
     min-height:100vh;
     overflow-x:hidden;
+
     font-family:"Poppins",sans-serif;
     color:var(--cream);
 
@@ -59,6 +65,7 @@ body::before{
     inset:0;
     pointer-events:none;
     z-index:9999;
+
     opacity:.08;
 
     background-image:
@@ -102,23 +109,44 @@ body::before{
     position:fixed;
     z-index:0;
     pointer-events:none;
+
     color:rgba(198,161,94,.22);
     font-family:"Cormorant Garamond",serif;
     font-size:90px;
 }
 
-.corner-tl{top:70px;left:15px}
-.corner-tr{top:70px;right:15px;transform:rotate(90deg)}
-.corner-bl{bottom:20px;left:15px;transform:rotate(-90deg)}
-.corner-br{bottom:20px;right:15px;transform:rotate(180deg)}
+.corner-tl{
+    top:70px;
+    left:15px;
+}
+
+.corner-tr{
+    top:70px;
+    right:15px;
+    transform:rotate(90deg);
+}
+
+.corner-bl{
+    bottom:20px;
+    left:15px;
+    transform:rotate(-90deg);
+}
+
+.corner-br{
+    bottom:20px;
+    right:15px;
+    transform:rotate(180deg);
+}
 
 .botanical{
     position:fixed;
     z-index:0;
     pointer-events:none;
     opacity:.13;
+
     font-family:"Cormorant Garamond",serif;
     color:#a9485d;
+
     filter:drop-shadow(0 10px 20px rgba(0,0,0,.5));
 }
 
@@ -150,6 +178,7 @@ body::before{
     position:fixed;
     top:0;
     left:0;
+
     width:100%;
     height:74px;
 
@@ -160,7 +189,9 @@ body::before{
     padding:0 5%;
 
     background:rgba(9,5,6,.94);
+
     backdrop-filter:blur(15px);
+
     border-bottom:1px solid var(--line);
 
     z-index:1000;
@@ -193,11 +224,15 @@ body::before{
 .nav-button{
     border:0;
     background:none;
+
     color:#bcae9f;
+
     cursor:pointer;
+
     font-family:"Cormorant Garamond",serif;
     font-size:16px;
     letter-spacing:.5px;
+
     transition:.3s;
 }
 
@@ -205,12 +240,15 @@ body::before{
     color:var(--gold);
 }
 
-/* PAGE */
+/* PAGE SYSTEM */
 
 .page-section{
     display:none;
+
     min-height:100vh;
+
     padding:125px 6% 85px;
+
     position:relative;
     z-index:2;
 }
@@ -225,16 +263,22 @@ body::before{
         opacity:0;
         transform:translateY(20px);
     }
+
     to{
         opacity:1;
         transform:translateY(0);
     }
 }
 
+/* LABELS */
+
 .eyebrow{
     color:var(--gold);
+
     font-size:9px;
+
     letter-spacing:3px;
+
     text-transform:uppercase;
 }
 
@@ -242,12 +286,17 @@ body::before{
     display:inline-flex;
     align-items:center;
     gap:12px;
+
     padding:8px 16px;
+
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
+
     color:var(--gold);
+
     font-size:8px;
     letter-spacing:3px;
+
     text-transform:uppercase;
 }
 
@@ -260,16 +309,22 @@ body::before{
 
 .hero{
     min-height:67vh;
+
     display:grid;
     grid-template-columns:1.1fr .9fr;
+
     align-items:center;
+
     gap:75px;
 }
 
 .hero h1{
     margin:22px 0;
+
     font-family:"DM Serif Display",serif;
+
     font-size:clamp(65px,9vw,120px);
+
     line-height:.82;
     font-weight:400;
     letter-spacing:-3px;
@@ -277,14 +332,19 @@ body::before{
 
 .hero h1 em{
     color:var(--gold);
+
     font-family:"Great Vibes",cursive;
+
     font-weight:400;
 }
 
 .hero-text{
     max-width:520px;
+
     color:#b7a79a;
+
     font-size:13px;
+
     line-height:1.9;
 }
 
@@ -301,18 +361,25 @@ body::before{
 .secondary-btn,
 .post-button{
     padding:13px 23px;
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
     font-size:9px;
+
     letter-spacing:1.5px;
+
     transition:.3s;
 }
 
 .primary-btn,
 .post-button{
     background:linear-gradient(135deg,var(--wine),var(--wine-deep));
+
     color:var(--cream);
+
     border:1px solid rgba(198,161,94,.55);
+
     box-shadow:
         inset 0 0 0 1px rgba(255,255,255,.04),
         0 10px 20px rgba(0,0,0,.35);
@@ -321,6 +388,7 @@ body::before{
 .secondary-btn{
     background:transparent;
     color:var(--cream);
+
     border:1px solid var(--line);
 }
 
@@ -328,17 +396,23 @@ body::before{
 .secondary-btn:hover,
 .post-button:hover{
     transform:translateY(-4px);
+
     border-color:var(--gold-light);
-    box-shadow:0 14px 30px rgba(0,0,0,.45);
+
+    box-shadow:
+        0 14px 30px rgba(0,0,0,.45);
 }
 
 /* LETTER */
 
 .letter{
     position:relative;
+
     max-width:400px;
     margin:auto;
+
     padding:55px 42px;
+
     color:var(--ink);
 
     background:
@@ -356,67 +430,93 @@ body::before{
 
 .letter::before{
     content:"✦  P L O T T W I S T E D  ✦";
+
     position:absolute;
+
     top:18px;
     left:0;
     width:100%;
+
     text-align:center;
+
     font-size:7px;
     letter-spacing:4px;
+
     color:#80634a;
 }
 
 .letter::after{
     content:"❦";
+
     position:absolute;
+
     bottom:12px;
     left:0;
     width:100%;
+
     text-align:center;
+
     font-size:25px;
+
     color:#8c674a;
 }
 
 .letter-top{
     margin-top:15px;
+
     display:flex;
     justify-content:space-between;
+
     color:#735b49;
+
     font-family:"Libre Baskerville",serif;
     font-size:7px;
+
     letter-spacing:1px;
 }
 
 .letter h2{
     margin:35px 0 18px;
+
     font-family:"Great Vibes",cursive;
     font-size:46px;
+
     font-weight:400;
+
     color:#54232d;
 }
 
 .letter p{
     font-family:"Cormorant Garamond",serif;
+
     font-size:20px;
     line-height:1.4;
+
     color:#3c2928;
 }
 
 .signature{
     margin-top:25px;
+
     text-align:right;
+
     font-family:"Great Vibes",cursive;
     font-size:28px;
+
     color:#632738;
 }
 
 .wax{
     position:absolute;
+
     width:58px;
     height:58px;
+
     left:50%;
     bottom:-29px;
+
     transform:translateX(-50%);
+
     border-radius:50%;
 
     display:flex;
@@ -427,6 +527,7 @@ body::before{
         radial-gradient(circle at 35% 30%,#b84a61,#5b1223 70%);
 
     border:2px solid rgba(50,8,15,.45);
+
     color:var(--gold-light);
     font-size:19px;
 
@@ -435,18 +536,22 @@ body::before{
         0 8px 14px rgba(0,0,0,.35);
 }
 
-/* INTERFACE */
+/* TITLES */
 
 .interface-title{
     max-width:850px;
     margin:60px auto 42px;
+
     text-align:center;
 }
 
 .interface-title h2{
     margin:14px 0;
+
     font-family:"DM Serif Display",serif;
+
     font-size:clamp(52px,8vw,90px);
+
     font-weight:400;
 }
 
@@ -459,6 +564,8 @@ body::before{
     color:var(--muted);
     font-size:11px;
 }
+
+/* ARCHIVE MENU */
 
 .sub-interface{
     display:none;
@@ -473,57 +580,81 @@ body::before{
 
 .vintage-menu{
     display:grid;
-    grid-template-columns:repeat(6,1fr);
+
+    grid-template-columns:repeat(5,1fr);
+
     gap:15px;
 }
 
 .menu-card{
     position:relative;
+
     min-height:210px;
+
     padding:30px 18px;
+
     text-align:center;
+
     cursor:pointer;
 
     background:
         linear-gradient(145deg,#241317,#10090b);
 
     border:1px solid var(--line);
+
     overflow:hidden;
+
     transition:.35s;
 }
 
 .menu-card::before{
     content:"";
+
     position:absolute;
     inset:8px;
+
     border:1px solid rgba(198,161,94,.15);
 }
 
 .menu-card::after{
     content:"✦";
+
     position:absolute;
     top:12px;
     right:14px;
+
     color:rgba(198,161,94,.35);
+
     font-size:12px;
 }
 
 .menu-card:hover{
     transform:translateY(-9px) rotate(-1deg);
+
     border-color:var(--gold);
-    background:linear-gradient(145deg,#381621,#16090d);
+
+    background:
+        linear-gradient(145deg,#381621,#16090d);
 }
 
 .menu-icon{
-    display:flex;
+    display:block;
+
     width:52px;
     height:52px;
+
     margin:0 auto 20px;
+
+    border:1px solid var(--gold-dark);
+
+    display:flex;
     align-items:center;
     justify-content:center;
-    border:1px solid var(--gold-dark);
+
     border-radius:50%;
+
     color:var(--gold);
+
     font-family:"Cormorant Garamond",serif;
     font-size:26px;
 }
@@ -536,20 +667,31 @@ body::before{
 
 .menu-card p{
     margin-top:8px;
+
     color:#938277;
+
     font-size:9px;
     line-height:1.6;
 }
 
+/* BACK BUTTON */
+
 .back-button{
     margin:25px 0;
+
     padding:10px 18px;
+
     background:transparent;
+
     border:1px solid var(--line);
+
     color:var(--gold);
+
     cursor:pointer;
+
     font-family:"Cormorant Garamond",serif;
     font-size:16px;
+
     transition:.3s;
 }
 
@@ -558,7 +700,7 @@ body::before{
     border-color:var(--gold);
 }
 
-/* CARDS */
+/* OPTION CARDS */
 
 .option-grid{
     display:grid;
@@ -568,19 +710,25 @@ body::before{
 
 .option-card{
     position:relative;
+
     min-height:220px;
+
     padding:35px;
+
     cursor:pointer;
 
-    background:linear-gradient(135deg,#efdabc,#d0ac82);
+    background:
+        linear-gradient(135deg,#efdabc,#d0ac82);
 
     color:var(--ink);
 
     border:1px solid rgba(112,77,45,.35);
 
-    box-shadow:8px 10px 0 rgba(198,161,94,.08);
+    box-shadow:
+        8px 10px 0 rgba(198,161,94,.08);
 
     transition:.3s;
+
     transform:rotate(-.7deg);
 }
 
@@ -590,16 +738,6 @@ body::before{
 
 .option-card:nth-child(3){
     transform:rotate(-.3deg);
-}
-
-.option-card::before{
-    content:"ARCHIVE RECORD";
-    position:absolute;
-    top:15px;
-    right:18px;
-    font-size:6px;
-    letter-spacing:2px;
-    color:#9a7758;
 }
 
 .option-card:hover{
@@ -613,18 +751,21 @@ body::before{
 
 .option-card h3{
     margin:18px 0 8px;
+
     font-family:"DM Serif Display",serif;
+
     font-size:27px;
     font-weight:400;
 }
 
 .option-card p{
     color:#654e42;
+
     font-size:10px;
     line-height:1.7;
 }
 
-/* HEADINGS */
+/* SECTION HEADINGS */
 
 .section-heading{
     max-width:1000px;
@@ -633,8 +774,11 @@ body::before{
 
 .section-heading h2{
     margin:15px 0;
+
     font-family:"DM Serif Display",serif;
+
     font-size:clamp(55px,8vw,92px);
+
     font-weight:400;
     line-height:.9;
 }
@@ -653,40 +797,54 @@ body::before{
 
 .form-card{
     position:relative;
+
     max-width:850px;
     margin:auto;
+
     padding:38px;
 
     color:var(--ink);
 
-    background:linear-gradient(135deg,#ead3b3,#cfaa80);
+    background:
+        linear-gradient(135deg,#ead3b3,#cfaa80);
 
     border:1px solid rgba(104,70,43,.4);
 
-    box-shadow:10px 13px 0 rgba(198,161,94,.08);
+    box-shadow:
+        10px 13px 0 rgba(198,161,94,.08);
 }
 
 .form-card::before{
     content:"CONFIDENTIAL ARCHIVE ENTRY";
+
     display:block;
+
     margin-bottom:20px;
+
     color:#805f46;
+
     font-size:7px;
     letter-spacing:3px;
 }
 
 .form-label{
     display:block;
+
     margin-bottom:15px;
+
     color:#622837;
+
     font-family:"Great Vibes",cursive;
+
     font-size:31px;
 }
 
 textarea{
     width:100%;
     min-height:170px;
+
     padding:20px;
+
     resize:vertical;
     outline:none;
 
@@ -710,10 +868,11 @@ textarea:focus{
     border-color:var(--wine-light);
 }
 
-/* POSTS */
+/* COMMUNITY */
 
 .feed-title{
     max-width:1100px;
+
     margin:60px auto 20px;
 
     display:flex;
@@ -736,27 +895,36 @@ textarea:focus{
 .post-grid{
     max-width:1100px;
     margin:auto;
+
     display:grid;
+
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
     gap:18px;
 }
 
 .post-card{
     position:relative;
+
     min-height:210px;
+
     padding:28px 24px 50px;
 
-    background:linear-gradient(145deg,#241417,#10090b);
+    background:
+        linear-gradient(145deg,#241417,#10090b);
 
     border:1px solid var(--line);
+
     transition:.3s;
 }
 
 .post-card::before{
     content:"❦";
+
     position:absolute;
     top:12px;
     right:15px;
+
     color:rgba(198,161,94,.22);
     font-size:24px;
 }
@@ -774,22 +942,27 @@ textarea:focus{
 
 .post-message{
     margin-top:20px;
+
     font-family:"Cormorant Garamond",serif;
+
     font-size:24px;
     line-height:1.25;
 }
 
 .post-date{
     margin-top:18px;
+
     color:#756961;
     font-size:8px;
 }
 
 .post-actions{
     position:absolute;
+
     left:22px;
     right:22px;
     bottom:14px;
+
     display:flex;
     justify-content:space-between;
 }
@@ -798,26 +971,33 @@ textarea:focus{
 .report-button{
     background:none;
     border:0;
+
     color:#80646a;
+
     cursor:pointer;
+
     font-size:10px;
 }
 
-/* VOTING */
+/* SIGN OR DELUSION */
 
 .vote-box{
     max-width:850px;
     margin:auto;
+
     padding:40px;
 
-    background:linear-gradient(145deg,#251316,#10090b);
+    background:
+        linear-gradient(145deg,#251316,#10090b);
 
     border:1px solid var(--line);
 }
 
 .vote-box h3{
     margin:20px 0 30px;
+
     font-family:"Cormorant Garamond",serif;
+
     font-size:36px;
     font-weight:500;
     line-height:1.2;
@@ -831,12 +1011,18 @@ textarea:focus{
 
 .vote-buttons button{
     min-height:110px;
+
     background:rgba(255,255,255,.025);
+
     color:var(--cream);
+
     border:1px solid var(--line);
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
     font-size:10px;
+
     transition:.3s;
 }
 
@@ -852,10 +1038,14 @@ textarea:focus{
 
 .result{
     display:grid;
+
     grid-template-columns:70px 1fr 45px;
+
     gap:12px;
     align-items:center;
+
     margin:15px 0;
+
     color:#9e9186;
     font-size:9px;
 }
@@ -867,16 +1057,21 @@ textarea:focus{
 
 .bar div{
     height:100%;
-    background:linear-gradient(90deg,var(--wine),var(--gold));
+
+    background:
+        linear-gradient(90deg,var(--wine),var(--gold));
 }
 
 /* ROULETTE */
 
 .center-box{
     position:relative;
+
     max-width:850px;
     margin:auto;
+
     padding:65px 35px;
+
     text-align:center;
 
     background:
@@ -889,7 +1084,9 @@ textarea:focus{
 .center-box::before,
 .center-box::after{
     content:"✦";
+
     position:absolute;
+
     color:rgba(198,161,94,.25);
     font-size:30px;
 }
@@ -907,6 +1104,7 @@ textarea:focus{
 #rouletteIcon{
     width:95px;
     height:95px;
+
     margin:0 auto 28px;
 
     display:flex;
@@ -914,9 +1112,13 @@ textarea:focus{
     justify-content:center;
 
     border:1px solid var(--gold);
+
     border-radius:50%;
+
     color:var(--gold);
+
     font-size:38px;
+
     transition:transform .7s ease;
 }
 
@@ -925,11 +1127,11 @@ textarea:focus{
     margin:auto;
 
     font-family:"Cormorant Garamond",serif;
+
     font-size:clamp(30px,5vw,52px);
+
     font-style:italic;
     line-height:1.15;
-
-    transition:.4s;
 }
 
 /* =========================================================
@@ -937,177 +1139,215 @@ textarea:focus{
 ========================================================= */
 
 .compatibility-box{
-    max-width:900px;
+    max-width:850px;
     margin:auto;
-    padding:40px;
+
+    padding:45px 35px;
+
+    text-align:center;
 
     background:
-        radial-gradient(circle at top,rgba(100,25,45,.35),transparent 60%),
-        linear-gradient(145deg,#1d0d12,#0f080a);
+        radial-gradient(circle at 50% 20%,rgba(100,25,45,.38),transparent 55%),
+        linear-gradient(145deg,#1c0b10,#0e0709);
 
     border:1px solid var(--line);
 
     box-shadow:
-        0 25px 60px rgba(0,0,0,.35);
+        0 25px 50px rgba(0,0,0,.35);
 }
 
-.compatibility-intro{
-    text-align:center;
-    margin-bottom:35px;
-}
+.compatibility-symbol{
+    width:90px;
+    height:90px;
 
-.compatibility-intro h3{
-    margin:12px 0;
-    font-family:"DM Serif Display",serif;
-    font-size:42px;
-    font-weight:400;
-}
-
-.compatibility-intro p{
-    color:#9e9187;
-    font-size:11px;
-    line-height:1.8;
-}
-
-.compatibility-question{
-    margin-bottom:25px;
-    padding:25px;
-
-    background:rgba(255,255,255,.025);
-    border:1px solid rgba(198,161,94,.18);
-}
-
-.compatibility-question label{
-    display:block;
-    margin-bottom:16px;
-
-    color:var(--cream);
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:24px;
-}
-
-.compatibility-question select{
-    width:100%;
-    padding:14px 16px;
-
-    background:#180c10;
-    color:var(--cream);
-
-    border:1px solid var(--line);
-    outline:none;
-
-    font-family:"Poppins",sans-serif;
-    font-size:11px;
-
-    cursor:pointer;
-}
-
-.compatibility-question select:focus{
-    border-color:var(--gold);
-}
-
-.compatibility-submit{
-    width:100%;
-    margin-top:10px;
-    padding:15px;
-
-    background:linear-gradient(135deg,var(--wine),var(--wine-deep));
-
-    color:var(--cream);
-
-    border:1px solid var(--gold-dark);
-
-    cursor:pointer;
-
-    font-family:"Poppins",sans-serif;
-    font-size:10px;
-    letter-spacing:2px;
-
-    transition:.3s;
-}
-
-.compatibility-submit:hover{
-    background:linear-gradient(135deg,var(--wine-light),var(--wine));
-    transform:translateY(-3px);
-}
-
-.compatibility-result{
-    display:none;
-    margin-top:35px;
-    padding:35px;
-
-    text-align:center;
-
-    background:
-        linear-gradient(135deg,#ead4b5,#cda77b);
-
-    color:var(--ink);
-
-    border:1px solid rgba(198,161,94,.5);
-}
-
-.compatibility-result.show{
-    display:block;
-    animation:resultIn .6s ease;
-}
-
-@keyframes resultIn{
-    from{
-        opacity:0;
-        transform:scale(.95);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
-.compatibility-score{
-    width:130px;
-    height:130px;
-
-    margin:0 auto 20px;
+    margin:0 auto 25px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    border:1px solid var(--gold);
+
     border-radius:50%;
 
-    border:2px solid var(--gold-dark);
+    color:var(--gold-light);
 
-    background:#ead4b5;
+    font-size:34px;
 
-    font-family:"DM Serif Display",serif;
-    font-size:42px;
-
-    color:var(--wine);
+    background:
+        radial-gradient(circle,rgba(198,161,94,.10),transparent 70%);
 }
 
-.compatibility-result h3{
-    font-family:"Great Vibes",cursive;
-    font-size:42px;
-    font-weight:400;
-    color:#5d2633;
+.name-grid{
+    max-width:650px;
+    margin:30px auto;
+
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+
+    gap:15px;
+    align-items:center;
 }
 
-.compatibility-result p{
-    max-width:600px;
-    margin:12px auto 0;
+.name-input{
+    width:100%;
 
-    color:#5c483d;
+    padding:16px 18px;
+
+    outline:none;
+
+    background:#ead5b5;
+
+    color:#342021;
+
+    border:1px solid rgba(198,161,94,.5);
 
     font-family:"Cormorant Garamond",serif;
+
+    font-size:20px;
+
+    text-align:center;
+}
+
+.name-input::placeholder{
+    color:#826c5c;
+}
+
+.name-input:focus{
+    border-color:var(--gold-light);
+
+    box-shadow:0 0 15px rgba(198,161,94,.12);
+}
+
+.name-heart{
+    color:var(--gold);
+
+    font-size:25px;
+}
+
+.compatibility-result{
+    display:none;
+
+    margin:40px auto 0;
+
+    max-width:650px;
+
+    padding:35px 25px;
+
+    background:
+        linear-gradient(135deg,#ead7b8,#cba77d);
+
+    color:var(--ink);
+
+    border:1px solid rgba(198,161,94,.6);
+
+    box-shadow:
+        8px 10px 0 rgba(198,161,94,.08);
+}
+
+.compatibility-result.show{
+    display:block;
+
+    animation:resultReveal .7s ease;
+}
+
+@keyframes resultReveal{
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.result-names{
+    font-family:"Great Vibes",cursive;
+
+    color:#622837;
+
+    font-size:42px;
+
+    margin-bottom:10px;
+}
+
+.result-divider{
+    color:#94734d;
+
+    font-size:20px;
+
+    margin:8px 0 15px;
+}
+
+.compatibility-number{
+    font-family:"DM Serif Display",serif;
+
+    color:#54232d;
+
+    font-size:72px;
+
+    line-height:1;
+
+    margin:10px 0;
+}
+
+.compatibility-label{
+    color:#805f46;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+.fate-label{
+    margin-top:25px;
+
+    color:#805f46;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+}
+
+.fate-title{
+    margin:8px 0 12px;
+
+    font-family:"DM Serif Display",serif;
+
+    color:#54232d;
+
+    font-size:34px;
+
+    font-weight:400;
+}
+
+.fate-message{
+    max-width:520px;
+    margin:auto;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:#493532;
+
     font-size:21px;
-    line-height:1.5;
+
+    line-height:1.45;
+
+    font-style:italic;
 }
 
 .compatibility-note{
-    margin-top:20px !important;
-    font-family:"Poppins",sans-serif !important;
-    font-size:9px !important;
-    color:#806b5b !important;
+    margin-top:20px;
+
+    color:#907b6b;
+
+    font-size:8px;
 }
 
 /* RECOMMENDATIONS */
@@ -1115,6 +1355,7 @@ textarea:focus{
 .recommendation-grid{
     max-width:1050px;
     margin:auto;
+
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:18px;
@@ -1122,23 +1363,31 @@ textarea:focus{
 
 .recommendation-card{
     position:relative;
+
     min-height:210px;
+
     padding:32px;
 
-    background:linear-gradient(135deg,#ead5b6,#c9a47b);
+    background:
+        linear-gradient(135deg,#ead5b6,#c9a47b);
 
     color:var(--ink);
 
     border:1px solid rgba(198,161,94,.4);
+
     transition:.3s;
 }
 
 .recommendation-card::before{
     content:"FROM THE ARCHIVES";
+
     display:block;
+
     margin-bottom:18px;
+
     font-size:7px;
     letter-spacing:2px;
+
     color:#8b684c;
 }
 
@@ -1153,7 +1402,9 @@ textarea:focus{
 
 .recommendation-card h3{
     margin:14px 0 8px;
+
     font-family:"DM Serif Display",serif;
+
     font-size:25px;
     font-weight:400;
 }
@@ -1173,21 +1424,28 @@ textarea:focus{
 
 .faq-item{
     margin-bottom:12px;
+
     background:#130b0e;
+
     border:1px solid var(--line);
 }
 
 .faq-item summary{
     padding:21px;
+
     cursor:pointer;
+
     list-style:none;
+
     font-family:"Cormorant Garamond",serif;
     font-size:22px;
 }
 
 .faq-item summary::after{
     content:"+";
+
     float:right;
+
     color:var(--gold);
 }
 
@@ -1197,7 +1455,9 @@ textarea:focus{
 
 .faq-answer{
     padding:0 21px 22px;
+
     color:#a49689;
+
     font-size:11px;
     line-height:1.8;
 }
@@ -1207,10 +1467,12 @@ textarea:focus{
 .about{
     max-width:850px;
     min-height:65vh;
+
     margin:auto;
 
     display:flex;
     flex-direction:column;
+
     justify-content:center;
     align-items:center;
 
@@ -1219,8 +1481,11 @@ textarea:focus{
 
 .about h2{
     margin:20px 0 35px;
+
     font-family:"DM Serif Display",serif;
+
     font-size:clamp(60px,9vw,105px);
+
     line-height:.8;
     font-weight:400;
 }
@@ -1232,7 +1497,9 @@ textarea:focus{
 
 .about p{
     max-width:650px;
+
     color:#a99b8e;
+
     font-size:13px;
     line-height:1.9;
 }
@@ -1242,16 +1509,20 @@ textarea:focus{
 .contact-box{
     max-width:750px;
     margin:auto;
+
     padding:50px 35px;
+
     text-align:center;
 
     background:#140c0f;
+
     border:1px solid var(--line);
 }
 
 .contact-symbol{
     width:65px;
     height:65px;
+
     margin:auto;
 
     display:flex;
@@ -1259,6 +1530,7 @@ textarea:focus{
     justify-content:center;
 
     border:1px solid var(--gold);
+
     border-radius:50%;
 
     color:var(--gold);
@@ -1267,6 +1539,7 @@ textarea:focus{
 
 .contact-box h2{
     margin:18px 0;
+
     font-family:"DM Serif Display",serif;
     font-size:50px;
     font-weight:400;
@@ -1282,9 +1555,13 @@ textarea:focus{
 
 footer{
     position:relative;
+
     margin-top:70px;
+
     padding:50px 7% 30px;
+
     background:#080506;
+
     border-top:1px solid var(--line);
 }
 
@@ -1293,7 +1570,9 @@ footer{
     margin:auto;
 
     display:grid;
+
     grid-template-columns:1.3fr 1fr 1fr;
+
     gap:40px;
 }
 
@@ -1304,13 +1583,16 @@ footer{
 
 .footer-title span{
     color:var(--gold);
+
     font-family:"Great Vibes",cursive;
     font-size:34px;
 }
 
 footer p{
     margin-top:12px;
+
     color:#82766d;
+
     font-size:10px;
     line-height:1.8;
 }
@@ -1324,9 +1606,13 @@ footer p{
 .footer-links button{
     background:none;
     border:0;
+
     text-align:left;
+
     color:#95877d;
+
     cursor:pointer;
+
     font-family:"Poppins",sans-serif;
     font-size:10px;
 }
@@ -1337,22 +1623,21 @@ footer p{
 
 .copyright{
     max-width:1100px;
+
     margin:35px auto 0;
+
     padding-top:20px;
+
     border-top:1px solid rgba(198,161,94,.12);
+
     text-align:center;
+
     color:#5d534e;
+
     font-size:8px;
 }
 
 /* MOBILE */
-
-@media(max-width:1100px){
-
-    .vintage-menu{
-        grid-template-columns:repeat(3,1fr);
-    }
-}
 
 @media(max-width:950px){
 
@@ -1371,10 +1656,6 @@ footer p{
 
     .option-grid,
     .recommendation-grid{
-        grid-template-columns:1fr;
-    }
-
-    .footer-grid{
         grid-template-columns:1fr;
     }
 }
@@ -1416,24 +1697,24 @@ footer p{
         padding:25px 18px;
     }
 
-    .compatibility-question{
-        padding:20px 15px;
+    .name-grid{
+        grid-template-columns:1fr;
     }
 
-    .compatibility-question label{
-        font-size:21px;
+    .name-heart{
+        transform:rotate(90deg);
     }
 
-    .compatibility-result{
-        padding:25px 15px;
+    .compatibility-number{
+        font-size:60px;
     }
 
-    .compatibility-result h3{
+    .result-names{
         font-size:35px;
     }
 
-    .compatibility-result p{
-        font-size:18px;
+    .footer-grid{
+        grid-template-columns:1fr;
     }
 
     .corner{
@@ -1458,9 +1739,7 @@ footer p{
 <div class="botanical three">✦</div>
 
 
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+<!-- NAVBAR -->
 
 <nav class="navbar">
 
@@ -1484,9 +1763,7 @@ footer p{
 </nav>
 
 
-<!-- =====================================================
-     HOME
-===================================================== -->
+<!-- HOME -->
 
 <section id="home" class="page-section active-section">
 
@@ -1538,8 +1815,10 @@ READ THE RECORDS
 <div class="letter">
 
 <div class="letter-top">
+
 <span>ARCHIVE FILE: 001</span>
 <span>CONFIDENTIAL</span>
+
 </div>
 
 <h2>Dear Stranger,</h2>
@@ -1568,9 +1847,7 @@ to quietly exist.
 </div>
 
 
-<!-- =====================================================
-     ARCHIVE MENU
-===================================================== -->
+<!-- ARCHIVE MENU -->
 
 <div id="storyMenu" class="sub-interface active">
 
@@ -1589,6 +1866,7 @@ Every archive contains a different kind of story.
 </p>
 
 </div>
+
 
 <div class="vintage-menu">
 
@@ -1647,23 +1925,6 @@ onclick="openInterface('twistMenu')">
 <p>
 Unexpected chapters
 chosen by fate.
-</p>
-
-</div>
-
-
-<!-- NEW COMPATIBILITY CARD -->
-
-<div class="menu-card"
-onclick="showPage('compatibility')">
-
-<span class="menu-icon">♡</span>
-
-<h3>Compatibility</h3>
-
-<p>
-Discover how your answers
-match with another person.
 </p>
 
 </div>
@@ -1902,7 +2163,7 @@ Let fate choose.
 </div>
 
 
-<!-- TWIST -->
+<!-- TWISTS -->
 
 <div id="twistMenu" class="sub-interface">
 
@@ -1941,13 +2202,13 @@ receive your next chapter.
 <div class="option-card"
 onclick="showPage('compatibility')">
 
-<span>♡</span>
+<span>♥</span>
 
 <h3>Compatibility Test</h3>
 
 <p>
-Answer the questions and
-discover your mysterious match.
+Enter two names and discover
+their fictional fate.
 </p>
 
 </div>
@@ -1976,9 +2237,7 @@ department.
 </section>
 
 
-<!-- =====================================================
-     COMMUNITY
-===================================================== -->
+<!-- COMMUNITY -->
 
 <section id="community" class="page-section">
 
@@ -2032,9 +2291,7 @@ Community confessions will appear here.
 </section>
 
 
-<!-- =====================================================
-     CONFESSIONS
-===================================================== -->
+<!-- CONFESSIONS -->
 
 <section id="confessions" class="page-section">
 
@@ -2082,9 +2339,7 @@ SEAL THIS CONFESSION
 </section>
 
 
-<!-- =====================================================
-     HUGOT
-===================================================== -->
+<!-- HUGOT -->
 
 <section id="hugot" class="page-section">
 
@@ -2132,9 +2387,7 @@ ADD TO THE ARCHIVE
 </section>
 
 
-<!-- =====================================================
-     SIGNS
-===================================================== -->
+<!-- SIGNS -->
 
 <section id="signs" class="page-section">
 
@@ -2185,6 +2438,7 @@ CASE OF DELUSION
 
 </div>
 
+
 <div class="results">
 
 <div class="result">
@@ -2199,6 +2453,7 @@ CASE OF DELUSION
 
 </div>
 
+
 <div class="result">
 
 <span>Maybe</span>
@@ -2210,6 +2465,7 @@ CASE OF DELUSION
 <strong id="maybePercent">25%</strong>
 
 </div>
+
 
 <div class="result">
 
@@ -2230,9 +2486,7 @@ CASE OF DELUSION
 </section>
 
 
-<!-- =====================================================
-     ROULETTE
-===================================================== -->
+<!-- ROULETTE -->
 
 <section id="roulette" class="page-section">
 
@@ -2253,7 +2507,7 @@ The archive will now choose your next chapter.
 <div id="rouletteIcon">✦</div>
 
 <p id="rouletteText" class="hugot-display">
-“The archive is waiting for you to spin.”
+“The next chapter has not been written yet.”
 </p>
 
 <br>
@@ -2271,181 +2525,113 @@ CONSULT FATE
 
 
 <!-- =====================================================
-     NEW COMPATIBILITY TEST
+     COMPATIBILITY TEST
 ===================================================== -->
 
 <section id="compatibility" class="page-section">
 
 <div class="section-heading">
 
-<p class="eyebrow">THE CONNECTION ARCHIVE</p>
+<p class="eyebrow">THE MATCHMAKER'S ARCHIVE</p>
 
 <h2>Compatibility <em>Test.</em></h2>
 
 <p>
-Answer honestly. The archive will calculate the mysterious connection.
+Two names. One mysterious fate.
+Let the archive decide.
 </p>
 
 </div>
-
 
 <div class="compatibility-box">
 
-<div class="compatibility-intro">
+<div class="compatibility-symbol">
+♥
+</div>
 
 <p class="eyebrow">
-ARCHIVE FILE: MATCH-001
+ARCHIVE RECORD • COMPATIBILITY FILE
 </p>
 
-<h3>
-Two stories. One question.
-</h3>
+<div class="name-grid">
 
-<p>
-Choose the answers that best describe you.
-There are no wrong answers — only different plot twists.
-</p>
+<input
+type="text"
+id="nameOne"
+class="name-input"
+maxlength="30"
+placeholder="First name"
+autocomplete="off">
 
+<div class="name-heart">
+♥
 </div>
 
-
-<form id="compatibilityForm">
-
-
-<div class="compatibility-question">
-
-<label>
-01. What matters most in a connection?
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">Trust and honesty</option>
-<option value="2">Shared interests</option>
-<option value="3">Understanding each other</option>
-<option value="1">Excitement and adventure</option>
-</select>
+<input
+type="text"
+id="nameTwo"
+class="name-input"
+maxlength="30"
+placeholder="Second name"
+autocomplete="off">
 
 </div>
-
-
-<div class="compatibility-question">
-
-<label>
-02. How do you usually communicate?
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">I say what I mean</option>
-<option value="2">I take time before replying</option>
-<option value="1">Mostly through jokes and memes</option>
-<option value="3">I prefer meaningful conversations</option>
-</select>
-
-</div>
-
-
-<div class="compatibility-question">
-
-<label>
-03. Your ideal free day is...
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">A quiet day with someone I trust</option>
-<option value="2">Going somewhere new</option>
-<option value="3">Talking for hours</option>
-<option value="1">Doing something completely random</option>
-</select>
-
-</div>
-
-
-<div class="compatibility-question">
-
-<label>
-04. When something goes wrong, you...
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">Talk about it calmly</option>
-<option value="2">Think about it first</option>
-<option value="1">Try to laugh it off</option>
-<option value="3">Ask someone I trust for advice</option>
-</select>
-
-</div>
-
-
-<div class="compatibility-question">
-
-<label>
-05. What kind of person do you connect with?
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">Someone genuine</option>
-<option value="2">Someone who shares my interests</option>
-<option value="3">Someone who understands my weird side</option>
-<option value="1">Someone spontaneous</option>
-</select>
-
-</div>
-
-
-<div class="compatibility-question">
-
-<label>
-06. What makes a memorable conversation?
-</label>
-
-<select required>
-<option value="">Choose an answer...</option>
-<option value="3">Being able to talk about anything</option>
-<option value="2">Laughing together</option>
-<option value="3">Feeling understood</option>
-<option value="1">Unexpected topics</option>
-</select>
-
-</div>
-
 
 <button
-type="submit"
-class="compatibility-submit">
+class="post-button"
+type="button"
+onclick="calculateCompatibility()">
 
-REVEAL THE ARCHIVE RESULT
+DISCOVER THEIR FATE
 
 </button>
 
-</form>
 
+<div id="compatibilityResult" class="compatibility-result">
 
-<div
-id="compatibilityResult"
-class="compatibility-result">
-
-<div
-id="compatibilityScore"
-class="compatibility-score">
-0%
+<div id="resultNames" class="result-names">
+Alex ♥ Jamie
 </div>
 
-<h3 id="compatibilityTitle">
-The Archive Has Spoken.
-</h3>
+<div class="result-divider">
+✦ ❦ ✦
+</div>
 
-<p id="compatibilityMessage">
-Your result is waiting to be revealed.
-</p>
+<div class="compatibility-label">
+COMPATIBILITY
+</div>
 
-<p class="compatibility-note">
-Remember: this is a playful test, not a prediction of real relationships.
-</p>
+<div id="compatibilityNumber"
+class="compatibility-number">
+87%
+</div>
+
+<div class="fate-label">
+THE ARCHIVE'S VERDICT
+</div>
+
+<div id="fateTitle" class="fate-title">
+Written in the Stars
+</div>
+
+<div id="fateMessage" class="fate-message">
+“The universe seems suspiciously fond of this connection.”
+</div>
+
+<div class="compatibility-note">
+For entertainment only — the archive cannot actually predict relationships.
+</div>
+
+<br>
+
+<button
+class="secondary-btn"
+type="button"
+onclick="resetCompatibility()">
+
+TRY ANOTHER PAIR
+
+</button>
 
 </div>
 
@@ -2454,9 +2640,7 @@ Remember: this is a playful test, not a prediction of real relationships.
 </section>
 
 
-<!-- =====================================================
-     UNSENT
-===================================================== -->
+<!-- UNSENT -->
 
 <section id="unsent" class="page-section">
 
@@ -2507,9 +2691,7 @@ LOCK IN THE ARCHIVE
 </section>
 
 
-<!-- =====================================================
-     RECOMMENDATIONS
-===================================================== -->
+<!-- RECOMMENDATIONS -->
 
 <section id="recommendations" class="page-section">
 
@@ -2610,9 +2792,7 @@ A different ending does not automatically mean a bad story.
 </section>
 
 
-<!-- =====================================================
-     FAQ
-===================================================== -->
+<!-- FAQ -->
 
 <section id="faq" class="page-section">
 
@@ -2687,10 +2867,10 @@ Yes. The Fate Machine randomly selects an entry from the PlotTwisted collection.
 
 <details class="faq-item">
 
-<summary>How does the Compatibility Test work?</summary>
+<summary>Is the Compatibility Test real?</summary>
 
 <div class="faq-answer">
-The Compatibility Test compares your selected answers and produces a playful compatibility result. It is meant for entertainment rather than predicting real relationships.
+No. The Compatibility Test is a fictional entertainment feature. The percentage and fate are randomly generated for fun.
 </div>
 
 </details>
@@ -2700,9 +2880,7 @@ The Compatibility Test compares your selected answers and produces a playful com
 </section>
 
 
-<!-- =====================================================
-     ABOUT
-===================================================== -->
+<!-- ABOUT -->
 
 <section id="about" class="page-section">
 
@@ -2738,9 +2916,7 @@ Your story. Your secret. Your plot twist.
 </section>
 
 
-<!-- =====================================================
-     CONTACT
-===================================================== -->
+<!-- CONTACT -->
 
 <section id="contact" class="page-section">
 
@@ -2782,9 +2958,7 @@ CONTACT PLOTTWISTED
 </section>
 
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -2868,10 +3042,6 @@ Contact Keeper
 </footer>
 
 
-<!-- =====================================================
-     MAIN JAVASCRIPT
-===================================================== -->
-
 <script>
 
 /* =========================================================
@@ -2901,10 +3071,6 @@ function showPage(id){
 }
 
 
-/* =========================================================
-   ARCHIVE INTERFACE
-========================================================= */
-
 function openInterface(id){
 
     showPage("home");
@@ -2925,6 +3091,7 @@ function openInterface(id){
             target.scrollIntoView({
                 behavior:"smooth",
                 block:"start"
+
             });
 
         },100);
@@ -2934,9 +3101,7 @@ function openInterface(id){
 }
 
 
-/* =========================================================
-   NAVIGATION BUTTONS
-========================================================= */
+/* NAVIGATION */
 
 document.querySelectorAll("[data-slide]")
 .forEach(button => {
@@ -2951,70 +3116,110 @@ document.querySelectorAll("[data-slide]")
 
 
 /* =========================================================
-   NEW PLOT TWIST ROULETTE RESULTS
+   FATE ROULETTE
 ========================================================= */
 
 const plotTwists = [
 
-"Someone you rarely talk to may become part of an important chapter.",
+"Your story is not finished yet.",
 
-"Your next plot twist might begin with a completely ordinary conversation.",
+"Someone remembers something about you that you thought they forgot.",
 
-"Someone may be waiting for the right moment to tell you something.",
+"A simple conversation may become an important memory.",
 
-"The person you least expect could have the most interesting story.",
+"Maybe the answer is not yes or no yet.",
 
-"A random decision may lead you somewhere unexpectedly meaningful.",
+"An unexpected friendship could become an important chapter.",
 
-"Your current situation may make more sense after a little time passes.",
+"You may discover something you were not expecting.",
 
-"An old connection may unexpectedly cross your path again.",
+"Sometimes the biggest plot twist is learning more about yourself.",
 
-"You might discover that you were worrying about something that never needed to be solved.",
+"A chapter can end without the whole story being over.",
 
-"One small message could change the mood of your entire day.",
+"Someone may be wondering the same thing about you.",
 
-"The best memories sometimes begin with plans that were never planned.",
+"Your next favorite memory may come from an ordinary day.",
 
-"Someone may remember a tiny detail about you that you completely forgot.",
+"Maybe the signs are confusing because the story is still unfolding.",
 
-"A friendship could become stronger because of one honest conversation.",
+"You might be overthinking it — or you might simply need more time.",
 
-"Your next favorite memory may happen on an ordinary day.",
+"An honest conversation could change the direction of the story.",
 
-"Not every mystery needs to be solved immediately.",
+"The person you least expected may become important to you.",
 
-"Someone might be seeing the situation differently from you.",
+"Maybe the best chapter has not happened yet.",
 
-"The plot is moving, even when nothing seems to be happening.",
+"Fate refuses to reveal the entire plot at once.",
 
-"You may soon understand why a certain chapter had to end.",
+"Some stories make sense only after several chapters.",
 
-"A surprising opportunity could appear when you stop looking for one.",
+"Perhaps the mystery is part of what makes the story interesting.",
 
-"Sometimes the plot twist is realizing how much you have changed.",
+"Your heart wants an answer. The archive recommends patience.",
 
-"Someone may know more about your story than you think.",
+"The next chapter may surprise you.",
 
-"The answer you want may arrive in an unexpected form.",
+"An ordinary day may become an unforgettable chapter.",
 
-"A simple invitation could become a memorable chapter.",
+"Someone from your past may unexpectedly cross your path again.",
 
-"Your story may be heading somewhere completely different from what you expected.",
+"The story may take a completely different direction.",
 
-"One conversation may reveal a side of someone you have never seen before.",
+"Do not rush the ending. Some chapters need time.",
 
-"The archive advises: do not judge the chapter before reaching the ending.",
+"A small decision today may create tomorrow's plot twist.",
 
-"Something unexpected may happen when you least expect it.",
+"You may soon understand why something did not work out.",
 
-"Your next plot twist might be a new friendship.",
+"Not every goodbye is the end of the story.",
 
-"Maybe the story is not confusing. Maybe it is simply unfinished.",
+"Someone may enter your life at exactly the right moment.",
 
-"Someone may be quietly rooting for you.",
+"The answer you seek may arrive in an unexpected form.",
 
-"The chapter you are waiting for may already be beginning."
+"Perhaps the plot twist is becoming comfortable with uncertainty.",
+
+"Your future chapter is waiting for you to turn the page.",
+
+"Something you considered ordinary may become special.",
+
+"The archive suspects a surprising conversation is coming.",
+
+"Your next chapter may involve someone you already know.",
+
+"A new opportunity may appear when you stop looking for it.",
+
+"Sometimes losing one direction helps you discover another.",
+
+"The story is quietly rearranging itself.",
+
+"You may be closer to a new beginning than you realize.",
+
+"A forgotten dream may return to the storyline.",
+
+"Someone may appreciate you more than they openly show.",
+
+"The next chapter belongs to you.",
+
+"Not everything needs to be solved tonight.",
+
+"Your story deserves an ending you can be proud of.",
+
+"The unexpected may become your favorite part.",
+
+"Perhaps you are currently living through the plot twist.",
+
+"Some answers arrive only after you stop searching for them.",
+
+"A new memory is waiting to be made.",
+
+"The archive advises: keep turning the pages.",
+
+"Your chapter may change when you least expect it.",
+
+"Sometimes the best plot twist is discovering yourself."
 
 ];
 
@@ -3026,11 +3231,13 @@ function spinRoulette(){
 
     if(!text) return;
 
+    text.style.transition="all .4s ease";
+
     text.style.opacity="0";
     text.style.transform="translateY(10px)";
 
     if(icon){
-        icon.style.transform="rotate(1080deg) scale(1.15)";
+        icon.style.transform="rotate(720deg) scale(1.1)";
     }
 
     setTimeout(() => {
@@ -3057,117 +3264,500 @@ function spinRoulette(){
    COMPATIBILITY TEST
 ========================================================= */
 
-const compatibilityForm =
-document.getElementById("compatibilityForm");
+const compatibilityFates = [
 
-if(compatibilityForm){
+{
+    title:"Soulmates",
+    message:"Two paths, mysteriously destined to cross."
+},
 
-    compatibilityForm.addEventListener("submit",function(event){
+{
+    title:"Written in the Stars",
+    message:"The universe seems suspiciously fond of this connection."
+},
 
-        event.preventDefault();
+{
+    title:"Almost Lovers",
+    message:"There is something here, but the story hesitates."
+},
 
-        const answers =
-        [...compatibilityForm.querySelectorAll("select")];
+{
+    title:"Best Friends",
+    message:"Perhaps your greatest love story is friendship."
+},
 
-        let total = 0;
+{
+    title:"Unexpected Connection",
+    message:"Neither of you expected this chapter to matter."
+},
 
-        answers.forEach(answer => {
+{
+    title:"Secretly Important",
+    message:"One of you may matter more than the other realizes."
+},
 
-            total += Number(answer.value);
+{
+    title:"Right Person, Wrong Chapter",
+    message:"The timing may be the only thing standing in the way."
+},
 
-        });
+{
+    title:"Beautiful What-If",
+    message:"A story that may always make you wonder."
+},
 
-        /*
-            Maximum possible score:
-            6 questions × 3 points = 18
-        */
+{
+    title:"Unspoken Connection",
+    message:"Some things are felt long before they are said."
+},
 
-        const percentage =
-        Math.round((total / 18) * 100);
+{
+    title:"Still Being Written",
+    message:"The archive refuses to reveal the ending."
+},
 
-        const result =
-        document.getElementById("compatibilityResult");
+{
+    title:"Destined to Meet",
+    message:"Your paths crossing may not have been entirely accidental."
+},
 
-        const score =
-        document.getElementById("compatibilityScore");
+{
+    title:"Plot Twist",
+    message:"Nothing about this connection is going according to plan."
+},
 
-        const title =
-        document.getElementById("compatibilityTitle");
+{
+    title:"Friends Who Might Become More",
+    message:"The friendship already has an interesting subplot."
+},
 
-        const message =
-        document.getElementById("compatibilityMessage");
+{
+    title:"A Connection Worth Keeping",
+    message:"Whatever happens, this person may be worth having around."
+},
+
+{
+    title:"Temporary Chapter",
+    message:"Some people arrive to change the story, not stay forever."
+},
+
+{
+    title:"The Almost Story",
+    message:"Close enough to feel real, complicated enough to remain unfinished."
+},
+
+{
+    title:"Slow-Burn Connection",
+    message:"This story was never meant to happen overnight."
+},
+
+{
+    title:"Secret Admirers",
+    message:"Someone may be hiding more feelings than they show."
+},
+
+{
+    title:"Mutual Curiosity",
+    message:"You both seem to have questions the other cannot answer."
+},
+
+{
+    title:"The Comfort Person",
+    message:"There is something unusually easy about being around each other."
+},
+
+{
+    title:"Partners in Crime",
+    message:"Together, you might create far too many memorable chapters."
+},
+
+{
+    title:"Chaotic Duo",
+    message:"The archive predicts questionable decisions and excellent stories."
+},
+
+{
+    title:"Golden Friendship",
+    message:"A friendship with the potential to survive many chapters."
+},
+
+{
+    title:"The Familiar Stranger",
+    message:"You feel strangely familiar despite the distance."
+},
+
+{
+    title:"A Chance Encounter",
+    message:"One meeting may lead to more than expected."
+},
+
+{
+    title:"The Missing Piece",
+    message:"Perhaps you bring something different into each other's lives."
+},
+
+{
+    title:"Parallel Stories",
+    message:"Your lives may keep crossing in unexpected ways."
+},
+
+{
+    title:"The Unfinished Letter",
+    message:"There are words between you that have yet to be written."
+},
+
+{
+    title:"Midnight Confession",
+    message:"The truth might finally surface when nobody expects it."
+},
+
+{
+    title:"Hidden Chapter",
+    message:"There is more to this connection than what appears on the surface."
+},
+
+{
+    title:"The Favorite Person",
+    message:"One of you may already have a special place in the other's story."
+},
+
+{
+    title:"Serendipity",
+    message:"Some meetings simply happen at exactly the right moment."
+},
+
+{
+    title:"A Curious Beginning",
+    message:"The first chapter is interesting enough to keep reading."
+},
+
+{
+    title:"The Safe Harbor",
+    message:"You may find comfort in one another."
+},
+
+{
+    title:"Opposites With Chemistry",
+    message:"Different stories, surprisingly compatible chapters."
+},
+
+{
+    title:"The Unexpected Duo",
+    message:"Nobody saw this pairing coming — not even the archive."
+},
+
+{
+    title:"A Memory in the Making",
+    message:"This connection may become one of your favorite memories."
+},
+
+{
+    title:"The Question Mark",
+    message:"The archive has insufficient evidence. Investigate further."
+},
+
+{
+    title:"Delightfully Complicated",
+    message:"Simple was never part of the plot."
+},
+
+{
+    title:"The Dramatic Chapter",
+    message:"Expect confusion, laughter, and at least one plot twist."
+},
+
+{
+    title:"The Maybe",
+    message:"Not a yes. Not a no. A very suspicious maybe."
+},
+
+{
+    title:"The Hopeful Chapter",
+    message:"Something meaningful could grow with time."
+},
+
+{
+    title:"The Unexpected Favorite",
+    message:"You may become more important to each other than planned."
+},
+
+{
+    title:"The Long-Distance Chapter",
+    message:"Different paths do not always mean disconnected stories."
+},
+
+{
+    title:"The Reunion",
+    message:"Some stories have a habit of finding their way back."
+},
+
+{
+    title:"The Once-in-a-Lifetime Friend",
+    message:"Some friendships become part of your personal history."
+},
+
+{
+    title:"The Secret Chapter",
+    message:"A story exists here, but nobody has opened the page yet."
+},
+
+{
+    title:"The Coincidence",
+    message:"Probably coincidence. Probably."
+},
+
+{
+    title:"The Red String",
+    message:"An invisible thread seems determined to connect your stories."
+},
+
+{
+    title:"The Great Unknown",
+    message:"The archive cannot predict this one. Live the chapter."
+},
+
+{
+    title:"Certified Menaces",
+    message:"Together, you are a questionable decision waiting to happen."
+},
+
+{
+    title:"Delulu Department Approved",
+    message:"The evidence is weak, but the imagination is powerful."
+},
+
+{
+    title:"Too Much Eye Contact",
+    message:"The archive has noticed something suspicious."
+},
+
+{
+    title:"One Brain Cell Between You",
+    message:"Please use it responsibly."
+},
+
+{
+    title:"Main Characters",
+    message:"Somehow, you both think the story revolves around you."
+},
+
+{
+    title:"Enemies-to-Friends Potential",
+    message:"The rivalry may eventually become an alliance."
+},
+
+{
+    title:"Bestie Energy",
+    message:"Romance is unclear. Chaos is absolutely confirmed."
+},
+
+{
+    title:"Suspiciously Compatible",
+    message:"The archive would like to investigate further."
+},
+
+{
+    title:"The Gossip-Worthy Duo",
+    message:"Your interactions may become somebody else's favorite story."
+},
+
+{
+    title:"Too Complicated to Explain",
+    message:"Even the archive keeper needs a flowchart."
+}
+
+];
 
 
-        score.textContent =
+/*
+    Generate a fun percentage.
+
+    The percentage is intentionally random and
+    should not be treated as a real measurement.
+*/
+
+function generateCompatibilityPercentage(){
+
+    return Math.floor(Math.random() * 61) + 40;
+
+}
+
+
+function calculateCompatibility(){
+
+    const firstInput =
+    document.getElementById("nameOne");
+
+    const secondInput =
+    document.getElementById("nameTwo");
+
+    const firstName =
+    firstInput.value.trim();
+
+    const secondName =
+    secondInput.value.trim();
+
+    if(!firstName || !secondName){
+
+        alert("Please enter both names before consulting the archive.");
+
+        return;
+
+    }
+
+
+    const percentage =
+    generateCompatibilityPercentage();
+
+
+    const randomFate =
+    compatibilityFates[
+        Math.floor(
+            Math.random() * compatibilityFates.length
+        )
+    ];
+
+
+    document.getElementById("resultNames").textContent =
+        firstName + " ♥ " + secondName;
+
+
+    document.getElementById("compatibilityNumber").textContent =
         percentage + "%";
 
 
-        if(percentage >= 90){
-
-            title.textContent =
-            "Written in the Same Chapter.";
-
-            message.textContent =
-            "Your answers show a remarkably strong connection. Your stories may have more in common than you expected.";
-
-        }
-
-        else if(percentage >= 75){
-
-            title.textContent =
-            "A Promising Plot Twist.";
-
-            message.textContent =
-            "There is a strong sense of compatibility here. Different personalities can still create a beautiful chapter together.";
-
-        }
-
-        else if(percentage >= 60){
-
-            title.textContent =
-            "The Story Is Interesting.";
-
-            message.textContent =
-            "You have several similarities, but your differences could make the story even more interesting.";
-
-        }
-
-        else if(percentage >= 45){
-
-            title.textContent =
-            "Different Chapters, Same Archive.";
-
-            message.textContent =
-            "Your answers are quite different, but that does not make the connection impossible. Sometimes contrast creates the most unexpected stories.";
-
-        }
-
-        else{
-
-            title.textContent =
-            "The Plot Is Complicated.";
-
-            message.textContent =
-            "Your answers reveal plenty of differences. Perhaps this story is better described as an unexpected plot twist.";
-
-        }
+    document.getElementById("fateTitle").textContent =
+        randomFate.title;
 
 
-        result.classList.add("show");
+    document.getElementById("fateMessage").textContent =
+        "“" + randomFate.message + "”";
+
+
+    const result =
+    document.getElementById("compatibilityResult");
+
+
+    result.classList.remove("show");
+
+
+    /*
+       Force the animation to restart.
+    */
+
+    void result.offsetWidth;
+
+
+    result.classList.add("show");
+
+
+    setTimeout(() => {
 
         result.scrollIntoView({
             behavior:"smooth",
             block:"center"
         });
 
-    });
+    },150);
+
+}
+
+
+function resetCompatibility(){
+
+    document.getElementById("nameOne").value="";
+    document.getElementById("nameTwo").value="";
+
+    document
+        .getElementById("compatibilityResult")
+        .classList.remove("show");
+
+    document
+        .getElementById("nameOne")
+        .focus();
 
 }
 
 
 /* =========================================================
-   START
+   SIGN / DELUSION DEMO
 ========================================================= */
+
+document.querySelectorAll(".sign-vote")
+.forEach(button => {
+
+    button.addEventListener("click",function(){
+
+        const choice = this.dataset.choice;
+
+        let sign =
+        parseInt(
+            document.getElementById("signPercent").textContent
+        );
+
+        let maybe =
+        parseInt(
+            document.getElementById("maybePercent").textContent
+        );
+
+        let delulu =
+        parseInt(
+            document.getElementById("deluluPercent").textContent
+        );
+
+
+        if(choice === "sign"){
+            sign += 1;
+        }
+
+        if(choice === "maybe"){
+            maybe += 1;
+        }
+
+        if(choice === "delulu"){
+            delulu += 1;
+        }
+
+
+        const total =
+        sign + maybe + delulu;
+
+
+        sign =
+        Math.round((sign / total) * 100);
+
+        maybe =
+        Math.round((maybe / total) * 100);
+
+        delulu =
+        100 - sign - maybe;
+
+
+        document.getElementById("signPercent").textContent =
+            sign + "%";
+
+        document.getElementById("maybePercent").textContent =
+            maybe + "%";
+
+        document.getElementById("deluluPercent").textContent =
+            delulu + "%";
+
+
+        document.getElementById("signBar").style.width =
+            sign + "%";
+
+        document.getElementById("maybeBar").style.width =
+            maybe + "%";
+
+        document.getElementById("deluluBar").style.width =
+            delulu + "%";
+
+    });
+
+});
+
+
+/* START */
 
 document.addEventListener("DOMContentLoaded",() => {
 
@@ -3178,9 +3768,7 @@ document.addEventListener("DOMContentLoaded",() => {
 </script>
 
 
-<!-- =====================================================
-     FIREBASE SCRIPT
-===================================================== -->
+<!-- YOUR FIREBASE SCRIPT -->
 
 <script type="module" src="./script.js"></script>
 
