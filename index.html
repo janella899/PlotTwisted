@@ -1,46 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PlotTwisted — The Archive of Untold Stories</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"><style>
 
-<title>PlotTwisted — Vintage Stories</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-
-/* =========================================================
-   PLOTTWISTED — VINTAGE LOVE LETTER EDITION
-========================================================= */
+/* =====================================================
+   PLOTTWISTED
+   VINTAGE WINE & GOLD ARCHIVE
+===================================================== */
 
 :root{
-    --black:#090607;
-    --dark:#11090c;
-    --dark2:#1b0d11;
+    --black:#080506;
+    --dark:#12090c;
+    --dark-wine:#210b12;
 
     --wine:#641b2c;
-    --wine2:#8b3045;
-    --wine3:#3b101c;
+    --wine-light:#8f3449;
+    --wine-deep:#3a0d18;
+
+    --gold:#c9a05d;
+    --gold-light:#e6c987;
+    --gold-dark:#896535;
 
     --cream:#f4e6d2;
     --paper:#ead7bc;
-    --paper2:#c7a889;
-    --ink:#27181a;
+    --paper-dark:#d2b18a;
 
-    --gold:#c9a05d;
-    --gold2:#e2c17e;
+    --ink:#2a1718;
+    --muted:#a99a8d;
 
-    --muted:#a99686;
     --line:rgba(201,160,93,.28);
 }
 
-/* =========================================================
+
+/* =====================================================
    RESET
-========================================================= */
+===================================================== */
 
 *{
     margin:0;
@@ -56,148 +51,126 @@ body{
     min-height:100vh;
     overflow-x:hidden;
 
+    font-family:"Poppins",sans-serif;
     color:var(--cream);
 
-    font-family:"Poppins",sans-serif;
-
     background:
-        radial-gradient(
-            circle at 15% 20%,
-            rgba(100,27,44,.30),
-            transparent 27%
-        ),
-        radial-gradient(
-            circle at 85% 70%,
-            rgba(201,160,93,.08),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #090607,
-            #14090c 50%,
-            #080506
-        );
+        radial-gradient(circle at 10% 20%,rgba(100,27,44,.35),transparent 28%),
+        radial-gradient(circle at 90% 75%,rgba(201,160,93,.09),transparent 30%),
+        linear-gradient(135deg,#070405,#17090d 50%,#080506);
+
+    position:relative;
 }
 
-/* =========================================================
-   VINTAGE GRAIN
-========================================================= */
+
+/* =====================================================
+   FILM GRAIN
+===================================================== */
 
 body::before{
     content:"";
     position:fixed;
     inset:0;
-
     pointer-events:none;
-
-    opacity:.07;
+    z-index:9999;
+    opacity:.06;
 
     background-image:
         repeating-linear-gradient(
             0deg,
-            transparent 0px,
+            transparent 0,
             transparent 2px,
             rgba(255,255,255,.08) 3px
         );
-
-    z-index:9999;
 }
 
-/* =========================================================
-   ROSE DECORATIONS
-========================================================= */
 
-.rose{
+/* =====================================================
+   VINTAGE ORNAMENTS
+===================================================== */
+
+.decor{
     position:fixed;
-    z-index:0;
-
-    color:#7d2638;
-
-    opacity:.20;
-
-    font-size:75px;
-
     pointer-events:none;
-
-    filter:
-        drop-shadow(
-            0 8px 12px rgba(0,0,0,.6)
-        );
-
-    animation:roseFloat 8s ease-in-out infinite;
+    z-index:0;
+    opacity:.35;
 }
 
-.rose1{
-    top:90px;
-    left:-12px;
-    transform:rotate(-18deg);
+.corner{
+    width:180px;
+    height:180px;
+    border:1px solid var(--gold);
 }
 
-.rose2{
-    right:-15px;
+.corner::before,
+.corner::after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(201,160,93,.5);
+}
+
+.corner::before{
+    width:120px;
+    height:120px;
+    top:18px;
+    left:18px;
+}
+
+.corner::after{
+    width:70px;
+    height:70px;
+    top:43px;
+    left:43px;
+    border-radius:50%;
+}
+
+.corner-left{
+    top:100px;
+    left:-110px;
+    transform:rotate(45deg);
+}
+
+.corner-right{
     bottom:80px;
-    font-size:90px;
-    transform:rotate(20deg);
-    animation-delay:2s;
+    right:-110px;
+    transform:rotate(45deg);
 }
 
-.rose3{
-    left:4%;
-    bottom:18%;
-    font-size:38px;
-    opacity:.14;
-    animation-delay:4s;
-}
 
-.rose4{
-    right:7%;
-    top:30%;
-    font-size:42px;
-    opacity:.12;
-    animation-delay:5s;
-}
+/* GOLDEN CIRCLES */
 
-@keyframes roseFloat{
-
-    0%,100%{
-        transform:translateY(0) rotate(-10deg);
-    }
-
-    50%{
-        transform:translateY(-12px) rotate(5deg);
-    }
-}
-
-/* =========================================================
-   PETALS
-========================================================= */
-
-.petal{
+.vintage-circle{
     position:fixed;
-    color:#9a344a;
-    opacity:.20;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    border:1px solid rgba(201,160,93,.18);
     pointer-events:none;
     z-index:0;
 }
 
-.petal1{
+.vintage-circle::before{
+    content:"";
+    position:absolute;
+    inset:20px;
+    border:1px dashed rgba(201,160,93,.25);
+    border-radius:50%;
+}
+
+.circle-one{
     top:25%;
-    left:20%;
+    right:-120px;
 }
 
-.petal2{
-    top:65%;
-    right:20%;
+.circle-two{
+    bottom:10%;
+    left:-120px;
 }
 
-.petal3{
-    bottom:15%;
-    left:40%;
-}
 
-/* =========================================================
-   NAVBAR
-========================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 .navbar{
     position:fixed;
@@ -205,17 +178,16 @@ body::before{
     left:0;
 
     width:100%;
-    height:72px;
+    height:76px;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:0 5%;
+    padding:0 6%;
 
-    background:rgba(7,4,5,.93);
-
-    backdrop-filter:blur(14px);
+    background:rgba(8,5,6,.92);
+    backdrop-filter:blur(16px);
 
     border-bottom:1px solid var(--line);
 
@@ -224,90 +196,81 @@ body::before{
 
 .logo{
     font-family:"DM Serif Display",serif;
-
     font-size:30px;
-
     letter-spacing:1px;
-
-    color:var(--cream);
 }
 
 .logo span{
-    color:var(--gold);
     font-family:"Great Vibes",cursive;
-    font-size:35px;
-    margin-left:3px;
-}
-
-.logo::before{
-    content:"✦";
     color:var(--gold);
-    font-size:11px;
-    margin-right:12px;
+    font-size:36px;
 }
 
 .nav-links{
     display:flex;
-    gap:24px;
+    gap:20px;
 }
 
 .nav-button{
+    border:none;
     background:none;
-    border:0;
 
-    color:#cdbdae;
-
-    cursor:pointer;
+    color:#b9a99a;
 
     font-family:"Cormorant Garamond",serif;
-
     font-size:16px;
+    letter-spacing:.5px;
 
+    cursor:pointer;
     transition:.3s;
 }
 
 .nav-button:hover{
-    color:var(--gold2);
+    color:var(--gold-light);
 }
 
-.moon{
-    border:0;
-    background:none;
+.archive-button{
+    width:38px;
+    height:38px;
+
+    border:1px solid var(--gold);
+    background:transparent;
 
     color:var(--gold);
 
-    font-size:20px;
-
     cursor:pointer;
+
+    font-family:"DM Serif Display",serif;
+
+    transition:.3s;
 }
 
-/* =========================================================
+.archive-button:hover{
+    background:var(--wine);
+    transform:rotate(45deg);
+}
+
+
+/* =====================================================
    PAGE SYSTEM
-========================================================= */
+===================================================== */
 
 .page-section{
     display:none;
-
     min-height:100vh;
 
-    padding:
-        115px
-        6%
-        80px;
+    padding:120px 6% 80px;
 
     position:relative;
-
     z-index:2;
 }
 
 .page-section.active-section{
     display:block;
-
-    animation:pageIn .55s ease;
+    animation:pageIn .6s ease;
 }
 
 @keyframes pageIn{
-
     from{
         opacity:0;
         transform:translateY(20px);
@@ -319,9 +282,10 @@ body::before{
     }
 }
 
-/* =========================================================
+
+/* =====================================================
    HOME
-========================================================= */
+===================================================== */
 
 .home-wrap{
     max-width:1200px;
@@ -329,454 +293,346 @@ body::before{
 }
 
 .hero{
-    min-height:65vh;
+    min-height:70vh;
 
     display:grid;
-
     grid-template-columns:1.1fr .9fr;
 
     align-items:center;
-
     gap:70px;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
-
 .eyebrow{
     color:var(--gold);
-
     font-size:10px;
-
     letter-spacing:3px;
-
     text-transform:uppercase;
 }
 
 .hero h1{
-    margin:22px 0;
+    margin:20px 0;
 
     font-family:"DM Serif Display",serif;
 
-    font-size:
-        clamp(
-            60px,
-            9vw,
-            115px
-        );
+    font-size:clamp(65px,9vw,120px);
 
     line-height:.82;
-
     font-weight:400;
-
     letter-spacing:-3px;
 }
 
 .hero h1 em{
-    color:var(--gold);
-
     font-family:"Great Vibes",cursive;
-
-    font-size:1.05em;
-
+    color:var(--gold);
     font-weight:400;
 }
 
 .hero-text{
-    max-width:540px;
+    max-width:520px;
 
     color:#b9a99a;
-
     line-height:1.9;
-
     font-size:13px;
 }
 
 .hero-actions{
     display:flex;
-
     gap:12px;
-
-    margin-top:30px;
-
     flex-wrap:wrap;
+    margin-top:30px;
 }
 
-/* =========================================================
+
+/* =====================================================
    BUTTONS
-========================================================= */
+===================================================== */
 
 .primary-btn,
 .secondary-btn{
-    padding:13px 24px;
-
-    cursor:pointer;
+    padding:14px 25px;
 
     font-family:"Poppins",sans-serif;
-
     font-size:10px;
-
     letter-spacing:1px;
 
+    cursor:pointer;
     transition:.3s;
 }
 
 .primary-btn{
     background:var(--wine);
-
     color:var(--cream);
 
-    border:1px solid #a34a5e;
+    border:1px solid var(--wine-light);
 
-    box-shadow:
-        0 8px 20px rgba(0,0,0,.3);
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
 
 .secondary-btn{
     background:transparent;
-
     color:var(--cream);
-
     border:1px solid var(--line);
 }
 
 .primary-btn:hover,
 .secondary-btn:hover{
     transform:translateY(-4px);
-
     border-color:var(--gold);
 
-    box-shadow:
-        0 12px 25px rgba(0,0,0,.45);
+    box-shadow:0 15px 30px rgba(0,0,0,.4);
 }
 
-/* =========================================================
+
+/* =====================================================
    VINTAGE LETTER
-========================================================= */
+===================================================== */
 
 .letter{
     position:relative;
 
-    max-width:390px;
-
+    max-width:400px;
     margin:auto;
 
-    padding:55px 40px;
+    padding:55px 42px;
 
     color:var(--ink);
 
     background:
-        linear-gradient(
-            135deg,
-            #f2dfc4,
-            #dfc4a1
-        );
+        linear-gradient(135deg,#f3dfc2,#d9ba94);
 
-    border:1px solid
-        rgba(80,45,30,.3);
+    border:1px solid rgba(90,55,35,.35);
 
     box-shadow:
-        12px 14px 0
-            rgba(201,160,93,.10),
-        0 25px 45px
-            rgba(0,0,0,.55);
+        15px 15px 0 rgba(201,160,93,.08),
+        0 30px 55px rgba(0,0,0,.6);
 
     transform:rotate(1.5deg);
 }
 
 .letter::before{
     content:"";
-
     position:absolute;
-
-    top:-15px;
-    left:30px;
-
-    width:85px;
-    height:25px;
-
-    background:
-        rgba(242,225,198,.65);
-
-    transform:rotate(-5deg);
-}
-
-.letter::after{
-    content:"";
-
-    position:absolute;
-
-    bottom:-14px;
-    right:25px;
-
-    width:80px;
-    height:22px;
-
-    background:
-        rgba(242,225,198,.5);
-
-    transform:rotate(4deg);
+    inset:10px;
+    border:1px solid rgba(105,70,45,.28);
+    pointer-events:none;
 }
 
 .letter-top{
     display:flex;
-
     justify-content:space-between;
 
-    color:#725a48;
-
     font-family:"Libre Baskerville",serif;
-
     font-size:8px;
-
     letter-spacing:1px;
+
+    color:#735a47;
 }
 
 .letter h2{
     margin:35px 0 20px;
 
     font-family:"Great Vibes",cursive;
-
-    font-size:43px;
-
+    font-size:48px;
     font-weight:400;
 
-    color:#4a2028;
+    color:#54202b;
 }
 
 .letter p{
     font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-
+    font-size:21px;
     line-height:1.45;
-
-    color:#3d2928;
 }
 
 .signature{
     margin-top:30px;
-
     text-align:right;
 
     font-family:"Great Vibes",cursive;
+    font-size:28px;
 
-    font-size:27px;
-
-    color:#6b2635;
+    color:#6a2635;
 }
 
 .wax{
     position:absolute;
 
-    width:55px;
-    height:55px;
+    width:56px;
+    height:56px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    bottom:-27px;
+    left:50%;
+
+    transform:translateX(-50%);
 
     border-radius:50%;
 
     background:
-        radial-gradient(
-            circle at 35% 30%,
-            #a33b50,
-            #541322
-        );
+        radial-gradient(circle at 35% 30%,#a84458,#53111f);
 
-    color:#e9c982;
+    border:2px solid #40101a;
 
-    font-size:20px;
-
-    box-shadow:
-        0 5px 12px rgba(0,0,0,.35);
-
-    bottom:-25px;
-    left:50%;
-
-    transform:translateX(-50%);
+    box-shadow:0 6px 14px rgba(0,0,0,.4);
 }
 
-/* =========================================================
-   MAIN INTERFACE
-========================================================= */
+
+/* =====================================================
+   INTERFACE
+===================================================== */
+
+.sub-interface{
+    display:none;
+    max-width:1100px;
+    margin:80px auto 0;
+}
+
+.sub-interface.active{
+    display:block;
+    animation:pageIn .5s ease;
+}
 
 .interface-title{
     text-align:center;
-
-    margin:20px auto 45px;
-
     max-width:850px;
+    margin:20px auto 45px;
 }
 
 .interface-title h2{
     margin:12px 0;
 
     font-family:"DM Serif Display",serif;
-
-    font-size:
-        clamp(
-            50px,
-            8vw,
-            90px
-        );
-
+    font-size:clamp(50px,8vw,90px);
     font-weight:400;
 }
 
 .interface-title h2 span{
     color:var(--gold);
-
     font-family:"Great Vibes",cursive;
 }
 
-.interface-title p{
-    color:#a99a8b;
-
+.interface-title p:last-child{
+    color:var(--muted);
     font-size:12px;
-
     line-height:1.8;
 }
 
-/* =========================================================
+
+/* =====================================================
    VINTAGE MENU
-========================================================= */
+===================================================== */
 
 .vintage-menu{
-    max-width:1050px;
-
-    margin:auto;
-
     display:grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
+    grid-template-columns:repeat(5,1fr);
     gap:15px;
 }
 
 .menu-card{
     position:relative;
 
-    min-height:190px;
-
-    padding:30px 18px;
+    min-height:210px;
+    padding:35px 18px;
 
     text-align:center;
 
     cursor:pointer;
 
     background:
-        linear-gradient(
-            145deg,
-            #211315,
-            #10090b
-        );
+        linear-gradient(145deg,#251317,#10090b);
 
     border:1px solid var(--line);
 
-    transition:.35s;
-
     overflow:hidden;
+
+    transition:.35s;
 }
 
 .menu-card::before{
     content:"";
-
     position:absolute;
-
     inset:8px;
 
-    border:1px dashed
-        rgba(201,160,93,.14);
+    border:1px dashed rgba(201,160,93,.18);
+}
 
-    pointer-events:none;
+.menu-card::after{
+    content:"";
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    border:1px solid rgba(201,160,93,.25);
+    border-radius:50%;
+
+    top:-30px;
+    right:-30px;
 }
 
 .menu-card:hover{
-    transform:
-        translateY(-8px)
-        rotate(-1deg);
-
+    transform:translateY(-9px) rotate(-1deg);
     border-color:var(--gold);
 
     background:
-        linear-gradient(
-            145deg,
-            #341620,
-            #14090d
-        );
+        linear-gradient(145deg,#3b1722,#15090d);
 }
 
-.menu-icon{
-    display:block;
+.menu-symbol{
+    width:48px;
+    height:48px;
+
+    margin:0 auto 20px;
+
+    border:1px solid var(--gold);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     color:var(--gold);
 
-    font-size:32px;
+    font-family:"DM Serif Display",serif;
+    font-size:21px;
 
-    margin-bottom:20px;
+    transform:rotate(45deg);
+}
+
+.menu-symbol span{
+    transform:rotate(-45deg);
 }
 
 .menu-card h3{
     font-family:"Cormorant Garamond",serif;
-
-    font-size:23px;
-
+    font-size:24px;
     font-weight:500;
 }
 
 .menu-card p{
     margin-top:8px;
-
     color:#928377;
 
     font-size:9px;
-
-    line-height:1.6;
+    line-height:1.7;
 }
 
-/* =========================================================
-   SUB INTERFACE
-========================================================= */
 
-.sub-interface{
-    display:none;
-
-    max-width:1050px;
-
-    margin:0 auto;
-}
-
-.sub-interface.active{
-    display:block;
-
-    animation:pageIn .4s ease;
-}
+/* =====================================================
+   BACK BUTTON
+===================================================== */
 
 .back-button{
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    margin-bottom:25px;
-
+    margin-bottom:30px;
     padding:10px 18px;
 
     background:transparent;
 
-    color:var(--gold);
-
     border:1px solid var(--line);
+
+    color:var(--gold);
 
     cursor:pointer;
 
     font-family:"Cormorant Garamond",serif;
-
     font-size:16px;
 
     transition:.3s;
@@ -784,46 +640,35 @@ body::before{
 
 .back-button:hover{
     background:var(--wine);
-
     border-color:var(--gold);
 }
 
-/* =========================================================
+
+/* =====================================================
    OPTION CARDS
-========================================================= */
+===================================================== */
 
 .option-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:18px;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
 .option-card{
-    min-height:190px;
+    min-height:210px;
 
-    padding:30px;
+    padding:35px;
 
     cursor:pointer;
 
-    background:
-        linear-gradient(
-            145deg,
-            #f0dec3,
-            #d8bb98
-        );
-
     color:var(--ink);
 
-    border:
-        1px solid
-        rgba(201,160,93,.45);
+    background:
+        linear-gradient(145deg,#f0dcc0,#d5b38d);
 
-    box-shadow:
-        8px 9px 0
-            rgba(201,160,93,.08);
+    border:1px solid rgba(201,160,93,.5);
+
+    box-shadow:8px 10px 0 rgba(201,160,93,.08);
 
     transition:.3s;
 
@@ -831,7 +676,7 @@ body::before{
 }
 
 .option-card:nth-child(2){
-    transform:rotate(.6deg);
+    transform:rotate(.7deg);
 }
 
 .option-card:nth-child(3){
@@ -839,198 +684,86 @@ body::before{
 }
 
 .option-card:hover{
-    transform:
-        translateY(-7px)
-        rotate(0);
+    transform:translateY(-8px) rotate(0);
 }
 
-.option-card span{
-    color:#762638;
+.card-stamp{
+    width:42px;
+    height:42px;
 
-    font-size:25px;
-}
+    border:1px solid #762638;
 
-.option-card h3{
-    margin:16px 0 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     font-family:"DM Serif Display",serif;
 
-    font-size:27px;
+    color:#762638;
+    font-size:18px;
+}
 
+.option-card h3{
+    margin:18px 0 8px;
+
+    font-family:"DM Serif Display",serif;
+    font-size:28px;
     font-weight:400;
 }
 
 .option-card p{
-    color:#654f43;
-
+    color:#665044;
     font-size:10px;
-
-    line-height:1.7;
+    line-height:1.8;
 }
 
-/* =========================================================
-   COMMUNITY
-========================================================= */
 
-.feed-title{
-    max-width:1100px;
+/* =====================================================
+   SECTION HEADINGS
+===================================================== */
 
-    margin:55px auto 20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
+.section-heading{
+    max-width:1000px;
+    margin:20px auto 45px;
+    text-align:center;
 }
 
-.feed-title h3{
-    font-family:"Cormorant Garamond",serif;
+.section-heading h2{
+    margin:15px 0;
 
-    font-size:36px;
+    font-family:"DM Serif Display",serif;
+    font-size:clamp(55px,8vw,95px);
 
-    font-weight:500;
+    font-weight:400;
+    line-height:.9;
 }
 
-.feed-title span{
-    color:var(--gold);
-
-    font-size:8px;
-
-    letter-spacing:2px;
+.section-heading p:last-child{
+    color:var(--muted);
+    font-size:12px;
 }
 
-.post-grid{
-    max-width:1100px;
 
-    margin:auto;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(250px,1fr)
-        );
-
-    gap:18px;
-}
-
-.post-card{
-    position:relative;
-
-    min-height:200px;
-
-    padding:25px 23px 48px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #241518,
-            #110a0c
-        );
-
-    border:1px solid var(--line);
-
-    transition:.3s;
-}
-
-.post-card:hover{
-    transform:
-        translateY(-5px)
-        rotate(.3deg);
-
-    border-color:var(--gold);
-}
-
-.post-type{
-    color:var(--gold);
-
-    font-size:9px;
-
-    letter-spacing:1px;
-}
-
-.post-message{
-    margin-top:18px;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:23px;
-
-    line-height:1.25;
-}
-
-.post-date{
-    margin-top:20px;
-
-    color:#756961;
-
-    font-size:8px;
-}
-
-.post-actions{
-    position:absolute;
-
-    left:22px;
-    right:22px;
-
-    bottom:8px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    z-index:2;
-}
-
-.like-button,
-.report-button{
-    background:none;
-
-    border:0;
-
-    color:#76545b;
-
-    cursor:pointer;
-
-    font-size:10px;
-}
-
-.like-button:hover{
-    color:#d0778b;
-}
-
-.report-button:hover{
-    color:var(--gold);
-}
-
-/* =========================================================
-   FORM — OLD LETTER
-========================================================= */
+/* =====================================================
+   FORMS
+===================================================== */
 
 .form-card{
     max-width:850px;
-
     margin:auto;
 
-    padding:32px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e8d3b6,
-            #d1b18e
-        );
+    padding:38px;
 
     color:var(--ink);
 
-    border:1px solid
-        rgba(201,160,93,.4);
+    background:
+        linear-gradient(135deg,#ead5b6,#cfad87);
+
+    border:1px solid rgba(201,160,93,.45);
 
     box-shadow:
-        10px 12px 0
-            rgba(201,160,93,.08);
+        10px 12px 0 rgba(201,160,93,.08),
+        0 25px 40px rgba(0,0,0,.25);
 }
 
 .form-label{
@@ -1038,134 +771,198 @@ body::before{
 
     margin-bottom:15px;
 
-    color:#6a4b40;
+    color:#6a403b;
 
     font-family:"Great Vibes",cursive;
-
-    font-size:28px;
+    font-size:32px;
 }
 
 textarea{
     width:100%;
+    min-height:180px;
 
-    min-height:170px;
+    padding:22px;
 
     resize:vertical;
-
-    padding:20px;
-
     outline:none;
 
     background:
         repeating-linear-gradient(
-            #f0dfc5,
-            #f0dfc5 30px,
-            #d7bd9d 31px
+            #f1dfc4,
+            #f1dfc4 31px,
+            #d8bc9a 32px
         );
 
     color:#302020;
 
-    border:
-        1px solid
-        rgba(91,56,44,.35);
+    border:1px solid rgba(91,56,44,.35);
 
     font-family:"Cormorant Garamond",serif;
-
-    font-size:19px;
-
+    font-size:20px;
     line-height:1.6;
 }
 
 textarea:focus{
-    border-color:#8b3045;
+    border-color:var(--wine);
 }
 
 .post-button{
-    margin-top:16px;
+    margin-top:18px;
 
-    padding:13px 23px;
+    padding:14px 24px;
 
     background:var(--wine);
 
-    border:1px solid #a34a5d;
-
     color:var(--cream);
+
+    border:1px solid var(--wine-light);
 
     cursor:pointer;
 
     font-family:"Poppins",sans-serif;
-
     font-size:10px;
-
     letter-spacing:1px;
 
     transition:.3s;
 }
 
 .post-button:hover{
-    background:var(--wine2);
-
-    border-color:var(--gold);
-
     transform:translateY(-3px);
+    border-color:var(--gold);
 }
 
-/* =========================================================
-   SECTION HEADING
-========================================================= */
 
-.section-heading{
-    max-width:1000px;
+/* =====================================================
+   COMMUNITY POSTS
+===================================================== */
 
-    margin:20px auto 40px;
+.feed-title{
+    max-width:1100px;
+
+    margin:65px auto 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.section-heading h2{
-    margin:15px 0;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:
-        clamp(
-            55px,
-            8vw,
-            90px
-        );
-
-    font-weight:400;
-
-    line-height:.9;
+.feed-title h3{
+    font-family:"Cormorant Garamond",serif;
+    font-size:38px;
+    font-weight:500;
 }
 
-.section-heading h2 em{
+.feed-title span{
     color:var(--gold);
-
-    font-family:"Great Vibes",cursive;
+    font-size:8px;
+    letter-spacing:2px;
 }
 
-.section-heading p:last-child{
-    color:#a89a8d;
+.post-grid{
+    max-width:1100px;
+    margin:auto;
 
-    font-size:12px;
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
 }
 
-/* =========================================================
+.post-card{
+    position:relative;
+
+    min-height:210px;
+
+    padding:28px 25px 55px;
+
+    background:
+        linear-gradient(145deg,#251417,#11090b);
+
+    border:1px solid var(--line);
+
+    transition:.3s;
+}
+
+.post-card::before{
+    content:"";
+    position:absolute;
+    top:10px;
+    left:10px;
+    right:10px;
+    bottom:10px;
+
+    border:1px solid rgba(201,160,93,.08);
+
+    pointer-events:none;
+}
+
+.post-card:hover{
+    transform:translateY(-6px) rotate(.3deg);
+    border-color:var(--gold);
+}
+
+.post-type{
+    color:var(--gold);
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.post-message{
+    margin-top:20px;
+
+    font-family:"Cormorant Garamond",serif;
+    font-size:24px;
+    line-height:1.3;
+}
+
+.post-date{
+    margin-top:20px;
+    color:#756961;
+    font-size:8px;
+}
+
+.post-actions{
+    position:absolute;
+    bottom:15px;
+    left:24px;
+    right:24px;
+
+    display:flex;
+    justify-content:space-between;
+}
+
+.like-button,
+.report-button{
+    background:none;
+    border:none;
+
+    color:#80616a;
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+.like-button:hover,
+.report-button:hover{
+    color:var(--gold);
+}
+
+
+/* =====================================================
    SIGN OR DELUSION
-========================================================= */
+===================================================== */
 
 .vote-box{
     max-width:850px;
-
     margin:auto;
 
-    padding:35px;
+    padding:45px;
 
     background:
-        linear-gradient(
-            145deg,
-            #211416,
-            #10090b
-        );
+        linear-gradient(145deg,#231316,#10090b);
 
     border:1px solid var(--line);
 }
@@ -1174,28 +971,21 @@ textarea:focus{
     margin:20px 0 30px;
 
     font-family:"Cormorant Garamond",serif;
-
-    font-size:35px;
-
+    font-size:36px;
     font-weight:500;
-
-    line-height:1.2;
+    line-height:1.25;
 }
 
 .vote-buttons{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
 }
 
 .vote-buttons button{
-    min-height:100px;
+    min-height:110px;
 
-    background:
-        rgba(255,255,255,.025);
+    background:rgba(255,255,255,.02);
 
     color:var(--cream);
 
@@ -1204,44 +994,37 @@ textarea:focus{
     cursor:pointer;
 
     font-family:"Poppins",sans-serif;
-
     font-size:10px;
+    letter-spacing:1px;
 
     transition:.3s;
 }
 
 .vote-buttons button:hover{
     background:var(--wine);
-
     border-color:var(--gold);
-
     transform:translateY(-5px);
 }
 
 .results{
-    margin-top:35px;
+    margin-top:40px;
 }
 
 .result{
     display:grid;
-
-    grid-template-columns:
-        70px 1fr 45px;
+    grid-template-columns:70px 1fr 45px;
 
     align-items:center;
-
     gap:12px;
 
-    margin:14px 0;
+    margin:15px 0;
 
     color:#9e9186;
-
-    font-size:9px;
+    font-size:10px;
 }
 
 .bar{
-    height:5px;
-
+    height:6px;
     background:#2b2020;
 }
 
@@ -1249,321 +1032,80 @@ textarea:focus{
     height:100%;
 
     background:
-        linear-gradient(
-            90deg,
-            var(--wine),
-            var(--gold)
-        );
+        linear-gradient(90deg,var(--wine),var(--gold));
 }
-   // =====================================================
-// 💗 PLOT TWIST ROULETTE
-// =====================================================
-
-const plotTwists = [
-   "Your friend might secretly like you too.",
-"Your friend knows you like them, but is waiting for you to say it.",
-"Your friend may be dropping hints without realizing it.",
-"You suddenly realize your feelings for your friend are getting stronger.",
-"Your friend starts treating you differently.",
-"Your friend remembers the smallest things you tell them.",
-"Your friend always finds a reason to talk to you.",
-"Your friend may be more interested in you than they admit.",
-"Your friend suddenly becomes shy around you.",
-"Your friend might be waiting for you to make the first move.",
-
-"Your friend chooses to sit beside you even when there are other seats.",  
-"Your friend starts looking for you whenever you enter the room.",  
-"Your friend notices when your mood changes.",  
-"Your friend remembers your favorite things.",  
-"Your friend might secretly check if you're okay.",  
-"Your friend laughs harder at your jokes than everyone else.",  
-"Your friend may be trying to spend more time with you.",  
-"Your friend suddenly starts asking about your love life.",  
-"Your friend asks who your crush is. Suspicious.",  
-"Your friend gets curious whenever you mention someone else.",  
-
-"Your friend may secretly get jealous.",  
-"Your friend might be hiding their feelings behind jokes.",  
-"Your friend suddenly compliments you more often.",  
-"Your friend starts teasing you about having a crush.",  
-"Your friend might be trying to figure out if you like them.",  
-"Your friend remembers conversations you already forgot.",  
-"Your friend finds random reasons to message you.",  
-"Your friend sends you something because it reminded them of you.",  
-"Your friend may be thinking about you more than you realize.",  
-"Your friend becomes unusually protective of you.",  
-
-"Your friend notices things about you that nobody else notices.",  
-"Your friend may have a nickname for you that means more than you think.",  
-"Your friend suddenly becomes nervous when you're alone together.",  
-"Your friend may be waiting for the perfect moment.",  
-"Your friend acts differently when other people mention your name.",  
-"Your friend might secretly save your messages.",  
-"Your friend may remember your birthday without a reminder.",  
-"Your friend may have already noticed your feelings.",  
-"Your friend might be pretending not to notice your hints.",  
-"Your friend could be waiting for you to confess first.",  
-
-"They look at you, then immediately look away.",  
-"They reply quickly but pretend they weren't waiting.",  
-"They say you're just a friend, but act differently.",  
-"They tease you more than everyone else.",  
-"They suddenly become quiet when you compliment them.",  
-"They always seem to appear wherever you are.",  
-"They ask about your plans for no obvious reason.",  
-"They suddenly want to know who you're talking to.",  
-"They send random messages just to start a conversation.",  
-"They remember something you mentioned weeks ago.",  
-
-"They keep finding reasons to continue the conversation.",  
-"They act normal in front of everyone but different when you're alone.",  
-"They may be giving you hints that you're too scared to believe.",  
-"They might be waiting for you to notice.",  
-"They say they aren't interested in anyone. Suspicious.",  
-"They ask about your type.",  
-"They suddenly want to know your ideal person.",  
-"They ask whether you're talking to someone.",  
-"They might be testing your reaction.",  
-"They may be hiding their feelings behind playful teasing.",  
-
-"You accidentally make eye contact and neither looks away.",  
-"You both reach for the same thing at the same time.",  
-"You laugh at the exact same moment.",  
-"You accidentally wear matching colors.",  
-"You get paired together unexpectedly.",  
-"You end up sitting beside each other again.",  
-"You accidentally call each other at the same time.",  
-"You both remember the same funny memory.",  
-"They smile the moment they see you.",  
-"You catch them looking at you.",  
-
-"They notice your new hairstyle immediately.",  
-"They compliment you when you least expect it.",  
-"They save you a seat.",  
-"They wait for you before leaving.",  
-"They ask if you've already eaten.",  
-"They offer to help even when you didn't ask.",  
-"They make you laugh when you're having a bad day.",  
-"They remember something important to you.",  
-"They message you after noticing you were quiet.",  
-"They choose you as their partner.",  
-
-"Maybe it's a sign. Maybe you're just hopeful.",  
-"You have evidence, but your heart wants more.",  
-"The signs are there. The question is whether they're intentional.",  
-"Your friends think there's something going on.",  
-"You might be overthinking it... or maybe you're not.",  
-"Three people noticed the chemistry before you did.",  
-"Your friend says it's nothing. Your heart disagrees.",  
-"Maybe they're friendly with everyone, but why especially you?",  
-"You could be delusional, but the coincidence is suspicious.",  
-"The universe is giving hints. Your brain wants proof.",  
-
-"Maybe it's friendship. Maybe it's the beginning of something else.",  
-"You don't know if it's a sign or wishful thinking.",  
-"Your heart says yes. Your logic says wait.",  
-"You might be reading too much into one small moment.",  
-"Or maybe that small moment meant everything.",  
-"You almost confess but chicken out.",  
-"Your friend almost tells you something important.",  
-"You accidentally reveal your feelings.",  
-"Someone asks you directly if you like your friend.",  
-"Your friend asks, 'What if we dated?' as a joke... maybe.",  
-
-"You almost send the message you've been writing for weeks.",  
-"Your friend discovers your crush accidentally.",  
-"Someone exposes your crush in front of them.",  
-"You finally get the courage to say something.",  
-"You decide to keep it a secret a little longer.",  
-"Your friend might confess before you do.",  
-"A simple conversation turns unexpectedly serious.",  
-"You finally ask what your friend really thinks.",  
-"The question you've been avoiding finally gets asked.",  
-"You find out whether your feelings are mutual.",  
-
-"Your friendship slowly starts feeling different.",  
-"You realize they're the first person you want to tell everything to.",  
-"They become your favorite notification.",  
-"You start missing them even when you just saw them.",  
-"Your favorite memories include them.",  
-"Your friendship becomes deeper than you expected.",  
-"You start wondering what dating your friend would be like.",  
-"You catch yourself imagining a future with them.",  
-"You realize your 'friend' is actually your favorite person.",  
-"You start seeing them differently.",  
-
-"They become the person you look for in every room.",  
-"Their happiness matters to you more than you expected.",  
-"Your friendship may be turning into something neither planned.",  
-"You may have fallen for the person who was already closest to you.",  
-"The person you thought would stay a friend may become something more.",  
-"Your best friendship could become your biggest plot twist.",  
-"You didn't plan to fall for your friend... but here you are.",  
-"Maybe your favorite person has been beside you all along.",  
-"Sometimes the best love story starts with friendship.",  
-"Maybe friendship was only the beginning.",  
-
-"You practice what to say, then forget everything when they appear.",  
-"You pretend not to care when they talk to someone else.",  
-"You check your phone hoping it's them.",  
-"You reread their message way too many times.",  
-"You tell your friends you don't like them for the 50th time.",  
-"You suddenly become very aware of how you look around them.",  
-"You accidentally smile at your phone because of their message.",  
-"You say 'just friends' while writing a whole romance novel in your head.",  
-"Your friends already know who you're talking about.",  
-"You deny everything while your face says otherwise.",  
-
-"You suddenly become an expert at analyzing their messages.",  
-"One 'good morning' has you thinking about it all day.",  
-"They send one emoji and you start investigating.",  
-"They reply with 'haha' and you analyze the punctuation.",  
-"Your friends are tired of hearing their name.",  
-"You claim you're not delulu, then analyze everything.",  
-"You accidentally make eye contact and forget how to act.",  
-"You see their name pop up and suddenly your day is better.",  
-"You tell yourself not to catch feelings. Too late.",  
-"Your heart already decided before your brain caught up.",  
-
-"They suddenly message you tonight.",  
-"You'll have an unexpected conversation with them.",  
-"You'll discover something surprising about your friend.",  
-"A simple hangout becomes a core memory.",  
-"Someone accidentally reveals a secret.",  
-"You'll hear something that changes how you see them.",  
-"Your friend surprises you with an unexpected gesture.",  
-"You'll get closer because of a random coincidence.",  
-"A normal school day suddenly feels special.",  
-"You'll have a conversation you'll remember for a long time.",  
-
-"Someone finally explains their confusing behavior.",  
-"A random question reveals someone's true feelings.",  
-"You'll discover someone has been rooting for you.",  
-"An ordinary moment becomes your favorite memory.",  
-"Someone unexpected becomes important to you.",  
-"A friendship becomes stronger after one honest conversation.",  
-"Your next conversation may change everything.",  
-"Something you've been waiting for may finally happen.",  
-"A coincidence makes you question everything.",  
-"Your story isn't finished yet.",  
-
-"Maybe your friend is your plot twist.",  
-"Maybe you're not imagining the connection.",  
-"Maybe they're waiting for you too.",  
-"Maybe the signs were real after all.",  
-"Maybe the person you're looking for is already beside you.",  
-"Maybe your best friend is secretly your biggest love story.",  
-"Maybe the person you keep thinking about is thinking about you too.",  
-"Maybe you should stop overthinking and enjoy the moment.",  
-"Maybe the answer isn't yes or no yet.",  
-"Maybe your story needs one more chapter.",  
-
-"Maybe the biggest plot twist is that you both feel the same.",  
-"Maybe someday you'll laugh about how scared you were to confess.",  
-"Maybe the person you call 'just a friend' won't always be just a friend.",  
-"Maybe your friendship is already becoming something beautiful.",  
-"Maybe the universe really is trying to tell you something.",  
-"Maybe you found your favorite person without looking for them.",  
-"Maybe this isn't delusion. Maybe it's the beginning.",  
-"Maybe your friend is the plot twist you've been waiting for.",  
-"Maybe the person beside you is the person you've been waiting for.",  
-"Maybe your crush story is only getting started."
-
-   ];
 
 
-// ROULETTE FUNCTION
-
-function spinRoulette() {
-
-    const text = document.getElementById("rouletteText");
-    const icon = document.getElementById("rouletteIcon");
-
-    if (!text) return;
-
-    // Animation
-    text.style.opacity = "0";
-    text.style.transform = "translateY(10px)";
-
-    if (icon) {
-        icon.style.transform = "rotate(720deg) scale(1.15)";
-        icon.style.transition = "transform 0.7s ease";
-    }
-
-    setTimeout(() => {
-
-        const randomIndex = Math.floor(
-            Math.random() * plotTwists.length
-        );
-
-        text.textContent = "“" + plotTwists[randomIndex] + "”";
-
-        text.style.opacity = "1";
-        text.style.transform = "translateY(0)";
-        text.style.transition = "all 0.4s ease";
-
-        if (icon) {
-            icon.style.transform = "rotate(0deg) scale(1)";
-        }
-
-    }, 700);
-
-       }
-
-/* =========================================================
+/* =====================================================
    ROULETTE
-========================================================= */
+===================================================== */
 
 .center-box{
     max-width:850px;
 
     margin:auto;
 
-    padding:60px 30px;
+    padding:70px 30px;
 
     text-align:center;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(100,27,44,.30),
-            transparent 65%
-        ),
-        #120a0d;
+        radial-gradient(circle,rgba(100,27,44,.4),transparent 60%),
+        #12090d;
 
     border:1px solid var(--line);
+
+    position:relative;
 }
 
-#rouletteIcon{
-    font-size:65px;
+.center-box::before{
+    content:"";
+    position:absolute;
+    inset:18px;
+
+    border:1px dashed rgba(201,160,93,.18);
+
+    pointer-events:none;
+}
+
+.roulette-wheel{
+    width:90px;
+    height:90px;
+
+    margin:0 auto 30px;
+
+    border:2px solid var(--gold);
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     color:var(--gold);
 
-    margin-bottom:25px;
+    font-family:"DM Serif Display",serif;
+    font-size:28px;
+
+    transition:transform .7s ease;
 }
 
 .hugot-display{
     max-width:700px;
-
     margin:auto;
 
     font-family:"Cormorant Garamond",serif;
 
-    font-size:
-        clamp(
-            30px,
-            5vw,
-            50px
-        );
-
+    font-size:clamp(30px,5vw,52px);
     font-style:italic;
 
     line-height:1.15;
 }
 
-/* =========================================================
+
+/* =====================================================
    RECOMMENDATIONS
-========================================================= */
+===================================================== */
 
 .recommendation-grid{
     max-width:1000px;
@@ -1571,52 +1113,51 @@ function spinRoulette() {
     margin:auto;
 
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:18px;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
 }
 
 .recommendation-card{
-    padding:30px;
+    position:relative;
 
-    min-height:190px;
+    padding:35px;
+
+    min-height:210px;
 
     background:
-        linear-gradient(
-            135deg,
-            #ead7bb,
-            #cdb08e
-        );
+        linear-gradient(135deg,#ead7bb,#cdb08e);
 
     color:var(--ink);
 
-    border:1px solid
-        rgba(201,160,93,.35);
+    border:1px solid rgba(201,160,93,.35);
 
     transition:.3s;
 }
 
-.recommendation-card:hover{
-    transform:
-        translateY(-6px)
-        rotate(-.5deg);
+.recommendation-card::before{
+    content:"";
+    position:absolute;
+    inset:10px;
+
+    border:1px solid rgba(100,60,45,.18);
 }
 
-.recommendation-card span{
+.recommendation-card:hover{
+    transform:translateY(-7px) rotate(-.5deg);
+}
+
+.recommendation-number{
     color:#762638;
 
-    font-size:22px;
+    font-family:"DM Serif Display",serif;
+    font-size:18px;
 }
 
 .recommendation-card h3{
-    margin:15px 0 8px;
+    margin:18px 0 10px;
 
     font-family:"DM Serif Display",serif;
-
-    font-size:25px;
-
+    font-size:27px;
     font-weight:400;
 }
 
@@ -1624,22 +1165,21 @@ function spinRoulette() {
     color:#624e43;
 
     font-size:11px;
-
-    line-height:1.7;
+    line-height:1.8;
 }
 
-/* =========================================================
+
+/* =====================================================
    FAQ
-========================================================= */
+===================================================== */
 
 .faq-container{
     max-width:850px;
-
     margin:auto;
 }
 
 .faq-item{
-    margin-bottom:12px;
+    margin-bottom:14px;
 
     border:1px solid var(--line);
 
@@ -1647,58 +1187,49 @@ function spinRoulette() {
 }
 
 .faq-item summary{
-    padding:20px;
+    padding:22px;
 
     cursor:pointer;
-
     list-style:none;
 
     font-family:"Cormorant Garamond",serif;
-
-    font-size:21px;
+    font-size:22px;
 }
 
 .faq-item summary::after{
     content:"+";
-
     float:right;
-
     color:var(--gold);
 }
 
-.faq-item[open]
-summary::after{
+.faq-item[open] summary::after{
     content:"−";
 }
 
 .faq-answer{
-    padding:
-        0 20px 20px;
+    padding:0 22px 22px;
 
-    color:#a49689;
+    color:var(--muted);
 
     font-size:11px;
-
-    line-height:1.8;
+    line-height:1.9;
 }
 
-/* =========================================================
+
+/* =====================================================
    ABOUT
-========================================================= */
+===================================================== */
 
 .about{
     max-width:850px;
-
     margin:auto;
 
     min-height:65vh;
 
     display:flex;
-
     flex-direction:column;
 
     justify-content:center;
-
     align-items:center;
 
     text-align:center;
@@ -1709,134 +1240,135 @@ summary::after{
 
     font-family:"DM Serif Display",serif;
 
-    font-size:
-        clamp(
-            60px,
-            9vw,
-            100px
-        );
+    font-size:clamp(60px,9vw,105px);
 
     line-height:.8;
-
     font-weight:400;
 }
 
 .about h2 em{
     color:var(--gold);
-
     font-family:"Great Vibes",cursive;
 }
 
 .about p{
     max-width:650px;
 
-    color:#a99b8e;
+    color:var(--muted);
 
     font-size:13px;
-
     line-height:1.9;
 }
 
-/* =========================================================
+
+/* =====================================================
    CONTACT
-========================================================= */
+===================================================== */
 
 .contact-box{
     max-width:750px;
 
     margin:auto;
 
-    padding:45px 30px;
+    padding:55px 35px;
 
     text-align:center;
 
-    border:1px solid var(--line);
-
     background:#140d0f;
+
+    border:1px solid var(--line);
+}
+
+.contact-seal{
+    width:55px;
+    height:55px;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    border:1px solid var(--gold);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--gold);
+
+    font-family:"DM Serif Display",serif;
 }
 
 .contact-box h2{
     margin:15px 0;
 
     font-family:"DM Serif Display",serif;
-
-    font-size:50px;
-
+    font-size:52px;
     font-weight:400;
 }
 
 .contact-box p{
-    color:#9e9187;
+    color:var(--muted);
 
     font-size:12px;
-
-    line-height:1.8;
+    line-height:1.9;
 }
 
-/* =========================================================
+
+/* =====================================================
    FOOTER
-========================================================= */
+===================================================== */
 
 footer{
     margin-top:70px;
 
-    padding:
-        45px 7% 30px;
+    padding:50px 7% 30px;
 
     border-top:1px solid var(--line);
 
-    background:#090607;
+    background:#080506;
+
+    position:relative;
+    z-index:2;
 }
 
 .footer-grid{
     max-width:1100px;
-
     margin:auto;
 
     display:grid;
-
-    grid-template-columns:
-        1.3fr 1fr 1fr;
-
-    gap:40px;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:45px;
 }
 
 .footer-title{
     font-family:"DM Serif Display",serif;
-
-    font-size:27px;
+    font-size:28px;
 }
 
 .footer-title span{
     color:var(--gold);
-
     font-family:"Great Vibes",cursive;
-
-    font-size:30px;
+    font-size:34px;
 }
 
 footer p{
     color:#82766d;
 
     font-size:10px;
-
-    line-height:1.8;
+    line-height:1.9;
 
     margin-top:12px;
 }
 
 .footer-links{
     display:flex;
-
     flex-direction:column;
-
     gap:10px;
 }
 
 .footer-links button{
     background:none;
-
-    border:0;
+    border:none;
 
     text-align:left;
 
@@ -1845,8 +1377,9 @@ footer p{
     cursor:pointer;
 
     font-family:"Poppins",sans-serif;
-
     font-size:10px;
+
+    transition:.3s;
 }
 
 .footer-links button:hover{
@@ -1856,24 +1389,22 @@ footer p{
 .copyright{
     max-width:1100px;
 
-    margin:35px auto 0;
+    margin:40px auto 0;
 
     padding-top:20px;
 
-    border-top:
-        1px solid
-        rgba(201,160,93,.12);
+    border-top:1px solid rgba(201,160,93,.12);
 
     text-align:center;
 
     color:#5d534e;
-
     font-size:8px;
 }
 
-/* =========================================================
+
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media(max-width:900px){
 
@@ -1883,18 +1414,14 @@ footer p{
 
     .hero{
         grid-template-columns:1fr;
-        gap:45px;
+        gap:55px;
     }
 
     .vintage-menu{
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .option-grid{
-        grid-template-columns:1fr;
-    }
-
+    .option-grid,
     .recommendation-grid{
         grid-template-columns:1fr;
     }
@@ -1904,24 +1431,19 @@ footer p{
 @media(max-width:600px){
 
     .navbar{
-        height:64px;
+        height:65px;
     }
 
     .logo{
         font-size:24px;
     }
 
-    .logo span{
-        font-size:29px;
-    }
-
     .page-section{
-        padding:
-            90px 5% 60px;
+        padding:95px 5% 60px;
     }
 
     .hero h1{
-        font-size:65px;
+        font-size:68px;
     }
 
     .vintage-menu{
@@ -1939,7 +1461,7 @@ footer p{
     .form-card,
     .vote-box,
     .center-box{
-        padding:25px 18px;
+        padding:28px 20px;
     }
 
     .footer-grid{
@@ -1948,1653 +1470,302 @@ footer p{
 
 }
 
-/* =========================================================
-   HIDE SUB INTERFACES
-========================================================= */
-
-#homeMenu{
-    display:block;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- =====================================================
-     VINTAGE DECOR
-===================================================== -->
-
-<div class="rose rose1">🌹</div>
-<div class="rose rose2">🌹</div>
-<div class="rose rose3">🥀</div>
-<div class="rose rose4">🌹</div>
-
-<div class="petal petal1">✿</div>
-<div class="petal petal2">✧</div>
-<div class="petal petal3">♡</div>
-
-
-<!-- =====================================================
+</style></head><body><!-- VINTAGE BACKGROUND DECORATIONS --><div class="decor corner corner-left"></div>
+<div class="decor corner corner-right"></div><div class="vintage-circle circle-one"></div>
+<div class="vintage-circle circle-two"></div><!-- =====================================================
      NAVBAR
-===================================================== -->
+===================================================== --><nav class="navbar"><div class="logo">
+    PLOT<span>twisted.</span>
+</div>
 
-<nav class="navbar">
+<div class="nav-links">
 
-    <div class="logo">
-        PLOT<span>twisted.</span>
-    </div>
+    <button class="nav-button" data-slide="home">HOME</button>
+    <button class="nav-button" data-slide="community">COMMUNITY</button>
+    <button class="nav-button" data-slide="roulette">ROULETTE</button>
+    <button class="nav-button" data-slide="recommendations">RECOMMENDATIONS</button>
+    <button class="nav-button" data-slide="about">ABOUT</button>
+    <button class="nav-button" data-slide="faq">FAQ</button>
+    <button class="nav-button" data-slide="contact">CONTACT</button>
 
-    <div class="nav-links">
+</div>
 
-        <button
-            class="nav-button"
-            data-slide="home">
-            HOME
-        </button>
+<button class="archive-button" type="button" onclick="showPage('home')">
+    P
+</button>
 
-        <button
-            class="nav-button"
-            data-slide="community">
-            COMMUNITY
-        </button>
-
-        <button
-            class="nav-button"
-            data-slide="roulette">
-            ROULETTE
-        </button>
-
-        <button
-            class="nav-button"
-            data-slide="recommendations">
-            RECOMMENDATIONS
-        </button>
-
-        <button
-            class="nav-button"
-            data-slide="about">
-            ABOUT
-        </button>
-
-        <button
-            class="nav-button"
-            data-slide="faq">
-            FAQ
-        </button>
-
-        <button
-            class="nav-button"
-            data-slide="contact">
-            CONTACT
-        </button>
-
-    </div>
-
-    <button
-        class="moon"
-        type="button">
-        ☾
-    </button>
-
-</nav>
-
-
-<!-- =====================================================
+</nav><!-- =====================================================
      HOME
-===================================================== -->
-
-<section
-    id="home"
-    class="page-section active-section">
-
-    <div class="home-wrap">
-
-        <div class="hero">
-
-            <div class="hero-content">
-
-                <p class="eyebrow">
-                    ✦ ANONYMOUS • HONEST • REAL ✦
-                </p>
-
-                <h1>
-                    Every story<br>
-                    has a <em>twist.</em>
-                </h1>
-
-                <p class="hero-text">
-
-                    Welcome to a little corner of secrets,
-                    feelings, letters, confessions and
-                    unexpected plot twists.
-
-                    <br><br>
-
-                    Write what you cannot say.
-                    Read what someone else couldn't say.
-
-                </p>
-
-                <div class="hero-actions">
-
-                    <button
-                        class="primary-btn"
-                        onclick="openInterface('storyMenu')">
-
-                        ✎ OPEN THE LETTER
-
-                    </button>
-
-                    <button
-                        class="secondary-btn"
-                        onclick="showPage('community')">
-
-                        ✦ READ STORIES
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- VINTAGE LETTER -->
-
-            <div class="letter">
-
-                <div class="letter-top">
-
-                    <span>
-                        PLOTTWISTED ARCHIVES
-                    </span>
-
-                    <span>
-                        2026
-                    </span>
-
-                </div>
-
-                <h2>
-                    Dear Stranger,
-                </h2>
-
-                <p>
-                    Maybe you came here because
-                    there are words you don't know
-                    where to put.
-                </p>
-
-                <br>
-
-                <p>
-                    So leave them here.
-                    Let them become part of
-                    someone else's story.
-                </p>
-
-                <div class="signature">
-                    — PlotTwisted
-                </div>
-
-                <div class="wax">
-                    ✦
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             MAIN INTERFACE
-        ================================================= -->
-
-        <div
-            id="storyMenu"
-            class="sub-interface active">
-
-            <div class="interface-title">
-
-                <p class="eyebrow">
-                    ✦ OPEN THE ARCHIVES ✦
-                </p>
-
-                <h2>
-                    Choose your <span>chapter.</span>
-                </h2>
-
-                <p>
-                    Every button opens another little
-                    corner of the PlotTwisted archive.
-                </p>
-
-            </div>
-
-
-            <div class="vintage-menu">
-
-                <div
-                    class="menu-card"
-                    onclick="openInterface('feelingsMenu')">
-
-                    <span class="menu-icon">
-                        ♡
-                    </span>
-
-                    <h3>
-                        Feelings
-                    </h3>
-
-                    <p>
-                        Confessions, hugots,
-                        and words from the heart.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="menu-card"
-                    onclick="openInterface('lettersMenu')">
-
-                    <span class="menu-icon">
-                        ✉
-                    </span>
-
-                    <h3>
-                        Letters
-                    </h3>
-
-                    <p>
-                        Messages that were
-                        never sent.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="menu-card"
-                    onclick="openInterface('mysteryMenu')">
-
-                    <span class="menu-icon">
-                        ?
-                    </span>
-
-                    <h3>
-                        Mysteries
-                    </h3>
-
-                    <p>
-                        Signs, delusions,
-                        and uncertain stories.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="menu-card"
-                    onclick="openInterface('twistMenu')">
-
-                    <span class="menu-icon">
-                        ✦
-                    </span>
-
-                    <h3>
-                        Plot Twists
-                    </h3>
-
-                    <p>
-                        Spin the roulette
-                        and see what happens.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="menu-card"
-                    onclick="showPage('recommendations')">
-
-                    <span class="menu-icon">
-                        ❧
-                    </span>
-
-                    <h3>
-                        Little Things
-                    </h3>
-
-                    <p>
-                        Recommendations,
-                        thoughts and reminders.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             FEELINGS MENU
-        ================================================= -->
-
-        <div
-            id="feelingsMenu"
-            class="sub-interface">
-
-            <button
-                class="back-button"
-                onclick="openInterface('storyMenu')">
-
-                ← Back to Archives
-
-            </button>
-
-            <div class="interface-title">
-
-                <p class="eyebrow">
-                    THE FEELINGS DEPARTMENT
-                </p>
-
-                <h2>
-                    What is on your <span>heart?</span>
-                </h2>
-
-            </div>
-
-            <div class="option-grid">
-
-                <div
-                    class="option-card"
-                    onclick="showPage('confessions')">
-
-                    <span>♡</span>
-
-                    <h3>
-                        Confessions
-                    </h3>
-
-                    <p>
-                        Say the thing you've
-                        been keeping inside.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('hugot')">
-
-                    <span>✦</span>
-
-                    <h3>
-                        Hugot Corner
-                    </h3>
-
-                    <p>
-                        One line.
-                        A thousand feelings.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('community')">
-
-                    <span>❧</span>
-
-                    <h3>
-                        Read Others
-                    </h3>
-
-                    <p>
-                        Maybe someone's story
-                        sounds like yours.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             LETTERS MENU
-        ================================================= -->
-
-        <div
-            id="lettersMenu"
-            class="sub-interface">
-
-            <button
-                class="back-button"
-                onclick="openInterface('storyMenu')">
-
-                ← Back to Archives
-
-            </button>
-
-            <div class="interface-title">
-
-                <p class="eyebrow">
-                    NEVER SENT
-                </p>
-
-                <h2>
-                    Letters that stayed in the <span>drafts.</span>
-                </h2>
-
-            </div>
-
-            <div class="option-grid">
-
-                <div
-                    class="option-card"
-                    onclick="showPage('unsent')">
-
-                    <span>✉</span>
-
-                    <h3>
-                        Unsent Messages
-                    </h3>
-
-                    <p>
-                        Write the words you
-                        never got to send.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('community')">
-
-                    <span>♡</span>
-
-                    <h3>
-                        Read Letters
-                    </h3>
-
-                    <p>
-                        Open anonymous messages
-                        from the community.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('contact')">
-
-                    <span>✦</span>
-
-                    <h3>
-                        Need Help?
-                    </h3>
-
-                    <p>
-                        Report something
-                        or contact the admin.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             MYSTERY MENU
-        ================================================= -->
-
-        <div
-            id="mysteryMenu"
-            class="sub-interface">
-
-            <button
-                class="back-button"
-                onclick="openInterface('storyMenu')">
-
-                ← Back to Archives
-
-            </button>
-
-            <div class="interface-title">
-
-                <p class="eyebrow">
-                    THE INVESTIGATION
-                </p>
-
-                <h2>
-                    Sign or <span>Delusion?</span>
-                </h2>
-
-                <p>
-                    Sometimes it's a sign.
-                    Sometimes you're just overthinking.
-                </p>
-
-            </div>
-
-            <div class="option-grid">
-
-                <div
-                    class="option-card"
-                    onclick="showPage('signs')">
-
-                    <span>?</span>
-
-                    <h3>
-                        Sign or Delusion
-                    </h3>
-
-                    <p>
-                        Present the case.
-                        Let everyone vote.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('community')">
-
-                    <span>✦</span>
-
-                    <h3>
-                        Community Verdicts
-                    </h3>
-
-                    <p>
-                        See what other people
-                        think about the stories.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('roulette')">
-
-                    <span>⚄</span>
-
-                    <h3>
-                        Random Twist
-                    </h3>
-
-                    <p>
-                        Stop thinking.
-                        Let fate decide.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             PLOT TWIST MENU
-        ================================================= -->
-
-        <div
-            id="twistMenu"
-            class="sub-interface">
-
-            <button
-                class="back-button"
-                onclick="openInterface('storyMenu')">
-
-                ← Back to Archives
-
-            </button>
-
-            <div class="interface-title">
-
-                <p class="eyebrow">
-                    THE UNEXPECTED CHAPTER
-                </p>
-
-                <h2>
-                    Choose your <span>twist.</span>
-                </h2>
-
-            </div>
-
-            <div class="option-grid">
-
-                <div
-                    class="option-card"
-                    onclick="showPage('roulette')">
-
-                    <span>⚄</span>
-
-                    <h3>
-                        Plot Twist Roulette
-                    </h3>
-
-                    <p>
-                        Spin the wheel and
-                        receive a random scenario.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('hugot')">
-
-                    <span>✦</span>
-
-                    <h3>
-                        Random Hugot
-                    </h3>
-
-                    <p>
-                        Enter the feelings
-                        department.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="option-card"
-                    onclick="showPage('community')">
-
-                    <span>♡</span>
-
-                    <h3>
-                        Other Stories
-                    </h3>
-
-                    <p>
-                        You never know what
-                        story you'll find next.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     COMMUNITY
-===================================================== -->
-
-<section
-    id="community"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            THE COMMUNITY
-        </p>
-
-        <h2>
-            Everyone's Stories.
-        </h2>
-
-        <p>
-            Anonymous stories shared by the PlotTwisted community.
-        </p>
-
-    </div>
-
-
-    <div class="feed-title">
-        <h3>Confessions</h3>
-        <span>PUBLIC</span>
-    </div>
-
-    <div
-        id="communityConfessions"
-        class="post-grid">
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                Your community confessions
-                will appear here.
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="feed-title">
-        <h3>Hugots</h3>
-        <span>PUBLIC</span>
-    </div>
-
-    <div
-        id="communityHugots"
-        class="post-grid">
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                Your community hugots
-                will appear here.
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="feed-title">
-        <h3>Unsent Messages</h3>
-        <span>PUBLIC</span>
-    </div>
-
-    <div
-        id="communityUnsent"
-        class="post-grid">
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                Anonymous unsent messages
-                will appear here.
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CONFESSIONS
-===================================================== -->
-
-<section
-    id="confessions"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            ANONYMOUS CORNER
-        </p>
-
-        <h2>
-            Confessions.
-        </h2>
-
-        <p>
-            Say it without revealing who you are.
-        </p>
-
-    </div>
-
-
-    <div class="form-card">
-
-        <label class="form-label">
-            Dear Stranger...
-        </label>
-
-        <form id="confessionForm">
-
-            <textarea
-                id="confessionInput"
-                maxlength="500"
-                placeholder="Write your anonymous confession..."
-                required></textarea>
-
-            <button
-                class="post-button"
-                type="submit">
-
-                ♡ SEAL THIS CONFESSION
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="feed-title">
-        <h3>Public Stories</h3>
-        <span>EVERYONE CAN SEE</span>
-    </div>
-
-    <div
-        id="confessionList"
-        class="post-grid">
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     HUGOT
-===================================================== -->
-
-<section
-    id="hugot"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            FEELINGS DEPARTMENT
-        </p>
-
-        <h2>
-            Hugot Corner.
-        </h2>
-
-        <p>
-            Leave a line. Maybe someone needs it.
-        </p>
-
-    </div>
-
-
-    <div class="form-card">
-
-        <label class="form-label">
-            Dear Heart...
-        </label>
-
-        <form id="hugotForm">
-
-            <textarea
-                id="hugotInput"
-                maxlength="400"
-                placeholder="Write your hugot..."
-                required></textarea>
-
-            <button
-                class="post-button"
-                type="submit">
-
-                ✦ SEND THIS HUGOT
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="feed-title">
-        <h3>Community Hugots</h3>
-        <span>PUBLIC</span>
-    </div>
-
-    <div
-        id="hugotList"
-        class="post-grid">
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SIGN OR DELUSION
-===================================================== -->
-
-<section
-    id="signs"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            CASE FILE
-        </p>
-
-        <h2>
-            Sign or Delusion?
-        </h2>
-
-        <p>
-            You decide the verdict.
-        </p>
-
-    </div>
-
-
-    <div class="vote-box">
-
-        <span class="eyebrow">
-            CASE #001
-        </span>
-
-        <h3>
-
-            They always find a reason
-            to talk to you.
-
-            <br><br>
-
-            Is that a sign?
-
-        </h3>
-
-
-        <div class="vote-buttons">
-
-            <button type="button" class="sign-vote" data-choice="sign">
-    ✦
-    <br>
-    DEFINITELY A SIGN
-</button>
-
-<button type="button" class="sign-vote" data-choice="maybe">
-    ?
-    <br>
-    MAYBE
-</button>
-
-<button type="button" class="sign-vote" data-choice="delulu">
-    ♡
-    <br>
-    YOU'RE DELULU
-</button>
-
-        </div>
-
-
-        <div class="results">
-
-            <div class="result">
-
-                <span>Sign</span>
-
-                <div class="bar">
-                    <div
-                        id="signBar"
-                        style="width:62%">
-                    </div>
-                </div>
-
-                <strong id="signPercent">
-                    62%
-                </strong>
-
-            </div>
-
-
-            <div class="result">
-
-                <span>Maybe</span>
-
-                <div class="bar">
-                    <div
-                        id="maybeBar"
-                        style="width:25%">
-                    </div>
-                </div>
-
-                <strong id="maybePercent">
-                    25%
-                </strong>
-
-            </div>
-
-
-            <div class="result">
-
-                <span>Delulu</span>
-
-                <div class="bar">
-                    <div
-                        id="deluluBar"
-                        style="width:13%">
-                    </div>
-                </div>
-
-                <strong id="deluluPercent">
-                    13%
-                </strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ROULETTE
-===================================================== -->
-
-<section
-    id="roulette"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            SPIN THE STORY
-        </p>
-
-        <h2>
-            Plot Twist Roulette.
-        </h2>
-
-        <p>
-            Let fate give you a twist.
-        </p>
-
-    </div>
-
-
-    <div class="center-box">
-
-        <div id="rouletteIcon">
-            ✧
-        </div>
-
-        <p
-            id="rouletteText"
-            class="hugot-display">
-
-            “Someone secretly likes
-            their best friend.”
-
-        </p>
-
-        <button
-            class="post-button"
-            type="button"
-            onclick="spinRoulette()">
-
-            ✧ SPIN THE PLOT
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     UNSENT
-===================================================== -->
-
-<section
-    id="unsent"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            NEVER SENT
-        </p>
-
-        <h2>
-            Unsent Messages.
-        </h2>
-
-        <p>
-            For the words that stayed in your drafts.
-        </p>
-
-    </div>
-
-
-    <div class="form-card">
-
-        <label class="form-label">
-            Dear You...
-        </label>
-
-        <form id="unsentForm">
-
-            <textarea
-                id="unsentInput"
-                maxlength="500"
-                placeholder="Write what you never sent..."
-                required></textarea>
-
-            <button
-                class="post-button"
-                type="submit">
-
-                ✉ SEND TO THE VOID
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <div class="feed-title">
-
-        <h3>
-            Anonymous Messages
-        </h3>
-
-        <span>
-            PUBLIC
-        </span>
-
-    </div>
-
-
-    <div
-        id="unsentList"
-        class="post-grid">
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     RECOMMENDATIONS
-===================================================== -->
-
-<section
-    id="recommendations"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            A LITTLE SOMETHING FOR YOU
-        </p>
-
-        <h2>
-            Recommendations.
-        </h2>
-
-        <p>
-            Little reminders for your chapter.
-        </p>
-
-    </div>
-
-
-    <div class="recommendation-grid">
-
-        <article class="recommendation-card">
-
-            <span>♡</span>
-
-            <h3>
-                When You Miss Someone
-            </h3>
-
-            <p>
-                Write the message,
-                but don't send it.
-                Sometimes writing is enough.
-            </p>
-
-        </article>
-
-
-        <article class="recommendation-card">
-
-            <span>✦</span>
-
-            <h3>
-                Main Character Moment
-            </h3>
-
-            <p>
-                Put your phone down,
-                listen to your favorite song,
-                and enjoy your own story.
-            </p>
-
-        </article>
-
-
-        <article class="recommendation-card">
-
-            <span>✧</span>
-
-            <h3>
-                Friend Crush?
-            </h3>
-
-            <p>
-                Before overthinking every sign,
-                remember that friendship itself
-                is valuable.
-            </p>
-
-        </article>
-
-
-        <article class="recommendation-card">
-
-            <span>☾</span>
-
-            <h3>
-                Late Night Thoughts
-            </h3>
-
-            <p>
-                Not every thought needs
-                an answer tonight.
-            </p>
-
-        </article>
-
-
-        <article class="recommendation-card">
-
-            <span>✉</span>
-
-            <h3>
-                Unsent Letter
-            </h3>
-
-            <p>
-                Say everything you wanted
-                to say. Keep it private
-                if you want.
-            </p>
-
-        </article>
-
-
-        <article class="recommendation-card">
-
-            <span>?</span>
-
-            <h3>
-                Plot Twist
-            </h3>
-
-            <p>
-                Sometimes the story becomes
-                better when it doesn't go
-                according to plan.
-            </p>
-
-        </article>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FAQ
-===================================================== -->
-
-<section
-    id="faq"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            QUESTIONS & ANSWERS
-        </p>
-
-        <h2>
-            FAQ.
-        </h2>
-
-        <p>
-            Everything you need to know.
-        </p>
-
-    </div>
-
-
-    <div class="faq-container">
-
-        <details class="faq-item">
-
-            <summary>
-                Is PlotTwisted anonymous?
-            </summary>
-
-            <div class="faq-answer">
-                Yes. Posts are designed to be shared
-                without displaying the poster's name.
-            </div>
-
-        </details>
-
-
-        <details class="faq-item">
-
-            <summary>
-                Can everyone see my confession?
-            </summary>
-
-            <div class="faq-answer">
-                Posts submitted to the public community
-                feed can be viewed by other visitors.
-            </div>
-
-        </details>
-
-
-        <details class="faq-item">
-
-            <summary>
-                Can I post a hugot?
-            </summary>
-
-            <div class="faq-answer">
-                Yes. Go to Hugot Corner,
-                write your message, and post it.
-            </div>
-
-        </details>
-
-
-        <details class="faq-item">
-
-            <summary>
-                How does Sign or Delusion work?
-            </summary>
-
-            <div class="faq-answer">
-                Read the situation and choose
-                Sign, Maybe, or Delulu.
-            </div>
-
-        </details>
-
-
-        <details class="faq-item">
-
-            <summary>
-                Is the roulette random?
-            </summary>
-
-            <div class="faq-answer">
-                Yes. The roulette chooses a random
-                entry from the PlotTwisted collection.
-            </div>
-
-        </details>
-
-
-        <details class="faq-item">
-
-            <summary>
-                What can I write?
-            </summary>
-
-            <div class="faq-answer">
-                Keep your posts respectful and avoid
-                sharing private information.
-            </div>
-
-        </details>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ABOUT
-===================================================== -->
-
-<section
-    id="about"
-    class="page-section">
-
-    <div class="about">
-
-        <p class="eyebrow">
-            BEHIND THE PLOT
-        </p>
-
-        <h2>
-            About<br>
-            <em>PlotTwisted.</em>
-        </h2>
-
-        <p>
-            PlotTwisted is an anonymous community where
-            people can share confessions, hugots,
-            unsent messages, and unexpected stories
-            without revealing their identity.
-        </p>
-
-        <br>
-
-        <p>
-            No names. No judgment. Just stories.
-        </p>
-
-        <br>
-
-        <p style="color:var(--gold);">
-            Your story. Your secret. Your plot twist.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     CONTACT
-===================================================== -->
-
-<section
-    id="contact"
-    class="page-section">
-
-    <div class="section-heading">
-
-        <p class="eyebrow">
-            REACH OUT
-        </p>
-
-        <h2>
-            Contact.
-        </h2>
-
-        <p>
-            Have a concern about the community?
-        </p>
-
-    </div>
-
-
-    <div class="contact-box">
-
-        <div style="
-            font-size:45px;
-            color:var(--gold);
-        ">
-            ✉
-        </div>
-
-        <h2>
-            Send a Message
-        </h2>
-
-        <p>
-            If you notice inappropriate content or
-            have a suggestion for PlotTwisted,
-            please contact the website administrator.
-        </p>
-
-        <br>
-
-        <button
-            class="primary-btn"
-            type="button"
-            onclick="alert('Thank you! Please contact the PlotTwisted administrator through your official school/project contact channel.')">
-
-            CONTACT PLOTTWISTED
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-    <div class="footer-grid">
-
-        <div>
-
-            <div class="footer-title">
-                PLOT<span>twisted.</span>
-            </div>
-
-            <p>
-                A little corner for stories,
-                secrets, feelings and unexpected
-                plot twists.
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p style="color:var(--cream);">
-                A SAFE SPACE
-            </p>
-
-            <p>
-                No names.<br>
-                No judgment.<br>
-                Just stories.
-            </p>
-
-        </div>
-
-
-        <div>
-
-            <p style="color:var(--cream);">
-                QUICK LINKS
-            </p>
-
-            <div class="footer-links">
-
-                <button
-                    onclick="showPage('community')">
-                    Community Feed
-                </button>
-
-                <button
-                    onclick="showPage('roulette')">
-                    Plot Twist Roulette
-                </button>
-
-                <button
-                    onclick="showPage('recommendations')">
-                    Recommendations
-                </button>
-
-                <button
-                    onclick="showPage('faq')">
-                    FAQ
-                </button>
-
-                <button
-                    onclick="showPage('contact')">
-                    Report / Contact
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="copyright">
-
-        ✦ © 2026 PlotTwisted.
-        Your story doesn't always go as planned. ✦
-
-    </div>
-
-</footer>
-
-
-<!-- =====================================================
-     INTERFACE / NAVIGATION SCRIPT
-     Firebase script remains separate.
-===================================================== -->
-
-<script>
-
-/* =========================================================
-   SHOW NORMAL PAGE
-========================================================= */
+===================================================== --><section id="home" class="page-section active-section"><div class="home-wrap"><div class="hero"><div class="hero-content"><p class="eyebrow">
+THE ARCHIVE OF UNTOLD STORIES
+</p><h1>
+Every story<br>
+has a <em>twist.</em>
+</h1><p class="hero-text">Welcome to a little archive of secrets, feelings,
+letters, confessions, and unexpected chapters.
+
+<br><br>
+
+Write what you cannot say.
+Read what someone else could not say.
+
+</p><div class="hero-actions"><button class="primary-btn" onclick="openInterface('storyMenu')">
+OPEN THE ARCHIVES
+</button><button class="secondary-btn" onclick="showPage('community')">
+READ THE STORIES
+</button></div></div><div class="letter"><div class="letter-top">
+<span>PLOTTWISTED ARCHIVES</span>
+<span>VOL. 01</span>
+</div><h2>Dear Stranger,</h2><p>
+Maybe you came here because there are words
+you don't know where to put.
+</p><br><p>
+Leave them here.
+Perhaps they will become part of
+someone else's story.
+</p><div class="signature">
+— PlotTwisted
+</div><div class="wax"></div></div></div><!-- MAIN ARCHIVE MENU --><div id="storyMenu" class="sub-interface active"><div class="interface-title"><p class="eyebrow">OPEN THE ARCHIVES</p><h2>
+Choose your <span>chapter.</span>
+</h2><p>
+Every archive holds another story waiting to be opened.
+</p></div><div class="vintage-menu"><div class="menu-card" onclick="openInterface('feelingsMenu')"><div class="menu-symbol"><span>F</span></div><h3>Feelings</h3><p>
+Confessions, hugots, and words from the heart.
+</p></div><div class="menu-card" onclick="openInterface('lettersMenu')"><div class="menu-symbol"><span>L</span></div><h3>Letters</h3><p>
+Messages that were never sent.
+</p></div><div class="menu-card" onclick="openInterface('mysteryMenu')"><div class="menu-symbol"><span>?</span></div><h3>Mysteries</h3><p>
+Signs, coincidences, and uncertain stories.
+</p></div><div class="menu-card" onclick="openInterface('twistMenu')"><div class="menu-symbol"><span>T</span></div><h3>Twists</h3><p>
+Let fate choose your next chapter.
+</p></div><div class="menu-card" onclick="showPage('recommendations')"><div class="menu-symbol"><span>R</span></div><h3>Little Things</h3><p>
+Reminders for your current chapter.
+</p></div></div></div><!-- FEELINGS --><div id="feelingsMenu" class="sub-interface"><button class="back-button" onclick="openInterface('storyMenu')">
+← Back to Archives
+</button><div class="interface-title"><p class="eyebrow">THE FEELINGS DEPARTMENT</p><h2>
+What is on your <span>heart?</span>
+</h2></div><div class="option-grid"><div class="option-card" onclick="showPage('confessions')"><div class="card-stamp">01</div><h3>Confessions</h3><p>
+Say the thing you've been keeping inside.
+</p></div><div class="option-card" onclick="showPage('hugot')"><div class="card-stamp">02</div><h3>Hugot Corner</h3><p>
+One line. A thousand feelings.
+</p></div><div class="option-card" onclick="showPage('community')"><div class="card-stamp">03</div><h3>Read Others</h3><p>
+Maybe someone's story sounds like yours.
+</p></div></div></div><!-- LETTERS --><div id="lettersMenu" class="sub-interface"><button class="back-button" onclick="openInterface('storyMenu')">
+← Back to Archives
+</button><div class="interface-title"><p class="eyebrow">NEVER SENT</p><h2>
+Letters that stayed in the <span>drafts.</span>
+</h2></div><div class="option-grid"><div class="option-card" onclick="showPage('unsent')"><div class="card-stamp">01</div><h3>Unsent Messages</h3><p>
+Write the words you never got to send.
+</p></div><div class="option-card" onclick="showPage('community')"><div class="card-stamp">02</div><h3>Read Letters</h3><p>
+Open anonymous messages from the community.
+</p></div><div class="option-card" onclick="showPage('contact')"><div class="card-stamp">03</div><h3>Contact</h3><p>
+Report something or contact the administrator.
+</p></div></div></div><!-- MYSTERIES --><div id="mysteryMenu" class="sub-interface"><button class="back-button" onclick="openInterface('storyMenu')">
+← Back to Archives
+</button><div class="interface-title"><p class="eyebrow">THE INVESTIGATION</p><h2>
+Sign or <span>Delusion?</span>
+</h2><p>
+Sometimes it's a sign. Sometimes you're overthinking.
+</p></div><div class="option-grid"><div class="option-card" onclick="showPage('signs')"><div class="card-stamp">?</div><h3>The Verdict</h3><p>
+Present the case and let the community decide.
+</p></div><div class="option-card" onclick="showPage('community')"><div class="card-stamp">02</div><h3>Community</h3><p>
+Read stories and opinions from other visitors.
+</p></div><div class="option-card" onclick="showPage('roulette')"><div class="card-stamp">03</div><h3>Random Twist</h3><p>
+Stop overthinking and let fate decide.
+</p></div></div></div><!-- TWISTS --><div id="twistMenu" class="sub-interface"><button class="back-button" onclick="openInterface('storyMenu')">
+← Back to Archives
+</button><div class="interface-title"><p class="eyebrow">THE UNEXPECTED CHAPTER</p><h2>
+Choose your <span>twist.</span>
+</h2></div><div class="option-grid"><div class="option-card" onclick="showPage('roulette')"><div class="card-stamp">01</div><h3>Roulette</h3><p>
+Receive a random PlotTwisted scenario.
+</p></div><div class="option-card" onclick="showPage('hugot')"><div class="card-stamp">02</div><h3>Random Hugot</h3><p>
+Enter the feelings department.
+</p></div><div class="option-card" onclick="showPage('community')"><div class="card-stamp">03</div><h3>Other Stories</h3><p>
+You never know which story you'll find next.
+</p></div></div></div></div></section><!-- COMMUNITY --><section id="community" class="page-section"><div class="section-heading"><p class="eyebrow">THE COMMUNITY ARCHIVES</p><h2>Everyone's Stories.</h2><p>
+Anonymous stories shared by the PlotTwisted community.
+</p></div><div class="feed-title">
+<h3>Confessions</h3>
+<span>PUBLIC ARCHIVE</span>
+</div><div id="communityConfessions" class="post-grid"><div class="post-card">
+<div class="post-type">PLOTTWISTED</div>
+<div class="post-message">
+Community confessions will appear here.
+</div>
+</div></div><div class="feed-title">
+<h3>Hugots</h3>
+<span>PUBLIC ARCHIVE</span>
+</div><div id="communityHugots" class="post-grid"><div class="post-card">
+<div class="post-type">PLOTTWISTED</div>
+<div class="post-message">
+Community hugots will appear here.
+</div>
+</div></div><div class="feed-title">
+<h3>Unsent Messages</h3>
+<span>PUBLIC ARCHIVE</span>
+</div><div id="communityUnsent" class="post-grid"><div class="post-card">
+<div class="post-type">PLOTTWISTED</div>
+<div class="post-message">
+Anonymous unsent messages will appear here.
+</div>
+</div></div></section><!-- CONFESSIONS --><section id="confessions" class="page-section"><div class="section-heading"><p class="eyebrow">ANONYMOUS CORNER</p><h2>Confessions.</h2><p>Say it without revealing who you are.</p></div><div class="form-card"><label class="form-label">
+Dear Stranger...
+</label><form id="confessionForm"><textarea
+id="confessionInput"
+maxlength="500"
+placeholder="Write your anonymous confession..."
+required></textarea><button class="post-button" type="submit">
+SEAL THIS CONFESSION
+</button></form></div><div class="feed-title"><h3>Public Stories</h3>
+<span>EVERYONE CAN SEE</span></div><div id="confessionList" class="post-grid"></div></section><!-- HUGOT --><section id="hugot" class="page-section"><div class="section-heading"><p class="eyebrow">FEELINGS DEPARTMENT</p><h2>Hugot Corner.</h2><p>Leave a line. Maybe someone needs it.</p></div><div class="form-card"><label class="form-label">
+Dear Heart...
+</label><form id="hugotForm"><textarea
+id="hugotInput"
+maxlength="400"
+placeholder="Write your hugot..."
+required></textarea><button class="post-button" type="submit">
+SEND THIS HUGOT
+</button></form></div><div class="feed-title"><h3>Community Hugots</h3>
+<span>PUBLIC</span></div><div id="hugotList" class="post-grid"></div></section><!-- SIGN OR DELUSION --><section id="signs" class="page-section"><div class="section-heading"><p class="eyebrow">CASE FILE</p><h2>Sign or Delusion?</h2><p>You decide the verdict.</p></div><div class="vote-box"><span class="eyebrow">
+CASE FILE 001
+</span><h3>
+They always find a reason to talk to you.<br><br>
+
+Is that a sign?
+
+</h3><div class="vote-buttons"><button type="button" class="sign-vote" data-choice="sign">
+DEFINITELY A SIGN
+</button><button type="button" class="sign-vote" data-choice="maybe">
+MAYBE
+</button><button type="button" class="sign-vote" data-choice="delulu">
+JUST DELUSION
+</button></div><div class="results"><div class="result"><span>Sign</span>
+
+<div class="bar">
+<div id="signBar" style="width:62%"></div>
+</div><strong id="signPercent">62%</strong>
+
+</div><div class="result"><span>Maybe</span>
+
+<div class="bar">
+<div id="maybeBar" style="width:25%"></div>
+</div><strong id="maybePercent">25%</strong>
+
+</div><div class="result"><span>Delusion</span>
+
+<div class="bar">
+<div id="deluluBar" style="width:13%"></div>
+</div><strong id="deluluPercent">13%</strong>
+
+</div></div></div></section><!-- ROULETTE --><section id="roulette" class="page-section"><div class="section-heading"><p class="eyebrow">SPIN THE STORY</p><h2>Plot Twist Roulette.</h2><p>Let fate give you a twist.</p></div><div class="center-box"><div id="rouletteIcon" class="roulette-wheel">
+PT
+</div><p id="rouletteText" class="hugot-display">
+“Someone secretly likes their best friend.”
+</p><button class="post-button" type="button" onclick="spinRoulette()">
+SPIN THE PLOT
+</button></div></section><!-- UNSENT --><section id="unsent" class="page-section"><div class="section-heading"><p class="eyebrow">NEVER SENT</p><h2>Unsent Messages.</h2><p>For the words that stayed in your drafts.</p></div><div class="form-card"><label class="form-label">
+Dear You...
+</label><form id="unsentForm"><textarea
+id="unsentInput"
+maxlength="500"
+placeholder="Write what you never sent..."
+required></textarea><button class="post-button" type="submit">
+SEND TO THE ARCHIVE
+</button></form></div><div class="feed-title"><h3>Anonymous Messages</h3>
+<span>PUBLIC</span></div><div id="unsentList" class="post-grid"></div></section><!-- RECOMMENDATIONS --><section id="recommendations" class="page-section"><div class="section-heading"><p class="eyebrow">A LITTLE SOMETHING FOR YOU</p><h2>Recommendations.</h2><p>Little reminders for your current chapter.</p></div><div class="recommendation-grid"><article class="recommendation-card"><div class="recommendation-number">01</div><h3>When You Miss Someone</h3><p>
+Write the message, but don't send it.
+Sometimes writing is enough.
+</p></article><article class="recommendation-card"><div class="recommendation-number">02</div><h3>Main Character Moment</h3><p>
+Put your phone down, listen to your favorite song,
+and enjoy your own story.
+</p></article><article class="recommendation-card"><div class="recommendation-number">03</div><h3>Friend Crush?</h3><p>
+Before analyzing every sign,
+remember that friendship itself is valuable.
+</p></article><article class="recommendation-card"><div class="recommendation-number">04</div><h3>Late Night Thoughts</h3><p>
+Not every thought needs an answer tonight.
+</p></article><article class="recommendation-card"><div class="recommendation-number">05</div><h3>Unsent Letter</h3><p>
+Say everything you wanted to say.
+Keep it private if you want.
+</p></article><article class="recommendation-card"><div class="recommendation-number">06</div><h3>Plot Twist</h3><p>
+Sometimes the story becomes better when it
+doesn't go according to plan.
+</p></article></div></section><!-- FAQ --><section id="faq" class="page-section"><div class="section-heading"><p class="eyebrow">QUESTIONS & ANSWERS</p><h2>FAQ.</h2><p>Everything you need to know.</p></div><div class="faq-container"><details class="faq-item"><summary>Is PlotTwisted anonymous?</summary><div class="faq-answer">
+Posts are designed to be shared without displaying the poster's name.
+</div></details><details class="faq-item"><summary>Can everyone see my confession?</summary><div class="faq-answer">
+Posts submitted to the public community feed can be viewed by other visitors.
+</div></details><details class="faq-item"><summary>Can I post a hugot?</summary><div class="faq-answer">
+Yes. Go to Hugot Corner, write your message, and post it.
+</div></details><details class="faq-item"><summary>How does Sign or Delusion work?</summary><div class="faq-answer">
+Read the situation and choose the verdict you believe fits best.
+</div></details><details class="faq-item"><summary>Is the roulette random?</summary><div class="faq-answer">
+Yes. Every spin chooses a random scenario from the PlotTwisted collection.
+</div></details><details class="faq-item"><summary>What can I write?</summary><div class="faq-answer">
+Keep posts respectful and avoid sharing private information about yourself or others.
+</div></details></div></section><!-- ABOUT --><section id="about" class="page-section"><div class="about"><p class="eyebrow">
+BEHIND THE PLOT
+</p><h2>
+About<br>
+<em>PlotTwisted.</em>
+</h2><p>
+PlotTwisted is an anonymous community where people
+can share confessions, hugots, unsent messages,
+and unexpected stories without revealing their identity.
+</p><br><p>
+No names. No judgment. Just stories.
+</p><br><p style="color:var(--gold);">
+Your story. Your secret. Your plot twist.
+</p></div></section><!-- CONTACT --><section id="contact" class="page-section"><div class="section-heading"><p class="eyebrow">REACH OUT</p><h2>Contact.</h2><p>Have a concern about the community?</p></div><div class="contact-box"><div class="contact-seal">
+PT
+</div><h2>Send a Message</h2><p>
+If you notice inappropriate content or have a suggestion
+for PlotTwisted, please contact the website administrator.
+</p><br><button
+class="primary-btn"
+type="button"
+onclick="alert('Thank you! Please contact the PlotTwisted administrator through your official contact channel.')">
+
+CONTACT PLOTTWISTED
+
+</button></div></section><!-- FOOTER --><footer><div class="footer-grid"><div><div class="footer-title">
+PLOT<span>twisted.</span>
+</div><p>
+A little archive for stories, secrets,
+feelings, and unexpected plot twists.
+</p></div><div><p style="color:var(--cream);">
+A SAFE SPACE
+</p><p>
+No names.<br>
+No judgment.<br>
+Just stories.
+</p></div><div><p style="color:var(--cream);">
+QUICK LINKS
+</p><div class="footer-links"><button onclick="showPage('community')">
+Community Feed
+</button><button onclick="showPage('roulette')">
+Plot Twist Roulette
+</button><button onclick="showPage('recommendations')">
+Recommendations
+</button><button onclick="showPage('faq')">
+FAQ
+</button><button onclick="showPage('contact')">
+Report / Contact
+</button></div></div></div><div class="copyright">© 2026 PLOTTWISTED ARCHIVES — EVERY STORY HAS A TWIST.
+
+</div></footer><!-- =====================================================
+     WEBSITE NAVIGATION
+===================================================== --><script>
 
 function showPage(id){
 
-    document
-        .querySelectorAll(".page-section")
-        .forEach(section => {
+    document.querySelectorAll(".page-section")
+    .forEach(section=>{
+        section.classList.remove("active-section");
+    });
 
-            section.classList.remove(
-                "active-section"
-            );
-
-        });
-
-    const target =
-        document.getElementById(id);
+    const target=document.getElementById(id);
 
     if(target){
 
-        target.classList.add(
-            "active-section"
-        );
+        target.classList.add("active-section");
 
         window.scrollTo({
             top:0,
@@ -3602,247 +1773,137 @@ function showPage(id){
         });
 
     }
+
 }
 
-
-/* =========================================================
-   OPEN HOME INTERFACE
-========================================================= */
 
 function openInterface(id){
 
     showPage("home");
 
-    document
-        .querySelectorAll(".sub-interface")
-        .forEach(item => {
+    document.querySelectorAll(".sub-interface")
+    .forEach(item=>{
+        item.classList.remove("active");
+    });
 
-            item.classList.remove("active");
-
-        });
-
-    const target =
-        document.getElementById(id);
+    const target=document.getElementById(id);
 
     if(target){
 
         target.classList.add("active");
 
-        target.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-        });
+        setTimeout(()=>{
+            target.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+        },100);
 
     }
 
 }
 
 
-/* =========================================================
-   NAVBAR BUTTONS
-========================================================= */
+/* NAVIGATION */
 
-document
-    .querySelectorAll("[data-slide]")
-    .forEach(button => {
+document.querySelectorAll("[data-slide]")
+.forEach(button=>{
 
-        button.addEventListener(
-            "click",
-            function(){
+    button.addEventListener("click",function(){
 
-                const page =
-                    this.dataset.slide;
-
-                showPage(page);
-
-            }
-        );
+        showPage(this.dataset.slide);
 
     });
 
-
-/* =========================================================
-   MOON BUTTON
-========================================================= */
-
-const moon =
-    document.querySelector(".moon");
-
-if(moon){
-
-    moon.addEventListener(
-        "click",
-        function(){
-
-            document.body.classList.toggle(
-                "moon-mode"
-            );
-
-        }
-    );
-
-}
+});
 
 
-/* =========================================================
-   ROULETTE
-========================================================= */
+/* =====================================================
+   PLOT TWIST ROULETTE
+===================================================== */
+
+const plotTwists=[
+
+"Your friend might secretly like you too.",
+"Your friend remembers the smallest things you tell them.",
+"They always find a reason to continue the conversation.",
+"They may be waiting for you to notice.",
+"You catch them looking at you.",
+"They save you a seat.",
+"They wait for you before leaving.",
+"You reread their message way too many times.",
+"One simple conversation becomes a core memory.",
+"Someone unexpectedly reveals a secret.",
+"A friendship slowly starts feeling different.",
+"You realize they are your favorite notification.",
+"You suddenly see someone differently.",
+"Your story isn't finished yet.",
+"Maybe the signs were real after all.",
+"Maybe friendship was only the beginning.",
+"You accidentally reveal your feelings.",
+"Someone asks if you like them.",
+"You finally find the courage to say something.",
+"A coincidence makes you question everything.",
+"The person you least expected becomes important to you.",
+"Someone remembers something you thought they forgot.",
+"Your next conversation may change everything.",
+"Maybe your biggest plot twist is already beside you.",
+"You don't know if it's a sign or wishful thinking.",
+"Your heart says yes, but your logic says wait.",
+"Maybe the answer isn't yes or no yet.",
+"Your friendship may be turning into something unexpected.",
+"Maybe your story needs one more chapter.",
+"Sometimes the best stories begin unexpectedly."
+
+];
+
 
 function spinRoulette(){
 
-    const stories = [
-
-        "Someone secretly likes their best friend.",
-
-        "The person you stopped talking to still remembers you.",
-
-        "Your crush may be waiting for you to make the first move.",
-
-        "A random conversation could become an important memory.",
-
-        "The person you least expected may become part of your story.",
-
-        "Someone is probably overthinking the same conversation you are.",
-
-        "Your next plot twist might come from an unexpected friendship.",
-
-        "Sometimes the ending you wanted isn't the ending you needed.",
-
-        "Someone remembers a small thing you thought they forgot.",
-
-        "A chapter can end without meaning the whole story is over."
-
-    ];
-
-    const icon =
-        document.getElementById(
-            "rouletteIcon"
-        );
-
-    const text =
-        document.getElementById(
-            "rouletteText"
-        );
+    const text=document.getElementById("rouletteText");
+    const icon=document.getElementById("rouletteIcon");
 
     if(!text) return;
 
-    let count = 0;
+    text.style.opacity="0";
+    text.style.transform="translateY(10px)";
 
-    const interval =
-        setInterval(() => {
+    if(icon){
+        icon.style.transform="rotate(720deg)";
+    }
 
-            const random =
-                stories[
-                    Math.floor(
-                        Math.random()
-                        * stories.length
-                    )
-                ];
+    setTimeout(()=>{
 
-            text.textContent =
-                "“" + random + "”";
+        const randomIndex=Math.floor(
+            Math.random()*plotTwists.length
+        );
 
-            if(icon){
+        text.textContent=
+        "“"+plotTwists[randomIndex]+"”";
 
-                icon.style.transform =
-                    "rotate(" +
-                    (count * 45) +
-                    "deg)";
+        text.style.transition="all .4s ease";
+        text.style.opacity="1";
+        text.style.transform="translateY(0)";
 
-            }
+        if(icon){
+            icon.style.transform="rotate(0deg)";
+        }
 
-            count++;
-
-            if(count >= 12){
-
-                clearInterval(interval);
-
-            }
-
-        },120);
+    },700);
 
 }
-   // =====================================================
-// LIKE POST
-// =====================================================
-
-async function likePost(id, button, currentLikes) {
-
-    try {
-
-        const postRef = doc(
-            db,
-            POSTS_COLLECTION,
-            id
-        );
 
 
-        button.disabled = true;
+/* START HOME */
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-        await updateDoc(
-            postRef,
-            {
-                likes: increment(1)
-            }
-        );
+    document.getElementById("storyMenu")
+    .classList.add("active");
 
+});
 
-        const newLikes =
-            Number(currentLikes) + 1;
-
-
-        button.textContent =
-            `♡ ${newLikes}`;
-
-
-        button.classList.add("liked");
-
-
-    } catch (error) {
-
-        console.error("LIKE ERROR:", error);
-
-        alert(
-            "Like failed. Check your Firebase Firestore Rules."
-        );
-
-
-        button.disabled = false;
-
-
-        button.textContent =
-            `♡ ${currentLikes}`;
-
-    }
-
-           }
-
-
-/* =========================================================
-   START HOME ARCHIVE
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        openInterface("storyMenu");
-
-    }
-);
-
-</script>
-
-
-<!-- =====================================================
-     FIREBASE / MAIN SCRIPT
-===================================================== -->
-
-<script
-    type="module"
-    src="./script.js">
-</script>
-
-</body>
+</script><!-- =====================================================
+     FIREBASE SCRIPT
+===================================================== --><script type="module" src="./script.js"></script></body>
    </html>
