@@ -1,146 +1,5 @@
 // =====================================================
-// PLOTTWISTED — FINAL FIRESTORE SCRIPT
-// GitHub Pages + Firebase Firestore
-// =====================================================
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    orderBy,
-    serverTimestamp,
-    doc,
-    updateDoc,
-    increment
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-// =====================================================
-// FIREBASE CONFIG
-// =====================================================
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCJ59V5ioK4DWpM_jYFy7NMMPPgjiHNeAE",
-    authDomain: "plottwisted-c5551.firebaseapp.com",
-    databaseURL: "https://plottwisted-c5551-default-rtdb.firebaseio.com",
-    projectId: "plottwisted-c5551",
-    storageBucket: "plottwisted-c5551.firebasestorage.app",
-    messagingSenderId: "797105645748",
-    appId: "1:797105645748:web:e410591f49c41b8a7f4fe1",
-    measurementId: "G-V5DBX6TKK2"
-};
-
-
-// =====================================================
-// INITIALIZE FIREBASE
-// =====================================================
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-// =====================================================
-// COLLECTION NAMES
-// =====================================================
-
-const COLLECTIONS = {
-    confessions: "confessions",
-    hugots: "hugots",
-    unsent: "unsentMessages"
-};
-
-
-// =====================================================
-// SAFE DATE FORMAT
-// =====================================================
-
-function formatDate(timestamp) {
-
-    if (!timestamp) {
-        return "Just now";
-    }
-
-    try {
-
-        const date =
-            timestamp.toDate
-                ? timestamp.toDate()
-                : new Date(timestamp);
-
-        return date.toLocaleString("en-PH", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        });
-
-    } catch (error) {
-
-        return "Recently";
-
-    }
-}
-
-
-// =====================================================
-// ESCAPE HTML
-// Prevents user-submitted HTML from being rendered
-// =====================================================
-
-function escapeHTML(value) {
-
-    const div = document.createElement("div");
-
-    div.textContent =
-        value == null ? "" : String(value);
-
-    return div.innerHTML;
-}
-
-
-// =====================================================
-// GET TEXT FROM FIRESTORE
-// Supports different field names from older posts
-// =====================================================
-
-function getPostText(data) {
-
-    return (
-        data.text ??
-        data.message ??
-        data.content ??
-        data.confession ??
-        data.hugot ??
-        data.body ??
-        ""
-    );
-
-}
-
-
-// =====================================================
-// GET LIKES
-// =====================================================
-
-function getLikes(data) {
-
-    const likes =
-        Number(data.likes ?? 0);
-
-    return Number.isFinite(likes)
-        ? likes
-        : 0;
-
-}
-
-
-// =====================================================
-// CREATE POST CARD
+// CREATE AESTHETIC VICTORIAN ARCHIVE RECORD
 // =====================================================
 
 function createPostCard(
@@ -157,51 +16,143 @@ function createPostCard(
         getLikes(data);
 
     const card =
-        document.createElement("div");
+        document.createElement("article");
 
     card.className =
-        "post-card";
+        "post-card archive-record";
+
+    // Generate a display-only archive number.
+    // This does NOT change the Firestore document ID.
+    const recordNumber =
+        String(
+            Math.abs(
+                Array.from(String(id))
+                    .reduce(
+                        (total, char) =>
+                            total + char.charCodeAt(0),
+                        0
+                    )
+            ) % 9999
+        ).padStart(4, "0");
+
+
+    // Determine archive label
+    let archiveLabel =
+        "ANONYMOUS RECORD";
+
+    if (type === "CONFESSION") {
+        archiveLabel =
+            "ANONYMOUS CONFESSION";
+    }
+
+    if (type === "HUGOT") {
+        archiveLabel =
+            "PERSONAL HUGOT";
+    }
+
+    if (type === "UNSENT MESSAGE") {
+        archiveLabel =
+            "UNSENT MESSAGE";
+    }
+
 
     card.innerHTML = `
 
-        <div class="post-type">
-            ${escapeHTML(type)}
-        </div>
+        <div class="record-inner">
 
-        <div class="post-message">
-            ${escapeHTML(text)}
-        </div>
+            <div class="record-header">
 
-        <div class="post-date">
-            ${escapeHTML(
-                formatDate(data.createdAt)
-            )}
-        </div>
+                <span class="record-stamp">
+                    RECENTLY FILED
+                </span>
 
-        <div class="post-actions">
+                <span class="record-number">
+                    RECORD No. ${recordNumber}
+                </span>
 
-            <button
-                class="like-button"
-                type="button"
-                data-id="${escapeHTML(id)}"
-                data-collection="${escapeHTML(collectionName)}">
+            </div>
 
-                ♡ ${likes}
 
-            </button>
+            <div class="record-ornament">
+                <span></span>
+                <b>ARCHIVE</b>
+                <span></span>
+            </div>
 
-            <button
-                class="report-button"
-                type="button"
-                onclick="alert('Thank you. Please report inappropriate content to the PlotTwisted administrator.')">
 
-                ⚑ REPORT
+            <div class="record-category">
+                ${escapeHTML(archiveLabel)}
+            </div>
 
-            </button>
+
+            <div class="record-content">
+
+                <p class="record-message">
+                    ${escapeHTML(text)}
+                </p>
+
+            </div>
+
+
+            <div class="record-divider"></div>
+
+
+            <div class="record-footer">
+
+                <div class="record-date">
+
+                    <span class="footer-label">
+                        FILED
+                    </span>
+
+                    <time>
+                        ${escapeHTML(
+                            formatDate(data.createdAt)
+                        )}
+                    </time>
+
+                </div>
+
+
+                <div class="record-seal">
+                    SEALED
+                </div>
+
+            </div>
+
+
+            <div class="record-actions">
+
+                <button
+                    class="like-button"
+                    type="button"
+                    data-id="${escapeHTML(id)}"
+                    data-collection="${escapeHTML(collectionName)}"
+                    aria-label="Like this record">
+
+                    <span class="button-symbol">♡</span>
+                    <span class="like-count">${likes}</span>
+
+                </button>
+
+
+                <button
+                    class="report-button"
+                    type="button">
+
+                    REPORT RECORD
+
+                </button>
+
+            </div>
 
         </div>
     `;
 
+
+    // =================================================
+    // LIKE BUTTON
+    // =================================================
 
     const likeButton =
         card.querySelector(".like-button");
@@ -217,7 +168,9 @@ function createPostCard(
                 return;
             }
 
+
             likeButton.disabled = true;
+
 
             try {
 
@@ -228,6 +181,7 @@ function createPostCard(
                         id
                     );
 
+
                 await updateDoc(
                     postRef,
                     {
@@ -235,14 +189,31 @@ function createPostCard(
                     }
                 );
 
+
                 const currentLikes =
                     likes + 1;
 
-                likeButton.textContent =
-                    `♡ ${currentLikes}`;
+
+                const count =
+                    likeButton.querySelector(
+                        ".like-count"
+                    );
+
+
+                if (count) {
+                    count.textContent =
+                        currentLikes;
+                }
+
 
                 likeButton.dataset.liked =
                     "true";
+
+
+                likeButton.classList.add(
+                    "is-liked"
+                );
+
 
             } catch (error) {
 
@@ -251,8 +222,10 @@ function createPostCard(
                     error
                 );
 
+
                 likeButton.disabled =
                     false;
+
 
                 alert(
                     "Unable to like this story right now."
@@ -264,703 +237,25 @@ function createPostCard(
     );
 
 
-    return card;
-}
+    // =================================================
+    // REPORT BUTTON
+    // =================================================
+
+    const reportButton =
+        card.querySelector(".report-button");
 
 
-// =====================================================
-// LOAD ONE COLLECTION
-// =====================================================
+    reportButton.addEventListener(
+        "click",
+        function () {
 
-async function loadCollection(
-    collectionName,
-    elementId,
-    type
-) {
-
-    const container =
-        document.getElementById(elementId);
-
-    if (!container) {
-        return;
-    }
-
-
-    // Loading state
-
-    container.innerHTML = `
-
-        <div class="post-card">
-
-            <div class="post-type">
-                PLOTTWISTED
-            </div>
-
-            <div class="post-message">
-                Loading stories...
-            </div>
-
-        </div>
-
-    `;
-
-
-    try {
-
-        const collectionRef =
-            collection(
-                db,
-                collectionName
+            alert(
+                "Thank you. Please report inappropriate content to the PlotTwisted administrator."
             );
-
-
-        // First try newest-first.
-
-        let snapshot;
-
-        try {
-
-            const orderedQuery =
-                query(
-                    collectionRef,
-                    orderBy(
-                        "createdAt",
-                        "desc"
-                    )
-                );
-
-            snapshot =
-                await getDocs(
-                    orderedQuery
-                );
-
-        } catch (orderError) {
-
-            console.warn(
-                "Ordered query failed. Loading without order:",
-                orderError
-            );
-
-            // Important:
-            // This allows older documents with missing
-            // createdAt fields to still appear.
-
-            snapshot =
-                await getDocs(
-                    collectionRef
-                );
-
-        }
-
-
-        container.innerHTML = "";
-
-
-        if (snapshot.empty) {
-
-            container.innerHTML = `
-
-                <div class="post-card">
-
-                    <div class="post-type">
-                        PLOTTWISTED
-                    </div>
-
-                    <div class="post-message">
-                        No stories yet.
-                        Be the first to share one.
-                    </div>
-
-                </div>
-
-            `;
-
-            return;
-        }
-
-
-        const posts = [];
-
-
-        snapshot.forEach(
-            documentSnapshot => {
-
-                const data =
-                    documentSnapshot.data();
-
-                posts.push({
-                    id: documentSnapshot.id,
-                    data
-                });
-
-            }
-        );
-
-
-        // Sort locally as an extra safety measure.
-
-        posts.sort(
-            (a, b) => {
-
-                const aTime =
-                    a.data.createdAt?.toMillis
-                        ? a.data.createdAt.toMillis()
-                        : 0;
-
-                const bTime =
-                    b.data.createdAt?.toMillis
-                        ? b.data.createdAt.toMillis()
-                        : 0;
-
-                return bTime - aTime;
-
-            }
-        );
-
-
-        posts.forEach(
-            post => {
-
-                const card =
-                    createPostCard(
-                        post.id,
-                        post.data,
-                        type,
-                        collectionName
-                    );
-
-                container.appendChild(card);
-
-            }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            `Error loading ${collectionName}:`,
-            error
-        );
-
-
-        container.innerHTML = `
-
-            <div class="post-card">
-
-                <div class="post-type">
-                    PLOTTWISTED
-                </div>
-
-                <div class="post-message">
-                    Unable to load stories right now.
-                </div>
-
-                <div class="post-date">
-                    Please check your Firestore rules.
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-// =====================================================
-// LOAD ALL COMMUNITY STORIES
-// =====================================================
-
-async function loadCommunityStories() {
-
-    await Promise.all([
-        loadCollection(
-            COLLECTIONS.confessions,
-            "communityConfessions",
-            "CONFESSION"
-        ),
-
-        loadCollection(
-            COLLECTIONS.hugots,
-            "communityHugots",
-            "HUGOT"
-        ),
-
-        loadCollection(
-            COLLECTIONS.unsent,
-            "communityUnsent",
-            "UNSENT MESSAGE"
-        )
-    ]);
-
-}
-
-
-// =====================================================
-// LOAD INDIVIDUAL PAGE LISTS
-// =====================================================
-
-async function loadIndividualLists() {
-
-    await Promise.all([
-        loadCollection(
-            COLLECTIONS.confessions,
-            "confessionList",
-            "CONFESSION"
-        ),
-
-        loadCollection(
-            COLLECTIONS.hugots,
-            "hugotList",
-            "HUGOT"
-        ),
-
-        loadCollection(
-            COLLECTIONS.unsent,
-            "unsentList",
-            "UNSENT MESSAGE"
-        )
-    ]);
-
-}
-
-
-// =====================================================
-// SAVE POST
-// =====================================================
-
-async function savePost(
-    collectionName,
-    inputId,
-    formId
-) {
-
-    const form =
-        document.getElementById(formId);
-
-    const input =
-        document.getElementById(inputId);
-
-    if (!form || !input) {
-        return;
-    }
-
-
-    form.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            const text =
-                input.value.trim();
-
-
-            if (!text) {
-
-                alert(
-                    "Please write something first."
-                );
-
-                return;
-            }
-
-
-            const button =
-                form.querySelector(
-                    "button[type='submit']"
-                );
-
-
-            if (button) {
-                button.disabled = true;
-                button.textContent =
-                    "SENDING...";
-            }
-
-
-            try {
-
-                await addDoc(
-                    collection(
-                        db,
-                        collectionName
-                    ),
-                    {
-                        text: text,
-                        likes: 0,
-                        createdAt:
-                            serverTimestamp()
-                    }
-                );
-
-
-                input.value = "";
-
-
-                alert(
-                    "Your story has been posted."
-                );
-
-
-                // Refresh all feeds.
-
-                await Promise.all([
-                    loadCommunityStories(),
-                    loadIndividualLists()
-                ]);
-
-
-            } catch (error) {
-
-                console.error(
-                    "Save error:",
-                    error
-                );
-
-
-                alert(
-                    "Unable to post your story right now. Please check your Firestore rules."
-                );
-
-
-            } finally {
-
-                if (button) {
-
-                    button.disabled =
-                        false;
-
-                    button.textContent =
-                        formId === "confessionForm"
-                            ? "♡ SEAL THIS CONFESSION"
-                            : formId === "hugotForm"
-                                ? "✦ SEND THIS HUGOT"
-                                : "✉ SEND TO THE VOID";
-
-                }
-
-            }
 
         }
     );
 
+
+    return card;
 }
-
-
-// =====================================================
-// INITIALIZE
-// =====================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function () {
-
-        console.log(
-            "✦ PlotTwisted Firebase starting..."
-        );
-
-
-        // Forms
-
-        await savePost(
-            COLLECTIONS.confessions,
-            "confessionInput",
-            "confessionForm"
-        );
-
-        await savePost(
-            COLLECTIONS.hugots,
-            "hugotInput",
-            "hugotForm"
-        );
-
-        await savePost(
-            COLLECTIONS.unsent,
-            "unsentInput",
-            "unsentForm"
-        );
-
-
-        // Load existing Firestore data.
-
-        await Promise.all([
-            loadCommunityStories(),
-            loadIndividualLists()
-        ]);
-
-
-        console.log(
-            "✦ PlotTwisted Firebase ready."
-        );
-
-    }
-);
-
-
-// =====================================================
-// RELOAD COMMUNITY WHEN COMMUNITY PAGE OPENS
-// =====================================================
-
-const originalShowPage =
-    window.showPage;
-
-
-if (typeof originalShowPage === "function") {
-
-    window.showPage =
-        function (id) {
-
-            originalShowPage(id);
-
-            if (
-                id === "community" ||
-                id === "confessions" ||
-                id === "hugot" ||
-                id === "unsent"
-            ) {
-
-                setTimeout(
-                    function () {
-
-                        loadCommunityStories();
-                        loadIndividualLists();
-
-                    },
-                    100
-                );
-
-            }
-
-        };
-
-}
-
-// =====================================================
-// SIGN OR DELUSION — FIRESTORE VOTING
-// =====================================================
-
-const voteButtons = document.querySelectorAll(
-    ".vote-buttons button"
-);
-
-const signBar = document.getElementById("signBar");
-const maybeBar = document.getElementById("maybeBar");
-const deluluBar = document.getElementById("deluluBar");
-
-const signPercent = document.getElementById("signPercent");
-const maybePercent = document.getElementById("maybePercent");
-const deluluPercent = document.getElementById("deluluPercent");
-
-async function loadVotes() {
-
-    try {
-
-        const snapshot = await getDocs(
-            collection(db, "signVotes")
-        );
-
-        let sign = 0;
-        let maybe = 0;
-        let delulu = 0;
-
-        snapshot.forEach(docSnap => {
-
-            const data = docSnap.data();
-
-            if (data.vote === "sign") {
-                sign++;
-            }
-
-            if (data.vote === "maybe") {
-                maybe++;
-            }
-
-            if (data.vote === "delulu") {
-                delulu++;
-            }
-
-        });
-
-        const total =
-            sign + maybe + delulu;
-
-        if (total === 0) {
-            updateVoteDisplay(62, 25, 13);
-            return;
-        }
-
-        const signPct =
-            Math.round((sign / total) * 100);
-
-        const maybePct =
-            Math.round((maybe / total) * 100);
-
-        const deluluPct =
-            100 - signPct - maybePct;
-
-        updateVoteDisplay(
-            signPct,
-            maybePct,
-            deluluPct
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load votes:",
-            error
-        );
-
-    }
-
-}
-
-
-function updateVoteDisplay(
-    sign,
-    maybe,
-    delulu
-) {
-
-    if (signBar) {
-        signBar.style.width =
-            sign + "%";
-    }
-
-    if (maybeBar) {
-        maybeBar.style.width =
-            maybe + "%";
-    }
-
-    if (deluluBar) {
-        deluluBar.style.width =
-            delulu + "%";
-    }
-
-    if (signPercent) {
-        signPercent.textContent =
-            sign + "%";
-    }
-
-    if (maybePercent) {
-        maybePercent.textContent =
-            maybe + "%";
-    }
-
-    if (deluluPercent) {
-        deluluPercent.textContent =
-            delulu + "%";
-    }
-
-}
-
-
-voteButtons.forEach(
-    (button, index) => {
-
-        button.addEventListener(
-            "click",
-            async () => {
-
-                let vote;
-
-                if (index === 0) {
-                    vote = "sign";
-                }
-
-                if (index === 1) {
-                    vote = "maybe";
-                }
-
-                if (index === 2) {
-                    vote = "delulu";
-                }
-
-                if (!vote) return;
-
-                // Prevent multiple votes
-                const alreadyVoted =
-                    localStorage.getItem(
-                        "plottwisted_vote_001"
-                    );
-
-                if (alreadyVoted) {
-
-                    alert(
-                        "You already voted on this case."
-                    );
-
-                    return;
-
-                }
-
-                try {
-
-                    button.disabled = true;
-
-                    await addDoc(
-                        collection(
-                            db,
-                            "signVotes"
-                        ),
-                        {
-                            vote: vote,
-                            caseId: "001",
-                            createdAt:
-                                serverTimestamp()
-                        }
-                    );
-
-                    localStorage.setItem(
-                        "plottwisted_vote_001",
-                        "true"
-                    );
-
-                    voteButtons.forEach(
-                        btn => {
-                            btn.disabled = true;
-                        }
-                    );
-
-                    await loadVotes();
-
-                    alert(
-                        "Your verdict has been recorded! ✦"
-                    );
-
-                } catch (error) {
-
-                    console.error(
-                        "Vote error:",
-                        error
-                    );
-
-                    button.disabled =
-                        false;
-
-                    alert(
-                        "Unable to record your vote right now."
-                    );
-
-                }
-
-            }
-        );
-
-    }
-);
-
-
-// Load existing votes
-loadVotes();
-
-
-// =====================================================
-// IMPORTANT
-// Roulette is NOT touched here.
-// Your existing spinRoulette() in index.html
-// remains active.
-// =====================================================
