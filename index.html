@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
     --black:#080405;
     --dark:#11070a;
@@ -39,6 +40,11 @@
     --body:"Poppins",sans-serif;
 }
 
+
+/* ==========================================
+   RESET
+========================================== */
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -51,13 +57,263 @@ html{
 
 body{
     min-height:100vh;
+    position:relative;
     background:
-        radial-gradient(circle at 50% 10%,rgba(100,25,45,.28),transparent 35%),
-        linear-gradient(135deg,#050304,#13070a 45%,#070304);
+        radial-gradient(
+            circle at 50% 8%,
+            rgba(100,25,45,.32),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(100,25,45,.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 60%,
+            rgba(198,161,94,.055),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #050304,
+            #13070a 45%,
+            #070304
+        );
     color:var(--cream);
     font-family:var(--body);
     overflow-x:hidden;
 }
+
+
+/* ==========================================
+   VICTORIAN BACKGROUND
+========================================== */
+
+.victorian-background{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+
+/* Large Victorian roses */
+
+.victorian-rose{
+    position:absolute;
+    width:310px;
+    height:310px;
+    color:rgba(198,161,94,.105);
+    opacity:.9;
+}
+
+.victorian-rose svg{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+.victorian-rose.rose-left{
+    top:8%;
+    left:-95px;
+    transform:rotate(-17deg);
+}
+
+.victorian-rose.rose-right{
+    right:-105px;
+    bottom:5%;
+    transform:rotate(19deg) scale(.9);
+    color:rgba(198,161,94,.09);
+}
+
+.victorian-rose.rose-center{
+    width:220px;
+    height:220px;
+    top:47%;
+    left:43%;
+    opacity:.045;
+    transform:rotate(8deg);
+}
+
+
+/* Rose outline */
+
+.rose-stroke{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.7;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+
+/* ==========================================
+   VICTORIAN VINES
+========================================== */
+
+.vine{
+    position:absolute;
+    width:420px;
+    height:190px;
+    opacity:.48;
+}
+
+.vine::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:70px;
+    height:1px;
+    background:linear-gradient(
+        to right,
+        transparent,
+        rgba(198,161,94,.16),
+        rgba(198,161,94,.28),
+        transparent
+    );
+    border-radius:50%;
+    transform:rotate(-8deg);
+}
+
+.vine::after{
+    content:"";
+    position:absolute;
+    width:32px;
+    height:14px;
+    border:1px solid rgba(198,161,94,.18);
+    border-radius:100% 0 100% 0;
+    transform:rotate(28deg);
+}
+
+
+/* Vine placements */
+
+.vine.vine-one{
+    top:16%;
+    right:-100px;
+    transform:rotate(-16deg);
+}
+
+.vine.vine-one::after{
+    left:90px;
+    top:47px;
+}
+
+.vine.vine-two{
+    left:-120px;
+    top:43%;
+    transform:rotate(20deg);
+}
+
+.vine.vine-two::after{
+    right:85px;
+    top:80px;
+    transform:rotate(-28deg);
+}
+
+.vine.vine-three{
+    right:-80px;
+    top:58%;
+    transform:rotate(22deg);
+}
+
+.vine.vine-three::after{
+    left:100px;
+    top:72px;
+}
+
+.vine.vine-four{
+    left:-110px;
+    bottom:12%;
+    transform:rotate(-15deg);
+}
+
+.vine.vine-four::after{
+    right:70px;
+    top:45px;
+    transform:rotate(-30deg);
+}
+
+
+/* ==========================================
+   SMALL FLORAL DETAILS
+========================================== */
+
+.floral-detail{
+    position:absolute;
+    color:rgba(198,161,94,.12);
+    font-family:var(--serif);
+    line-height:1;
+}
+
+.detail-one{
+    top:26%;
+    left:25%;
+    font-size:65px;
+    transform:rotate(-15deg);
+}
+
+.detail-two{
+    top:70%;
+    right:26%;
+    font-size:72px;
+    transform:rotate(18deg);
+}
+
+.detail-three{
+    bottom:18%;
+    left:39%;
+    font-size:48px;
+    opacity:.6;
+}
+
+.detail-four{
+    top:12%;
+    right:30%;
+    font-size:40px;
+    opacity:.5;
+}
+
+
+/* Thin decorative circles */
+
+.archive-circle{
+    position:absolute;
+    width:210px;
+    height:210px;
+    border:1px solid rgba(198,161,94,.055);
+    border-radius:50%;
+}
+
+.archive-circle::before{
+    content:"";
+    position:absolute;
+    inset:15px;
+    border:1px solid rgba(198,161,94,.035);
+    border-radius:50%;
+}
+
+.archive-circle.circle-one{
+    left:6%;
+    top:58%;
+}
+
+.archive-circle.circle-two{
+    right:8%;
+    top:25%;
+    width:150px;
+    height:150px;
+}
+
+
+/* ==========================================
+   BACKGROUND TEXTURE
+========================================== */
 
 body::before{
     content:"";
@@ -65,7 +321,7 @@ body::before{
     inset:0;
     pointer-events:none;
     z-index:999;
-    opacity:.13;
+    opacity:.12;
     background-image:
         repeating-linear-gradient(
             0deg,
@@ -75,6 +331,11 @@ body::before{
             transparent 4px
         );
 }
+
+
+/* ==========================================
+   PAGE FRAME
+========================================== */
 
 .page-frame{
     position:fixed;
@@ -108,7 +369,10 @@ body::before{
     border-right:2px solid;
 }
 
-/* NAVBAR */
+
+/* ==========================================
+   NAVBAR
+========================================== */
 
 .navbar{
     position:relative;
@@ -127,8 +391,9 @@ body::before{
     cursor:pointer;
     color:var(--gold-light);
     font-family:var(--display);
-    font-size:25px;
-    letter-spacing:3px;
+    font-size:27px;
+    letter-spacing:1.5px;
+    text-transform:none;
 }
 
 .brand small{
@@ -161,13 +426,17 @@ body::before{
     color:var(--gold-light);
 }
 
-/* GENERAL */
+
+/* ==========================================
+   GENERAL
+========================================== */
 
 .page{
     display:none;
     min-height:calc(100vh - 78px);
     padding:75px 7% 90px;
     position:relative;
+    z-index:2;
 }
 
 .page.active{
@@ -181,6 +450,8 @@ body::before{
 
 .interface{
     display:none;
+    position:relative;
+    z-index:2;
 }
 
 .interface.active{
@@ -239,14 +510,25 @@ body::before{
     content:"";
     height:1px;
     width:95px;
-    background:linear-gradient(to right,transparent,var(--gold-dark));
+    background:linear-gradient(
+        to right,
+        transparent,
+        var(--gold-dark)
+    );
 }
 
 .ornament::after{
-    background:linear-gradient(to left,transparent,var(--gold-dark));
+    background:linear-gradient(
+        to left,
+        transparent,
+        var(--gold-dark)
+    );
 }
 
-/* BUTTONS */
+
+/* ==========================================
+   BUTTONS
+========================================== */
 
 .btn{
     position:relative;
@@ -256,7 +538,11 @@ body::before{
     gap:12px;
     padding:14px 27px;
     border:1px solid var(--gold);
-    background:linear-gradient(145deg,#1c090e,#0b0507);
+    background:linear-gradient(
+        145deg,
+        #1c090e,
+        #0b0507
+    );
     color:var(--gold-light);
     font-family:var(--body);
     font-size:10px;
@@ -295,7 +581,10 @@ body::before{
     margin-bottom:35px;
 }
 
-/* OPEN LETTER */
+
+/* ==========================================
+   OPEN LETTER
+========================================== */
 
 #home{
     padding:0;
@@ -307,6 +596,8 @@ body::before{
     justify-content:center;
     align-items:center;
     padding:60px 20px;
+    position:relative;
+    z-index:2;
 }
 
 .letter-wrapper{
@@ -318,8 +609,16 @@ body::before{
     position:relative;
     padding:75px clamp(30px,7vw,85px);
     background:
-        radial-gradient(circle at 20% 20%,rgba(255,255,255,.18),transparent 20%),
-        linear-gradient(135deg,#e8d4ae,#d7ba8b);
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.18),
+            transparent 20%
+        ),
+        linear-gradient(
+            135deg,
+            #e8d4ae,
+            #d7ba8b
+        );
     color:var(--ink);
     box-shadow:
         0 30px 90px rgba(0,0,0,.65),
@@ -454,11 +753,16 @@ body::before{
     right:32px;
 }
 
-/* ARCHIVE MENU */
+
+/* ==========================================
+   ARCHIVE MENU
+========================================== */
 
 .archive-menu{
     display:none;
     padding:80px 7% 100px;
+    position:relative;
+    z-index:2;
 }
 
 .archive-menu.active{
@@ -522,10 +826,16 @@ body::before{
     position:relative;
     padding:30px 25px;
     border:1px solid var(--gold-line);
-    background:linear-gradient(145deg,rgba(38,12,19,.9),rgba(12,5,8,.95));
+    background:
+        linear-gradient(
+            145deg,
+            rgba(38,12,19,.94),
+            rgba(12,5,8,.96)
+        );
     text-align:center;
     cursor:pointer;
     transition:.35s;
+    overflow:hidden;
 }
 
 .archive-card::before{
@@ -535,10 +845,24 @@ body::before{
     border:1px solid rgba(198,161,94,.2);
 }
 
+.archive-card::after{
+    content:"❦";
+    position:absolute;
+    right:14px;
+    bottom:8px;
+    color:rgba(198,161,94,.13);
+    font-size:25px;
+}
+
 .archive-card:hover{
     transform:translateY(-5px);
     border-color:var(--gold-light);
-    background:linear-gradient(145deg,#3a101c,#100508);
+    background:
+        linear-gradient(
+            145deg,
+            #3a101c,
+            #100508
+        );
 }
 
 .card-symbol{
@@ -562,7 +886,10 @@ body::before{
     line-height:1.7;
 }
 
-/* CATEGORY */
+
+/* ==========================================
+   CATEGORY
+========================================== */
 
 .category-grid{
     display:grid;
@@ -578,6 +905,7 @@ body::before{
     background:rgba(24,8,13,.92);
     cursor:pointer;
     transition:.3s;
+    overflow:hidden;
 }
 
 .category-card::before{
@@ -585,6 +913,15 @@ body::before{
     position:absolute;
     inset:9px;
     border:1px solid rgba(198,161,94,.17);
+}
+
+.category-card::after{
+    content:"❦";
+    position:absolute;
+    right:18px;
+    bottom:8px;
+    color:rgba(198,161,94,.12);
+    font-size:28px;
 }
 
 .category-card:hover{
@@ -610,13 +947,24 @@ body::before{
     margin-top:7px;
 }
 
-/* PAPER PANEL */
+
+/* ==========================================
+   PAPER PANEL
+========================================== */
 
 .paper-panel{
     position:relative;
     background:
-        radial-gradient(circle at 80% 10%,rgba(255,255,255,.14),transparent 25%),
-        linear-gradient(135deg,#ead9b8,#d5b987);
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(255,255,255,.14),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #ead9b8,
+            #d5b987
+        );
     color:var(--ink);
     padding:45px;
     border:6px solid #b18a55;
@@ -689,16 +1037,17 @@ input:focus{
     color:var(--gold-light);
 }
 
-/* RECENT RECORDS */
+
+/* ==========================================
+   RECENT RECORDS
+========================================== */
 
 .records-header{
     width:min(900px,100%);
     margin:55px auto 0;
-
     display:grid;
     grid-template-columns:70px 1fr 70px;
     align-items:center;
-
     text-align:center;
 }
 
@@ -752,7 +1101,10 @@ input:focus{
     font-size:15px;
 }
 
-/* EMPTY RECORD */
+
+/* ==========================================
+   EMPTY RECORD
+========================================== */
 
 .empty-record{
     grid-column:1 / -1;
@@ -764,11 +1116,12 @@ input:focus{
     position:relative;
     padding:40px;
     border:1px solid var(--gold-line);
-    background:linear-gradient(
-        145deg,
-        rgba(38,12,19,.85),
-        rgba(10,4,7,.95)
-    );
+    background:
+        linear-gradient(
+            145deg,
+            rgba(38,12,19,.85),
+            rgba(10,4,7,.95)
+        );
     text-align:center;
 }
 
@@ -823,22 +1176,30 @@ input:focus{
     letter-spacing:3px;
 }
 
-/* ACTUAL RECORDS */
+
+/* ==========================================
+   ACTUAL RECORDS
+========================================== */
 
 .record-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:18px;
+    gap:20px;
 }
 
 .record{
     position:relative;
-    padding:34px 30px 28px;
+    padding:38px 32px 30px;
     background:
         radial-gradient(
             circle at 90% 10%,
-            rgba(255,255,255,.12),
+            rgba(255,255,255,.16),
             transparent 25%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(120,80,35,.08),
+            transparent 28%
         ),
         linear-gradient(
             135deg,
@@ -847,27 +1208,42 @@ input:focus{
         );
     color:var(--ink);
     border:5px solid #a77c45;
-    box-shadow:0 14px 40px rgba(0,0,0,.35);
+    box-shadow:
+        0 16px 45px rgba(0,0,0,.42),
+        inset 0 0 30px rgba(70,40,15,.08);
     overflow:hidden;
+    transition:.3s;
+}
+
+.record:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.48),
+        inset 0 0 30px rgba(70,40,15,.08);
 }
 
 .record::before{
-    content:"◇";
+    content:"ARCHIVE RECORD";
     position:absolute;
-    top:12px;
-    left:15px;
+    top:11px;
+    left:50%;
+    transform:translateX(-50%);
     color:#765127;
-    font-size:14px;
+    font-family:var(--body);
+    font-size:6px;
+    letter-spacing:3px;
+    white-space:nowrap;
+    opacity:.8;
 }
 
 .record::after{
     content:"❧";
     position:absolute;
     right:18px;
-    bottom:10px;
+    bottom:8px;
     color:#765127;
     font-family:var(--serif);
-    font-size:23px;
+    font-size:27px;
 }
 
 .record-number{
@@ -903,7 +1279,17 @@ input:focus{
     text-transform:uppercase;
 }
 
-/* VOTING */
+
+/* Hide placeholder once actual records appear */
+
+.record-grid:has(.record) .empty-record{
+    display:none;
+}
+
+
+/* ==========================================
+   VOTING
+========================================== */
 
 .vote-panel{
     width:min(800px,100%);
@@ -972,7 +1358,10 @@ input:focus{
     transition:1s;
 }
 
-/* ROULETTE */
+
+/* ==========================================
+   ROULETTE
+========================================== */
 
 .roulette-interface{
     text-align:center;
@@ -985,7 +1374,11 @@ input:focus{
     padding:65px 45px;
     border:1px solid var(--gold);
     background:
-        radial-gradient(circle at center,rgba(100,25,45,.35),transparent 60%),
+        radial-gradient(
+            circle at center,
+            rgba(100,25,45,.35),
+            transparent 60%
+        ),
         #0d0508;
     box-shadow:
         0 0 60px rgba(0,0,0,.5),
@@ -1065,7 +1458,10 @@ input:focus{
     transition:.3s;
 }
 
-/* COMPATIBILITY */
+
+/* ==========================================
+   COMPATIBILITY
+========================================== */
 
 .compatibility-box{
     width:min(760px,100%);
@@ -1141,7 +1537,10 @@ input:focus{
     font-size:18px;
 }
 
-/* COMMUNITY */
+
+/* ==========================================
+   COMMUNITY
+========================================== */
 
 .community-grid{
     display:grid;
@@ -1165,6 +1564,15 @@ input:focus{
     left:16px;
 }
 
+.community-card::after{
+    content:"❦";
+    position:absolute;
+    right:14px;
+    bottom:8px;
+    color:rgba(198,161,94,.12);
+    font-size:26px;
+}
+
 .community-card h3{
     margin-top:15px;
     font-family:var(--display);
@@ -1180,7 +1588,10 @@ input:focus{
     line-height:1.5;
 }
 
-/* RECOMMENDATIONS */
+
+/* ==========================================
+   RECOMMENDATIONS
+========================================== */
 
 .recommendation-list{
     display:grid;
@@ -1189,6 +1600,7 @@ input:focus{
 }
 
 .recommendation{
+    position:relative;
     padding:28px;
     border:1px solid var(--gold-line);
     background:#12070a;
@@ -1198,6 +1610,14 @@ input:focus{
     content:"❦";
     color:var(--gold);
     font-size:20px;
+}
+
+.recommendation::after{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid rgba(198,161,94,.09);
+    pointer-events:none;
 }
 
 .recommendation h3{
@@ -1214,7 +1634,10 @@ input:focus{
     line-height:1.7;
 }
 
-/* FAQ */
+
+/* ==========================================
+   FAQ
+========================================== */
 
 .faq-list{
     width:min(850px,100%);
@@ -1261,7 +1684,10 @@ input:focus{
     display:block;
 }
 
-/* INFO */
+
+/* ==========================================
+   INFO
+========================================== */
 
 .info-panel{
     width:min(850px,100%);
@@ -1304,9 +1730,14 @@ input:focus{
     text-align:center;
 }
 
-/* FOOTER */
+
+/* ==========================================
+   FOOTER
+========================================== */
 
 footer{
+    position:relative;
+    z-index:2;
     padding:30px 7%;
     border-top:1px solid rgba(198,161,94,.2);
     text-align:center;
@@ -1320,12 +1751,19 @@ footer strong{
     color:var(--gold-dark);
 }
 
-/* MOBILE */
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media(max-width:800px){
 
     .navbar{
         padding:15px 25px;
+    }
+
+    .brand{
+        font-size:23px;
     }
 
     .nav-links{
@@ -1396,37 +1834,281 @@ footer strong{
     .records-header h3{
         font-size:25px;
     }
+
+    .victorian-rose{
+        opacity:.55;
+        transform:scale(.75);
+    }
+
+    .victorian-rose.rose-left{
+        left:-120px;
+    }
+
+    .victorian-rose.rose-right{
+        right:-125px;
+    }
+
+    .victorian-rose.rose-center{
+        display:none;
+    }
+
+    .vine{
+        opacity:.3;
+    }
+
+    .floral-detail{
+        opacity:.5;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
+
+<!-- ==========================================
+     VICTORIAN BACKGROUND DECORATIONS
+========================================== -->
+
+<div class="victorian-background" aria-hidden="true">
+
+    <!-- LEFT ROSE -->
+
+    <div class="victorian-rose rose-left">
+
+        <svg viewBox="0 0 300 300">
+
+            <g class="rose-stroke">
+
+                <path d="M150 158
+                         C112 148 105 112 132 95
+                         C153 81 174 95 176 117
+                         C179 143 162 153 150 158Z"/>
+
+                <path d="M150 158
+                         C124 130 128 92 155 86
+                         C183 80 199 109 181 132
+                         C173 143 162 151 150 158Z"/>
+
+                <path d="M150 158
+                         C164 127 196 119 210 140
+                         C226 164 203 187 178 176
+                         C166 171 157 164 150 158Z"/>
+
+                <path d="M150 158
+                         C126 178 92 169 91 143
+                         C90 118 119 110 139 128
+                         C148 136 151 148 150 158Z"/>
+
+                <path d="M150 158
+                         C142 185 158 207 181 202
+                         C207 197 211 170 189 158
+                         C177 151 162 153 150 158Z"/>
+
+                <path d="M150 158
+                         C175 154 201 174 193 198
+                         C184 225 151 221 142 198
+                         C137 184 142 168 150 158Z"/>
+
+                <path d="M150 158
+                         C140 143 148 127 163 129
+                         C178 131 180 148 150 158Z"/>
+
+                <!-- stem -->
+
+                <path d="M150 204
+                         C151 227 145 251 126 275"/>
+
+                <!-- leaves -->
+
+                <path d="M148 224
+                         C119 212 100 223 96 244
+                         C117 248 138 240 148 224Z"/>
+
+                <path d="M146 245
+                         C173 229 194 241 198 260
+                         C178 266 157 260 146 245Z"/>
+
+                <!-- fine decorative curls -->
+
+                <path d="M126 275
+                         C113 285 99 284 91 275"/>
+
+                <path d="M126 275
+                         C140 283 151 280 158 270"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+
+    <!-- RIGHT ROSE -->
+
+    <div class="victorian-rose rose-right">
+
+        <svg viewBox="0 0 300 300">
+
+            <g class="rose-stroke">
+
+                <path d="M150 158
+                         C112 148 105 112 132 95
+                         C153 81 174 95 176 117
+                         C179 143 162 153 150 158Z"/>
+
+                <path d="M150 158
+                         C124 130 128 92 155 86
+                         C183 80 199 109 181 132
+                         C173 143 162 151 150 158Z"/>
+
+                <path d="M150 158
+                         C164 127 196 119 210 140
+                         C226 164 203 187 178 176
+                         C166 171 157 164 150 158Z"/>
+
+                <path d="M150 158
+                         C126 178 92 169 91 143
+                         C90 118 119 110 139 128
+                         C148 136 151 148 150 158Z"/>
+
+                <path d="M150 158
+                         C142 185 158 207 181 202
+                         C207 197 211 170 189 158
+                         C177 151 162 153 150 158Z"/>
+
+                <path d="M150 158
+                         C175 154 201 174 193 198
+                         C184 225 151 221 142 198
+                         C137 184 142 168 150 158Z"/>
+
+                <path d="M150 158
+                         C140 143 148 127 163 129
+                         C178 131 180 148 150 158Z"/>
+
+                <path d="M150 204
+                         C151 227 145 251 126 275"/>
+
+                <path d="M148 224
+                         C119 212 100 223 96 244
+                         C117 248 138 240 148 224Z"/>
+
+                <path d="M146 245
+                         C173 229 194 241 198 260
+                         C178 266 157 260 146 245Z"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+
+    <!-- VERY FAINT CENTER ROSE -->
+
+    <div class="victorian-rose rose-center">
+
+        <svg viewBox="0 0 300 300">
+
+            <g class="rose-stroke">
+
+                <circle cx="150" cy="150" r="75"/>
+                <circle cx="150" cy="150" r="55"/>
+                <circle cx="150" cy="150" r="32"/>
+
+                <path d="M150 150
+                         C118 127 126 91 154 90
+                         C183 89 190 124 150 150Z"/>
+
+                <path d="M150 150
+                         C179 127 211 143 202 169
+                         C193 193 165 183 150 150Z"/>
+
+                <path d="M150 150
+                         C124 178 91 160 99 136
+                         C107 112 135 119 150 150Z"/>
+
+            </g>
+
+        </svg>
+
+    </div>
+
+
+    <!-- VINES -->
+
+    <div class="vine vine-one"></div>
+    <div class="vine vine-two"></div>
+    <div class="vine vine-three"></div>
+    <div class="vine vine-four"></div>
+
+
+    <!-- FLORAL ORNAMENTS -->
+
+    <div class="floral-detail detail-one">❦</div>
+    <div class="floral-detail detail-two">❧</div>
+    <div class="floral-detail detail-three">⁂</div>
+    <div class="floral-detail detail-four">❦</div>
+
+
+    <!-- DECORATIVE CIRCLES -->
+
+    <div class="archive-circle circle-one"></div>
+    <div class="archive-circle circle-two"></div>
+
+</div>
+
+
+<!-- PAGE FRAME -->
 
 <div class="page-frame"></div>
 
-<!-- NAVIGATION -->
+
+<!-- ==========================================
+     NAVIGATION
+========================================== -->
 
 <nav class="navbar">
 
     <div class="brand" onclick="goHome()">
-        PLOTWISTED
+        PlotTwisted
         <small>THE SECRET ARCHIVE</small>
     </div>
 
     <div class="nav-links">
-        <button onclick="goHome()">Home</button>
-        <button onclick="openArchive()">Archive</button>
-        <button onclick="showPage('community')">Community</button>
-        <button onclick="showPage('recommendations')">Records</button>
-        <button onclick="showPage('faq')">FAQ</button>
+
+        <button onclick="goHome()">
+            Home
+        </button>
+
+        <button onclick="openArchive()">
+            Archive
+        </button>
+
+        <button onclick="showPage('community')">
+            Community
+        </button>
+
+        <button onclick="showPage('recommendations')">
+            Records
+        </button>
+
+        <button onclick="showPage('faq')">
+            FAQ
+        </button>
+
     </div>
 
 </nav>
 
 
-<!-- HOME -->
+<!-- ==========================================
+     HOME
+========================================== -->
 
 <section id="home" class="page active">
+
 
     <!-- OPEN LETTER -->
 
@@ -1459,7 +2141,9 @@ footer strong{
 
                     <div class="letter-line"></div>
 
-                    <p class="dear">Dear Stranger,</p>
+                    <p class="dear">
+                        Dear Stranger,
+                    </p>
 
                     <p class="letter-copy">
                         Somewhere between what was said, what was never said,
@@ -1494,7 +2178,9 @@ footer strong{
     </div>
 
 
-    <!-- ARCHIVE MENU -->
+    <!-- ==========================================
+         ARCHIVE MENU
+    ========================================== -->
 
     <div id="storyMenu" class="archive-menu">
 
@@ -1508,18 +2194,26 @@ footer strong{
                 Choose a <span>Record</span>
             </h2>
 
-            <div class="ornament">⁂</div>
+            <div class="ornament">
+                ⁂
+            </div>
 
         </div>
 
+
         <div class="archive-grid">
+
 
             <div class="archive-card"
                  onclick="openInterface('feelingsMenu')">
 
-                <div class="card-symbol">❦</div>
+                <div class="card-symbol">
+                    ❦
+                </div>
 
-                <h3>Feelings</h3>
+                <h3>
+                    Feelings
+                </h3>
 
                 <p>
                     Confessions and words that were never meant
@@ -1532,9 +2226,13 @@ footer strong{
             <div class="archive-card"
                  onclick="openInterface('lettersMenu')">
 
-                <div class="card-symbol">❧</div>
+                <div class="card-symbol">
+                    ❧
+                </div>
 
-                <h3>Letters</h3>
+                <h3>
+                    Letters
+                </h3>
 
                 <p>
                     Unsent thoughts, unfinished messages,
@@ -1547,9 +2245,13 @@ footer strong{
             <div class="archive-card"
                  onclick="openInterface('mysteryMenu')">
 
-                <div class="card-symbol">◇</div>
+                <div class="card-symbol">
+                    ◇
+                </div>
 
-                <h3>Mysteries</h3>
+                <h3>
+                    Mysteries
+                </h3>
 
                 <p>
                     Signs, assumptions, and the thin line between
@@ -1562,9 +2264,13 @@ footer strong{
             <div class="archive-card"
                  onclick="openInterface('twistMenu')">
 
-                <div class="card-symbol">✦</div>
+                <div class="card-symbol">
+                    ✦
+                </div>
 
-                <h3>Twists</h3>
+                <h3>
+                    Twists
+                </h3>
 
                 <p>
                     Unexpected outcomes, possibilities,
@@ -1577,9 +2283,13 @@ footer strong{
             <div class="archive-card"
                  onclick="showPage('community')">
 
-                <div class="card-symbol">⁂</div>
+                <div class="card-symbol">
+                    ⁂
+                </div>
 
-                <h3>Community</h3>
+                <h3>
+                    Community
+                </h3>
 
                 <p>
                     Stories submitted by visitors
@@ -1592,9 +2302,13 @@ footer strong{
             <div class="archive-card"
                  onclick="showPage('recommendations')">
 
-                <div class="card-symbol">◆</div>
+                <div class="card-symbol">
+                    ◆
+                </div>
 
-                <h3>Curated Records</h3>
+                <h3>
+                    Curated Records
+                </h3>
 
                 <p>
                     Stories, themes, and recommendations
@@ -1608,7 +2322,9 @@ footer strong{
     </div>
 
 
-    <!-- FEELINGS -->
+    <!-- ==========================================
+         FEELINGS
+    ========================================== -->
 
     <div id="feelingsMenu" class="interface">
 
@@ -1637,14 +2353,19 @@ footer strong{
 
             </div>
 
+
             <div class="category-grid">
 
                 <div class="category-card"
                      onclick="openInterface('confessions')">
 
-                    <div class="category-symbol">❦</div>
+                    <div class="category-symbol">
+                        ❦
+                    </div>
 
-                    <h3>Confessions</h3>
+                    <h3>
+                        Confessions
+                    </h3>
 
                     <p>
                         For thoughts that have been waiting
@@ -1657,9 +2378,13 @@ footer strong{
                 <div class="category-card"
                      onclick="openInterface('hugot')">
 
-                    <div class="category-symbol">❧</div>
+                    <div class="category-symbol">
+                        ❧
+                    </div>
 
-                    <h3>Hugot Corner</h3>
+                    <h3>
+                        Hugot Corner
+                    </h3>
 
                     <p>
                         Words inspired by memories,
@@ -1675,7 +2400,9 @@ footer strong{
     </div>
 
 
-    <!-- CONFESSIONS -->
+    <!-- ==========================================
+         CONFESSIONS
+    ========================================== -->
 
     <div id="confessions" class="interface">
 
@@ -1707,7 +2434,9 @@ footer strong{
 
             <div class="paper-panel">
 
-                <h3>Leave a Record</h3>
+                <h3>
+                    Leave a Record
+                </h3>
 
                 <p class="panel-subtitle">
                     Your identity remains outside the archive.
@@ -1719,20 +2448,22 @@ footer strong{
                     placeholder="Write what you have never been able to say..."
                 ></textarea>
 
-                <button class="btn" id="submitConfession">
+                <button class="btn"
+                        id="submitConfession">
                     Seal the Confession
                 </button>
 
             </div>
 
 
-            <!-- RECENTLY FILED -->
-
             <div class="records-header">
 
-                <div class="records-symbol">❦</div>
+                <div class="records-symbol">
+                    ❦
+                </div>
 
                 <div>
+
                     <div class="records-label">
                         ARCHIVE COLLECTION
                     </div>
@@ -1740,18 +2471,23 @@ footer strong{
                     <h3>
                         Recently Filed Records
                     </h3>
+
                 </div>
 
-                <div class="records-symbol">❧</div>
+                <div class="records-symbol">
+                    ❧
+                </div>
 
             </div>
+
 
             <div class="records-divider">
                 <span>◇</span>
             </div>
 
 
-            <div id="confessionList" class="record-grid">
+            <div id="confessionList"
+                 class="record-grid">
 
                 <div class="empty-record">
 
@@ -1780,7 +2516,9 @@ footer strong{
     </div>
 
 
-    <!-- HUGOT -->
+    <!-- ==========================================
+         HUGOT
+    ========================================== -->
 
     <div id="hugot" class="interface">
 
@@ -1812,7 +2550,9 @@ footer strong{
 
             <div class="paper-panel">
 
-                <h3>Write the Line</h3>
+                <h3>
+                    Write the Line
+                </h3>
 
                 <p class="panel-subtitle">
                     Some words only make sense after midnight.
@@ -1824,7 +2564,8 @@ footer strong{
                     placeholder="Write your hugot..."
                 ></textarea>
 
-                <button class="btn" id="submitHugot">
+                <button class="btn"
+                        id="submitHugot">
                     File the Line
                 </button>
 
@@ -1833,9 +2574,12 @@ footer strong{
 
             <div class="records-header">
 
-                <div class="records-symbol">❧</div>
+                <div class="records-symbol">
+                    ❧
+                </div>
 
                 <div>
+
                     <div class="records-label">
                         ARCHIVE COLLECTION
                     </div>
@@ -1843,18 +2587,23 @@ footer strong{
                     <h3>
                         Recently Filed Lines
                     </h3>
+
                 </div>
 
-                <div class="records-symbol">❦</div>
+                <div class="records-symbol">
+                    ❦
+                </div>
 
             </div>
+
 
             <div class="records-divider">
                 <span>◇</span>
             </div>
 
 
-            <div id="hugotList" class="record-grid">
+            <div id="hugotList"
+                 class="record-grid">
 
                 <div class="empty-record">
 
@@ -1883,7 +2632,9 @@ footer strong{
     </div>
 
 
-    <!-- LETTERS -->
+    <!-- ==========================================
+         LETTERS
+    ========================================== -->
 
     <div id="lettersMenu" class="interface">
 
@@ -1918,9 +2669,13 @@ footer strong{
                 <div class="category-card"
                      onclick="openInterface('unsent')">
 
-                    <div class="category-symbol">✧</div>
+                    <div class="category-symbol">
+                        ✧
+                    </div>
 
-                    <h3>Unsent Messages</h3>
+                    <h3>
+                        Unsent Messages
+                    </h3>
 
                     <p>
                         For messages that remained in the drafts.
@@ -1932,9 +2687,13 @@ footer strong{
                 <div class="category-card"
                      onclick="showPage('contact')">
 
-                    <div class="category-symbol">◇</div>
+                    <div class="category-symbol">
+                        ◇
+                    </div>
 
-                    <h3>Contact Archive</h3>
+                    <h3>
+                        Contact Archive
+                    </h3>
 
                     <p>
                         Questions, suggestions, and messages
@@ -1950,7 +2709,9 @@ footer strong{
     </div>
 
 
-    <!-- UNSENT -->
+    <!-- ==========================================
+         UNSENT
+    ========================================== -->
 
     <div id="unsent" class="interface">
 
@@ -1982,7 +2743,9 @@ footer strong{
 
             <div class="paper-panel">
 
-                <h3>Dear Someone...</h3>
+                <h3>
+                    Dear Someone...
+                </h3>
 
                 <p class="panel-subtitle">
                     Write the message. You do not have to send it.
@@ -1994,7 +2757,8 @@ footer strong{
                     placeholder="Dear someone..."
                 ></textarea>
 
-                <button class="btn" id="submitUnsent">
+                <button class="btn"
+                        id="submitUnsent">
                     Place in the Archive
                 </button>
 
@@ -2003,9 +2767,12 @@ footer strong{
 
             <div class="records-header">
 
-                <div class="records-symbol">✧</div>
+                <div class="records-symbol">
+                    ✧
+                </div>
 
                 <div>
+
                     <div class="records-label">
                         PRIVATE CORRESPONDENCE
                     </div>
@@ -2013,18 +2780,23 @@ footer strong{
                     <h3>
                         Recently Filed Messages
                     </h3>
+
                 </div>
 
-                <div class="records-symbol">✧</div>
+                <div class="records-symbol">
+                    ✧
+                </div>
 
             </div>
+
 
             <div class="records-divider">
                 <span>◇</span>
             </div>
 
 
-            <div id="unsentList" class="record-grid">
+            <div id="unsentList"
+                 class="record-grid">
 
                 <div class="empty-record">
 
@@ -2053,7 +2825,9 @@ footer strong{
     </div>
 
 
-    <!-- MYSTERIES -->
+    <!-- ==========================================
+         MYSTERIES
+    ========================================== -->
 
     <div id="mysteryMenu" class="interface">
 
@@ -2088,9 +2862,13 @@ footer strong{
                 <div class="category-card"
                      onclick="openInterface('signs')">
 
-                    <div class="category-symbol">◇</div>
+                    <div class="category-symbol">
+                        ◇
+                    </div>
 
-                    <h3>Sign or Delusion</h3>
+                    <h3>
+                        Sign or Delusion
+                    </h3>
 
                     <p>
                         Decide whether the evidence means something—
@@ -2103,9 +2881,13 @@ footer strong{
                 <div class="category-card"
                      onclick="showPage('faq')">
 
-                    <div class="category-symbol">⁂</div>
+                    <div class="category-symbol">
+                        ⁂
+                    </div>
 
-                    <h3>Archive FAQ</h3>
+                    <h3>
+                        Archive FAQ
+                    </h3>
 
                     <p>
                         Learn how the archive works.
@@ -2120,7 +2902,9 @@ footer strong{
     </div>
 
 
-    <!-- SIGNS -->
+    <!-- ==========================================
+         SIGNS
+    ========================================== -->
 
     <div id="signs" class="interface">
 
@@ -2198,10 +2982,12 @@ footer strong{
                         </div>
 
                         <div class="result-track">
+
                             <div
                                 id="signBar"
                                 class="result-bar">
                             </div>
+
                         </div>
 
                     </div>
@@ -2215,10 +3001,12 @@ footer strong{
                         </div>
 
                         <div class="result-track">
+
                             <div
                                 id="maybeBar"
                                 class="result-bar">
                             </div>
+
                         </div>
 
                     </div>
@@ -2232,10 +3020,12 @@ footer strong{
                         </div>
 
                         <div class="result-track">
+
                             <div
                                 id="deluluBar"
                                 class="result-bar">
                             </div>
+
                         </div>
 
                     </div>
@@ -2249,7 +3039,9 @@ footer strong{
     </div>
 
 
-    <!-- TWISTS -->
+    <!-- ==========================================
+         TWISTS
+    ========================================== -->
 
     <div id="twistMenu" class="interface">
 
@@ -2288,7 +3080,9 @@ footer strong{
                         ✦
                     </div>
 
-                    <h3>Fate Roulette</h3>
+                    <h3>
+                        Fate Roulette
+                    </h3>
 
                     <p>
                         Spin the wheel and discover your fictional
@@ -2305,7 +3099,9 @@ footer strong{
                         ❦
                     </div>
 
-                    <h3>Compatibility Test</h3>
+                    <h3>
+                        Compatibility Test
+                    </h3>
 
                     <p>
                         A playful archive calculation for two names.
@@ -2320,7 +3116,9 @@ footer strong{
     </div>
 
 
-    <!-- ROULETTE -->
+    <!-- ==========================================
+         ROULETTE
+    ========================================== -->
 
     <div id="roulette" class="interface">
 
@@ -2385,7 +3183,9 @@ footer strong{
     </div>
 
 
-    <!-- COMPATIBILITY -->
+    <!-- ==========================================
+         COMPATIBILITY
+    ========================================== -->
 
     <div id="compatibility" class="interface">
 
@@ -2493,7 +3293,9 @@ footer strong{
 </section>
 
 
-<!-- COMMUNITY -->
+<!-- ==========================================
+     COMMUNITY
+========================================== -->
 
 <section id="community" class="page">
 
@@ -2528,13 +3330,17 @@ footer strong{
 
             <div class="community-card">
 
-                <h3>Confessions</h3>
+                <h3>
+                    Confessions
+                </h3>
 
                 <div id="communityConfessions">
+
                     <p>
                         Records submitted to the confession archive
                         will appear here.
                     </p>
+
                 </div>
 
             </div>
@@ -2542,12 +3348,16 @@ footer strong{
 
             <div class="community-card">
 
-                <h3>Hugot</h3>
+                <h3>
+                    Hugot
+                </h3>
 
                 <div id="communityHugots">
+
                     <p>
                         Filed hugot lines will appear here.
                     </p>
+
                 </div>
 
             </div>
@@ -2555,12 +3365,16 @@ footer strong{
 
             <div class="community-card">
 
-                <h3>Unsent</h3>
+                <h3>
+                    Unsent
+                </h3>
 
                 <div id="communityUnsent">
+
                     <p>
                         Anonymous unsent messages will appear here.
                     </p>
+
                 </div>
 
             </div>
@@ -2572,7 +3386,9 @@ footer strong{
 </section>
 
 
-<!-- RECOMMENDATIONS -->
+<!-- ==========================================
+     RECOMMENDATIONS
+========================================== -->
 
 <section id="recommendations" class="page">
 
@@ -2607,7 +3423,9 @@ footer strong{
 
             <div class="recommendation">
 
-                <h3>The Almost Story</h3>
+                <h3>
+                    The Almost Story
+                </h3>
 
                 <p>
                     For stories that never became relationships,
@@ -2619,7 +3437,9 @@ footer strong{
 
             <div class="recommendation">
 
-                <h3>The What-If File</h3>
+                <h3>
+                    The What-If File
+                </h3>
 
                 <p>
                     A record for the possibilities that remain
@@ -2631,7 +3451,9 @@ footer strong{
 
             <div class="recommendation">
 
-                <h3>The Coincidence Archive</h3>
+                <h3>
+                    The Coincidence Archive
+                </h3>
 
                 <p>
                     For strange timing, unexpected meetings,
@@ -2643,7 +3465,9 @@ footer strong{
 
             <div class="recommendation">
 
-                <h3>The Unfinished Chapter</h3>
+                <h3>
+                    The Unfinished Chapter
+                </h3>
 
                 <p>
                     For stories that ended without giving anyone
@@ -2659,7 +3483,9 @@ footer strong{
 </section>
 
 
-<!-- FAQ -->
+<!-- ==========================================
+     FAQ
+========================================== -->
 
 <section id="faq" class="page">
 
@@ -2778,7 +3604,9 @@ footer strong{
 </section>
 
 
-<!-- ABOUT -->
+<!-- ==========================================
+     ABOUT
+========================================== -->
 
 <section id="about" class="page">
 
@@ -2804,7 +3632,9 @@ footer strong{
 
         <div class="info-panel">
 
-            <h3>A Cabinet of Stories</h3>
+            <h3>
+                A Cabinet of Stories
+            </h3>
 
             <p>
                 PlotTwisted was created as a vintage-inspired
@@ -2826,7 +3656,9 @@ footer strong{
 </section>
 
 
-<!-- CONTACT -->
+<!-- ==========================================
+     CONTACT
+========================================== -->
 
 <section id="contact" class="page">
 
@@ -2852,7 +3684,9 @@ footer strong{
 
         <div class="info-panel">
 
-            <h3>Send a Message</h3>
+            <h3>
+                Send a Message
+            </h3>
 
             <p style="margin-bottom:25px;">
 
@@ -2900,7 +3734,9 @@ footer strong{
 </section>
 
 
-<!-- FOOTER -->
+<!-- ==========================================
+     FOOTER
+========================================== -->
 
 <footer id="siteFooter">
 
@@ -2912,6 +3748,10 @@ footer strong{
 
 </footer>
 
+
+<!-- ==========================================
+     JAVASCRIPT
+========================================== -->
 
 <script>
 
@@ -3044,103 +3884,81 @@ function showPage(id){
 const plotTwists = [
 
     "You unexpectedly become the main character of someone else's story.",
-
     "The person you least expected becomes your greatest ally.",
-
     "A forgotten conversation suddenly becomes important.",
-
     "You discover that the coincidence was not as random as it seemed.",
-
     "Someone from the past unexpectedly returns.",
-
     "A simple decision changes the entire direction of the story.",
-
     "The answer arrives when you finally stop looking for it.",
-
     "You receive a message at exactly the right moment.",
-
     "The person you thought forgot you remembers everything.",
-
     "An ordinary day becomes unexpectedly memorable.",
-
     "You discover a hidden connection between two unrelated events.",
-
     "Someone finally says what they had been keeping to themselves.",
-
     "The chapter you thought was finished receives one unexpected page.",
-
     "You meet someone who changes the way you see an old memory.",
-
     "The plot takes a completely different direction.",
-
     "A missed opportunity becomes a new beginning.",
-
     "You find an answer in the most unlikely place.",
-
     "The person you underestimated surprises you.",
-
     "A quiet moment becomes the turning point.",
-
     "Your biggest what-if becomes a lesson instead of a regret.",
-
     "A coincidence becomes the beginning of a new story.",
-
     "You realize the ending was actually a beginning.",
-
     "An unexpected invitation changes your plans.",
-
     "Someone notices something about you that nobody else noticed.",
-
     "A secret finally finds its way into the open.",
-
     "You cross paths with someone at the exact wrong—or right—time.",
-
     "The smallest decision creates the biggest plot twist.",
-
     "A familiar place suddenly feels completely different.",
-
     "You discover that someone has been quietly supporting you.",
-
     "A chapter closes without the ending you expected.",
-
     "A completely random choice turns out to matter.",
-
     "The story takes a peaceful turn when you least expect it.",
-
     "Something you once dismissed becomes important later.",
-
     "You find closure in a place you never expected.",
-
     "A new opportunity appears after an unexpected change.",
-
     "The person you thought was a stranger becomes familiar.",
-
     "A forgotten promise suddenly matters again.",
-
     "You learn that not every unanswered question needs an answer.",
-
     "The plot twist is realizing you were stronger than you thought.",
-
     "A new chapter begins quietly.",
-
     "Someone finally understands what you meant.",
-
     "An old memory gains an entirely different meaning.",
-
     "You accidentally discover something worth remembering.",
-
     "The story changes because you choose differently this time.",
-
     "The archive records a beginning rather than an ending.",
-
     "You realize the plot was never about the person you thought it was about.",
-
     "A small act of kindness becomes unexpectedly significant.",
-
     "The next chapter is completely unwritten.",
-
     "Your story receives a plot twist you could not have planned."
-
+    "A simple late-night conversation suddenly feels different.",
+    "You both joke about dating, until one of you stops laughing.",
+    "Your friend gets jealous when someone else starts getting close to you.",
+    "You accidentally become each other's favorite person.",
+    "One day, your friendship starts feeling like something more.",
+    "You realize you've been falling for your best friend without noticing.",
+    "Your friend remembers every little detail about you—and you finally notice.",
+    "A 'what if we dated?' joke becomes a serious conversation.",
+    "You get paired together for something and suddenly everyone thinks you're a couple.",
+    "Your friends keep teasing you two because the chemistry is obvious.",
+    "You both deny having feelings while acting like a couple.",
+    "Your best friend becomes the person you want to tell everything to.",
+    "A random moment makes you wonder if your friendship could become something more.",
+    "You catch yourself getting nervous whenever your friend gets unusually close.",
+    "Your friend starts treating you differently, and you can't figure out why.",
+    "Someone asks if you're dating. You both say no… a little too quickly.",
+    "Your friendship survives awkwardness, misunderstandings, and somehow becomes stronger.",
+    "You realize the person you've been waiting for has been beside you all along.",
+    "Your friend confesses first—but neither of you knows what happens next.",
+    "A friendship that everyone thought was platonic starts becoming something else.",
+    "You slowly discover that your favorite person might also be your favorite love story.",
+    "One confession changes the way you see your friendship forever.",
+    "The line between 'best friends' and 'something more' gets dangerously blurry.",
+    "You both have feelings but are too scared to risk the friendship.",
+    "A late-night chat becomes the conversation neither of you expected.",
+    "You realize you've been saving your best stories for one specific person.",
+    
 ];
 
 
