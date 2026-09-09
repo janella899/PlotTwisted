@@ -1,3776 +1,3101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PlotTwisted — The Secret Victorian Archive</title>
+  <title>PlotTwisted — The Secret Victorian Archive</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display&family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<style>
+  <style>
+    :root {
+      --black: #090506;
+      --dark: #12080b;
+      --dark-wine: #210b12;
 
-:root{
-    --black:#090506;
-    --dark:#12080b;
-    --dark-wine:#210b12;
+      --wine: #64192d;
+      --wine-light: #8d354a;
+      --wine-deep: #3a0c18;
 
-    --wine:#64192d;
-    --wine-light:#8d354a;
-    --wine-deep:#3a0c18;
+      --gold: #c6a15e;
+      --gold-light: #e6c77f;
+      --gold-dark: #87622e;
 
-    --gold:#c6a15e;
-    --gold-light:#e6c77f;
-    --gold-dark:#87622e;
+      --cream: #f1e1c8;
+      --paper: #e4cda9;
+      --paper-dark: #caa77c;
 
-    --cream:#f1e1c8;
-    --paper:#e4cda9;
-    --paper-dark:#caa77c;
+      --ink: #281719;
+      --muted: #a89787;
 
-    --ink:#281719;
-    --muted:#a89787;
+      --line: rgba(198,161,94,.32);
+      --line-light: rgba(241,225,200,.18);
 
-    --line:rgba(198,161,94,.32);
-}
+      --shadow:
+        0 25px 70px rgba(0,0,0,.55);
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+      --transition: .35s ease;
+    }
 
-html{
-    scroll-behavior:smooth;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body{
-    min-height:100vh;
-    overflow-x:hidden;
+    html {
+      scroll-behavior: smooth;
+    }
 
-    font-family:"Poppins",sans-serif;
-    color:var(--cream);
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(100,25,45,.20), transparent 35%),
+        linear-gradient(135deg, #080405, #16080c 45%, #090506);
+      color: var(--cream);
+      font-family: "Poppins", sans-serif;
+      overflow-x: hidden;
+    }
 
-    background:
-        radial-gradient(circle at 15% 20%,rgba(100,25,45,.30),transparent 28%),
-        radial-gradient(circle at 85% 70%,rgba(198,161,94,.08),transparent 32%),
-        linear-gradient(135deg,#080506,#17090d 50%,#070405);
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:9999;
-
-    opacity:.08;
-
-    background-image:
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: .12;
+      background-image:
         repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(255,255,255,.05) 3px
+          0deg,
+          rgba(255,255,255,.03) 0,
+          rgba(255,255,255,.03) 1px,
+          transparent 1px,
+          transparent 4px
         );
-}
-
-.archive-frame{
-    position:fixed;
-    inset:18px;
-    border:1px solid rgba(198,161,94,.16);
-    pointer-events:none;
-    z-index:0;
-}
-
-.archive-frame::before,
-.archive-frame::after{
-    content:"❦";
-    position:absolute;
-    color:var(--gold);
-    font-size:38px;
-    opacity:.28;
-}
-
-.archive-frame::before{
-    top:-19px;
-    left:25px;
-}
-
-.archive-frame::after{
-    bottom:-19px;
-    right:25px;
-    transform:rotate(180deg);
-}
-
-.corner{
-    position:fixed;
-    z-index:0;
-    pointer-events:none;
-
-    color:rgba(198,161,94,.22);
-    font-family:"Cormorant Garamond",serif;
-    font-size:90px;
-}
-
-.corner-tl{
-    top:70px;
-    left:15px;
-}
-
-.corner-tr{
-    top:70px;
-    right:15px;
-    transform:rotate(90deg);
-}
-
-.corner-bl{
-    bottom:20px;
-    left:15px;
-    transform:rotate(-90deg);
-}
-
-.corner-br{
-    bottom:20px;
-    right:15px;
-    transform:rotate(180deg);
-}
-
-.botanical{
-    position:fixed;
-    z-index:0;
-    pointer-events:none;
-    opacity:.13;
-
-    font-family:"Cormorant Garamond",serif;
-    color:#a9485d;
-
-    filter:drop-shadow(0 10px 20px rgba(0,0,0,.5));
-}
-
-.botanical.one{
-    left:-35px;
-    top:180px;
-    font-size:180px;
-    transform:rotate(-15deg);
-}
-
-.botanical.two{
-    right:-40px;
-    bottom:60px;
-    font-size:200px;
-    transform:rotate(18deg);
-}
-
-.botanical.three{
-    right:6%;
-    top:30%;
-    font-size:90px;
-    color:var(--gold);
-    opacity:.08;
-}
-
-/* NAVBAR */
-
-.navbar{
-    position:fixed;
-    top:0;
-    left:0;
-
-    width:100%;
-    height:74px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 5%;
-
-    background:rgba(9,5,6,.94);
-
-    backdrop-filter:blur(15px);
-
-    border-bottom:1px solid var(--line);
-
-    z-index:1000;
-}
-
-.logo{
-    font-family:"DM Serif Display",serif;
-    font-size:29px;
-    letter-spacing:1px;
-}
-
-.logo::before{
-    content:"✦";
-    color:var(--gold);
-    font-size:12px;
-    margin-right:10px;
-}
-
-.logo span{
-    font-family:"Great Vibes",cursive;
-    color:var(--gold);
-    font-size:37px;
-}
-
-.nav-links{
-    display:flex;
-    gap:21px;
-}
-
-.nav-button{
-    border:0;
-    background:none;
-
-    color:#bcae9f;
-
-    cursor:pointer;
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:16px;
-    letter-spacing:.5px;
-
-    transition:.3s;
-}
-
-.nav-button:hover{
-    color:var(--gold);
-}
-
-/* PAGE SYSTEM */
-
-.page-section{
-    display:none;
-
-    min-height:100vh;
-
-    padding:125px 6% 85px;
-
-    position:relative;
-    z-index:2;
-}
-
-.page-section.active-section{
-    display:block;
-    animation:pageIn .6s ease;
-}
-
-@keyframes pageIn{
-    from{
-        opacity:0;
-        transform:translateY(20px);
+      mix-blend-mode: overlay;
     }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
+    /* =========================================
+       DECORATIVE FRAME
+    ========================================= */
+
+    .page-frame {
+      position: fixed;
+      inset: 14px;
+      border: 1px solid rgba(198,161,94,.22);
+      pointer-events: none;
+      z-index: 9999;
     }
-}
 
-/* LABELS */
-
-.eyebrow{
-    color:var(--gold);
-
-    font-size:9px;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-}
-
-.archive-label{
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-
-    padding:8px 16px;
-
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-
-    color:var(--gold);
-
-    font-size:8px;
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-}
-
-/* HERO */
-
-.home-wrap{
-    max-width:1200px;
-    margin:auto;
-}
-
-.hero{
-    min-height:67vh;
-
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-
-    align-items:center;
-
-    gap:75px;
-}
-
-.hero h1{
-    margin:22px 0;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:clamp(65px,9vw,120px);
-
-    line-height:.82;
-    font-weight:400;
-    letter-spacing:-3px;
-}
-
-.hero h1 em{
-    color:var(--gold);
-
-    font-family:"Great Vibes",cursive;
-
-    font-weight:400;
-}
-
-.hero-text{
-    max-width:520px;
-
-    color:#b7a79a;
-
-    font-size:13px;
-
-    line-height:1.9;
-}
-
-/* BUTTONS */
-
-.hero-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:30px;
-}
-
-.primary-btn,
-.secondary-btn,
-.post-button{
-    padding:13px 23px;
-
-    cursor:pointer;
-
-    font-family:"Poppins",sans-serif;
-    font-size:9px;
-
-    letter-spacing:1.5px;
-
-    transition:.3s;
-}
-
-.primary-btn,
-.post-button{
-    background:linear-gradient(135deg,var(--wine),var(--wine-deep));
-
-    color:var(--cream);
-
-    border:1px solid rgba(198,161,94,.55);
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.04),
-        0 10px 20px rgba(0,0,0,.35);
-}
-
-.secondary-btn{
-    background:transparent;
-    color:var(--cream);
-
-    border:1px solid var(--line);
-}
-
-.primary-btn:hover,
-.secondary-btn:hover,
-.post-button:hover{
-    transform:translateY(-4px);
-
-    border-color:var(--gold-light);
-
-    box-shadow:
-        0 14px 30px rgba(0,0,0,.45);
-}
-
-/* LETTER */
-
-.letter{
-    position:relative;
-
-    max-width:400px;
-    margin:auto;
-
-    padding:55px 42px;
-
-    color:var(--ink);
-
-    background:
-        radial-gradient(circle at 20% 20%,rgba(255,255,255,.35),transparent 30%),
-        linear-gradient(135deg,#f1dfc2,#d5b48d);
-
-    border:1px solid rgba(85,55,35,.35);
-
-    box-shadow:
-        12px 15px 0 rgba(198,161,94,.08),
-        0 28px 55px rgba(0,0,0,.55);
-
-    transform:rotate(1.5deg);
-}
-
-.letter::before{
-    content:"✦  P L O T T W I S T E D  ✦";
-
-    position:absolute;
-
-    top:18px;
-    left:0;
-    width:100%;
-
-    text-align:center;
-
-    font-size:7px;
-    letter-spacing:4px;
-
-    color:#80634a;
-}
-
-.letter::after{
-    content:"❦";
-
-    position:absolute;
-
-    bottom:12px;
-    left:0;
-    width:100%;
-
-    text-align:center;
-
-    font-size:25px;
-
-    color:#8c674a;
-}
-
-.letter-top{
-    margin-top:15px;
-
-    display:flex;
-    justify-content:space-between;
-
-    color:#735b49;
-
-    font-family:"Libre Baskerville",serif;
-    font-size:7px;
-
-    letter-spacing:1px;
-}
-
-.letter h2{
-    margin:35px 0 18px;
-
-    font-family:"Great Vibes",cursive;
-    font-size:46px;
-
-    font-weight:400;
-
-    color:#54232d;
-}
-
-.letter p{
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-    line-height:1.4;
-
-    color:#3c2928;
-}
-
-.signature{
-    margin-top:25px;
-
-    text-align:right;
-
-    font-family:"Great Vibes",cursive;
-    font-size:28px;
-
-    color:#632738;
-}
-
-.wax{
-    position:absolute;
-
-    width:58px;
-    height:58px;
-
-    left:50%;
-    bottom:-29px;
-
-    transform:translateX(-50%);
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        radial-gradient(circle at 35% 30%,#b84a61,#5b1223 70%);
-
-    border:2px solid rgba(50,8,15,.45);
-
-    color:var(--gold-light);
-    font-size:19px;
-
-    box-shadow:
-        inset 4px 4px 8px rgba(255,255,255,.1),
-        0 8px 14px rgba(0,0,0,.35);
-}
-
-/* TITLES */
-
-.interface-title{
-    max-width:850px;
-    margin:60px auto 42px;
-
-    text-align:center;
-}
-
-.interface-title h2{
-    margin:14px 0;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:clamp(52px,8vw,90px);
-
-    font-weight:400;
-}
-
-.interface-title h2 span{
-    color:var(--gold);
-    font-family:"Great Vibes",cursive;
-}
-
-.interface-title p:last-child{
-    color:var(--muted);
-    font-size:11px;
-}
-
-/* ARCHIVE MENU */
-
-.sub-interface{
-    display:none;
-    max-width:1100px;
-    margin:auto;
-}
-
-.sub-interface.active{
-    display:block;
-    animation:pageIn .5s ease;
-}
-
-.vintage-menu{
-    display:grid;
-
-    grid-template-columns:repeat(5,1fr);
-
-    gap:15px;
-}
-
-.menu-card{
-    position:relative;
-
-    min-height:210px;
-
-    padding:30px 18px;
-
-    text-align:center;
-
-    cursor:pointer;
-
-    background:
-        linear-gradient(145deg,#241317,#10090b);
-
-    border:1px solid var(--line);
-
-    overflow:hidden;
-
-    transition:.35s;
-}
-
-.menu-card::before{
-    content:"";
-
-    position:absolute;
-    inset:8px;
-
-    border:1px solid rgba(198,161,94,.15);
-}
-
-.menu-card::after{
-    content:"✦";
-
-    position:absolute;
-    top:12px;
-    right:14px;
-
-    color:rgba(198,161,94,.35);
-
-    font-size:12px;
-}
-
-.menu-card:hover{
-    transform:translateY(-9px) rotate(-1deg);
-
-    border-color:var(--gold);
-
-    background:
-        linear-gradient(145deg,#381621,#16090d);
-}
-
-.menu-icon{
-    display:block;
-
-    width:52px;
-    height:52px;
-
-    margin:0 auto 20px;
-
-    border:1px solid var(--gold-dark);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    color:var(--gold);
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:26px;
-}
-
-.menu-card h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:25px;
-    font-weight:500;
-}
-
-.menu-card p{
-    margin-top:8px;
-
-    color:#938277;
-
-    font-size:9px;
-    line-height:1.6;
-}
-
-/* BACK BUTTON */
-
-.back-button{
-    margin:25px 0;
-
-    padding:10px 18px;
-
-    background:transparent;
-
-    border:1px solid var(--line);
-
-    color:var(--gold);
-
-    cursor:pointer;
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:16px;
-
-    transition:.3s;
-}
-
-.back-button:hover{
-    background:var(--wine);
-    border-color:var(--gold);
-}
-
-/* OPTION CARDS */
-
-.option-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.option-card{
-    position:relative;
-
-    min-height:220px;
-
-    padding:35px;
-
-    cursor:pointer;
-
-    background:
-        linear-gradient(135deg,#efdabc,#d0ac82);
-
-    color:var(--ink);
-
-    border:1px solid rgba(112,77,45,.35);
-
-    box-shadow:
-        8px 10px 0 rgba(198,161,94,.08);
-
-    transition:.3s;
-
-    transform:rotate(-.7deg);
-}
-
-.option-card:nth-child(2){
-    transform:rotate(.5deg);
-}
-
-.option-card:nth-child(3){
-    transform:rotate(-.3deg);
-}
-
-.option-card:hover{
-    transform:translateY(-8px) rotate(0);
-}
-
-.option-card span{
-    color:var(--wine);
-    font-size:28px;
-}
-
-.option-card h3{
-    margin:18px 0 8px;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:27px;
-    font-weight:400;
-}
-
-.option-card p{
-    color:#654e42;
-
-    font-size:10px;
-    line-height:1.7;
-}
-
-/* SECTION HEADINGS */
-
-.section-heading{
-    max-width:1000px;
-    margin:15px auto 45px;
-}
-
-.section-heading h2{
-    margin:15px 0;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:clamp(55px,8vw,92px);
-
-    font-weight:400;
-    line-height:.9;
-}
-
-.section-heading h2 em{
-    color:var(--gold);
-    font-family:"Great Vibes",cursive;
-}
-
-.section-heading p:last-child{
-    color:var(--muted);
-    font-size:12px;
-}
-
-/* FORMS */
-
-.form-card{
-    position:relative;
-
-    max-width:850px;
-    margin:auto;
-
-    padding:38px;
-
-    color:var(--ink);
-
-    background:
-        linear-gradient(135deg,#ead3b3,#cfaa80);
-
-    border:1px solid rgba(104,70,43,.4);
-
-    box-shadow:
-        10px 13px 0 rgba(198,161,94,.08);
-}
-
-.form-card::before{
-    content:"CONFIDENTIAL ARCHIVE ENTRY";
-
-    display:block;
-
-    margin-bottom:20px;
-
-    color:#805f46;
-
-    font-size:7px;
-    letter-spacing:3px;
-}
-
-.form-label{
-    display:block;
-
-    margin-bottom:15px;
-
-    color:#622837;
-
-    font-family:"Great Vibes",cursive;
-
-    font-size:31px;
-}
-
-textarea{
-    width:100%;
-    min-height:170px;
-
-    padding:20px;
-
-    resize:vertical;
-    outline:none;
-
-    background:
-        repeating-linear-gradient(
-            #f0dfc5,
-            #f0dfc5 31px,
-            #d6b993 32px
+    .page-frame::before,
+    .page-frame::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-color: var(--gold);
+      opacity: .55;
+    }
+
+    .page-frame::before {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid;
+      border-left: 2px solid;
+    }
+
+    .page-frame::after {
+      right: -1px;
+      bottom: -1px;
+      border-right: 2px solid;
+      border-bottom: 2px solid;
+    }
+
+    .corner {
+      position: fixed;
+      width: 42px;
+      height: 42px;
+      border-color: rgba(198,161,94,.45);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .corner.top-right {
+      top: 14px;
+      right: 14px;
+      border-top: 1px solid;
+      border-right: 1px solid;
+    }
+
+    .corner.bottom-left {
+      bottom: 14px;
+      left: 14px;
+      border-bottom: 1px solid;
+      border-left: 1px solid;
+    }
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9000;
+
+      padding: 20px 7%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(9,5,6,.98),
+          rgba(9,5,6,.80),
+          transparent
         );
 
-    color:#302020;
-
-    border:1px solid rgba(91,56,44,.35);
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:19px;
-    line-height:1.6;
-}
-
-textarea:focus{
-    border-color:var(--wine-light);
-}
-
-/* COMMUNITY */
-
-.feed-title{
-    max-width:1100px;
-
-    margin:60px auto 20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.feed-title h3{
-    font-family:"Cormorant Garamond",serif;
-    font-size:37px;
-    font-weight:500;
-}
-
-.feed-title span{
-    color:var(--gold);
-    font-size:8px;
-    letter-spacing:2px;
-}
-
-.post-grid{
-    max-width:1100px;
-    margin:auto;
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:18px;
-}
-
-.post-card{
-    position:relative;
-
-    min-height:210px;
-
-    padding:28px 24px 50px;
-
-    background:
-        linear-gradient(145deg,#241417,#10090b);
-
-    border:1px solid var(--line);
-
-    transition:.3s;
-}
-
-.post-card::before{
-    content:"❦";
-
-    position:absolute;
-    top:12px;
-    right:15px;
-
-    color:rgba(198,161,94,.22);
-    font-size:24px;
-}
-
-.post-card:hover{
-    transform:translateY(-6px) rotate(.4deg);
-    border-color:var(--gold);
-}
-
-.post-type{
-    color:var(--gold);
-    font-size:8px;
-    letter-spacing:2px;
-}
-
-.post-message{
-    margin-top:20px;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:24px;
-    line-height:1.25;
-}
-
-.post-date{
-    margin-top:18px;
-
-    color:#756961;
-    font-size:8px;
-}
-
-.post-actions{
-    position:absolute;
-
-    left:22px;
-    right:22px;
-    bottom:14px;
-
-    display:flex;
-    justify-content:space-between;
-}
-
-.like-button,
-.report-button{
-    background:none;
-    border:0;
-
-    color:#80646a;
-
-    cursor:pointer;
-
-    font-size:10px;
-}
-
-/* SIGN OR DELUSION */
-
-.vote-box{
-    max-width:850px;
-    margin:auto;
-
-    padding:40px;
-
-    background:
-        linear-gradient(145deg,#251316,#10090b);
-
-    border:1px solid var(--line);
-}
-
-.vote-box h3{
-    margin:20px 0 30px;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:36px;
-    font-weight:500;
-    line-height:1.2;
-}
-
-.vote-buttons{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.vote-buttons button{
-    min-height:110px;
-
-    background:rgba(255,255,255,.025);
-
-    color:var(--cream);
-
-    border:1px solid var(--line);
-
-    cursor:pointer;
-
-    font-family:"Poppins",sans-serif;
-    font-size:10px;
-
-    transition:.3s;
-}
-
-.vote-buttons button:hover{
-    background:var(--wine);
-    border-color:var(--gold);
-    transform:translateY(-5px);
-}
-
-.results{
-    margin-top:35px;
-}
-
-.result{
-    display:grid;
-
-    grid-template-columns:70px 1fr 45px;
-
-    gap:12px;
-    align-items:center;
-
-    margin:15px 0;
-
-    color:#9e9186;
-    font-size:9px;
-}
-
-.bar{
-    height:5px;
-    background:#2a1d1f;
-}
-
-.bar div{
-    height:100%;
-
-    background:
-        linear-gradient(90deg,var(--wine),var(--gold));
-}
-
-/* ROULETTE */
-
-.center-box{
-    position:relative;
-
-    max-width:850px;
-    margin:auto;
-
-    padding:65px 35px;
-
-    text-align:center;
-
-    background:
-        radial-gradient(circle,rgba(100,25,45,.32),transparent 65%),
-        #12090c;
-
-    border:1px solid var(--line);
-}
-
-.center-box::before,
-.center-box::after{
-    content:"✦";
-
-    position:absolute;
-
-    color:rgba(198,161,94,.25);
-    font-size:30px;
-}
-
-.center-box::before{
-    top:20px;
-    left:25px;
-}
-
-.center-box::after{
-    bottom:20px;
-    right:25px;
-}
-
-#rouletteIcon{
-    width:95px;
-    height:95px;
-
-    margin:0 auto 28px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:1px solid var(--gold);
-
-    border-radius:50%;
-
-    color:var(--gold);
-
-    font-size:38px;
-
-    transition:transform .7s ease;
-}
-
-.hugot-display{
-    max-width:700px;
-    margin:auto;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:clamp(30px,5vw,52px);
-
-    font-style:italic;
-    line-height:1.15;
-}
-
-/* =========================================================
-   COMPATIBILITY TEST
-========================================================= */
-
-.compatibility-box{
-    max-width:850px;
-    margin:auto;
-
-    padding:45px 35px;
-
-    text-align:center;
-
-    background:
-        radial-gradient(circle at 50% 20%,rgba(100,25,45,.38),transparent 55%),
-        linear-gradient(145deg,#1c0b10,#0e0709);
-
-    border:1px solid var(--line);
-
-    box-shadow:
-        0 25px 50px rgba(0,0,0,.35);
-}
-
-.compatibility-symbol{
-    width:90px;
-    height:90px;
-
-    margin:0 auto 25px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:1px solid var(--gold);
-
-    border-radius:50%;
-
-    color:var(--gold-light);
-
-    font-size:34px;
-
-    background:
-        radial-gradient(circle,rgba(198,161,94,.10),transparent 70%);
-}
-
-.name-grid{
-    max-width:650px;
-    margin:30px auto;
-
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-
-    gap:15px;
-    align-items:center;
-}
-
-.name-input{
-    width:100%;
-
-    padding:16px 18px;
-
-    outline:none;
-
-    background:#ead5b5;
-
-    color:#342021;
-
-    border:1px solid rgba(198,161,94,.5);
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-
-    text-align:center;
-}
-
-.name-input::placeholder{
-    color:#826c5c;
-}
-
-.name-input:focus{
-    border-color:var(--gold-light);
-
-    box-shadow:0 0 15px rgba(198,161,94,.12);
-}
-
-.name-heart{
-    color:var(--gold);
-
-    font-size:25px;
-}
-
-.compatibility-result{
-    display:none;
-
-    margin:40px auto 0;
-
-    max-width:650px;
-
-    padding:35px 25px;
-
-    background:
-        linear-gradient(135deg,#ead7b8,#cba77d);
-
-    color:var(--ink);
-
-    border:1px solid rgba(198,161,94,.6);
-
-    box-shadow:
-        8px 10px 0 rgba(198,161,94,.08);
-}
-
-.compatibility-result.show{
-    display:block;
-
-    animation:resultReveal .7s ease;
-}
-
-@keyframes resultReveal{
-    from{
-        opacity:0;
-        transform:translateY(20px) scale(.97);
+      backdrop-filter: blur(8px);
     }
 
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
-
-.result-names{
-    font-family:"Great Vibes",cursive;
-
-    color:#622837;
-
-    font-size:42px;
-
-    margin-bottom:10px;
-}
-
-.result-divider{
-    color:#94734d;
-
-    font-size:20px;
-
-    margin:8px 0 15px;
-}
-
-.compatibility-number{
-    font-family:"DM Serif Display",serif;
-
-    color:#54232d;
-
-    font-size:72px;
-
-    line-height:1;
-
-    margin:10px 0;
-}
-
-.compatibility-label{
-    color:#805f46;
-
-    font-size:8px;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-}
-
-.fate-label{
-    margin-top:25px;
-
-    color:#805f46;
-
-    font-size:8px;
-
-    letter-spacing:3px;
-
-    text-transform:uppercase;
-}
-
-.fate-title{
-    margin:8px 0 12px;
-
-    font-family:"DM Serif Display",serif;
-
-    color:#54232d;
-
-    font-size:34px;
-
-    font-weight:400;
-}
-
-.fate-message{
-    max-width:520px;
-    margin:auto;
-
-    font-family:"Cormorant Garamond",serif;
-
-    color:#493532;
-
-    font-size:21px;
-
-    line-height:1.45;
-
-    font-style:italic;
-}
-
-.compatibility-note{
-    margin-top:20px;
-
-    color:#907b6b;
-
-    font-size:8px;
-}
-
-/* RECOMMENDATIONS */
-
-.recommendation-grid{
-    max-width:1050px;
-    margin:auto;
-
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.recommendation-card{
-    position:relative;
-
-    min-height:210px;
-
-    padding:32px;
-
-    background:
-        linear-gradient(135deg,#ead5b6,#c9a47b);
-
-    color:var(--ink);
-
-    border:1px solid rgba(198,161,94,.4);
-
-    transition:.3s;
-}
-
-.recommendation-card::before{
-    content:"FROM THE ARCHIVES";
-
-    display:block;
-
-    margin-bottom:18px;
-
-    font-size:7px;
-    letter-spacing:2px;
-
-    color:#8b684c;
-}
-
-.recommendation-card:hover{
-    transform:translateY(-7px) rotate(-.5deg);
-}
-
-.recommendation-card span{
-    color:var(--wine);
-    font-size:24px;
-}
-
-.recommendation-card h3{
-    margin:14px 0 8px;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:25px;
-    font-weight:400;
-}
-
-.recommendation-card p{
-    color:#624d42;
-    font-size:11px;
-    line-height:1.7;
-}
-
-/* FAQ */
-
-.faq-container{
-    max-width:850px;
-    margin:auto;
-}
-
-.faq-item{
-    margin-bottom:12px;
-
-    background:#130b0e;
-
-    border:1px solid var(--line);
-}
-
-.faq-item summary{
-    padding:21px;
-
-    cursor:pointer;
-
-    list-style:none;
-
-    font-family:"Cormorant Garamond",serif;
-    font-size:22px;
-}
-
-.faq-item summary::after{
-    content:"+";
-
-    float:right;
-
-    color:var(--gold);
-}
-
-.faq-item[open] summary::after{
-    content:"−";
-}
-
-.faq-answer{
-    padding:0 21px 22px;
-
-    color:#a49689;
-
-    font-size:11px;
-    line-height:1.8;
-}
-
-/* ABOUT */
-
-.about{
-    max-width:850px;
-    min-height:65vh;
-
-    margin:auto;
-
-    display:flex;
-    flex-direction:column;
-
-    justify-content:center;
-    align-items:center;
-
-    text-align:center;
-}
-
-.about h2{
-    margin:20px 0 35px;
-
-    font-family:"DM Serif Display",serif;
-
-    font-size:clamp(60px,9vw,105px);
-
-    line-height:.8;
-    font-weight:400;
-}
-
-.about h2 em{
-    color:var(--gold);
-    font-family:"Great Vibes",cursive;
-}
-
-.about p{
-    max-width:650px;
-
-    color:#a99b8e;
-
-    font-size:13px;
-    line-height:1.9;
-}
-
-/* CONTACT */
-
-.contact-box{
-    max-width:750px;
-    margin:auto;
-
-    padding:50px 35px;
-
-    text-align:center;
-
-    background:#140c0f;
-
-    border:1px solid var(--line);
-}
-
-.contact-symbol{
-    width:65px;
-    height:65px;
-
-    margin:auto;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:1px solid var(--gold);
-
-    border-radius:50%;
-
-    color:var(--gold);
-    font-size:28px;
-}
-
-.contact-box h2{
-    margin:18px 0;
-
-    font-family:"DM Serif Display",serif;
-    font-size:50px;
-    font-weight:400;
-}
-
-.contact-box p{
-    color:#9e9187;
-    font-size:12px;
-    line-height:1.8;
-}
-
-/* FOOTER */
-
-footer{
-    position:relative;
-
-    margin-top:70px;
-
-    padding:50px 7% 30px;
-
-    background:#080506;
-
-    border-top:1px solid var(--line);
-}
-
-.footer-grid{
-    max-width:1100px;
-    margin:auto;
-
-    display:grid;
-
-    grid-template-columns:1.3fr 1fr 1fr;
-
-    gap:40px;
-}
-
-.footer-title{
-    font-family:"DM Serif Display",serif;
-    font-size:28px;
-}
-
-.footer-title span{
-    color:var(--gold);
-
-    font-family:"Great Vibes",cursive;
-    font-size:34px;
-}
-
-footer p{
-    margin-top:12px;
-
-    color:#82766d;
-
-    font-size:10px;
-    line-height:1.8;
-}
-
-.footer-links{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.footer-links button{
-    background:none;
-    border:0;
-
-    text-align:left;
-
-    color:#95877d;
-
-    cursor:pointer;
-
-    font-family:"Poppins",sans-serif;
-    font-size:10px;
-}
-
-.footer-links button:hover{
-    color:var(--gold);
-}
-
-.copyright{
-    max-width:1100px;
-
-    margin:35px auto 0;
-
-    padding-top:20px;
-
-    border-top:1px solid rgba(198,161,94,.12);
-
-    text-align:center;
-
-    color:#5d534e;
-
-    font-size:8px;
-}
-
-/* MOBILE */
-
-@media(max-width:950px){
-
-    .nav-links{
-        display:none;
+    .brand {
+      border: 0;
+      background: transparent;
+      color: var(--cream);
+      cursor: pointer;
+      text-align: left;
     }
 
-    .hero{
-        grid-template-columns:1fr;
-        gap:60px;
+    .brand-small {
+      display: block;
+      color: var(--gold);
+      font-size: .62rem;
+      letter-spacing: .32em;
+      margin-bottom: 2px;
     }
 
-    .vintage-menu{
-        grid-template-columns:repeat(2,1fr);
+    .brand-name {
+      font-family: "DM Serif Display", serif;
+      font-size: 1.35rem;
+      letter-spacing: .08em;
     }
 
-    .option-grid,
-    .recommendation-grid{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:600px){
-
-    .navbar{
-        height:65px;
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 7px;
     }
 
-    .logo{
-        font-size:23px;
+    .nav-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 11px;
+      font-family: "Poppins", sans-serif;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      cursor: pointer;
+      transition: var(--transition);
     }
 
-    .page-section{
-        padding:100px 5% 60px;
+    .nav-btn:hover,
+    .nav-btn.active {
+      color: var(--gold-light);
+      border-color: var(--line);
+      background: rgba(100,25,45,.18);
     }
 
-    .hero h1{
-        font-size:66px;
+    /* =========================================
+       GENERAL
+    ========================================= */
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 125px 7% 80px;
+      animation: pageIn .5s ease;
     }
 
-    .vintage-menu{
-        grid-template-columns:1fr;
+    .page.active {
+      display: block;
     }
 
-    .letter{
-        padding:50px 28px;
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .vote-buttons{
-        grid-template-columns:1fr;
+    .page-inner {
+      width: min(1100px, 100%);
+      margin: auto;
     }
 
-    .form-card,
-    .vote-box,
-    .center-box,
-    .compatibility-box{
-        padding:25px 18px;
+    .archive-label {
+      color: var(--gold);
+      font-size: .65rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
     }
 
-    .name-grid{
-        grid-template-columns:1fr;
+    .page-title {
+      margin-top: 12px;
+      color: var(--cream);
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: .95;
     }
 
-    .name-heart{
-        transform:rotate(90deg);
+    .page-description {
+      max-width: 680px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.9;
     }
 
-    .compatibility-number{
-        font-size:60px;
+    .section-heading {
+      color: var(--cream);
+      font-family: "DM Serif Display", serif;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
     }
 
-    .result-names{
-        font-size:35px;
+    .section-subtitle {
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
     }
 
-    .footer-grid{
-        grid-template-columns:1fr;
+    /* =========================================
+       BUTTONS
+    ========================================= */
+
+    .archive-btn,
+    .gold-btn,
+    .back-button,
+    .outline-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      border: 1px solid var(--gold-dark);
+      background: transparent;
+      color: var(--gold-light);
+
+      padding: 13px 20px;
+
+      font-family: "Poppins", sans-serif;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+      transition: var(--transition);
     }
 
-    .corner{
-        display:none;
+    .archive-btn:hover,
+    .gold-btn:hover,
+    .back-button:hover,
+    .outline-btn:hover {
+      color: var(--cream);
+      border-color: var(--gold-light);
+      background: var(--wine);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
     }
-}
 
-</style>
+    .gold-btn {
+      background: var(--wine);
+    }
+
+    .back-button {
+      margin-bottom: 32px;
+      border-color: rgba(198,161,94,.45);
+      color: var(--muted);
+    }
+
+    .back-button::before {
+      content: "←";
+      font-size: .9rem;
+    }
+
+    /* =========================================
+       FIRST SCREEN — OPEN LETTER ONLY
+    ========================================= */
+
+    #home {
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    #home.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .letter-landing {
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 100px 20px 70px;
+
+      position: relative;
+    }
+
+    .letter-landing::before,
+    .letter-landing::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: .5;
+    }
+
+    .letter-landing::before {
+      top: 19%;
+    }
+
+    .letter-landing::after {
+      bottom: 13%;
+    }
+
+    .letter-wrapper {
+      width: min(670px, 100%);
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .letter-wrapper::before {
+      content: "PLOT TWISTED";
+      position: absolute;
+      top: -35px;
+      left: 0;
+      right: 0;
+      text-align: center;
+
+      color: var(--gold);
+      font-size: .58rem;
+      letter-spacing: .55em;
+    }
+
+    .letter {
+      position: relative;
+      padding: clamp(35px, 7vw, 70px);
+
+      background:
+        linear-gradient(
+          rgba(241,225,200,.96),
+          rgba(228,205,169,.98)
+        );
+
+      color: var(--ink);
+
+      box-shadow:
+        0 35px 90px rgba(0,0,0,.65),
+        inset 0 0 50px rgba(75,39,21,.10);
+
+      border: 1px solid rgba(135,98,46,.55);
+
+      transform: rotate(-.35deg);
+    }
+
+    .letter::before {
+      content: "";
+      position: absolute;
+      inset: 13px;
+      border: 1px solid rgba(135,98,46,.45);
+      pointer-events: none;
+    }
+
+    .letter::after {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px dashed rgba(135,98,46,.25);
+      pointer-events: none;
+    }
+
+    .letter-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 38px;
+    }
+
+    .file-number {
+      font-size: .6rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: #694a25;
+    }
+
+    .classification {
+      padding: 5px 9px;
+      border: 1px solid rgba(100,25,45,.5);
+      color: var(--wine);
+      font-size: .55rem;
+      letter-spacing: .18em;
+    }
+
+    .letter h1 {
+      position: relative;
+      z-index: 2;
+      font-family: "Great Vibes", cursive;
+      font-weight: 400;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: .9;
+      color: var(--wine);
+      margin-bottom: 26px;
+    }
+
+    .letter-body {
+      position: relative;
+      z-index: 2;
+      font-family: "Libre Baskerville", serif;
+      font-size: .88rem;
+      line-height: 2;
+    }
+
+    .letter-body p {
+      margin-bottom: 20px;
+    }
+
+    .letter-signature {
+      font-family: "Great Vibes", cursive;
+      font-size: 2rem;
+      color: var(--wine);
+      margin-top: 28px;
+    }
+
+    .letter-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 35px;
+    }
+
+    .seal {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--wine);
+      color: var(--gold-light);
+
+      border: 3px double var(--gold);
+      box-shadow: 0 7px 18px rgba(0,0,0,.25);
+
+      font-family: "DM Serif Display", serif;
+      font-size: 1.15rem;
+    }
+
+    .open-archive-btn {
+      position: relative;
+      z-index: 2;
+
+      padding: 14px 23px;
+      border: 1px solid var(--wine);
+      background: var(--wine);
+      color: var(--cream);
+
+      font-family: "Poppins", sans-serif;
+      font-size: .63rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .open-archive-btn:hover {
+      background: var(--wine-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(58,12,24,.28);
+    }
+
+    /* =========================================
+       HOME ARCHIVE MENU
+    ========================================= */
+
+    .archive-header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .archive-header .page-title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+    }
+
+    .archive-rule {
+      width: 180px;
+      height: 1px;
+      margin: 25px auto;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .archive-card {
+      min-height: 220px;
+      position: relative;
+      padding: 30px;
+
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(100,25,45,.22),
+          rgba(18,8,11,.85)
+        );
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      cursor: pointer;
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .archive-card::before {
+      content: "";
+      position: absolute;
+      top: 13px;
+      left: 13px;
+      width: 22px;
+      height: 22px;
+      border-top: 1px solid var(--gold);
+      border-left: 1px solid var(--gold);
+      opacity: .55;
+    }
+
+    .archive-card::after {
+      content: "";
+      position: absolute;
+      right: 13px;
+      bottom: 13px;
+      width: 22px;
+      height: 22px;
+      border-right: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold);
+      opacity: .55;
+    }
+
+    .archive-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(100,25,45,.4),
+          rgba(18,8,11,.95)
+        );
+      box-shadow: var(--shadow);
+    }
+
+    .archive-number {
+      color: var(--gold);
+      font-family: "Libre Baskerville", serif;
+      font-size: .65rem;
+      letter-spacing: .2em;
+    }
+
+    .archive-card h3 {
+      font-family: "DM Serif Display", serif;
+      color: var(--cream);
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+
+    .archive-card p {
+      color: var(--muted);
+      font-size: .72rem;
+      line-height: 1.7;
+    }
+
+    .archive-card-link {
+      color: var(--gold-light);
+      font-size: .58rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       SUB INTERFACES
+    ========================================= */
+
+    .sub-interface {
+      display: none;
+      animation: interfaceIn .4s ease;
+    }
+
+    .sub-interface.active {
+      display: block;
+    }
+
+    @keyframes interfaceIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .interface-wrap {
+      width: min(1050px, 100%);
+      margin: auto;
+    }
+
+    .interface-header {
+      margin-bottom: 35px;
+    }
+
+    .interface-header h2 {
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 400;
+    }
+
+    .interface-header p {
+      color: var(--muted);
+      max-width: 650px;
+      margin-top: 10px;
+      line-height: 1.8;
+      font-size: .82rem;
+    }
+
+    /* =========================================
+       CATEGORY MENUS
+    ========================================= */
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 850px;
+    }
+
+    .category-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      background: rgba(33,11,18,.5);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .category-card:hover {
+      border-color: var(--gold);
+      background: rgba(100,25,45,.22);
+      transform: translateY(-3px);
+    }
+
+    .category-card small {
+      color: var(--gold);
+      font-size: .58rem;
+      letter-spacing: .2em;
+    }
+
+    .category-card h3 {
+      margin: 10px 0;
+      font-family: "DM Serif Display", serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      font-size: .72rem;
+      line-height: 1.7;
+    }
+
+    /* =========================================
+       FORMS
+    ========================================= */
+
+    .paper-panel {
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(25px, 5vw, 45px);
+      border: 1px solid var(--paper-dark);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .paper-panel::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(100,25,45,.22);
+      pointer-events: none;
+    }
+
+    .paper-panel h3 {
+      position: relative;
+      font-family: "DM Serif Display", serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .paper-panel p {
+      position: relative;
+      color: #594746;
+      font-size: .76rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      border: 1px solid rgba(40,23,25,.35);
+      background: rgba(255,250,239,.4);
+      color: var(--ink);
+
+      padding: 15px;
+
+      font-family: "Libre Baskerville", serif;
+      font-size: .78rem;
+
+      outline: none;
+      resize: vertical;
+      transition: var(--transition);
+    }
+
+    textarea {
+      min-height: 160px;
+    }
+
+    textarea:focus,
+    input:focus {
+      border-color: var(--wine);
+      box-shadow: 0 0 0 3px rgba(100,25,45,.08);
+    }
+
+    .form-actions {
+      position: relative;
+      margin-top: 15px;
+    }
+
+    .paper-button {
+      border: 1px solid var(--wine);
+      background: var(--wine);
+      color: var(--cream);
+      padding: 12px 18px;
+
+      font-family: "Poppins", sans-serif;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .paper-button:hover {
+      background: var(--wine-deep);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================
+       RECORD LISTS
+    ========================================= */
+
+    .record-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .record-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(18,8,11,.75);
+      transition: var(--transition);
+    }
+
+    .record-card:hover {
+      border-color: rgba(198,161,94,.55);
+      transform: translateX(3px);
+    }
+
+    .record-card small {
+      display: block;
+      color: var(--gold);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      margin-bottom: 9px;
+    }
+
+    .record-card p {
+      color: var(--cream);
+      font-family: "Libre Baskerville", serif;
+      font-size: .78rem;
+      line-height: 1.8;
+    }
+
+    /* =========================================
+       COMMUNITY
+    ========================================= */
+
+    .community-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .community-column {
+      border: 1px solid var(--line);
+      padding: 22px;
+      background: rgba(33,11,18,.48);
+    }
+
+    .community-column h3 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 18px;
+    }
+
+    /* =========================================
+       SIGN / DELUSION
+    ========================================= */
+
+    .case-file {
+      max-width: 800px;
+      margin: auto;
+      padding: clamp(28px, 6vw, 55px);
+
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(100,25,45,.25),
+          rgba(18,8,11,.9)
+        );
+
+      box-shadow: var(--shadow);
+    }
+
+    .case-stamp {
+      display: inline-block;
+      border: 1px solid var(--gold-dark);
+      color: var(--gold);
+      padding: 6px 10px;
+      font-size: .55rem;
+      letter-spacing: .2em;
+      margin-bottom: 25px;
+    }
+
+    .case-file h3 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 20px;
+    }
+
+    .vote-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .sign-vote {
+      padding: 15px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--cream);
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-size: .65rem;
+      letter-spacing: .1em;
+      transition: var(--transition);
+    }
+
+    .sign-vote:hover {
+      background: var(--wine);
+      border-color: var(--gold);
+    }
+
+    .vote-result {
+      margin-top: 25px;
+    }
+
+    .vote-row {
+      margin-bottom: 15px;
+    }
+
+    .vote-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: .65rem;
+      margin-bottom: 6px;
+    }
+
+    .vote-track {
+      height: 6px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .vote-bar {
+      height: 100%;
+      width: 0;
+      background: var(--gold);
+      transition: width .5s ease;
+    }
+
+    /* =========================================
+       ROULETTE
+    ========================================= */
+
+    .roulette-box {
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+      padding: 55px 30px;
+
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle, rgba(100,25,45,.3), transparent 65%),
+        rgba(18,8,11,.9);
+
+      box-shadow: var(--shadow);
+    }
+
+    .roulette-symbol {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px double var(--gold);
+      border-radius: 50%;
+
+      color: var(--gold-light);
+      font-family: "DM Serif Display", serif;
+      font-size: 1.7rem;
+
+      box-shadow:
+        0 0 0 8px rgba(198,161,94,.05),
+        0 0 0 16px rgba(198,161,94,.025);
+    }
+
+    .roulette-box h2 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    .roulette-result {
+      min-height: 70px;
+      color: var(--cream);
+      font-family: "Libre Baskerville", serif;
+      font-size: .9rem;
+      line-height: 1.8;
+      margin: 20px auto 30px;
+      max-width: 550px;
+    }
+
+    /* =========================================
+       COMPATIBILITY
+    ========================================= */
+
+    .compatibility-box {
+      max-width: 760px;
+      margin: auto;
+      padding: 40px;
+
+      border: 1px solid var(--line);
+      background: rgba(33,11,18,.58);
+
+      box-shadow: var(--shadow);
+    }
+
+    .name-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .field-label {
+      display: block;
+      color: var(--gold);
+      font-size: .58rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .compatibility-result {
+      display: none;
+      margin-top: 35px;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .compatibility-result.show {
+      display: block;
+      animation: interfaceIn .4s ease;
+    }
+
+    #resultNames {
+      color: var(--muted);
+      font-size: .7rem;
+      letter-spacing: .1em;
+    }
+
+    #compatibilityNumber {
+      font-family: "DM Serif Display", serif;
+      font-size: 5rem;
+      color: var(--gold-light);
+      line-height: 1;
+      margin: 10px 0;
+    }
+
+    #fateTitle {
+      font-family: "Great Vibes", cursive;
+      font-size: 2.7rem;
+      font-weight: 400;
+      color: var(--cream);
+    }
+
+    #fateMessage {
+      max-width: 550px;
+      margin: 10px auto 20px;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.8;
+    }
+
+    /* =========================================
+       RECOMMENDATIONS
+    ========================================= */
+
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .recommendation-card {
+      min-height: 210px;
+      padding: 28px;
+
+      border: 1px solid var(--line);
+      background: rgba(33,11,18,.5);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      transition: var(--transition);
+    }
+
+    .recommendation-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .recommendation-card small {
+      color: var(--gold);
+      font-size: .55rem;
+      letter-spacing: .18em;
+    }
+
+    .recommendation-card h3 {
+      font-family: "DM Serif Display", serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+    }
+
+    .recommendation-card p {
+      color: var(--muted);
+      font-size: .7rem;
+      line-height: 1.7;
+    }
+
+    /* =========================================
+       FAQ
+    ========================================= */
+
+    .faq-list {
+      max-width: 850px;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--line);
+    }
+
+    .faq-item:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-item summary {
+      padding: 22px 5px;
+      cursor: pointer;
+      color: var(--cream);
+      font-family: "DM Serif Display", serif;
+      font-size: 1.2rem;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      float: right;
+      color: var(--gold);
+      font-family: "Poppins", sans-serif;
+    }
+
+    .faq-item[open] summary::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 5px 22px;
+      color: var(--muted);
+      font-size: .75rem;
+      line-height: 1.9;
+    }
+
+    /* =========================================
+       ABOUT / CONTACT
+    ========================================= */
+
+    .text-panel {
+      max-width: 850px;
+      padding: 40px;
+
+      border: 1px solid var(--line);
+      background: rgba(33,11,18,.48);
+    }
+
+    .text-panel p {
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 2;
+      margin-bottom: 18px;
+    }
+
+    .contact-box {
+      max-width: 650px;
+      padding: 40px;
+      border: 1px solid var(--line);
+      background: rgba(33,11,18,.5);
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      display: none;
+      padding: 45px 7%;
+      border-top: 1px solid var(--line);
+      background: #0b0507;
+    }
+
+    footer.show {
+      display: block;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-title {
+      font-family: "DM Serif Display", serif;
+      color: var(--cream);
+      font-size: 1.3rem;
+    }
+
+    .footer-text {
+      max-width: 500px;
+      color: var(--muted);
+      font-size: .65rem;
+      line-height: 1.8;
+    }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 16px 6%;
+      }
+
+      .nav-links {
+        gap: 2px;
+      }
+
+      .archive-grid,
+      .community-grid,
+      .recommendation-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .page {
+        padding: 110px 6% 60px;
+      }
+
+      .navbar {
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .brand {
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+      }
+
+      .nav-links {
+        max-width: 240px;
+      }
+
+      .nav-btn {
+        padding: 6px 7px;
+        font-size: .5rem;
+      }
+
+      .letter {
+        padding: 32px 24px;
+      }
+
+      .letter-header,
+      .letter-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .letter h1 {
+        font-size: 3.5rem;
+      }
+
+      .archive-grid,
+      .category-grid,
+      .community-grid,
+      .recommendation-grid,
+      .name-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-card {
+        min-height: 190px;
+      }
+
+      .vote-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .compatibility-box {
+        padding: 25px 18px;
+      }
+
+      .text-panel,
+      .contact-box {
+        padding: 25px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="archive-frame"></div>
+  <div class="page-frame"></div>
+  <div class="corner top-right"></div>
+  <div class="corner bottom-left"></div>
 
-<div class="corner corner-tl">❦</div>
-<div class="corner corner-tr">❦</div>
-<div class="corner corner-bl">❦</div>
-<div class="corner corner-br">❦</div>
+  <!-- =========================================
+       NAVIGATION
+  ========================================= -->
 
-<div class="botanical one">❦</div>
-<div class="botanical two">❧</div>
-<div class="botanical three">✦</div>
+  <nav class="navbar">
 
-
-<!-- NAVBAR -->
-
-<nav class="navbar">
-
-    <div class="logo">
-        PLOT<span>twisted.</span>
-    </div>
+    <button class="brand" onclick="goHome()">
+      <span class="brand-small">SECRET ARCHIVE</span>
+      <span class="brand-name">PlotTwisted</span>
+    </button>
 
     <div class="nav-links">
 
-        <button class="nav-button" data-slide="home">HOME</button>
-        <button class="nav-button" data-slide="community">COMMUNITY</button>
-        <button class="nav-button" data-slide="roulette">ROULETTE</button>
-        <button class="nav-button" data-slide="compatibility">COMPATIBILITY</button>
-        <button class="nav-button" data-slide="recommendations">ARCHIVES</button>
-        <button class="nav-button" data-slide="about">ABOUT</button>
-        <button class="nav-button" data-slide="faq">FAQ</button>
-        <button class="nav-button" data-slide="contact">CONTACT</button>
+      <button class="nav-btn" onclick="goHome()">
+        HOME
+      </button>
+
+      <button class="nav-btn" onclick="openArchive()">
+        ARCHIVES
+      </button>
+
+      <button class="nav-btn" onclick="showPage('community')">
+        COMMUNITY
+      </button>
+
+      <button class="nav-btn" onclick="showPage('roulette')">
+        ROULETTE
+      </button>
+
+      <button class="nav-btn" onclick="showPage('compatibility')">
+        COMPATIBILITY
+      </button>
+
+      <button class="nav-btn" onclick="showPage('about')">
+        ABOUT
+      </button>
+
+      <button class="nav-btn" onclick="showPage('faq')">
+        FAQ
+      </button>
+
+      <button class="nav-btn" onclick="showPage('contact')">
+        CONTACT
+      </button>
 
     </div>
 
-</nav>
+  </nav>
 
 
-<!-- HOME -->
+  <!-- =========================================
+       HOME — FIRST SCREEN
+       ONLY THE OPEN LETTER IS VISIBLE
+  ========================================= -->
 
-<section id="home" class="page-section active-section">
+  <main id="home" class="page active">
 
-<div class="home-wrap">
+    <section id="letterLanding" class="sub-interface active">
 
-<div class="hero">
+      <div class="letter-landing">
 
-<div>
+        <div class="letter-wrapper">
 
-<div class="archive-label">
-    RESTRICTED ARCHIVES • EST. 2026
-</div>
+          <article class="letter">
 
-<h1>
-Every story<br>
-has a <em>twist.</em>
-</h1>
+            <div class="letter-header">
 
-<p class="hero-text">
+              <div class="file-number">
+                ARCHIVE FILE 001
+              </div>
 
-Welcome to PlotTwisted — a hidden archive of secrets,
-confessions, unsent letters, quiet feelings, and stories
-that were never meant to be found.
+              <div class="classification">
+                CONFIDENTIAL
+              </div>
 
-<br><br>
+            </div>
 
-Write what you cannot say.
-Leave behind the words that deserve a place somewhere.
+            <h1>Dear Stranger,</h1>
 
-</p>
+            <div class="letter-body">
 
-<div class="hero-actions">
+              <p>
+                You have found a collection of stories that were never
+                meant to disappear completely.
+              </p>
 
-<button class="primary-btn"
-onclick="openInterface('storyMenu')">
-OPEN THE ARCHIVES
-</button>
+              <p>
+                Somewhere between the things people said, the things
+                they never said, and the twists nobody expected,
+                there is a story waiting to be uncovered.
+              </p>
 
-<button class="secondary-btn"
-onclick="showPage('community')">
-READ THE RECORDS
-</button>
+              <p>
+                Turn the page carefully. Some records are funny.
+                Some are complicated. Some may feel strangely familiar.
+              </p>
 
-</div>
+            </div>
 
-</div>
+            <div class="letter-signature">
+              PlotTwisted
+            </div>
 
+            <div class="letter-footer">
 
-<div class="letter">
+              <div class="seal">
+                PT
+              </div>
 
-<div class="letter-top">
+              <button
+                class="open-archive-btn"
+                onclick="openArchive()"
+              >
+                Open the Archive
+              </button>
 
-<span>ARCHIVE FILE: 001</span>
-<span>CONFIDENTIAL</span>
+            </div>
 
-</div>
+          </article>
 
-<h2>Dear Stranger,</h2>
+        </div>
 
-<p>
-Perhaps you arrived here carrying
-words you could not place anywhere else.
-</p>
+      </div>
 
-<br>
+    </section>
 
-<p>
-Leave them in the archive.
-Every secret deserves somewhere
-to quietly exist.
-</p>
 
-<div class="signature">
-— PlotTwisted
-</div>
+    <!-- =========================================
+         ARCHIVE MENU
+    ========================================= -->
 
-<div class="wax">PT</div>
+    <section id="storyMenu" class="sub-interface">
 
-</div>
+      <div class="interface-wrap">
 
-</div>
+        <button
+          class="back-button"
+          onclick="openInterface('letterLanding')"
+        >
+          Back to Letter
+        </button>
 
+        <div class="archive-header">
 
-<!-- ARCHIVE MENU -->
+          <div class="archive-label">
+            The Secret Victorian Archive
+          </div>
 
-<div id="storyMenu" class="sub-interface active">
+          <h1 class="page-title">
+            Archive Records
+          </h1>
+
+          <div class="archive-rule"></div>
+
+          <p class="page-description" style="margin:0 auto;">
+            Choose a collection. Each file leads somewhere different.
+          </p>
+
+        </div>
+
+
+        <div class="archive-grid">
+
+          <div
+            class="archive-card"
+            onclick="openInterface('feelingsMenu')"
+          >
+            <span class="archive-number">I</span>
+
+            <div>
+              <h3>Feelings</h3>
+              <p>
+                Confessions and thoughts that were easier to write
+                than to say.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Collection
+            </span>
+          </div>
+
+
+          <div
+            class="archive-card"
+            onclick="openInterface('lettersMenu')"
+          >
+            <span class="archive-number">II</span>
+
+            <div>
+              <h3>Letters</h3>
+              <p>
+                Words that remained unsent and messages waiting
+                inside the archive.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Collection
+            </span>
+          </div>
+
+
+          <div
+            class="archive-card"
+            onclick="openInterface('mysteryMenu')"
+          >
+            <span class="archive-number">III</span>
+
+            <div>
+              <h3>Mysteries</h3>
+              <p>
+                Cases, signs, questions and situations that require
+                a verdict.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Collection
+            </span>
+          </div>
+
+
+          <div
+            class="archive-card"
+            onclick="openInterface('twistMenu')"
+          >
+            <span class="archive-number">IV</span>
+
+            <div>
+              <h3>Twists</h3>
+              <p>
+                Unexpected outcomes, fate, roulette and compatibility.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Collection
+            </span>
+          </div>
+
+
+          <div
+            class="archive-card"
+            onclick="showPage('community')"
+          >
+            <span class="archive-number">V</span>
+
+            <div>
+              <h3>Community</h3>
+              <p>
+                Stories and records submitted by visitors of the archive.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Records
+            </span>
+          </div>
+
+
+          <div
+            class="archive-card"
+            onclick="showPage('recommendations')"
+          >
+            <span class="archive-number">VI</span>
+
+            <div>
+              <h3>Curated Records</h3>
+              <p>
+                A selection of stories and recommendations for
+                different moods.
+              </p>
+            </div>
+
+            <span class="archive-card-link">
+              Open Records
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FEELINGS MENU
+    ========================================= -->
+
+    <section id="feelingsMenu" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('storyMenu')"
+        >
+          Back to Archives
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">Collection I</div>
+          <h2>Feelings</h2>
+          <p>
+            Personal thoughts, confessions and words that are easier
+            to leave inside a record.
+          </p>
+        </div>
+
+        <div class="category-grid">
+
+          <div
+            class="category-card"
+            onclick="openInterface('confessions')"
+          >
+            <small>FILE I-A</small>
+            <h3>Confessions</h3>
+            <p>
+              Anonymous thoughts and stories submitted to the archive.
+            </p>
+          </div>
+
+          <div
+            class="category-card"
+            onclick="openInterface('hugot')"
+          >
+            <small>FILE I-B</small>
+            <h3>Hugot Corner</h3>
+            <p>
+              Short lines and thoughts from the emotional archives.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         LETTERS MENU
+    ========================================= -->
+
+    <section id="lettersMenu" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('storyMenu')"
+        >
+          Back to Archives
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">Collection II</div>
+          <h2>Letters</h2>
+          <p>
+            Messages written for someone, but never necessarily sent.
+          </p>
+        </div>
+
+        <div class="category-grid">
+
+          <div
+            class="category-card"
+            onclick="openInterface('unsent')"
+          >
+            <small>FILE II-A</small>
+            <h3>Unsent Messages</h3>
+            <p>
+              Write what you never got the chance to say.
+            </p>
+          </div>
+
+          <div
+            class="category-card"
+            onclick="showPage('contact')"
+          >
+            <small>FILE II-B</small>
+            <h3>Contact the Archive</h3>
+            <p>
+              Send a message regarding the archive or its records.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MYSTERY MENU
+    ========================================= -->
+
+    <section id="mysteryMenu" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('storyMenu')"
+        >
+          Back to Archives
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">Collection III</div>
+          <h2>Mysteries</h2>
+          <p>
+            Not every situation has an obvious answer.
+          </p>
+        </div>
+
+        <div class="category-grid">
+
+          <div
+            class="category-card"
+            onclick="openInterface('signs')"
+          >
+            <small>CASE III-A</small>
+            <h3>Sign or Delusion</h3>
+            <p>
+              Examine the case and decide how you interpret the signs.
+            </p>
+          </div>
+
+          <div
+            class="category-card"
+            onclick="showPage('faq')"
+          >
+            <small>CASE III-B</small>
+            <h3>Archive FAQ</h3>
+            <p>
+              Learn how the archive works and what its records mean.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TWIST MENU
+    ========================================= -->
+
+    <section id="twistMenu" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('storyMenu')"
+        >
+          Back to Archives
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">Collection IV</div>
+          <h2>Twists</h2>
+          <p>
+            Sometimes the archive refuses to give a predictable answer.
+          </p>
+        </div>
+
+        <div class="category-grid">
+
+          <div
+            class="category-card"
+            onclick="showPage('roulette')"
+          >
+            <small>FILE IV-A</small>
+            <h3>Fate Roulette</h3>
+            <p>
+              Spin the archive and reveal an unexpected plot twist.
+            </p>
+          </div>
+
+          <div
+            class="category-card"
+            onclick="showPage('compatibility')"
+          >
+            <small>FILE IV-B</small>
+            <h3>Compatibility Test</h3>
+            <p>
+              Enter two names and receive an entertainment-only result.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CONFESSIONS
+    ========================================= -->
+
+    <section id="confessions" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('feelingsMenu')"
+        >
+          Back to Feelings
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">File I-A</div>
+          <h2>Confessions</h2>
+          <p>
+            Leave a thought inside the archive. No public name is
+            displayed with your post.
+          </p>
+        </div>
+
+        <div class="paper-panel">
+
+          <h3>Write Your Record</h3>
+
+          <p>
+            Say what you want to say. Keep your record respectful
+            and appropriate for the archive.
+          </p>
+
+          <form id="confessionForm">
+
+            <textarea
+              id="confessionInput"
+              placeholder="Write your confession here..."
+              required
+            ></textarea>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="paper-button"
+              >
+                Seal the Record
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <div
+          id="confessionList"
+          class="record-list"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         HUGOT
+    ========================================= -->
+
+    <section id="hugot" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('feelingsMenu')"
+        >
+          Back to Feelings
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">File I-B</div>
+          <h2>Hugot Corner</h2>
+          <p>
+            Short thoughts and lines collected inside the archive.
+          </p>
+        </div>
+
+        <div class="paper-panel">
+
+          <h3>Add a Line</h3>
+
+          <p>
+            Leave a short thought for the archive.
+          </p>
+
+          <form id="hugotForm">
+
+            <textarea
+              id="hugotInput"
+              placeholder="Write your line here..."
+              required
+            ></textarea>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="paper-button"
+              >
+                Add to Archive
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <div
+          id="hugotList"
+          class="record-list"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         UNSENT MESSAGES
+    ========================================= -->
+
+    <section id="unsent" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('lettersMenu')"
+        >
+          Back to Letters
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">File II-A</div>
+          <h2>Unsent Messages</h2>
+          <p>
+            For the words that remained in the draft.
+          </p>
+        </div>
+
+        <div class="paper-panel">
+
+          <h3>The Unsent Letter</h3>
+
+          <p>
+            Write the message you never sent.
+          </p>
+
+          <form id="unsentForm">
+
+            <textarea
+              id="unsentInput"
+              placeholder="Dear..."
+              required
+            ></textarea>
+
+            <div class="form-actions">
+              <button
+                type="submit"
+                class="paper-button"
+              >
+                Archive Message
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <div
+          id="unsentList"
+          class="record-list"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SIGN OR DELUSION
+    ========================================= -->
+
+    <section id="signs" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('mysteryMenu')"
+        >
+          Back to Mysteries
+        </button>
+
+        <div class="interface-header">
+          <div class="archive-label">Case III-A</div>
+          <h2>Sign or Delusion</h2>
+          <p>
+            Examine the current case and cast your interpretation.
+          </p>
+        </div>
+
+        <div class="case-file">
+
+          <div class="case-stamp">
+            CURRENT CASE
+          </div>
+
+          <h3>
+            They always find a reason to talk to you.
+          </h3>
 
-<div class="interface-title">
+          <p class="page-description">
+            What is your verdict?
+          </p>
+
+          <div class="vote-grid">
 
-<p class="eyebrow">
-THE SECRET COLLECTION
-</p>
+            <button
+              class="sign-vote"
+              data-choice="sign"
+            >
+              It is a Sign
+            </button>
+
+            <button
+              class="sign-vote"
+              data-choice="maybe"
+            >
+              Maybe
+            </button>
+
+            <button
+              class="sign-vote"
+              data-choice="delulu"
+            >
+              Probably Delusion
+            </button>
+
+          </div>
+
+          <div class="vote-result">
+
+            <div class="vote-row">
+
+              <div class="vote-label">
+                <span>Sign</span>
+                <span id="signPercent">0%</span>
+              </div>
+
+              <div class="vote-track">
+                <div
+                  id="signBar"
+                  class="vote-bar"
+                ></div>
+              </div>
 
-<h2>
-Choose a <span>chapter.</span>
-</h2>
+            </div>
 
-<p>
-Every archive contains a different kind of story.
-</p>
 
-</div>
+            <div class="vote-row">
 
+              <div class="vote-label">
+                <span>Maybe</span>
+                <span id="maybePercent">0%</span>
+              </div>
 
-<div class="vintage-menu">
+              <div class="vote-track">
+                <div
+                  id="maybeBar"
+                  class="vote-bar"
+                ></div>
+              </div>
 
-<div class="menu-card"
-onclick="openInterface('feelingsMenu')">
+            </div>
 
-<span class="menu-icon">I</span>
 
-<h3>Feelings</h3>
+            <div class="vote-row">
 
-<p>
-Confessions, quiet thoughts,
-and words from the heart.
-</p>
+              <div class="vote-label">
+                <span>Delusion</span>
+                <span id="deluluPercent">0%</span>
+              </div>
 
-</div>
+              <div class="vote-track">
+                <div
+                  id="deluluBar"
+                  class="vote-bar"
+                ></div>
+              </div>
 
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
 
-<div class="menu-card"
-onclick="openInterface('lettersMenu')">
+    </section>
+
+
+    <!-- =========================================
+         ROULETTE
+    ========================================= -->
+
+    <section id="roulette" class="sub-interface">
+
+      <div class="interface-wrap">
+
+        <button
+          class="back-button"
+          onclick="openInterface('twistMenu')"
+        >
+          Back to Twists
+        </button>
+
+        <div class="roulette-box">
+
+          <div
+            id="rouletteIcon"
+            class="roulette-symbol"
+          >
+            PT
+          </div>
+
+          <div class="archive-label">
+            File IV-A
+          </div>
+
+          <h2>Fate Roulette</h2>
+
+          <div
+            id="rouletteText"
+            class="roulette-result"
+          >
+            The archive is waiting for you to turn the page.
+          </div>
+
+          <button
+            class="gold-btn"
+            onclick="spinRoulette()"
+          >
+            Reveal the Twist
+          </button>
+
+        </div>
+
+      </div>
 
-<span class="menu-icon">L</span>
+    </section>
 
-<h3>Letters</h3>
 
-<p>
-Messages that remained
-locked inside the drafts.
-</p>
+    <!-- =========================================
+         COMPATIBILITY
+    ========================================= -->
 
-</div>
+    <section id="compatibility" class="sub-interface">
 
+      <div class="interface-wrap">
 
-<div class="menu-card"
-onclick="openInterface('mysteryMenu')">
+        <button
+          class="back-button"
+          onclick="openInterface('twistMenu')"
+        >
+          Back to Twists
+        </button>
 
-<span class="menu-icon">?</span>
+        <div class="compatibility-box">
 
-<h3>Mysteries</h3>
+          <div class="interface-header">
+            <div class="archive-label">File IV-B</div>
+            <h2>Compatibility Test</h2>
+            <p>
+              An entertainment-only archive reading. The result does
+              not predict real relationships.
+            </p>
+          </div>
 
-<p>
-Investigate the signs
-and questionable evidence.
-</p>
+          <div class="name-grid">
 
-</div>
+            <div>
+              <label
+                class="field-label"
+                for="nameOne"
+              >
+                First Name
+              </label>
 
+              <input
+                id="nameOne"
+                type="text"
+                placeholder="Enter a name"
+              >
+            </div>
 
-<div class="menu-card"
-onclick="openInterface('twistMenu')">
 
-<span class="menu-icon">T</span>
+            <div>
+              <label
+                class="field-label"
+                for="nameTwo"
+              >
+                Second Name
+              </label>
 
-<h3>Twists</h3>
+              <input
+                id="nameTwo"
+                type="text"
+                placeholder="Enter a name"
+              >
+            </div>
+
+          </div>
 
-<p>
-Unexpected chapters
-chosen by fate.
-</p>
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
 
-</div>
+            <button
+              class="gold-btn"
+              onclick="calculateCompatibility()"
+            >
+              Calculate
+            </button>
 
+            <button
+              class="outline-btn"
+              onclick="resetCompatibility()"
+            >
+              Reset
+            </button>
 
-<div class="menu-card"
-onclick="showPage('recommendations')">
+          </div>
 
-<span class="menu-icon">A</span>
 
-<h3>Archives</h3>
+          <div
+            id="compatibilityResult"
+            class="compatibility-result"
+          >
 
-<p>
-Small reminders and
-things worth remembering.
-</p>
+            <div id="resultNames"></div>
 
-</div>
+            <div id="compatibilityNumber">
+              0%
+            </div>
+
+            <div id="fateTitle"></div>
 
-</div>
+            <p id="fateMessage"></p>
 
-</div>
+          </div>
 
-
-<!-- FEELINGS -->
-
-<div id="feelingsMenu" class="sub-interface">
-
-<button class="back-button"
-onclick="openInterface('storyMenu')">
-← Return to Archives
-</button>
-
-<div class="interface-title">
-
-<p class="eyebrow">THE FEELINGS DEPARTMENT</p>
-
-<h2>
-What is on your <span>heart?</span>
-</h2>
-
-</div>
-
-<div class="option-grid">
-
-<div class="option-card"
-onclick="showPage('confessions')">
-
-<span>I</span>
-
-<h3>Confessions</h3>
-
-<p>
-Say the thing you've
-been keeping inside.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('hugot')">
-
-<span>H</span>
-
-<h3>Hugot Corner</h3>
-
-<p>
-One sentence can hold
-an entire story.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('community')">
-
-<span>R</span>
-
-<h3>Read Records</h3>
-
-<p>
-Perhaps another person's
-story feels familiar.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- LETTERS -->
-
-<div id="lettersMenu" class="sub-interface">
-
-<button class="back-button"
-onclick="openInterface('storyMenu')">
-← Return to Archives
-</button>
-
-<div class="interface-title">
-
-<p class="eyebrow">THE UNSENT COLLECTION</p>
-
-<h2>
-Letters left in the <span>drafts.</span>
-</h2>
-
-</div>
-
-<div class="option-grid">
-
-<div class="option-card"
-onclick="showPage('unsent')">
-
-<span>U</span>
-
-<h3>Unsent Messages</h3>
-
-<p>
-For words that never
-reached their destination.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('community')">
-
-<span>A</span>
-
-<h3>Anonymous Letters</h3>
-
-<p>
-Open records left behind
-by strangers.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('contact')">
-
-<span>!</span>
-
-<h3>Report a Record</h3>
-
-<p>
-Contact the archive keeper
-for concerns.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- MYSTERY -->
-
-<div id="mysteryMenu" class="sub-interface">
-
-<button class="back-button"
-onclick="openInterface('storyMenu')">
-← Return to Archives
-</button>
-
-<div class="interface-title">
-
-<p class="eyebrow">THE INVESTIGATION ROOM</p>
-
-<h2>
-Sign or <span>Delusion?</span>
-</h2>
-
-<p>
-Examine the evidence. Decide the verdict.
-</p>
-
-</div>
-
-<div class="option-grid">
-
-<div class="option-card"
-onclick="showPage('signs')">
-
-<span>?</span>
-
-<h3>The Case File</h3>
-
-<p>
-Present the situation.
-Let the community decide.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('community')">
-
-<span>V</span>
-
-<h3>Verdicts</h3>
-
-<p>
-Read the stories and
-community opinions.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('roulette')">
-
-<span>F</span>
-
-<h3>Fate</h3>
-
-<p>
-Stop investigating.
-Let fate choose.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- TWISTS -->
-
-<div id="twistMenu" class="sub-interface">
-
-<button class="back-button"
-onclick="openInterface('storyMenu')">
-← Return to Archives
-</button>
-
-<div class="interface-title">
-
-<p class="eyebrow">THE UNEXPECTED CHAPTER</p>
-
-<h2>
-Choose your <span>twist.</span>
-</h2>
-
-</div>
-
-<div class="option-grid">
-
-<div class="option-card"
-onclick="showPage('roulette')">
-
-<span>F</span>
-
-<h3>Fate Roulette</h3>
-
-<p>
-Spin the archive and
-receive your next chapter.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('compatibility')">
-
-<span>♥</span>
-
-<h3>Compatibility Test</h3>
-
-<p>
-Enter two names and discover
-their fictional fate.
-</p>
-
-</div>
-
-
-<div class="option-card"
-onclick="showPage('hugot')">
-
-<span>H</span>
-
-<h3>Random Hugot</h3>
-
-<p>
-Enter the feelings
-department.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- COMMUNITY -->
-
-<section id="community" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">PUBLIC ARCHIVE</p>
-
-<h2>Everyone's Stories.</h2>
-
-<p>
-Anonymous records preserved inside the PlotTwisted archive.
-</p>
-
-</div>
-
-<div class="feed-title">
-<h3>Confessions</h3>
-<span>PUBLIC RECORDS</span>
-</div>
-
-<div id="communityConfessions" class="post-grid">
-
-<div class="post-card">
-
-<div class="post-type">ARCHIVE ENTRY</div>
-
-<div class="post-message">
-Community confessions will appear here.
-</div>
-
-</div>
-
-</div>
-
-
-<div class="feed-title">
-<h3>Hugots</h3>
-<span>PUBLIC RECORDS</span>
-</div>
-
-<div id="communityHugots" class="post-grid"></div>
-
-
-<div class="feed-title">
-<h3>Unsent Messages</h3>
-<span>PUBLIC RECORDS</span>
-</div>
-
-<div id="communityUnsent" class="post-grid"></div>
-
-</section>
-
-
-<!-- CONFESSIONS -->
-
-<section id="confessions" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">CLASSIFIED ENTRY</p>
-
-<h2>Confessions.</h2>
-
-<p>
-Leave your identity outside the archive.
-</p>
-
-</div>
-
-<div class="form-card">
-
-<label class="form-label">
-Dear Stranger...
-</label>
-
-<form id="confessionForm">
-
-<textarea
-id="confessionInput"
-maxlength="500"
-placeholder="Write your anonymous confession..."
-required></textarea>
-
-<button class="post-button" type="submit">
-SEAL THIS CONFESSION
-</button>
-
-</form>
-
-</div>
-
-<div class="feed-title">
-<h3>Public Records</h3>
-<span>ARCHIVE OPEN</span>
-</div>
-
-<div id="confessionList" class="post-grid"></div>
-
-</section>
-
-
-<!-- HUGOT -->
-
-<section id="hugot" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">THE FEELINGS DEPARTMENT</p>
-
-<h2>Hugot Corner.</h2>
-
-<p>
-One line. A thousand possibilities.
-</p>
-
-</div>
-
-<div class="form-card">
-
-<label class="form-label">
-Dear Heart...
-</label>
-
-<form id="hugotForm">
-
-<textarea
-id="hugotInput"
-maxlength="400"
-placeholder="Write your hugot..."
-required></textarea>
-
-<button class="post-button" type="submit">
-ADD TO THE ARCHIVE
-</button>
-
-</form>
-
-</div>
-
-<div class="feed-title">
-<h3>Community Hugots</h3>
-<span>PUBLIC</span>
-</div>
-
-<div id="hugotList" class="post-grid"></div>
-
-</section>
-
-
-<!-- SIGNS -->
-
-<section id="signs" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">CASE FILE NO. 001</p>
-
-<h2>Sign or Delusion?</h2>
-
-<p>
-Examine the evidence carefully.
-</p>
-
-</div>
-
-<div class="vote-box">
-
-<span class="eyebrow">EVIDENCE SUBMITTED</span>
-
-<h3>
-They always find a reason
-to talk to you.
-
-<br><br>
-
-What is the verdict?
-</h3>
-
-<div class="vote-buttons">
-
-<button type="button"
-class="sign-vote"
-data-choice="sign">
-DEFINITELY A SIGN
-</button>
-
-<button type="button"
-class="sign-vote"
-data-choice="maybe">
-INSUFFICIENT EVIDENCE
-</button>
-
-<button type="button"
-class="sign-vote"
-data-choice="delulu">
-CASE OF DELUSION
-</button>
-
-</div>
-
-
-<div class="results">
-
-<div class="result">
-
-<span>Sign</span>
-
-<div class="bar">
-<div id="signBar" style="width:62%"></div>
-</div>
-
-<strong id="signPercent">62%</strong>
-
-</div>
-
-
-<div class="result">
-
-<span>Maybe</span>
-
-<div class="bar">
-<div id="maybeBar" style="width:25%"></div>
-</div>
-
-<strong id="maybePercent">25%</strong>
-
-</div>
-
-
-<div class="result">
-
-<span>Delulu</span>
-
-<div class="bar">
-<div id="deluluBar" style="width:13%"></div>
-</div>
-
-<strong id="deluluPercent">13%</strong>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ROULETTE -->
-
-<section id="roulette" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">THE FATE MACHINE</p>
-
-<h2>Plot Twist Roulette.</h2>
-
-<p>
-The archive will now choose your next chapter.
-</p>
-
-</div>
-
-<div class="center-box">
-
-<div id="rouletteIcon">✦</div>
-
-<p id="rouletteText" class="hugot-display">
-“The next chapter has not been written yet.”
-</p>
-
-<br>
-
-<button
-class="post-button"
-type="button"
-onclick="spinRoulette()">
-CONSULT FATE
-</button>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     COMPATIBILITY TEST
-===================================================== -->
-
-<section id="compatibility" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">THE MATCHMAKER'S ARCHIVE</p>
-
-<h2>Compatibility <em>Test.</em></h2>
-
-<p>
-Two names. One mysterious fate.
-Let the archive decide.
-</p>
-
-</div>
-
-<div class="compatibility-box">
-
-<div class="compatibility-symbol">
-♥
-</div>
-
-<p class="eyebrow">
-ARCHIVE RECORD • COMPATIBILITY FILE
-</p>
-
-<div class="name-grid">
-
-<input
-type="text"
-id="nameOne"
-class="name-input"
-maxlength="30"
-placeholder="First name"
-autocomplete="off">
-
-<div class="name-heart">
-♥
-</div>
-
-<input
-type="text"
-id="nameTwo"
-class="name-input"
-maxlength="30"
-placeholder="Second name"
-autocomplete="off">
-
-</div>
-
-<button
-class="post-button"
-type="button"
-onclick="calculateCompatibility()">
-
-DISCOVER THEIR FATE
-
-</button>
-
-
-<div id="compatibilityResult" class="compatibility-result">
-
-<div id="resultNames" class="result-names">
-Alex ♥ Jamie
-</div>
-
-<div class="result-divider">
-✦ ❦ ✦
-</div>
-
-<div class="compatibility-label">
-COMPATIBILITY
-</div>
-
-<div id="compatibilityNumber"
-class="compatibility-number">
-87%
-</div>
-
-<div class="fate-label">
-THE ARCHIVE'S VERDICT
-</div>
-
-<div id="fateTitle" class="fate-title">
-Written in the Stars
-</div>
-
-<div id="fateMessage" class="fate-message">
-“The universe seems suspiciously fond of this connection.”
-</div>
-
-<div class="compatibility-note">
-For entertainment only — the archive cannot actually predict relationships.
-</div>
-
-<br>
-
-<button
-class="secondary-btn"
-type="button"
-onclick="resetCompatibility()">
-
-TRY ANOTHER PAIR
-
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- UNSENT -->
-
-<section id="unsent" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">NEVER DELIVERED</p>
-
-<h2>Unsent Messages.</h2>
-
-<p>
-For the words that remained in your drafts.
-</p>
-
-</div>
-
-<div class="form-card">
-
-<label class="form-label">
-Dear You...
-</label>
-
-<form id="unsentForm">
-
-<textarea
-id="unsentInput"
-maxlength="500"
-placeholder="Write what you never sent..."
-required></textarea>
-
-<button class="post-button" type="submit">
-LOCK IN THE ARCHIVE
-</button>
-
-</form>
-
-</div>
-
-<div class="feed-title">
-
-<h3>Anonymous Letters</h3>
-
-<span>PUBLIC</span>
-
-</div>
-
-<div id="unsentList" class="post-grid"></div>
-
-</section>
-
-
-<!-- RECOMMENDATIONS -->
-
-<section id="recommendations" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">CURATOR'S COLLECTION</p>
-
-<h2>From the Archives.</h2>
-
-<p>
-Small things worth keeping for your journey.
-</p>
-
-</div>
-
-<div class="recommendation-grid">
-
-<article class="recommendation-card">
-
-<span>I</span>
-
-<h3>When You Miss Someone</h3>
-
-<p>
-Write the message first. You do not always have to send it.
-Sometimes writing is enough.
-</p>
-
-</article>
-
-
-<article class="recommendation-card">
-
-<span>II</span>
-
-<h3>Your Own Story</h3>
-
-<p>
-Put your phone down for a moment and remember that your life is happening outside the screen too.
-</p>
-
-</article>
-
-
-<article class="recommendation-card">
-
-<span>III</span>
-
-<h3>Friendship First</h3>
-
-<p>
-Not every meaningful connection needs to become something else immediately.
-</p>
-
-</article>
-
-
-<article class="recommendation-card">
-
-<span>IV</span>
-
-<h3>Late Night Thoughts</h3>
-
-<p>
-Not every question needs an answer before the morning arrives.
-</p>
-
-</article>
-
-
-<article class="recommendation-card">
-
-<span>V</span>
-
-<h3>The Unsent Letter</h3>
-
-<p>
-Sometimes saying everything on paper helps you understand what you really feel.
-</p>
-
-</article>
-
-
-<article class="recommendation-card">
-
-<span>VI</span>
-
-<h3>The Plot Twist</h3>
-
-<p>
-A different ending does not automatically mean a bad story.
-</p>
-
-</article>
-
-</div>
-
-</section>
-
-
-<!-- FAQ -->
-
-<section id="faq" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">ARCHIVE INFORMATION</p>
-
-<h2>FAQ.</h2>
-
-<p>
-Questions submitted to the archive keeper.
-</p>
-
-</div>
-
-<div class="faq-container">
-
-<details class="faq-item">
-
-<summary>Is PlotTwisted anonymous?</summary>
-
-<div class="faq-answer">
-Posts are designed to be shared without publicly displaying the poster's name.
-</div>
-
-</details>
-
-
-<details class="faq-item">
-
-<summary>Can everyone see my confession?</summary>
-
-<div class="faq-answer">
-Posts submitted to the public community archive can be viewed by visitors.
-</div>
-
-</details>
-
-
-<details class="faq-item">
-
-<summary>Can I post a hugot?</summary>
-
-<div class="faq-answer">
-Yes. Visit the Hugot Corner, write your entry, and submit it to the archive.
-</div>
-
-</details>
-
-
-<details class="faq-item">
-
-<summary>How does Sign or Delusion work?</summary>
-
-<div class="faq-answer">
-Read the case file and choose the verdict that you think best fits the situation.
-</div>
-
-</details>
-
-
-<details class="faq-item">
-
-<summary>Is the roulette random?</summary>
-
-<div class="faq-answer">
-Yes. The Fate Machine randomly selects an entry from the PlotTwisted collection.
-</div>
-
-</details>
-
-
-<details class="faq-item">
-
-<summary>Is the Compatibility Test real?</summary>
-
-<div class="faq-answer">
-No. The Compatibility Test is a fictional entertainment feature. The percentage and fate are randomly generated for fun.
-</div>
-
-</details>
-
-</div>
-
-</section>
-
-
-<!-- ABOUT -->
-
-<section id="about" class="page-section">
-
-<div class="about">
-
-<p class="eyebrow">
-THE STORY BEHIND THE ARCHIVE
-</p>
-
-<h2>
-About<br>
-<em>PlotTwisted.</em>
-</h2>
-
-<p>
-PlotTwisted is a creative anonymous archive where people can share confessions, hugots, unsent messages, and unexpected stories.
-</p>
-
-<br>
-
-<p>
-A place for thoughts that are difficult to say out loud.
-</p>
-
-<br>
-
-<p style="color:var(--gold);">
-Your story. Your secret. Your plot twist.
-</p>
-
-</div>
-
-</section>
-
-
-<!-- CONTACT -->
-
-<section id="contact" class="page-section">
-
-<div class="section-heading">
-
-<p class="eyebrow">CONTACT THE ARCHIVE KEEPER</p>
-
-<h2>Contact.</h2>
-
-<p>
-For concerns regarding the PlotTwisted community.
-</p>
-
-</div>
-
-<div class="contact-box">
-
-<div class="contact-symbol">!</div>
-
-<h2>Send a Record</h2>
-
-<p>
-If you notice inappropriate content or have a suggestion for PlotTwisted, contact the archive administrator.
-</p>
-
-<br>
-
-<button
-class="primary-btn"
-type="button"
-onclick="alert('Thank you for contacting PlotTwisted.')">
-
-CONTACT PLOTTWISTED
-
-</button>
-
-</div>
-
-</section>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-<div class="footer-grid">
-
-<div>
-
-<div class="footer-title">
-PLOT<span>twisted.</span>
-</div>
-
-<p>
-A secret archive for stories, letters,
-feelings, mysteries and unexpected chapters.
-</p>
-
-</div>
-
-
-<div>
-
-<p style="color:var(--cream);">
-ARCHIVE RULES
-</p>
-
-<p>
-No names.<br>
-Be respectful.<br>
-Protect privacy.<br>
-Tell your story safely.
-</p>
-
-</div>
-
-
-<div>
-
-<p style="color:var(--cream);">
-QUICK ACCESS
-</p>
-
-<div class="footer-links">
-
-<button onclick="showPage('community')">
-Community Archive
-</button>
-
-<button onclick="showPage('roulette')">
-Fate Roulette
-</button>
-
-<button onclick="showPage('compatibility')">
-Compatibility Test
-</button>
-
-<button onclick="showPage('recommendations')">
-Curator's Collection
-</button>
-
-<button onclick="showPage('faq')">
-Archive FAQ
-</button>
-
-<button onclick="showPage('contact')">
-Contact Keeper
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="copyright">
-
-✦ © 2026 PLOTTWISTED — THE SECRET VICTORIAN ARCHIVE ✦
-
-</div>
-
-</footer>
-
-
-<script>
-
-/* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-function showPage(id){
-
-    document.querySelectorAll(".page-section")
-    .forEach(section => {
-        section.classList.remove("active-section");
-    });
-
-    const target = document.getElementById(id);
-
-    if(target){
-
-        target.classList.add("active-section");
-
-        window.scrollTo({
-            top:0,
-            behavior:"smooth"
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================
+       COMMUNITY
+  ========================================= -->
+
+  <section
+    id="community"
+    class="page"
+  >
+
+    <div class="page-inner">
+
+      <button
+        class="back-button"
+        onclick="openArchive()"
+      >
+        Back to Archives
+      </button>
+
+      <div class="interface-header">
+        <div class="archive-label">Public Records</div>
+        <h2>Everyone's Stories</h2>
+        <p>
+          A collection of records shared throughout the archive.
+        </p>
+      </div>
+
+      <div class="community-grid">
+
+        <div class="community-column">
+          <h3>Confessions</h3>
+          <div
+            id="communityConfessions"
+            class="record-list"
+          ></div>
+        </div>
+
+        <div class="community-column">
+          <h3>Hugot</h3>
+          <div
+            id="communityHugots"
+            class="record-list"
+          ></div>
+        </div>
+
+        <div class="community-column">
+          <h3>Unsent</h3>
+          <div
+            id="communityUnsent"
+            class="record-list"
+          ></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       RECOMMENDATIONS
+  ========================================= -->
+
+  <section
+    id="recommendations"
+    class="page"
+  >
+
+    <div class="page-inner">
+
+      <button
+        class="back-button"
+        onclick="openArchive()"
+      >
+        Back to Archives
+      </button>
+
+      <div class="interface-header">
+        <div class="archive-label">Curated Records</div>
+        <h2>Archive Recommendations</h2>
+        <p>
+          Choose a record according to the mood of the moment.
+        </p>
+      </div>
+
+      <div class="recommendation-grid">
+
+        <article class="recommendation-card">
+          <small>RECORD 001</small>
+          <h3>When You Miss Someone</h3>
+          <p>
+            A quiet collection for thoughts that return unexpectedly.
+          </p>
+        </article>
+
+        <article class="recommendation-card">
+          <small>RECORD 002</small>
+          <h3>Your Own Story</h3>
+          <p>
+            A reminder that your story does not need another person's
+            approval to matter.
+          </p>
+        </article>
+
+        <article class="recommendation-card">
+          <small>RECORD 003</small>
+          <h3>Friendship First</h3>
+          <p>
+            Stories about friendships, memories and unexpected bonds.
+          </p>
+        </article>
+
+        <article class="recommendation-card">
+          <small>RECORD 004</small>
+          <h3>Late Night Thoughts</h3>
+          <p>
+            For thoughts that become louder when everything becomes quiet.
+          </p>
+        </article>
+
+        <article class="recommendation-card">
+          <small>RECORD 005</small>
+          <h3>The Unsent Letter</h3>
+          <p>
+            For words that stayed inside the draft instead of reaching
+            their intended destination.
+          </p>
+        </article>
+
+        <article class="recommendation-card">
+          <small>RECORD 006</small>
+          <h3>The Plot Twist</h3>
+          <p>
+            Sometimes the ending changes everything that came before it.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       FAQ
+  ========================================= -->
+
+  <section
+    id="faq"
+    class="page"
+  >
+
+    <div class="page-inner">
+
+      <button
+        class="back-button"
+        onclick="openArchive()"
+      >
+        Back to Archives
+      </button>
+
+      <div class="interface-header">
+        <div class="archive-label">Archive Guide</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list">
+
+        <details class="faq-item">
+          <summary>What is PlotTwisted?</summary>
+          <div class="faq-answer">
+            PlotTwisted is a vintage-inspired archive for confessions,
+            thoughts, messages, stories and playful interactive features.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Are the posts anonymous?</summary>
+          <div class="faq-answer">
+            No public name is displayed with submitted posts. However,
+            users should avoid sharing private or identifying information.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I submit a confession?</summary>
+          <div class="faq-answer">
+            Yes. Open the Feelings collection and select Confessions.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>What is Fate Roulette?</summary>
+          <div class="faq-answer">
+            It is a playful randomizer that reveals one of the archive's
+            fictional plot twists.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is the compatibility result real?</summary>
+          <div class="faq-answer">
+            No. The compatibility test is intended only as entertainment.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I remove a record?</summary>
+          <div class="faq-answer">
+            If a record needs to be addressed, use the Contact section
+            to communicate with the archive administrator.
+          </div>
+        </details>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       ABOUT
+  ========================================= -->
+
+  <section
+    id="about"
+    class="page"
+  >
+
+    <div class="page-inner">
+
+      <button
+        class="back-button"
+        onclick="openArchive()"
+      >
+        Back to Archives
+      </button>
+
+      <div class="interface-header">
+        <div class="archive-label">About the Archive</div>
+        <h2>PlotTwisted</h2>
+      </div>
+
+      <div class="text-panel">
+
+        <p>
+          PlotTwisted is a fictional Victorian-inspired archive designed
+          to collect stories, confessions, unsent thoughts and playful
+          plot twists.
+        </p>
+
+        <p>
+          The archive combines an old-letter aesthetic with interactive
+          features, creating a space where ordinary thoughts can be
+          presented like mysterious records waiting to be discovered.
+        </p>
+
+        <p>
+          Every record has a story. Every story has a twist.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       CONTACT
+  ========================================= -->
+
+  <section
+    id="contact"
+    class="page"
+  >
+
+    <div class="page-inner">
+
+      <button
+        class="back-button"
+        onclick="openArchive()"
+      >
+        Back to Archives
+      </button>
+
+      <div class="interface-header">
+        <div class="archive-label">Archive Office</div>
+        <h2>Contact</h2>
+        <p>
+          Have a concern about the archive? Leave a message.
+        </p>
+      </div>
+
+      <div class="contact-box">
+
+        <p class="section-subtitle">
+          For concerns, suggestions or questions about the archive,
+          use the button below.
+        </p>
+
+        <button
+          class="gold-btn"
+          onclick="alert('Thank you for contacting the PlotTwisted Archive.')"
+        >
+          Contact the Archive
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+
+  <footer id="siteFooter">
+
+    <div class="footer-inner">
+
+      <div>
+        <div class="footer-title">
+          PlotTwisted
+        </div>
+
+        <div class="footer-text">
+          The Secret Victorian Archive
+        </div>
+      </div>
+
+      <div class="footer-text">
+        Archive records are meant for entertainment and creative
+        expression. Please do not submit private, identifying or
+        harmful information.
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================= -->
+
+  <script>
+
+    /* =========================================
+       PAGE NAVIGATION
+    ========================================= */
+
+    function hideAllSubInterfaces() {
+
+      document
+        .querySelectorAll("#home .sub-interface")
+        .forEach(section => {
+          section.classList.remove("active");
         });
 
     }
 
-}
 
+    function openInterface(id) {
 
-function openInterface(id){
+      showPage("home");
 
-    showPage("home");
+      hideAllSubInterfaces();
 
-    document.querySelectorAll(".sub-interface")
-    .forEach(item => {
-        item.classList.remove("active");
-    });
+      const target = document.getElementById(id);
 
-    const target = document.getElementById(id);
-
-    if(target){
-
+      if (target) {
         target.classList.add("active");
+      }
 
-        setTimeout(() => {
-
-            target.scrollIntoView({
-                behavior:"smooth",
-                block:"start"
-
-            });
-
-        },100);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
-}
 
-
-/* NAVIGATION */
-
-document.querySelectorAll("[data-slide]")
-.forEach(button => {
-
-    button.addEventListener("click",function(){
-
-        showPage(this.dataset.slide);
-
-    });
-
-});
-
-
-/* =========================================================
-   FATE ROULETTE
-========================================================= */
-
-const plotTwists = [
-
-"Your story is not finished yet.",
-
-"Someone remembers something about you that you thought they forgot.",
-
-"A simple conversation may become an important memory.",
-
-"Maybe the answer is not yes or no yet.",
-
-"An unexpected friendship could become an important chapter.",
-
-"You may discover something you were not expecting.",
-
-"Sometimes the biggest plot twist is learning more about yourself.",
-
-"A chapter can end without the whole story being over.",
-
-"Someone may be wondering the same thing about you.",
-
-"Your next favorite memory may come from an ordinary day.",
-
-"Maybe the signs are confusing because the story is still unfolding.",
-
-"You might be overthinking it — or you might simply need more time.",
-
-"An honest conversation could change the direction of the story.",
-
-"The person you least expected may become important to you.",
-
-"Maybe the best chapter has not happened yet.",
-
-"Fate refuses to reveal the entire plot at once.",
-
-"Some stories make sense only after several chapters.",
-
-"Perhaps the mystery is part of what makes the story interesting.",
-
-"Your heart wants an answer. The archive recommends patience.",
-
-"The next chapter may surprise you.",
-
-"An ordinary day may become an unforgettable chapter.",
-
-"Someone from your past may unexpectedly cross your path again.",
-
-"The story may take a completely different direction.",
-
-"Do not rush the ending. Some chapters need time.",
-
-"A small decision today may create tomorrow's plot twist.",
-
-"You may soon understand why something did not work out.",
-
-"Not every goodbye is the end of the story.",
-
-"Someone may enter your life at exactly the right moment.",
-
-"The answer you seek may arrive in an unexpected form.",
-
-"Perhaps the plot twist is becoming comfortable with uncertainty.",
-
-"Your future chapter is waiting for you to turn the page.",
-
-"Something you considered ordinary may become special.",
-
-"The archive suspects a surprising conversation is coming.",
-
-"Your next chapter may involve someone you already know.",
-
-"A new opportunity may appear when you stop looking for it.",
-
-"Sometimes losing one direction helps you discover another.",
-
-"The story is quietly rearranging itself.",
-
-"You may be closer to a new beginning than you realize.",
-
-"A forgotten dream may return to the storyline.",
-
-"Someone may appreciate you more than they openly show.",
-
-"The next chapter belongs to you.",
-
-"Not everything needs to be solved tonight.",
-
-"Your story deserves an ending you can be proud of.",
-
-"The unexpected may become your favorite part.",
-
-"Perhaps you are currently living through the plot twist.",
-
-"Some answers arrive only after you stop searching for them.",
-
-"A new memory is waiting to be made.",
-
-"The archive advises: keep turning the pages.",
-
-"Your chapter may change when you least expect it.",
-
-"Sometimes the best plot twist is discovering yourself."
-
-];
-
-
-function spinRoulette(){
-
-    const text = document.getElementById("rouletteText");
-    const icon = document.getElementById("rouletteIcon");
-
-    if(!text) return;
-
-    text.style.transition="all .4s ease";
-
-    text.style.opacity="0";
-    text.style.transform="translateY(10px)";
-
-    if(icon){
-        icon.style.transform="rotate(720deg) scale(1.1)";
-    }
-
-    setTimeout(() => {
-
-        const randomIndex =
-        Math.floor(Math.random() * plotTwists.length);
-
-        text.textContent =
-        "“" + plotTwists[randomIndex] + "”";
-
-        text.style.opacity="1";
-        text.style.transform="translateY(0)";
-
-        if(icon){
-            icon.style.transform="rotate(0deg) scale(1)";
-        }
-
-    },700);
-
-}
-
-
-/* =========================================================
-   COMPATIBILITY TEST
-========================================================= */
-
-const compatibilityFates = [
-
-{
-    title:"Soulmates",
-    message:"Two paths, mysteriously destined to cross."
-},
-
-{
-    title:"Written in the Stars",
-    message:"The universe seems suspiciously fond of this connection."
-},
-
-{
-    title:"Almost Lovers",
-    message:"There is something here, but the story hesitates."
-},
-
-{
-    title:"Best Friends",
-    message:"Perhaps your greatest love story is friendship."
-},
-
-{
-    title:"Unexpected Connection",
-    message:"Neither of you expected this chapter to matter."
-},
-
-{
-    title:"Secretly Important",
-    message:"One of you may matter more than the other realizes."
-},
-
-{
-    title:"Right Person, Wrong Chapter",
-    message:"The timing may be the only thing standing in the way."
-},
-
-{
-    title:"Beautiful What-If",
-    message:"A story that may always make you wonder."
-},
-
-{
-    title:"Unspoken Connection",
-    message:"Some things are felt long before they are said."
-},
-
-{
-    title:"Still Being Written",
-    message:"The archive refuses to reveal the ending."
-},
-
-{
-    title:"Destined to Meet",
-    message:"Your paths crossing may not have been entirely accidental."
-},
-
-{
-    title:"Plot Twist",
-    message:"Nothing about this connection is going according to plan."
-},
-
-{
-    title:"Friends Who Might Become More",
-    message:"The friendship already has an interesting subplot."
-},
-
-{
-    title:"A Connection Worth Keeping",
-    message:"Whatever happens, this person may be worth having around."
-},
-
-{
-    title:"Temporary Chapter",
-    message:"Some people arrive to change the story, not stay forever."
-},
-
-{
-    title:"The Almost Story",
-    message:"Close enough to feel real, complicated enough to remain unfinished."
-},
-
-{
-    title:"Slow-Burn Connection",
-    message:"This story was never meant to happen overnight."
-},
-
-{
-    title:"Secret Admirers",
-    message:"Someone may be hiding more feelings than they show."
-},
-
-{
-    title:"Mutual Curiosity",
-    message:"You both seem to have questions the other cannot answer."
-},
-
-{
-    title:"The Comfort Person",
-    message:"There is something unusually easy about being around each other."
-},
-
-{
-    title:"Partners in Crime",
-    message:"Together, you might create far too many memorable chapters."
-},
-
-{
-    title:"Chaotic Duo",
-    message:"The archive predicts questionable decisions and excellent stories."
-},
-
-{
-    title:"Golden Friendship",
-    message:"A friendship with the potential to survive many chapters."
-},
-
-{
-    title:"The Familiar Stranger",
-    message:"You feel strangely familiar despite the distance."
-},
-
-{
-    title:"A Chance Encounter",
-    message:"One meeting may lead to more than expected."
-},
-
-{
-    title:"The Missing Piece",
-    message:"Perhaps you bring something different into each other's lives."
-},
-
-{
-    title:"Parallel Stories",
-    message:"Your lives may keep crossing in unexpected ways."
-},
-
-{
-    title:"The Unfinished Letter",
-    message:"There are words between you that have yet to be written."
-},
-
-{
-    title:"Midnight Confession",
-    message:"The truth might finally surface when nobody expects it."
-},
-
-{
-    title:"Hidden Chapter",
-    message:"There is more to this connection than what appears on the surface."
-},
-
-{
-    title:"The Favorite Person",
-    message:"One of you may already have a special place in the other's story."
-},
-
-{
-    title:"Serendipity",
-    message:"Some meetings simply happen at exactly the right moment."
-},
-
-{
-    title:"A Curious Beginning",
-    message:"The first chapter is interesting enough to keep reading."
-},
-
-{
-    title:"The Safe Harbor",
-    message:"You may find comfort in one another."
-},
-
-{
-    title:"Opposites With Chemistry",
-    message:"Different stories, surprisingly compatible chapters."
-},
-
-{
-    title:"The Unexpected Duo",
-    message:"Nobody saw this pairing coming — not even the archive."
-},
-
-{
-    title:"A Memory in the Making",
-    message:"This connection may become one of your favorite memories."
-},
-
-{
-    title:"The Question Mark",
-    message:"The archive has insufficient evidence. Investigate further."
-},
-
-{
-    title:"Delightfully Complicated",
-    message:"Simple was never part of the plot."
-},
-
-{
-    title:"The Dramatic Chapter",
-    message:"Expect confusion, laughter, and at least one plot twist."
-},
-
-{
-    title:"The Maybe",
-    message:"Not a yes. Not a no. A very suspicious maybe."
-},
-
-{
-    title:"The Hopeful Chapter",
-    message:"Something meaningful could grow with time."
-},
-
-{
-    title:"The Unexpected Favorite",
-    message:"You may become more important to each other than planned."
-},
-
-{
-    title:"The Long-Distance Chapter",
-    message:"Different paths do not always mean disconnected stories."
-},
-
-{
-    title:"The Reunion",
-    message:"Some stories have a habit of finding their way back."
-},
-
-{
-    title:"The Once-in-a-Lifetime Friend",
-    message:"Some friendships become part of your personal history."
-},
-
-{
-    title:"The Secret Chapter",
-    message:"A story exists here, but nobody has opened the page yet."
-},
-
-{
-    title:"The Coincidence",
-    message:"Probably coincidence. Probably."
-},
-
-{
-    title:"The Red String",
-    message:"An invisible thread seems determined to connect your stories."
-},
-
-{
-    title:"The Great Unknown",
-    message:"The archive cannot predict this one. Live the chapter."
-},
-
-{
-    title:"Certified Menaces",
-    message:"Together, you are a questionable decision waiting to happen."
-},
-
-{
-    title:"Delulu Department Approved",
-    message:"The evidence is weak, but the imagination is powerful."
-},
-
-{
-    title:"Too Much Eye Contact",
-    message:"The archive has noticed something suspicious."
-},
-
-{
-    title:"One Brain Cell Between You",
-    message:"Please use it responsibly."
-},
-
-{
-    title:"Main Characters",
-    message:"Somehow, you both think the story revolves around you."
-},
-
-{
-    title:"Enemies-to-Friends Potential",
-    message:"The rivalry may eventually become an alliance."
-},
-
-{
-    title:"Bestie Energy",
-    message:"Romance is unclear. Chaos is absolutely confirmed."
-},
-
-{
-    title:"Suspiciously Compatible",
-    message:"The archive would like to investigate further."
-},
-
-{
-    title:"The Gossip-Worthy Duo",
-    message:"Your interactions may become somebody else's favorite story."
-},
-
-{
-    title:"Too Complicated to Explain",
-    message:"Even the archive keeper needs a flowchart."
-}
-
-];
-
-
-/*
-    Generate a fun percentage.
-
-    The percentage is intentionally random and
-    should not be treated as a real measurement.
-*/
-
-function generateCompatibilityPercentage(){
-
-    return Math.floor(Math.random() * 61) + 40;
-
-}
-
-
-function calculateCompatibility(){
-
-    const firstInput =
-    document.getElementById("nameOne");
-
-    const secondInput =
-    document.getElementById("nameTwo");
-
-    const firstName =
-    firstInput.value.trim();
-
-    const secondName =
-    secondInput.value.trim();
-
-    if(!firstName || !secondName){
-
-        alert("Please enter both names before consulting the archive.");
-
-        return;
+    function showPage(id) {
+
+      document
+        .querySelectorAll(".page")
+        .forEach(page => {
+          page.classList.remove("active");
+        });
+
+      const target = document.getElementById(id);
+
+      if (target) {
+        target.classList.add("active");
+      }
+
+      document
+        .querySelectorAll("#siteFooter")
+        .forEach(footer => {
+          footer.classList.add("show");
+        });
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
 
-    const percentage =
-    generateCompatibilityPercentage();
+    function goHome() {
+
+      document
+        .querySelectorAll(".page")
+        .forEach(page => {
+          page.classList.remove("active");
+        });
+
+      document
+        .getElementById("home")
+        .classList.add("active");
+
+      hideAllSubInterfaces();
+
+      document
+        .getElementById("letterLanding")
+        .classList.add("active");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
 
 
-    const randomFate =
-    compatibilityFates[
-        Math.floor(
-            Math.random() * compatibilityFates.length
-        )
+    function openArchive() {
+
+      openInterface("storyMenu");
+
+    }
+
+
+    /* =========================================
+       ROULETTE
+    ========================================= */
+
+    const plotTwists = [
+
+      "Someone from your past may unexpectedly return.",
+      "The person you least expect may know more than they reveal.",
+      "A casual conversation could become an important memory.",
+      "You may discover that the answer was closer than you thought.",
+      "An unexpected message could change the mood of your day.",
+      "Someone may finally say what they have been thinking.",
+      "A coincidence may become the beginning of a new story.",
+      "You could meet someone at exactly the right moment.",
+      "A friendship may become more meaningful than expected.",
+      "The situation may not be what it first appeared to be.",
+      "A forgotten memory may suddenly make sense.",
+      "Someone may surprise you with an honest confession.",
+      "The plot may take a completely different direction.",
+      "An ordinary day could become unexpectedly memorable.",
+      "You may realize that you have already moved forward.",
+      "A small decision may lead to a bigger change.",
+      "Someone could appear when you have stopped waiting.",
+      "The answer may arrive when you stop looking for it.",
+      "A misunderstanding may finally be cleared up.",
+      "You may receive news you were not expecting.",
+      "A familiar person may see you differently this time.",
+      "The next chapter may begin sooner than expected.",
+      "A simple hello may lead to an interesting conversation.",
+      "You may discover a hidden side of someone.",
+      "A past situation may finally receive its conclusion.",
+      "The person you thought forgot may actually remember.",
+      "Something you considered insignificant may become important.",
+      "An unexpected opportunity may appear.",
+      "A random encounter could become a lasting memory.",
+      "You may finally understand why something happened.",
+      "The story is not finished yet.",
+      "A new chapter is quietly beginning.",
+      "Someone may be waiting for the right moment to speak.",
+      "A secret may eventually become known.",
+      "A surprising friendship may develop.",
+      "You may be closer to an answer than you realize.",
+      "An old connection may become relevant again.",
+      "A decision you make soon may change your direction.",
+      "Someone may unexpectedly choose honesty.",
+      "The next twist may come from somewhere completely unexpected.",
+      "A small gesture may mean more than words.",
+      "You may discover that timing matters more than certainty.",
+      "A situation may resolve itself naturally.",
+      "A familiar place may hold a new memory.",
+      "The person you underestimated may surprise you.",
+      "An unexpected ending may turn into a new beginning.",
+      "You may finally let go of an old question.",
+      "A conversation may reveal something important.",
+      "The archive predicts one thing: expect the unexpected."
     ];
 
 
-    document.getElementById("resultNames").textContent =
-        firstName + " ♥ " + secondName;
+    function spinRoulette() {
+
+      const text = document.getElementById("rouletteText");
+      const icon = document.getElementById("rouletteIcon");
+
+      if (!text) return;
+
+      icon.style.transform = "rotate(360deg)";
+      icon.style.transition = "transform .7s ease";
+
+      text.style.opacity = "0";
+
+      setTimeout(() => {
+
+        const randomIndex =
+          Math.floor(Math.random() * plotTwists.length);
+
+        text.textContent = plotTwists[randomIndex];
+
+        text.style.opacity = "1";
+
+        icon.style.transform = "rotate(0deg)";
+
+      }, 400);
+
+    }
 
 
-    document.getElementById("compatibilityNumber").textContent =
-        percentage + "%";
+    /* =========================================
+       COMPATIBILITY
+    ========================================= */
+
+    const compatibilityFates = [
+
+      {
+        title: "A Curious Connection",
+        message: "There may be an interesting story hidden between these two names."
+      },
+
+      {
+        title: "Unexpected Chapter",
+        message: "The archive suggests that this connection could take an unexpected direction."
+      },
+
+      {
+        title: "Two Different Stories",
+        message: "Different paths can still create memorable moments."
+      },
+
+      {
+        title: "The Plot Thickens",
+        message: "Something about this combination deserves another chapter."
+      },
+
+      {
+        title: "A Familiar Feeling",
+        message: "This pairing carries the feeling of something strangely familiar."
+      },
+
+      {
+        title: "Possible Plot Twist",
+        message: "The archive refuses to give a predictable ending."
+      },
+
+      {
+        title: "Interesting Timing",
+        message: "Sometimes timing creates the most unexpected stories."
+      },
+
+      {
+        title: "Worth a Chapter",
+        message: "This combination has enough mystery to deserve another page."
+      },
+
+      {
+        title: "The Archive Wonders",
+        message: "Even the archive cannot decide where this story ends."
+      },
+
+      {
+        title: "An Unwritten Story",
+        message: "The next chapter depends on what happens beyond the archive."
+      }
+    ];
 
 
-    document.getElementById("fateTitle").textContent =
-        randomFate.title;
+    function calculateCompatibility() {
+
+      const one =
+        document.getElementById("nameOne").value.trim();
+
+      const two =
+        document.getElementById("nameTwo").value.trim();
+
+      if (!one || !two) {
+
+        alert("Please enter both names first.");
+
+        return;
+      }
 
 
-    document.getElementById("fateMessage").textContent =
-        "“" + randomFate.message + "”";
+      let total = 0;
+
+      const combined =
+        (one + two).toLowerCase();
+
+      for (let i = 0; i < combined.length; i++) {
+
+        total += combined.charCodeAt(i);
+
+      }
+
+      const score =
+        (total % 51) + 50;
+
+      const fate =
+        compatibilityFates[
+          total % compatibilityFates.length
+        ];
 
 
-    const result =
-    document.getElementById("compatibilityResult");
+      document.getElementById("resultNames")
+        .textContent =
+        one + " + " + two;
+
+      document.getElementById("compatibilityNumber")
+        .textContent =
+        score + "%";
+
+      document.getElementById("fateTitle")
+        .textContent =
+        fate.title;
+
+      document.getElementById("fateMessage")
+        .textContent =
+        fate.message;
+
+      document
+        .getElementById("compatibilityResult")
+        .classList.add("show");
+
+    }
 
 
-    result.classList.remove("show");
+    function resetCompatibility() {
 
+      document.getElementById("nameOne").value = "";
+      document.getElementById("nameTwo").value = "";
 
-    /*
-       Force the animation to restart.
-    */
-
-    void result.offsetWidth;
-
-
-    result.classList.add("show");
-
-
-    setTimeout(() => {
-
-        result.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-
-    },150);
-
-}
-
-
-function resetCompatibility(){
-
-    document.getElementById("nameOne").value="";
-    document.getElementById("nameTwo").value="";
-
-    document
+      document
         .getElementById("compatibilityResult")
         .classList.remove("show");
 
+    }
+
+
+    /* =========================================
+       LOCAL SIGN / DELUSION VOTING
+    ========================================= */
+
+    let votes = {
+      sign: 0,
+      maybe: 0,
+      delulu: 0
+    };
+
+
     document
-        .getElementById("nameOne")
-        .focus();
+      .querySelectorAll(".sign-vote")
+      .forEach(button => {
 
-}
+        button.addEventListener("click", () => {
 
+          const choice =
+            button.dataset.choice;
 
-/* =========================================================
-   SIGN / DELUSION DEMO
-========================================================= */
+          if (!votes.hasOwnProperty(choice)) return;
 
-document.querySelectorAll(".sign-vote")
-.forEach(button => {
+          votes[choice]++;
 
-    button.addEventListener("click",function(){
+          updateVotes();
 
-        const choice = this.dataset.choice;
+        });
 
-        let sign =
-        parseInt(
-            document.getElementById("signPercent").textContent
-        );
-
-        let maybe =
-        parseInt(
-            document.getElementById("maybePercent").textContent
-        );
-
-        let delulu =
-        parseInt(
-            document.getElementById("deluluPercent").textContent
-        );
+      });
 
 
-        if(choice === "sign"){
-            sign += 1;
-        }
+    function updateVotes() {
 
-        if(choice === "maybe"){
-            maybe += 1;
-        }
+      const total =
+        votes.sign +
+        votes.maybe +
+        votes.delulu;
 
-        if(choice === "delulu"){
-            delulu += 1;
-        }
+      if (total === 0) return;
 
 
-        const total =
-        sign + maybe + delulu;
+      const sign =
+        Math.round((votes.sign / total) * 100);
 
+      const maybe =
+        Math.round((votes.maybe / total) * 100);
 
-        sign =
-        Math.round((sign / total) * 100);
-
-        maybe =
-        Math.round((maybe / total) * 100);
-
-        delulu =
+      const delulu =
         100 - sign - maybe;
 
 
-        document.getElementById("signPercent").textContent =
-            sign + "%";
+      document.getElementById("signPercent")
+        .textContent = sign + "%";
 
-        document.getElementById("maybePercent").textContent =
-            maybe + "%";
+      document.getElementById("maybePercent")
+        .textContent = maybe + "%";
 
-        document.getElementById("deluluPercent").textContent =
-            delulu + "%";
+      document.getElementById("deluluPercent")
+        .textContent = delulu + "%";
 
 
-        document.getElementById("signBar").style.width =
-            sign + "%";
+      document.getElementById("signBar")
+        .style.width = sign + "%";
 
-        document.getElementById("maybeBar").style.width =
-            maybe + "%";
+      document.getElementById("maybeBar")
+        .style.width = maybe + "%";
 
-        document.getElementById("deluluBar").style.width =
-            delulu + "%";
+      document.getElementById("deluluBar")
+        .style.width = delulu + "%";
+
+    }
+
+
+    /* =========================================
+       START ON OPEN LETTER
+    ========================================= */
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      goHome();
 
     });
 
-});
+  </script>
 
 
-/* START */
-
-document.addEventListener("DOMContentLoaded",() => {
-
-    openInterface("storyMenu");
-
-});
-
-</script>
-
-
-<!-- YOUR FIREBASE SCRIPT -->
-
-<script type="module" src="./script.js"></script>
+  <!-- KEEP YOUR FIREBASE / DATABASE SCRIPT -->
+  <script
+    type="module"
+    src="./script.js"
+  ></script>
 
 </body>
     </html>
