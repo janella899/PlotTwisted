@@ -1,6 +1,6 @@
 // =====================================================
-// PLOTTWISTED — FIRESTORE SCRIPT
-// GitHub Pages + Firebase Firestore
+// PLOTTWISTED — FIRESTORE ARCHIVE
+// Matched to the current Victorian index.html
 // =====================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
@@ -24,7 +24,7 @@ import {
 // =====================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCJ59V5ioK4DWpM_jYFy7NMMPPgjiHNeAE",
+    apiKey: "AIzaSyCJ59V5ioK4DWp_mjYFy7NMMPPgjiHNeAE",
     authDomain: "plottwisted-c5551.firebaseapp.com",
     databaseURL: "https://plottwisted-c5551-default-rtdb.firebaseio.com",
     projectId: "plottwisted-c5551",
@@ -44,7 +44,7 @@ const db = getFirestore(app);
 
 
 // =====================================================
-// COLLECTION NAMES
+// COLLECTIONS
 // =====================================================
 
 const COLLECTIONS = {
@@ -55,58 +55,15 @@ const COLLECTIONS = {
 
 
 // =====================================================
-// SAFE DATE FORMAT
-// =====================================================
-
-function formatDate(timestamp) {
-
-    if (!timestamp) {
-        return "Just now";
-    }
-
-    try {
-
-        const date =
-            timestamp.toDate
-                ? timestamp.toDate()
-                : new Date(timestamp);
-
-        if (isNaN(date.getTime())) {
-            return "Recently";
-        }
-
-        return date.toLocaleString("en-PH", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        });
-
-    } catch (error) {
-
-        console.warn(
-            "Date formatting error:",
-            error
-        );
-
-        return "Recently";
-    }
-}
-
-
-// =====================================================
-// ESCAPE HTML
-// Prevents submitted HTML from being rendered
+// HELPERS
 // =====================================================
 
 function escapeHTML(value) {
 
-    const div =
-        document.createElement("div");
+    const div = document.createElement("div");
 
     div.textContent =
-        value == null
+        value === undefined || value === null
             ? ""
             : String(value);
 
@@ -114,16 +71,7 @@ function escapeHTML(value) {
 }
 
 
-// =====================================================
-// GET TEXT FROM FIRESTORE
-// Supports older field names
-// =====================================================
-
 function getPostText(data) {
-
-    if (!data) {
-        return "";
-    }
 
     return (
         data.text ??
@@ -137,18 +85,9 @@ function getPostText(data) {
 }
 
 
-// =====================================================
-// GET LIKES
-// =====================================================
-
 function getLikes(data) {
 
-    if (!data) {
-        return 0;
-    }
-
-    const likes =
-        Number(data.likes ?? 0);
+    const likes = Number(data.likes ?? 0);
 
     return Number.isFinite(likes)
         ? likes
@@ -156,205 +95,263 @@ function getLikes(data) {
 }
 
 
+function formatDate(timestamp) {
+
+    if (!timestamp) {
+        return "Recently filed";
+    }
+
+    try {
+
+        const date =
+            timestamp.toDate
+                ? timestamp.toDate()
+                : new Date(timestamp);
+
+        return date.toLocaleString("en-PH", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        });
+
+    } catch (error) {
+
+        return "Recently filed";
+
+    }
+
+}
+
+
 // =====================================================
-// CREATE VICTORIAN ARCHIVE RECORD
+// RECORD TYPE LABEL
 // =====================================================
 
-function createPostCard(
-    id,
-    data,
-    type,
-    collectionName
-) {
+function getRecordLabel(type) {
+
+    if (type === "CONFESSION") {
+        return "CONFIDENTIAL CONFESSION";
+    }
+
+    if (type === "HUGOT") {
+        return "EMOTIONAL RECORD";
+    }
+
+    if (type === "UNSENT MESSAGE") {
+        return "UNSENT CORRESPONDENCE";
+    }
+
+    return "ARCHIVE RECORD";
+
+}
+
+
+// =====================================================
+// RECORD SYMBOL
+// No emoji — only Victorian text symbols
+// =====================================================
+
+function getRecordSymbol(type) {
+
+    if (type === "CONFESSION") {
+        return "PT";
+    }
+
+    if (type === "HUGOT") {
+        return "PT";
+    }
+
+    if (type === "UNSENT MESSAGE") {
+        return "PT";
+    }
+
+    return "PT";
+
+}
+
+
+// =====================================================
+// VICTORIAN WATERMARK
+// =====================================================
+
+function createWatermark() {
+
+    return `
+        <div class="record-watermark" aria-hidden="true">
+
+            <svg viewBox="0 0 180 180">
+
+                <circle
+                    cx="90"
+                    cy="90"
+                    r="65"
+                ></circle>
+
+                <circle
+                    cx="90"
+                    cy="90"
+                    r="50"
+                ></circle>
+
+                <path
+                    d="
+                    M90 90
+                    C65 72 70 45 91 43
+                    C113 42 120 68 90 90Z
+                    "
+                ></path>
+
+                <path
+                    d="
+                    M90 90
+                    C112 73 136 85 130 105
+                    C124 123 102 115 90 90Z
+                    "
+                ></path>
+
+                <path
+                    d="
+                    M90 90
+                    C71 111 47 99 52 80
+                    C57 62 79 67 90 90Z
+                    "
+                ></path>
+
+            </svg>
+
+        </div>
+    `;
+
+}
+
+
+// =====================================================
+// CREATE VICTORIAN RECORD
+// =====================================================
+
+function createRecord(id, data, type, collectionName) {
+
+    const record =
+        document.createElement("article");
+
+    record.className = "record";
 
     const text =
-        getPostText(data);
+        escapeHTML(getPostText(data));
 
     const likes =
         getLikes(data);
 
-
-    const card =
-        document.createElement("article");
-
-    card.className =
-        "post-card archive-record";
-
-
-    // =================================================
-    // DISPLAY-ONLY RECORD NUMBER
-    // Does NOT change Firestore ID
-    // =================================================
-
-    const recordNumber =
-        String(
-            Math.abs(
-                Array.from(String(id || ""))
-                    .reduce(
-                        (total, char) =>
-                            total +
-                            char.charCodeAt(0),
-                        0
-                    )
-            ) % 9999
-        ).padStart(4, "0");
-
-
-    // =================================================
-    // ARCHIVE LABEL
-    // =================================================
-
-    let archiveLabel =
-        "ANONYMOUS RECORD";
-
-    if (type === "CONFESSION") {
-
-        archiveLabel =
-            "ANONYMOUS CONFESSION";
-
-    } else if (type === "HUGOT") {
-
-        archiveLabel =
-            "PERSONAL HUGOT";
-
-    } else if (type === "UNSENT MESSAGE") {
-
-        archiveLabel =
-            "UNSENT MESSAGE";
-
-    }
-
-
-    // =================================================
-    // DATE
-    // =================================================
-
-    let dateText =
-        "DATE UNKNOWN";
-
-    try {
-
-        if (data && data.createdAt) {
-
-            dateText =
-                formatDate(
-                    data.createdAt
-                );
-
-        }
-
-    } catch (error) {
-
-        dateText =
-            "Recently";
-
-    }
-
-
-    // =================================================
-    // RECORD HTML
-    // =================================================
-
-    card.innerHTML = `
-
-        <div class="record-inner">
-
-            <div class="record-header">
-
-                <span class="record-stamp">
-                    RECENTLY FILED
-                </span>
-
-                <span class="record-number">
-                    RECORD No. ${recordNumber}
-                </span>
-
-            </div>
-
-
-            <div class="record-ornament">
-
-                <span></span>
-
-                <b>ARCHIVE</b>
-
-                <span></span>
-
-            </div>
-
-
-            <div class="record-category">
-
-                ${escapeHTML(archiveLabel)}
-
-            </div>
-
-
-            <div class="record-content">
-
-                <p class="record-message">
-
-                    ${escapeHTML(text)}
-
-                </p>
-
-            </div>
-
-
-            <div class="record-divider"></div>
-
-
-            <div class="record-footer">
-
-                <div class="record-date">
-
-                    <span class="footer-label">
-                        FILED
-                    </span>
-
-                    <time>
-                        ${escapeHTML(dateText)}
-                    </time>
-
-                </div>
-
-
-                <div class="record-seal">
-                    SEALED
-                </div>
-
-            </div>
-
-
-            <div class="record-actions">
-
-                <button
-                    class="like-button"
-                    type="button"
-                    data-id="${escapeHTML(String(id))}"
-                    data-collection="${escapeHTML(String(collectionName))}"
-                    aria-label="Like this record">
-
-                    <span class="button-symbol">
-                        ♡
-                    </span>
-
-                    <span class="like-count">
-                        ${likes}
-                    </span>
-
-                </button>
-
-
-                <button
-                    class="report-button"
-                    type="button">
-
-                    REPORT RECORD
-
-                </button>
-
-            </div>
+    const date =
+        escapeHTML(formatDate(data.createdAt));
+
+    const label =
+        escapeHTML(getRecordLabel(type));
+
+    const symbol =
+        escapeHTML(getRecordSymbol(type));
+
+    record.dataset.recordId = id;
+
+    record.innerHTML = `
+
+        <div class="record-corner top-left">
+            ❦
+        </div>
+
+        <div class="record-corner top-right">
+            ❧
+        </div>
+
+        <div class="record-corner bottom-left">
+            ❧
+        </div>
+
+        <div class="record-corner bottom-right">
+            ❦
+        </div>
+
+
+        <div class="record-number">
+            ${symbol}
+            ${label}
+        </div>
+
+
+        <div class="record-text">
+            ${text}
+        </div>
+
+
+        <div class="record-meta">
+
+            <span>
+                ${date}
+            </span>
+
+            <span>
+                FILE NO. ${escapeHTML(id.slice(0, 6).toUpperCase())}
+            </span>
+
+        </div>
+
+
+        ${createWatermark()}
+
+
+        <div
+            class="record-actions"
+            style="
+                position:relative;
+                z-index:6;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                margin-top:18px;
+                padding-top:12px;
+                border-top:1px solid rgba(93,60,27,.25);
+            "
+        >
+
+            <button
+                type="button"
+                class="record-action like-record"
+                style="
+                    border:1px solid #80602f;
+                    background:rgba(247,229,193,.55);
+                    color:#63451e;
+                    padding:7px 12px;
+                    font-family:var(--body);
+                    font-size:7px;
+                    letter-spacing:1.5px;
+                    text-transform:uppercase;
+                    cursor:pointer;
+                "
+            >
+                LIKE ${likes}
+            </button>
+
+
+            <button
+                type="button"
+                class="record-action report-record"
+                style="
+                    border:1px solid #80602f;
+                    background:transparent;
+                    color:#63451e;
+                    padding:7px 12px;
+                    font-family:var(--body);
+                    font-size:7px;
+                    letter-spacing:1.5px;
+                    text-transform:uppercase;
+                    cursor:pointer;
+                "
+            >
+                REPORT
+            </button>
 
         </div>
 
@@ -362,222 +359,224 @@ function createPostCard(
 
 
     // =================================================
-    // LIKE BUTTON
+    // LIKE
     // =================================================
 
     const likeButton =
-        card.querySelector(
-            ".like-button"
-        );
+        record.querySelector(".like-record");
 
 
-    if (likeButton) {
+    likeButton.addEventListener(
+        "click",
+        async function () {
 
-        likeButton.addEventListener(
-            "click",
-            async function () {
+            if (
+                likeButton.dataset.liked === "true"
+            ) {
+                return;
+            }
 
-                if (
-                    likeButton.dataset.liked ===
-                    "true"
-                ) {
-                    return;
-                }
+
+            likeButton.disabled = true;
+
+
+            try {
+
+                const postRef =
+                    doc(
+                        db,
+                        collectionName,
+                        id
+                    );
+
+
+                await updateDoc(
+                    postRef,
+                    {
+                        likes: increment(1)
+                    }
+                );
+
+
+                const newLikes =
+                    likes + 1;
+
+
+                likeButton.textContent =
+                    `LIKED ${newLikes}`;
+
+
+                likeButton.dataset.liked =
+                    "true";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Like error:",
+                    error
+                );
 
 
                 likeButton.disabled =
-                    true;
+                    false;
 
-
-                try {
-
-                    const postRef =
-                        doc(
-                            db,
-                            collectionName,
-                            id
-                        );
-
-
-                    await updateDoc(
-                        postRef,
-                        {
-                            likes:
-                                increment(1)
-                        }
-                    );
-
-
-                    const count =
-                        likeButton.querySelector(
-                            ".like-count"
-                        );
-
-
-                    const currentLikes =
-                        Number(
-                            count
-                                ? count.textContent
-                                : likes
-                        ) + 1;
-
-
-                    if (count) {
-
-                        count.textContent =
-                            currentLikes;
-
-                    }
-
-
-                    likeButton.dataset.liked =
-                        "true";
-
-
-                    likeButton.classList.add(
-                        "is-liked"
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Like error:",
-                        error
-                    );
-
-
-                    likeButton.disabled =
-                        false;
-
-
-                    alert(
-                        "Unable to like this story right now."
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    // =================================================
-    // REPORT BUTTON
-    // =================================================
-
-    const reportButton =
-        card.querySelector(
-            ".report-button"
-        );
-
-
-    if (reportButton) {
-
-        reportButton.addEventListener(
-            "click",
-            function () {
 
                 alert(
-                    "Thank you. Please report inappropriate content to the PlotTwisted administrator."
+                    "Unable to like this record right now."
                 );
 
             }
-        );
 
-    }
+        }
+    );
 
 
-    return card;
+    // =================================================
+    // REPORT
+    // =================================================
+
+    const reportButton =
+        record.querySelector(".report-record");
+
+
+    reportButton.addEventListener(
+        "click",
+        function () {
+
+            alert(
+                "Thank you. Please report inappropriate content to the PlotTwisted administrator."
+            );
+
+        }
+    );
+
+
+    return record;
+
 }
 
 
 // =====================================================
-// GET ARCHIVE CONTAINER
+// EMPTY RECORD
 // =====================================================
 
-function getContainer(elementId) {
-
-    const container =
-        document.getElementById(
-            elementId
-        );
-
-    if (!container) {
-
-        console.warn(
-            `PlotTwisted: #${elementId} was not found.`
-        );
-
-    }
-
-    return container;
-}
-
-
-// =====================================================
-// CREATE EMPTY MESSAGE
-// =====================================================
-
-function createEmptyMessage() {
+function createEmptyRecord(type) {
 
     const empty =
         document.createElement("div");
 
     empty.className =
-        "post-card archive-empty";
+        "empty-record";
+
+
+    let title =
+        "NO RECORDS YET";
+
+    let message =
+        "The archive is waiting for its first record.";
+
+
+    if (type === "CONFESSION") {
+
+        title =
+            "NO CONFESSIONS YET";
+
+        message =
+            "The confession archive is waiting for its first record.";
+
+    }
+
+
+    if (type === "HUGOT") {
+
+        title =
+            "NO HUGOT LINES YET";
+
+        message =
+            "The emotional archive is waiting for its first line.";
+
+    }
+
+
+    if (type === "UNSENT MESSAGE") {
+
+        title =
+            "NO LETTERS YET";
+
+        message =
+            "No unsent messages have entered the archive.";
+
+    }
+
 
     empty.innerHTML = `
 
-        <div class="post-type">
-            THE ARCHIVE IS QUIET
+        <div class="empty-symbol">
+            ⁂
         </div>
 
-        <div class="post-message">
-            No records have been filed here yet.
+        <div class="empty-title">
+            ${title}
+        </div>
+
+        <div class="empty-text">
+            ${message}
+        </div>
+
+        <div class="empty-line">
+            — END OF CURRENT FILE —
         </div>
 
     `;
+
 
     return empty;
+
 }
 
 
 // =====================================================
-// CREATE ERROR MESSAGE
+// ERROR RECORD
 // =====================================================
 
-function createErrorMessage() {
+function createErrorRecord() {
 
-    const errorCard =
+    const errorBox =
         document.createElement("div");
 
-    errorCard.className =
-        "post-card archive-error";
+    errorBox.className =
+        "empty-record";
 
-    errorCard.innerHTML = `
 
-        <div class="post-type">
-            ARCHIVE ERROR
+    errorBox.innerHTML = `
+
+        <div class="empty-symbol">
+            ◇
         </div>
 
-        <div class="post-message">
-            Unable to retrieve the records right now.
+        <div class="empty-title">
+            ARCHIVE UNAVAILABLE
         </div>
 
-        <div class="post-date">
-            Please check your Firebase Firestore rules.
+        <div class="empty-text">
+            The records could not be retrieved at this time.
+        </div>
+
+        <div class="empty-line">
+            — PLEASE TRY AGAIN LATER —
         </div>
 
     `;
 
-    return errorCard;
+
+    return errorBox;
+
 }
 
 
 // =====================================================
-// LOAD ONE COLLECTION
+// LOAD FIRESTORE COLLECTION
 // =====================================================
 
 async function loadCollection(
@@ -587,28 +586,40 @@ async function loadCollection(
 ) {
 
     const container =
-        getContainer(elementId);
+        document.getElementById(elementId);
 
 
     if (!container) {
+
+        console.warn(
+            `Container #${elementId} was not found.`
+        );
+
         return;
+
     }
 
 
-    // =================================================
-    // LOADING STATE
-    // =================================================
+    // Loading state
 
     container.innerHTML = `
 
-        <div class="post-card archive-loading">
+        <div class="empty-record">
 
-            <div class="post-type">
-                PLOTTWISTED ARCHIVE
+            <div class="empty-symbol">
+                ◇
             </div>
 
-            <div class="post-message">
-                Opening the archive...
+            <div class="empty-title">
+                OPENING ARCHIVE
+            </div>
+
+            <div class="empty-text">
+                Retrieving recently filed records...
+            </div>
+
+            <div class="empty-line">
+                — PLEASE WAIT —
             </div>
 
         </div>
@@ -628,9 +639,7 @@ async function loadCollection(
         let snapshot;
 
 
-        // =================================================
-        // TRY NEWEST FIRST
-        // =================================================
+        // Try newest first
 
         try {
 
@@ -653,7 +662,7 @@ async function loadCollection(
         } catch (orderError) {
 
             console.warn(
-                "Ordered query failed. Loading collection without ordering.",
+                "Ordered query unavailable. Loading records without ordering.",
                 orderError
             );
 
@@ -666,30 +675,21 @@ async function loadCollection(
         }
 
 
-        // =================================================
-        // CLEAR LOADING
-        // =================================================
+        // Clear loading state
 
         container.innerHTML = "";
 
 
-        // =================================================
-        // EMPTY COLLECTION
-        // =================================================
-
         if (snapshot.empty) {
 
             container.appendChild(
-                createEmptyMessage()
+                createEmptyRecord(type)
             );
 
             return;
+
         }
 
-
-        // =================================================
-        // COLLECT POSTS
-        // =================================================
 
         const posts = [];
 
@@ -697,13 +697,17 @@ async function loadCollection(
         snapshot.forEach(
             documentSnapshot => {
 
+                const data =
+                    documentSnapshot.data();
+
+
                 posts.push({
 
                     id:
                         documentSnapshot.id,
 
                     data:
-                        documentSnapshot.data()
+                        data
 
                 });
 
@@ -711,9 +715,7 @@ async function loadCollection(
         );
 
 
-        // =================================================
-        // LOCAL SORT
-        // =================================================
+        // Sort newest first
 
         posts.sort(
             (a, b) => {
@@ -736,15 +738,13 @@ async function loadCollection(
         );
 
 
-        // =================================================
-        // DISPLAY POSTS
-        // =================================================
+        // Add Victorian records
 
         posts.forEach(
             post => {
 
-                const card =
-                    createPostCard(
+                const record =
+                    createRecord(
                         post.id,
                         post.data,
                         type,
@@ -753,7 +753,7 @@ async function loadCollection(
 
 
                 container.appendChild(
-                    card
+                    record
                 );
 
             }
@@ -772,7 +772,7 @@ async function loadCollection(
 
 
         container.appendChild(
-            createErrorMessage()
+            createErrorRecord()
         );
 
     }
@@ -781,38 +781,7 @@ async function loadCollection(
 
 
 // =====================================================
-// LOAD ALL COMMUNITY STORIES
-// =====================================================
-
-async function loadCommunityStories() {
-
-    await Promise.all([
-
-        loadCollection(
-            COLLECTIONS.confessions,
-            "communityConfessions",
-            "CONFESSION"
-        ),
-
-        loadCollection(
-            COLLECTIONS.hugots,
-            "communityHugots",
-            "HUGOT"
-        ),
-
-        loadCollection(
-            COLLECTIONS.unsent,
-            "communityUnsent",
-            "UNSENT MESSAGE"
-        )
-
-    ]);
-
-}
-
-
-// =====================================================
-// LOAD INDIVIDUAL PAGE LISTS
+// LOAD ALL INDIVIDUAL ARCHIVES
 // =====================================================
 
 async function loadIndividualLists() {
@@ -843,107 +812,68 @@ async function loadIndividualLists() {
 
 
 // =====================================================
-// ADD NEW RECORD DIRECTLY TO PAGE
+// COMMUNITY RECORDS
 // =====================================================
 
-function addNewRecordToPage(
-    id,
-    data,
-    type,
-    collectionName,
-    elementId
-) {
+async function loadCommunity() {
 
-    const container =
-        getContainer(elementId);
+    await Promise.all([
 
+        loadCollection(
+            COLLECTIONS.confessions,
+            "communityConfessions",
+            "CONFESSION"
+        ),
 
-    if (!container) {
-        return;
-    }
+        loadCollection(
+            COLLECTIONS.hugots,
+            "communityHugots",
+            "HUGOT"
+        ),
 
+        loadCollection(
+            COLLECTIONS.unsent,
+            "communityUnsent",
+            "UNSENT MESSAGE"
+        )
 
-    // Remove empty/loading messages
-    const emptyCards =
-        container.querySelectorAll(
-            ".archive-empty, .archive-loading"
-        );
-
-
-    emptyCards.forEach(
-        card => card.remove()
-    );
-
-
-    const card =
-        createPostCard(
-            id,
-            data,
-            type,
-            collectionName
-        );
-
-
-    // Put newest record at the top
-    container.prepend(card);
+    ]);
 
 }
 
 
 // =====================================================
-// SAVE POST
+// SAVE NEW RECORD
 // =====================================================
 
-async function savePost(
+async function saveRecord(
     collectionName,
     inputId,
-    formId,
-    type,
-    listId,
-    communityId
+    buttonId
 ) {
 
-    const form =
-        document.getElementById(
-            formId
-        );
-
-
     const input =
-        document.getElementById(
-            inputId
-        );
+        document.getElementById(inputId);
 
 
-    if (!form || !input) {
+    const button =
+        document.getElementById(buttonId);
+
+
+    if (!input || !button) {
 
         console.warn(
-            `PlotTwisted: Form or input missing for ${formId}`
+            `Missing input or button: ${inputId}`
         );
 
         return;
+
     }
 
 
-    // Prevent duplicate event listeners
-    if (
-        form.dataset.firestoreReady ===
-        "true"
-    ) {
-        return;
-    }
-
-
-    form.dataset.firestoreReady =
-        "true";
-
-
-    form.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
+    button.addEventListener(
+        "click",
+        async function () {
 
             const text =
                 input.value.trim();
@@ -956,133 +886,57 @@ async function savePost(
                 );
 
                 return;
-            }
-
-
-            const button =
-                form.querySelector(
-                    "button[type='submit']"
-                );
-
-
-            const originalButtonText =
-                button
-                    ? button.textContent
-                    : "";
-
-
-            if (button) {
-
-                button.disabled =
-                    true;
-
-                button.textContent =
-                    "FILING RECORD...";
 
             }
+
+
+            const originalText =
+                button.textContent;
+
+
+            button.disabled =
+                true;
+
+
+            button.textContent =
+                "FILING RECORD...";
 
 
             try {
 
-                // =================================================
-                // SAVE TO FIRESTORE
-                // =================================================
+                await addDoc(
+                    collection(
+                        db,
+                        collectionName
+                    ),
+                    {
 
-                const docRef =
-                    await addDoc(
-                        collection(
-                            db,
-                            collectionName
-                        ),
-                        {
-                            text: text,
-                            likes: 0,
-                            createdAt:
-                                serverTimestamp()
-                        }
-                    );
+                        text:
+                            text,
 
+                        likes:
+                            0,
 
-                // =================================================
-                // CREATE LOCAL DATA
-                // =================================================
+                        createdAt:
+                            serverTimestamp()
 
-                const newPostData = {
+                    }
+                );
 
-                    text: text,
-
-                    likes: 0,
-
-                    // serverTimestamp is not immediately readable
-                    // on the client, so use the current time
-                    // for immediate display.
-                    createdAt:
-                        new Date()
-
-                };
-
-
-                // =================================================
-                // CLEAR INPUT
-                // =================================================
 
                 input.value = "";
 
 
-                // =================================================
-                // IMMEDIATELY DISPLAY NEW RECORD
-                // =================================================
-
-                addNewRecordToPage(
-                    docRef.id,
-                    newPostData,
-                    type,
-                    collectionName,
-                    listId
-                );
-
-
-                // Also display it in community feed
-                addNewRecordToPage(
-                    docRef.id,
-                    newPostData,
-                    type,
-                    collectionName,
-                    communityId
-                );
-
-
                 alert(
-                    "Your story has been filed in the archive."
+                    "Your record has been filed in the archive."
                 );
 
 
-                // =================================================
-                // REFRESH FROM FIRESTORE
-                // =================================================
+                // Refresh archive records
 
-                setTimeout(
-                    async function () {
+                await loadIndividualLists();
 
-                        try {
-
-                            await Promise.all([
-                                loadCommunityStories(),
-                                loadIndividualLists()
-                            ]);
-
-                        } catch (refreshError) {
-
-                            console.warn(
-                                "Archive refresh failed:",
-                                refreshError
-                            );
-
-                        }
-
-                    },
-                    500
-                );
+                await loadCommunity();
 
 
             } catch (error) {
@@ -1094,53 +948,18 @@ async function savePost(
 
 
                 alert(
-                    "Unable to file your story right now. Please check your Firestore rules."
+                    "Unable to file your record right now. Please check your Firestore rules."
                 );
 
 
             } finally {
 
-                if (button) {
-
-                    button.disabled =
-                        false;
+                button.disabled =
+                    false;
 
 
-                    if (
-                        originalButtonText
-                    ) {
-
-                        button.textContent =
-                            originalButtonText;
-
-                    } else {
-
-                        if (
-                            formId ===
-                            "confessionForm"
-                        ) {
-
-                            button.textContent =
-                                "SEAL THIS CONFESSION";
-
-                        } else if (
-                            formId ===
-                            "hugotForm"
-                        ) {
-
-                            button.textContent =
-                                "SEND THIS HUGOT";
-
-                        } else {
-
-                            button.textContent =
-                                "SEND TO THE VOID";
-
-                        }
-
-                    }
-
-                }
+                button.textContent =
+                    originalText;
 
             }
 
@@ -1151,340 +970,325 @@ async function savePost(
 
 
 // =====================================================
-// SIGN OR DELUSION — FIRESTORE VOTING
+// SIGN / DELUSION VOTING
 // =====================================================
 
-function initializeVoting() {
+const voteButtons =
+    document.querySelectorAll(".sign-vote");
 
-    const voteButtons =
-        document.querySelectorAll(
-            ".vote-buttons button"
-        );
 
+async function loadVotes() {
 
     const signBar =
-        document.getElementById(
-            "signBar"
-        );
-
+        document.getElementById("signBar");
 
     const maybeBar =
-        document.getElementById(
-            "maybeBar"
-        );
-
+        document.getElementById("maybeBar");
 
     const deluluBar =
-        document.getElementById(
-            "deluluBar"
-        );
+        document.getElementById("deluluBar");
 
 
     const signPercent =
-        document.getElementById(
-            "signPercent"
-        );
-
+        document.getElementById("signPercent");
 
     const maybePercent =
-        document.getElementById(
-            "maybePercent"
-        );
-
+        document.getElementById("maybePercent");
 
     const deluluPercent =
-        document.getElementById(
-            "deluluPercent"
+        document.getElementById("deluluPercent");
+
+
+    if (
+        !signBar ||
+        !maybeBar ||
+        !deluluBar
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "signVotes"
+                )
+            );
+
+
+        let sign = 0;
+        let maybe = 0;
+        let delulu = 0;
+
+
+        snapshot.forEach(
+            docSnap => {
+
+                const data =
+                    docSnap.data();
+
+
+                if (
+                    data.vote === "sign"
+                ) {
+                    sign++;
+                }
+
+
+                if (
+                    data.vote === "maybe"
+                ) {
+                    maybe++;
+                }
+
+
+                if (
+                    data.vote === "delulu"
+                ) {
+                    delulu++;
+                }
+
+            }
         );
 
 
-    function updateVoteDisplay(
-        sign,
-        maybe,
-        delulu
-    ) {
-
-        if (signBar) {
-
-            signBar.style.width =
-                sign + "%";
-
-        }
+        const total =
+            sign +
+            maybe +
+            delulu;
 
 
-        if (maybeBar) {
-
-            maybeBar.style.width =
-                maybe + "%";
-
-        }
-
-
-        if (deluluBar) {
-
-            deluluBar.style.width =
-                delulu + "%";
-
-        }
-
-
-        if (signPercent) {
-
-            signPercent.textContent =
-                sign + "%";
-
-        }
-
-
-        if (maybePercent) {
-
-            maybePercent.textContent =
-                maybe + "%";
-
-        }
-
-
-        if (deluluPercent) {
-
-            deluluPercent.textContent =
-                delulu + "%";
-
-        }
-
-    }
-
-
-    async function loadVotes() {
-
-        try {
-
-            const snapshot =
-                await getDocs(
-                    collection(
-                        db,
-                        "signVotes"
-                    )
-                );
-
-
-            let sign = 0;
-            let maybe = 0;
-            let delulu = 0;
-
-
-            snapshot.forEach(
-                docSnap => {
-
-                    const data =
-                        docSnap.data();
-
-
-                    if (
-                        data.vote ===
-                        "sign"
-                    ) {
-
-                        sign++;
-
-                    }
-
-
-                    if (
-                        data.vote ===
-                        "maybe"
-                    ) {
-
-                        maybe++;
-
-                    }
-
-
-                    if (
-                        data.vote ===
-                        "delulu"
-                    ) {
-
-                        delulu++;
-
-                    }
-
-                }
-            );
-
-
-            const total =
-                sign +
-                maybe +
-                delulu;
-
-
-            if (total === 0) {
-
-                updateVoteDisplay(
-                    62,
-                    25,
-                    13
-                );
-
-                return;
-            }
-
-
-            const signPct =
-                Math.round(
-                    (sign / total) * 100
-                );
-
-
-            const maybePct =
-                Math.round(
-                    (maybe / total) * 100
-                );
-
-
-            const deluluPct =
-                100 -
-                signPct -
-                maybePct;
-
+        if (total === 0) {
 
             updateVoteDisplay(
-                signPct,
-                maybePct,
-                deluluPct
+                62,
+                25,
+                13
             );
 
-
-        } catch (error) {
-
-            console.error(
-                "Unable to load votes:",
-                error
-            );
+            return;
 
         }
+
+
+        const signPct =
+            Math.round(
+                (sign / total) * 100
+            );
+
+
+        const maybePct =
+            Math.round(
+                (maybe / total) * 100
+            );
+
+
+        const deluluPct =
+            100 -
+            signPct -
+            maybePct;
+
+
+        updateVoteDisplay(
+            signPct,
+            maybePct,
+            deluluPct
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load votes:",
+            error
+        );
 
     }
 
-
-    voteButtons.forEach(
-        (button, index) => {
-
-            button.addEventListener(
-                "click",
-                async function () {
-
-                    let vote;
+}
 
 
-                    if (index === 0) {
-                        vote = "sign";
-                    }
+function updateVoteDisplay(
+    sign,
+    maybe,
+    delulu
+) {
 
-                    else if (index === 1) {
-                        vote = "maybe";
-                    }
+    const signBar =
+        document.getElementById("signBar");
 
-                    else if (index === 2) {
-                        vote = "delulu";
-                    }
+    const maybeBar =
+        document.getElementById("maybeBar");
 
-
-                    if (!vote) {
-                        return;
-                    }
+    const deluluBar =
+        document.getElementById("deluluBar");
 
 
-                    const alreadyVoted =
-                        localStorage.getItem(
-                            "plottwisted_vote_001"
-                        );
+    const signPercent =
+        document.getElementById("signPercent");
+
+    const maybePercent =
+        document.getElementById("maybePercent");
+
+    const deluluPercent =
+        document.getElementById("deluluPercent");
 
 
-                    if (alreadyVoted) {
-
-                        alert(
-                            "You already voted on this case."
-                        );
-
-                        return;
-                    }
+    if (signBar) {
+        signBar.style.width =
+            sign + "%";
+    }
 
 
-                    try {
-
-                        button.disabled =
-                            true;
-
-
-                        await addDoc(
-                            collection(
-                                db,
-                                "signVotes"
-                            ),
-                            {
-                                vote: vote,
-
-                                caseId: "001",
-
-                                createdAt:
-                                    serverTimestamp()
-                            }
-                        );
+    if (maybeBar) {
+        maybeBar.style.width =
+            maybe + "%";
+    }
 
 
-                        localStorage.setItem(
-                            "plottwisted_vote_001",
-                            "true"
-                        );
+    if (deluluBar) {
+        deluluBar.style.width =
+            delulu + "%";
+    }
 
 
-                        voteButtons.forEach(
-                            btn => {
-
-                                btn.disabled =
-                                    true;
-
-                            }
-                        );
+    if (signPercent) {
+        signPercent.textContent =
+            sign + "%";
+    }
 
 
-                        await loadVotes();
+    if (maybePercent) {
+        maybePercent.textContent =
+            maybe + "%";
+    }
 
 
-                        alert(
-                            "Your verdict has been recorded."
-                        );
-
-
-                    } catch (error) {
-
-                        console.error(
-                            "Vote error:",
-                            error
-                        );
-
-
-                        button.disabled =
-                            false;
-
-
-                        alert(
-                            "Unable to record your vote right now."
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    loadVotes();
+    if (deluluPercent) {
+        deluluPercent.textContent =
+            delulu + "%";
+    }
 
 }
+
+
+// =====================================================
+// VOTE BUTTONS
+// =====================================================
+
+voteButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            async function () {
+
+                const vote =
+                    this.dataset.choice;
+
+
+                if (
+                    ![
+                        "sign",
+                        "maybe",
+                        "delulu"
+                    ].includes(vote)
+                ) {
+
+                    return;
+
+                }
+
+
+                const alreadyVoted =
+                    localStorage.getItem(
+                        "plottwisted_vote_001"
+                    );
+
+
+                if (alreadyVoted) {
+
+                    alert(
+                        "You already voted on this case."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    voteButtons.forEach(
+                        btn => {
+                            btn.disabled = true;
+                        }
+                    );
+
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "signVotes"
+                        ),
+                        {
+
+                            vote:
+                                vote,
+
+                            caseId:
+                                "001",
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    localStorage.setItem(
+                        "plottwisted_vote_001",
+                        "true"
+                    );
+
+
+                    await loadVotes();
+
+
+                    alert(
+                        "Your verdict has been recorded."
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Vote error:",
+                        error
+                    );
+
+
+                    voteButtons.forEach(
+                        btn => {
+                            btn.disabled = false;
+                        }
+                    );
+
+
+                    alert(
+                        "Unable to record your verdict right now."
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
 
 
 // =====================================================
@@ -1496,66 +1300,47 @@ document.addEventListener(
     async function () {
 
         console.log(
-            "PlotTwisted Firebase starting..."
+            "PlotTwisted archive starting..."
         );
 
 
-        // =================================================
-        // FORMS
-        // =================================================
+        // Save buttons
 
-        await savePost(
+        await saveRecord(
             COLLECTIONS.confessions,
             "confessionInput",
-            "confessionForm",
-            "CONFESSION",
-            "confessionList",
-            "communityConfessions"
+            "submitConfession"
         );
 
 
-        await savePost(
+        await saveRecord(
             COLLECTIONS.hugots,
             "hugotInput",
-            "hugotForm",
-            "HUGOT",
-            "hugotList",
-            "communityHugots"
+            "submitHugot"
         );
 
 
-        await savePost(
+        await saveRecord(
             COLLECTIONS.unsent,
             "unsentInput",
-            "unsentForm",
-            "UNSENT MESSAGE",
-            "unsentList",
-            "communityUnsent"
+            "submitUnsent"
         );
 
 
-        // =================================================
-        // LOAD EXISTING RECORDS
-        // =================================================
+        // Load existing records
 
-        await Promise.all([
+        await loadIndividualLists();
 
-            loadCommunityStories(),
-
-            loadIndividualLists()
-
-        ]);
+        await loadCommunity();
 
 
-        // =================================================
-        // INITIALIZE VOTING
-        // =================================================
+        // Load voting
 
-        initializeVoting();
+        await loadVotes();
 
 
         console.log(
-            "PlotTwisted Firebase ready."
+            "PlotTwisted archive ready."
         );
 
     }
@@ -1563,99 +1348,64 @@ document.addEventListener(
 
 
 // =====================================================
-// RELOAD ARCHIVE WHEN PAGES OPEN
+// REFRESH RECORDS WHEN PAGES OPEN
 // =====================================================
 
-function connectPageReload() {
-
-    const originalShowPage =
-        window.showPage;
+const originalOpenInterface =
+    window.openInterface;
 
 
-    if (
-        typeof originalShowPage !==
-        "function"
-    ) {
+if (
+    typeof originalOpenInterface ===
+    "function"
+) {
 
-        return;
+    window.openInterface =
+        async function (id) {
 
-    }
-
-
-    // Prevent wrapping more than once
-    if (
-        window.showPage.__plotTwistedWrapped
-    ) {
-
-        return;
-
-    }
-
-
-    window.showPage =
-        function (id) {
-
-            originalShowPage(id);
+            originalOpenInterface(id);
 
 
             if (
-                id === "community" ||
                 id === "confessions" ||
                 id === "hugot" ||
                 id === "unsent"
             ) {
 
-                setTimeout(
-                    function () {
-
-                        if (
-                            id ===
-                            "community"
-                        ) {
-
-                            loadCommunityStories();
-
-                        }
-
-
-                        if (
-                            id ===
-                            "confessions" ||
-                            id ===
-                            "hugot" ||
-                            id ===
-                            "unsent"
-                        ) {
-
-                            loadIndividualLists();
-
-                        }
-
-                    },
-                    100
-                );
+                await loadIndividualLists();
 
             }
 
         };
 
-
-    window.showPage.__plotTwistedWrapped =
-        true;
-
 }
 
 
-// Try immediately
-connectPageReload();
+// =====================================================
+// REFRESH COMMUNITY WHEN OPENED
+// =====================================================
+
+const originalShowPage =
+    window.showPage;
 
 
-// Try again after the HTML has finished loading
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+if (
+    typeof originalShowPage ===
+    "function"
+) {
 
-        connectPageReload();
+    window.showPage =
+        async function (id) {
 
-    }
-);
+            originalShowPage(id);
+
+
+            if (id === "community") {
+
+                await loadCommunity();
+
+            }
+
+        };
+
+                }
