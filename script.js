@@ -1,8 +1,3 @@
-// =====================================================
-// PLOTTWISTED — FIRESTORE ARCHIVE
-// Matched to the current Victorian index.html
-// =====================================================
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
@@ -10,8 +5,6 @@ import {
     collection,
     addDoc,
     getDocs,
-    query,
-    orderBy,
     serverTimestamp,
     doc,
     updateDoc,
@@ -20,7 +13,7 @@ import {
 
 
 // =====================================================
-// FIREBASE CONFIG
+// FIREBASE
 // =====================================================
 
 const firebaseConfig = {
@@ -33,11 +26,6 @@ const firebaseConfig = {
     appId: "1:797105645748:web:e410591f49c41b8a7f4fe1",
     measurementId: "G-V5DBX6TKK2"
 };
-
-
-// =====================================================
-// INITIALIZE FIREBASE
-// =====================================================
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -55,7 +43,7 @@ const COLLECTIONS = {
 
 
 // =====================================================
-// HELPERS
+// SAFE TEXT
 // =====================================================
 
 function escapeHTML(value) {
@@ -63,15 +51,18 @@ function escapeHTML(value) {
     const div = document.createElement("div");
 
     div.textContent =
-        value === undefined || value === null
-            ? ""
-            : String(value);
+        value == null ? "" : String(value);
 
     return div.innerHTML;
 }
 
 
-function getPostText(data) {
+// =====================================================
+// GET MESSAGE
+// Works with old AND new Firestore records
+// =====================================================
+
+function getText(data) {
 
     return (
         data.text ??
@@ -82,20 +73,15 @@ function getPostText(data) {
         data.body ??
         ""
     );
+
 }
 
 
-function getLikes(data) {
+// =====================================================
+// DATE
+// =====================================================
 
-    const likes = Number(data.likes ?? 0);
-
-    return Number.isFinite(likes)
-        ? likes
-        : 0;
-}
-
-
-function formatDate(timestamp) {
+function getDate(timestamp) {
 
     if (!timestamp) {
         return "Recently filed";
@@ -103,10 +89,19 @@ function formatDate(timestamp) {
 
     try {
 
-        const date =
-            timestamp.toDate
-                ? timestamp.toDate()
-                : new Date(timestamp);
+        let date;
+
+        if (typeof timestamp.toDate === "function") {
+            date = timestamp.toDate();
+        } else if (timestamp.seconds) {
+            date = new Date(timestamp.seconds * 1000);
+        } else {
+            date = new Date(timestamp);
+        }
+
+        if (isNaN(date.getTime())) {
+            return "Recently filed";
+        }
 
         return date.toLocaleString("en-PH", {
             month: "short",
@@ -116,7 +111,7 @@ function formatDate(timestamp) {
             minute: "2-digit"
         });
 
-    } catch (error) {
+    } catch {
 
         return "Recently filed";
 
@@ -126,112 +121,42 @@ function formatDate(timestamp) {
 
 
 // =====================================================
-// RECORD TYPE LABEL
+// TIMESTAMP FOR SORTING
 // =====================================================
 
-function getRecordLabel(type) {
+function getTime(data) {
 
-    if (type === "CONFESSION") {
-        return "CONFIDENTIAL CONFESSION";
+    const timestamp = data.createdAt;
+
+    if (!timestamp) {
+        return 0;
     }
 
-    if (type === "HUGOT") {
-        return "EMOTIONAL RECORD";
+    if (typeof timestamp.toMillis === "function") {
+        return timestamp.toMillis();
     }
 
-    if (type === "UNSENT MESSAGE") {
-        return "UNSENT CORRESPONDENCE";
+    if (typeof timestamp.seconds === "number") {
+        return timestamp.seconds * 1000;
     }
 
-    return "ARCHIVE RECORD";
+    const time = new Date(timestamp).getTime();
+
+    return isNaN(time) ? 0 : time;
 
 }
 
 
 // =====================================================
-// RECORD SYMBOL
-// No emoji — only Victorian text symbols
+// VICTORIAN RECORD
 // =====================================================
 
-function getRecordSymbol(type) {
-
-    if (type === "CONFESSION") {
-        return "PT";
-    }
-
-    if (type === "HUGOT") {
-        return "PT";
-    }
-
-    if (type === "UNSENT MESSAGE") {
-        return "PT";
-    }
-
-    return "PT";
-
-}
-
-
-// =====================================================
-// VICTORIAN WATERMARK
-// =====================================================
-
-function createWatermark() {
-
-    return `
-        <div class="record-watermark" aria-hidden="true">
-
-            <svg viewBox="0 0 180 180">
-
-                <circle
-                    cx="90"
-                    cy="90"
-                    r="65"
-                ></circle>
-
-                <circle
-                    cx="90"
-                    cy="90"
-                    r="50"
-                ></circle>
-
-                <path
-                    d="
-                    M90 90
-                    C65 72 70 45 91 43
-                    C113 42 120 68 90 90Z
-                    "
-                ></path>
-
-                <path
-                    d="
-                    M90 90
-                    C112 73 136 85 130 105
-                    C124 123 102 115 90 90Z
-                    "
-                ></path>
-
-                <path
-                    d="
-                    M90 90
-                    C71 111 47 99 52 80
-                    C57 62 79 67 90 90Z
-                    "
-                ></path>
-
-            </svg>
-
-        </div>
-    `;
-
-}
-
-
-// =====================================================
-// CREATE VICTORIAN RECORD
-// =====================================================
-
-function createRecord(id, data, type, collectionName) {
+function createVictorianRecord(
+    id,
+    data,
+    type,
+    collectionName
+) {
 
     const record =
         document.createElement("article");
@@ -239,21 +164,13 @@ function createRecord(id, data, type, collectionName) {
     record.className = "record";
 
     const text =
-        escapeHTML(getPostText(data));
+        escapeHTML(getText(data));
 
     const likes =
-        getLikes(data);
+        Number(data.likes ?? 0);
 
     const date =
-        escapeHTML(formatDate(data.createdAt));
-
-    const label =
-        escapeHTML(getRecordLabel(type));
-
-    const symbol =
-        escapeHTML(getRecordSymbol(type));
-
-    record.dataset.recordId = id;
+        escapeHTML(getDate(data.createdAt));
 
     record.innerHTML = `
 
@@ -275,8 +192,7 @@ function createRecord(id, data, type, collectionName) {
 
 
         <div class="record-number">
-            ${symbol}
-            ${label}
+            ${escapeHTML(type)}
         </div>
 
 
@@ -288,70 +204,81 @@ function createRecord(id, data, type, collectionName) {
         <div class="record-meta">
 
             <span>
-                ${date}
+                FILED ${date}
             </span>
 
             <span>
-                FILE NO. ${escapeHTML(id.slice(0, 6).toUpperCase())}
+                ARCHIVE NO. ${escapeHTML(
+                    id.substring(0, 6).toUpperCase()
+                )}
             </span>
 
         </div>
 
 
-        ${createWatermark()}
-
-
-        <div
-            class="record-actions"
-            style="
-                position:relative;
-                z-index:6;
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:10px;
-                margin-top:18px;
-                padding-top:12px;
-                border-top:1px solid rgba(93,60,27,.25);
-            "
-        >
+        <div class="record-actions">
 
             <button
                 type="button"
-                class="record-action like-record"
-                style="
-                    border:1px solid #80602f;
-                    background:rgba(247,229,193,.55);
-                    color:#63451e;
-                    padding:7px 12px;
-                    font-family:var(--body);
-                    font-size:7px;
-                    letter-spacing:1.5px;
-                    text-transform:uppercase;
-                    cursor:pointer;
-                "
+                class="record-like"
             >
                 LIKE ${likes}
             </button>
 
-
             <button
                 type="button"
-                class="record-action report-record"
-                style="
-                    border:1px solid #80602f;
-                    background:transparent;
-                    color:#63451e;
-                    padding:7px 12px;
-                    font-family:var(--body);
-                    font-size:7px;
-                    letter-spacing:1.5px;
-                    text-transform:uppercase;
-                    cursor:pointer;
-                "
+                class="record-report"
             >
                 REPORT
             </button>
+
+        </div>
+
+
+        <div class="record-watermark">
+
+            <svg
+                viewBox="0 0 180 180"
+                aria-hidden="true"
+            >
+
+                <circle
+                    cx="90"
+                    cy="90"
+                    r="62"
+                ></circle>
+
+                <circle
+                    cx="90"
+                    cy="90"
+                    r="48"
+                ></circle>
+
+                <path
+                    d="
+                    M90 91
+                    C67 78 69 53 88 46
+                    C108 39 121 62 90 91
+                    "
+                ></path>
+
+                <path
+                    d="
+                    M90 91
+                    C111 74 133 85 130 104
+                    C127 124 103 121 90 91
+                    "
+                ></path>
+
+                <path
+                    d="
+                    M90 91
+                    C74 111 51 103 51 84
+                    C51 65 75 67 90 91
+                    "
+                ></path>
+
+            </svg>
 
         </div>
 
@@ -363,12 +290,12 @@ function createRecord(id, data, type, collectionName) {
     // =================================================
 
     const likeButton =
-        record.querySelector(".like-record");
+        record.querySelector(".record-like");
 
 
     likeButton.addEventListener(
         "click",
-        async function () {
+        async () => {
 
             if (
                 likeButton.dataset.liked === "true"
@@ -376,39 +303,26 @@ function createRecord(id, data, type, collectionName) {
                 return;
             }
 
-
             likeButton.disabled = true;
-
 
             try {
 
-                const postRef =
+                await updateDoc(
                     doc(
                         db,
                         collectionName,
                         id
-                    );
-
-
-                await updateDoc(
-                    postRef,
+                    ),
                     {
                         likes: increment(1)
                     }
                 );
 
-
-                const newLikes =
-                    likes + 1;
-
-
                 likeButton.textContent =
-                    `LIKED ${newLikes}`;
-
+                    `LIKED ${likes + 1}`;
 
                 likeButton.dataset.liked =
                     "true";
-
 
             } catch (error) {
 
@@ -417,10 +331,8 @@ function createRecord(id, data, type, collectionName) {
                     error
                 );
 
-
                 likeButton.disabled =
                     false;
-
 
                 alert(
                     "Unable to like this record right now."
@@ -437,12 +349,12 @@ function createRecord(id, data, type, collectionName) {
     // =================================================
 
     const reportButton =
-        record.querySelector(".report-record");
+        record.querySelector(".record-report");
 
 
     reportButton.addEventListener(
         "click",
-        function () {
+        () => {
 
             alert(
                 "Thank you. Please report inappropriate content to the PlotTwisted administrator."
@@ -458,232 +370,604 @@ function createRecord(id, data, type, collectionName) {
 
 
 // =====================================================
-// EMPTY RECORD
+// ADD FORCED RECORD STYLING
+// This makes the design work even if the original
+// CSS is not reaching the Firebase-generated records.
 // =====================================================
 
-function createEmptyRecord(type) {
+function addRecordStyles() {
 
-    const empty =
-        document.createElement("div");
-
-    empty.className =
-        "empty-record";
-
-
-    let title =
-        "NO RECORDS YET";
-
-    let message =
-        "The archive is waiting for its first record.";
-
-
-    if (type === "CONFESSION") {
-
-        title =
-            "NO CONFESSIONS YET";
-
-        message =
-            "The confession archive is waiting for its first record.";
-
+    if (
+        document.getElementById(
+            "plotTwistedFirebaseRecordStyles"
+        )
+    ) {
+        return;
     }
 
 
-    if (type === "HUGOT") {
+    const style =
+        document.createElement("style");
 
-        title =
-            "NO HUGOT LINES YET";
-
-        message =
-            "The emotional archive is waiting for its first line.";
-
-    }
+    style.id =
+        "plotTwistedFirebaseRecordStyles";
 
 
-    if (type === "UNSENT MESSAGE") {
+    style.textContent = `
 
-        title =
-            "NO LETTERS YET";
+        /* =========================================
+           VICTORIAN FIRESTORE RECORD
+        ========================================= */
 
-        message =
-            "No unsent messages have entered the archive.";
+        .record {
+            position: relative !important;
+            min-height: 265px !important;
+            padding: 48px 34px 28px !important;
+            box-sizing: border-box !important;
 
-    }
+            background:
+                linear-gradient(
+                    135deg,
+                    #f1dfbd 0%,
+                    #e5cfaa 48%,
+                    #d8bb8c 100%
+                ) !important;
+
+            color: #28191a !important;
+
+            border: 1px solid #a77c45 !important;
+
+            box-shadow:
+                0 12px 28px rgba(0,0,0,.30),
+                inset 0 0 0 1px rgba(255,255,255,.35)
+                !important;
+
+            overflow: hidden !important;
+
+            transform: rotate(-0.4deg);
+
+            isolation: isolate;
+        }
 
 
-    empty.innerHTML = `
+        .record:nth-child(even) {
+            transform: rotate(0.4deg);
+        }
 
-        <div class="empty-symbol">
-            ⁂
-        </div>
 
-        <div class="empty-title">
-            ${title}
-        </div>
+        /* Outer gold frame */
 
-        <div class="empty-text">
-            ${message}
-        </div>
+        .record::before {
 
-        <div class="empty-line">
-            — END OF CURRENT FILE —
-        </div>
+            content: "";
+
+            position: absolute;
+
+            inset: 9px;
+
+            border: 1px solid
+                rgba(128,96,47,.75);
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
+        /* Inner Victorian frame */
+
+        .record::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 16px;
+
+            border: 1px dashed
+                rgba(128,96,47,.55);
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
+        /* =========================================
+           RECORD HEADER
+        ========================================= */
+
+        .record-number {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            padding: 7px 13px;
+
+            border: 1px solid #80602f;
+
+            background:
+                rgba(255,244,214,.65);
+
+            color: #63451e;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================
+           RECORD MESSAGE
+        ========================================= */
+
+        .record-text {
+
+            position: relative;
+
+            z-index: 5;
+
+            color: #28191a !important;
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif !important;
+
+            font-size: 22px !important;
+
+            line-height: 1.55 !important;
+
+            font-weight: 500;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+
+            text-align: left;
+        }
+
+
+        /* =========================================
+           RECORD META
+        ========================================= */
+
+        .record-meta {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 28px;
+
+            padding-top: 12px;
+
+            border-top:
+                1px solid
+                rgba(128,96,47,.45);
+
+            color: #63451e !important;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size: 7px;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================
+           ACTIONS
+        ========================================= */
+
+        .record-actions {
+
+            position: relative;
+
+            z-index: 7;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+
+        .record-like,
+        .record-report {
+
+            appearance: none;
+
+            border:
+                1px solid
+                #80602f;
+
+            background:
+                rgba(255,244,214,.45);
+
+            color:
+                #63451e;
+
+            padding:
+                7px 12px;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size: 7px;
+
+            letter-spacing:
+                1.4px;
+
+            text-transform:
+                uppercase;
+
+            cursor: pointer;
+
+            transition:
+                .2s ease;
+        }
+
+
+        .record-like:hover,
+        .record-report:hover {
+
+            background:
+                rgba(255,244,214,.85);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .record-like:disabled {
+
+            cursor:
+                default;
+
+            opacity:
+                .65;
+        }
+
+
+        /* =========================================
+           CORNER ORNAMENTS
+        ========================================= */
+
+        .record-corner {
+
+            position: absolute;
+
+            z-index: 4;
+
+            color:
+                rgba(128,96,47,.78);
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 27px;
+
+            line-height: 1;
+        }
+
+
+        .record-corner.top-left {
+            top: 18px;
+            left: 20px;
+        }
+
+
+        .record-corner.top-right {
+            top: 18px;
+            right: 20px;
+        }
+
+
+        .record-corner.bottom-left {
+            bottom: 14px;
+            left: 20px;
+        }
+
+
+        .record-corner.bottom-right {
+            bottom: 14px;
+            right: 20px;
+        }
+
+
+        /* =========================================
+           WATERMARK
+        ========================================= */
+
+        .record-watermark {
+
+            position: absolute;
+
+            right: 20px;
+
+            bottom: 20px;
+
+            width: 125px;
+
+            height: 125px;
+
+            z-index: 2;
+
+            opacity: .13;
+
+            pointer-events: none;
+        }
+
+
+        .record-watermark svg {
+
+            width: 100%;
+
+            height: 100%;
+
+            fill: none;
+
+            stroke:
+                #80602f;
+
+            stroke-width:
+                1.2;
+        }
+
+
+        /* =========================================
+           EMPTY RECORD
+        ========================================= */
+
+        .empty-record {
+
+            padding: 60px 30px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(198,161,94,.5);
+
+            background:
+                rgba(22,7,11,.28);
+
+            color:
+                #d0bba5;
+        }
+
+
+        .empty-symbol {
+
+            color:
+                #c6a15e;
+
+            font-size: 25px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty-title {
+
+            color:
+                #f1d58e;
+
+            font-family:
+                "DM Serif Display",
+                serif;
+
+            font-size: 18px;
+
+            letter-spacing: 2px;
+        }
+
+
+        .empty-text {
+
+            margin-top: 8px;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .empty-line {
+
+            margin-top: 15px;
+
+            color:
+                #80602f;
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+        }
+
+
+        @media(max-width:700px) {
+
+            .record {
+
+                padding:
+                    45px 23px 25px !important;
+
+            }
+
+
+            .record-text {
+
+                font-size:
+                    19px !important;
+
+            }
+
+
+            .record-meta {
+
+                flex-direction:
+                    column;
+
+                gap:
+                    5px;
+
+            }
+
+        }
 
     `;
 
 
-    return empty;
+    document.head.appendChild(style);
 
 }
 
 
 // =====================================================
-// ERROR RECORD
+// LOAD RECORDS
 // =====================================================
 
-function createErrorRecord() {
+async function getRecords(
+    collectionName
+) {
 
-    const errorBox =
-        document.createElement("div");
-
-    errorBox.className =
-        "empty-record";
-
-
-    errorBox.innerHTML = `
-
-        <div class="empty-symbol">
-            ◇
-        </div>
-
-        <div class="empty-title">
-            ARCHIVE UNAVAILABLE
-        </div>
-
-        <div class="empty-text">
-            The records could not be retrieved at this time.
-        </div>
-
-        <div class="empty-line">
-            — PLEASE TRY AGAIN LATER —
-        </div>
-
-    `;
+    const snapshot =
+        await getDocs(
+            collection(
+                db,
+                collectionName
+            )
+        );
 
 
-    return errorBox;
+    const records = [];
+
+
+    snapshot.forEach(
+        documentSnapshot => {
+
+            records.push({
+
+                id:
+                    documentSnapshot.id,
+
+                data:
+                    documentSnapshot.data()
+
+            });
+
+        }
+    );
+
+
+    records.sort(
+        (a, b) =>
+            getTime(b.data) -
+            getTime(a.data)
+    );
+
+
+    return records;
 
 }
 
 
 // =====================================================
-// LOAD FIRESTORE COLLECTION
+// DISPLAY ARCHIVE RECORDS
 // =====================================================
 
-async function loadCollection(
+async function loadArchive(
     collectionName,
-    elementId,
+    containerId,
     type
 ) {
 
     const container =
-        document.getElementById(elementId);
+        document.getElementById(
+            containerId
+        );
 
 
     if (!container) {
-
-        console.warn(
-            `Container #${elementId} was not found.`
-        );
-
         return;
-
     }
-
-
-    // Loading state
-
-    container.innerHTML = `
-
-        <div class="empty-record">
-
-            <div class="empty-symbol">
-                ◇
-            </div>
-
-            <div class="empty-title">
-                OPENING ARCHIVE
-            </div>
-
-            <div class="empty-text">
-                Retrieving recently filed records...
-            </div>
-
-            <div class="empty-line">
-                — PLEASE WAIT —
-            </div>
-
-        </div>
-
-    `;
 
 
     try {
 
-        const collectionRef =
-            collection(
-                db,
+        const records =
+            await getRecords(
                 collectionName
             );
 
 
-        let snapshot;
-
-
-        // Try newest first
-
-        try {
-
-            const orderedQuery =
-                query(
-                    collectionRef,
-                    orderBy(
-                        "createdAt",
-                        "desc"
-                    )
-                );
-
-
-            snapshot =
-                await getDocs(
-                    orderedQuery
-                );
-
-
-        } catch (orderError) {
-
-            console.warn(
-                "Ordered query unavailable. Loading records without ordering.",
-                orderError
-            );
-
-
-            snapshot =
-                await getDocs(
-                    collectionRef
-                );
-
-        }
-
-
-        // Clear loading state
-
         container.innerHTML = "";
 
 
-        if (snapshot.empty) {
+        if (records.length === 0) {
+
+            const empty =
+                document.createElement("div");
+
+            empty.className =
+                "empty-record";
+
+            empty.innerHTML = `
+
+                <div class="empty-symbol">
+                    ⁂
+                </div>
+
+                <div class="empty-title">
+                    NO RECORDS YET
+                </div>
+
+                <div class="empty-text">
+                    The archive is waiting for its first entry.
+                </div>
+
+                <div class="empty-line">
+                    — END OF CURRENT FILE —
+                </div>
+
+            `;
 
             container.appendChild(
-                createEmptyRecord(type)
+                empty
             );
 
             return;
@@ -691,69 +975,18 @@ async function loadCollection(
         }
 
 
-        const posts = [];
-
-
-        snapshot.forEach(
-            documentSnapshot => {
-
-                const data =
-                    documentSnapshot.data();
-
-
-                posts.push({
-
-                    id:
-                        documentSnapshot.id,
-
-                    data:
-                        data
-
-                });
-
-            }
-        );
-
-
-        // Sort newest first
-
-        posts.sort(
-            (a, b) => {
-
-                const aTime =
-                    a.data.createdAt?.toMillis
-                        ? a.data.createdAt.toMillis()
-                        : 0;
-
-
-                const bTime =
-                    b.data.createdAt?.toMillis
-                        ? b.data.createdAt.toMillis()
-                        : 0;
-
-
-                return bTime - aTime;
-
-            }
-        );
-
-
-        // Add Victorian records
-
-        posts.forEach(
-            post => {
-
-                const record =
-                    createRecord(
-                        post.id,
-                        post.data,
-                        type,
-                        collectionName
-                    );
-
+        records.forEach(
+            record => {
 
                 container.appendChild(
-                    record
+
+                    createVictorianRecord(
+                        record.id,
+                        record.data,
+                        type,
+                        collectionName
+                    )
+
                 );
 
             }
@@ -763,17 +996,34 @@ async function loadCollection(
     } catch (error) {
 
         console.error(
-            `Error loading ${collectionName}:`,
+            `Unable to load ${collectionName}:`,
             error
         );
 
 
-        container.innerHTML = "";
+        container.innerHTML = `
 
+            <div class="empty-record">
 
-        container.appendChild(
-            createErrorRecord()
-        );
+                <div class="empty-symbol">
+                    ◇
+                </div>
+
+                <div class="empty-title">
+                    ARCHIVE UNAVAILABLE
+                </div>
+
+                <div class="empty-text">
+                    Unable to retrieve the records.
+                </div>
+
+                <div class="empty-line">
+                    — PLEASE TRY AGAIN —
+                </div>
+
+            </div>
+
+        `;
 
     }
 
@@ -781,26 +1031,26 @@ async function loadCollection(
 
 
 // =====================================================
-// LOAD ALL INDIVIDUAL ARCHIVES
+// LOAD ALL ARCHIVES
 // =====================================================
 
-async function loadIndividualLists() {
+async function loadAllArchives() {
 
     await Promise.all([
 
-        loadCollection(
+        loadArchive(
             COLLECTIONS.confessions,
             "confessionList",
             "CONFESSION"
         ),
 
-        loadCollection(
+        loadArchive(
             COLLECTIONS.hugots,
             "hugotList",
             "HUGOT"
         ),
 
-        loadCollection(
+        loadArchive(
             COLLECTIONS.unsent,
             "unsentList",
             "UNSENT MESSAGE"
@@ -812,68 +1062,283 @@ async function loadIndividualLists() {
 
 
 // =====================================================
-// COMMUNITY RECORDS
+// COMMUNITY DISPLAY
 // =====================================================
 
-async function loadCommunity() {
+async function loadCommunityRecords() {
 
-    await Promise.all([
+    const sections = [
 
-        loadCollection(
-            COLLECTIONS.confessions,
-            "communityConfessions",
-            "CONFESSION"
-        ),
+        {
+            collection:
+                COLLECTIONS.confessions,
 
-        loadCollection(
-            COLLECTIONS.hugots,
-            "communityHugots",
-            "HUGOT"
-        ),
+            id:
+                "communityConfessions",
 
-        loadCollection(
-            COLLECTIONS.unsent,
-            "communityUnsent",
-            "UNSENT MESSAGE"
-        )
+            type:
+                "CONFESSION"
+        },
 
-    ]);
+        {
+            collection:
+                COLLECTIONS.hugots,
+
+            id:
+                "communityHugots",
+
+            type:
+                "HUGOT"
+        },
+
+        {
+            collection:
+                COLLECTIONS.unsent,
+
+            id:
+                "communityUnsent",
+
+            type:
+                "UNSENT MESSAGE"
+        }
+
+    ];
+
+
+    for (
+        const section of sections
+    ) {
+
+        const container =
+            document.getElementById(
+                section.id
+            );
+
+
+        if (!container) {
+            continue;
+        }
+
+
+        try {
+
+            const records =
+                await getRecords(
+                    section.collection
+                );
+
+
+            container.innerHTML = "";
+
+
+            if (records.length === 0) {
+
+                container.innerHTML = `
+
+                    <p>
+                        No records have been filed yet.
+                    </p>
+
+                `;
+
+                continue;
+
+            }
+
+
+            records.forEach(
+                record => {
+
+                    const wrapper =
+                        document.createElement("div");
+
+
+                    wrapper.className =
+                        "community-record";
+
+
+                    wrapper.innerHTML = `
+
+                        <div class="community-record-label">
+                            ${escapeHTML(section.type)}
+                        </div>
+
+                        <p class="community-record-text">
+                            ${escapeHTML(
+                                getText(record.data)
+                            )}
+                        </p>
+
+                        <div class="community-record-date">
+                            ${escapeHTML(
+                                getDate(
+                                    record.data.createdAt
+                                )
+                            )}
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(
+                        wrapper
+                    );
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Community error:",
+                error
+            );
+
+        }
+
+    }
 
 }
 
 
 // =====================================================
-// SAVE NEW RECORD
+// COMMUNITY CSS
 // =====================================================
 
-async function saveRecord(
+function addCommunityStyles() {
+
+    const style =
+        document.createElement("style");
+
+
+    style.textContent = `
+
+        .community-record {
+
+            margin:
+                12px 0;
+
+            padding:
+                17px;
+
+            border:
+                1px solid
+                rgba(198,161,94,.35);
+
+            background:
+                rgba(22,7,11,.30);
+
+        }
+
+
+        .community-record-label {
+
+            color:
+                #f1d58e;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size:
+                7px;
+
+            letter-spacing:
+                2px;
+
+            margin-bottom:
+                10px;
+
+        }
+
+
+        .community-record-text {
+
+            color:
+                #ead9b8;
+
+            font-family:
+                "Cormorant Garamond",
+                Georgia,
+                serif;
+
+            font-size:
+                18px;
+
+            line-height:
+                1.5;
+
+            white-space:
+                pre-wrap;
+
+            overflow-wrap:
+                anywhere;
+
+        }
+
+
+        .community-record-date {
+
+            margin-top:
+                10px;
+
+            color:
+                #a98d72;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            font-size:
+                7px;
+
+            letter-spacing:
+                1px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+    `;
+
+
+    document.head.appendChild(style);
+
+}
+
+
+// =====================================================
+// SUBMIT RECORD
+// =====================================================
+
+function setupSubmission(
     collectionName,
     inputId,
     buttonId
 ) {
 
     const input =
-        document.getElementById(inputId);
+        document.getElementById(
+            inputId
+        );
 
 
     const button =
-        document.getElementById(buttonId);
+        document.getElementById(
+            buttonId
+        );
 
 
     if (!input || !button) {
-
-        console.warn(
-            `Missing input or button: ${inputId}`
-        );
-
         return;
-
     }
 
 
     button.addEventListener(
         "click",
-        async function () {
+        async () => {
 
             const text =
                 input.value.trim();
@@ -890,7 +1355,7 @@ async function saveRecord(
             }
 
 
-            const originalText =
+            const original =
                 button.textContent;
 
 
@@ -927,41 +1392,37 @@ async function saveRecord(
                 input.value = "";
 
 
+                await loadAllArchives();
+
+                await loadCommunityRecords();
+
+
                 alert(
-                    "Your record has been filed in the archive."
+                    "Your record has been filed."
                 );
-
-
-                // Refresh archive records
-
-                await loadIndividualLists();
-
-                await loadCommunity();
 
 
             } catch (error) {
 
                 console.error(
-                    "Save error:",
+                    "Submission error:",
                     error
                 );
 
 
                 alert(
-                    "Unable to file your record right now. Please check your Firestore rules."
+                    "Unable to file your record right now."
                 );
 
-
-            } finally {
-
-                button.disabled =
-                    false;
-
-
-                button.textContent =
-                    originalText;
-
             }
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                original;
 
         }
     );
@@ -970,40 +1431,44 @@ async function saveRecord(
 
 
 // =====================================================
-// SIGN / DELUSION VOTING
+// FIRESTORE VOTING
 // =====================================================
-
-const voteButtons =
-    document.querySelectorAll(".sign-vote");
-
 
 async function loadVotes() {
 
     const signBar =
-        document.getElementById("signBar");
+        document.getElementById(
+            "signBar"
+        );
 
     const maybeBar =
-        document.getElementById("maybeBar");
+        document.getElementById(
+            "maybeBar"
+        );
 
     const deluluBar =
-        document.getElementById("deluluBar");
+        document.getElementById(
+            "deluluBar"
+        );
 
 
     const signPercent =
-        document.getElementById("signPercent");
+        document.getElementById(
+            "signPercent"
+        );
 
     const maybePercent =
-        document.getElementById("maybePercent");
+        document.getElementById(
+            "maybePercent"
+        );
 
     const deluluPercent =
-        document.getElementById("deluluPercent");
+        document.getElementById(
+            "deluluPercent"
+        );
 
 
-    if (
-        !signBar ||
-        !maybeBar ||
-        !deluluBar
-    ) {
+    if (!signBar) {
         return;
     }
 
@@ -1031,23 +1496,15 @@ async function loadVotes() {
                     docSnap.data();
 
 
-                if (
-                    data.vote === "sign"
-                ) {
+                if (data.vote === "sign") {
                     sign++;
                 }
 
-
-                if (
-                    data.vote === "maybe"
-                ) {
+                if (data.vote === "maybe") {
                     maybe++;
                 }
 
-
-                if (
-                    data.vote === "delulu"
-                ) {
+                if (data.vote === "delulu") {
                     delulu++;
                 }
 
@@ -1063,113 +1520,63 @@ async function loadVotes() {
 
         if (total === 0) {
 
-            updateVoteDisplay(
-                62,
-                25,
-                13
-            );
+            sign = 62;
+            maybe = 25;
+            delulu = 13;
 
-            return;
+        } else {
+
+            sign =
+                Math.round(
+                    (sign / total) * 100
+                );
+
+            maybe =
+                Math.round(
+                    (maybe / total) * 100
+                );
+
+            delulu =
+                100 -
+                sign -
+                maybe;
 
         }
 
 
-        const signPct =
-            Math.round(
-                (sign / total) * 100
-            );
+        signBar.style.width =
+            `${sign}%`;
+
+        maybeBar.style.width =
+            `${maybe}%`;
+
+        deluluBar.style.width =
+            `${delulu}%`;
 
 
-        const maybePct =
-            Math.round(
-                (maybe / total) * 100
-            );
+        if (signPercent) {
+            signPercent.textContent =
+                `${sign}%`;
+        }
 
+        if (maybePercent) {
+            maybePercent.textContent =
+                `${maybe}%`;
+        }
 
-        const deluluPct =
-            100 -
-            signPct -
-            maybePct;
-
-
-        updateVoteDisplay(
-            signPct,
-            maybePct,
-            deluluPct
-        );
+        if (deluluPercent) {
+            deluluPercent.textContent =
+                `${delulu}%`;
+        }
 
 
     } catch (error) {
 
         console.error(
-            "Unable to load votes:",
+            "Vote loading error:",
             error
         );
 
-    }
-
-}
-
-
-function updateVoteDisplay(
-    sign,
-    maybe,
-    delulu
-) {
-
-    const signBar =
-        document.getElementById("signBar");
-
-    const maybeBar =
-        document.getElementById("maybeBar");
-
-    const deluluBar =
-        document.getElementById("deluluBar");
-
-
-    const signPercent =
-        document.getElementById("signPercent");
-
-    const maybePercent =
-        document.getElementById("maybePercent");
-
-    const deluluPercent =
-        document.getElementById("deluluPercent");
-
-
-    if (signBar) {
-        signBar.style.width =
-            sign + "%";
-    }
-
-
-    if (maybeBar) {
-        maybeBar.style.width =
-            maybe + "%";
-    }
-
-
-    if (deluluBar) {
-        deluluBar.style.width =
-            delulu + "%";
-    }
-
-
-    if (signPercent) {
-        signPercent.textContent =
-            sign + "%";
-    }
-
-
-    if (maybePercent) {
-        maybePercent.textContent =
-            maybe + "%";
-    }
-
-
-    if (deluluPercent) {
-        deluluPercent.textContent =
-            delulu + "%";
     }
 
 }
@@ -1179,233 +1586,193 @@ function updateVoteDisplay(
 // VOTE BUTTONS
 // =====================================================
 
-voteButtons.forEach(
-    button => {
+function setupVoting() {
 
-        button.addEventListener(
-            "click",
-            async function () {
-
-                const vote =
-                    this.dataset.choice;
+    const buttons =
+        document.querySelectorAll(
+            ".sign-vote"
+        );
 
 
-                if (
-                    ![
-                        "sign",
-                        "maybe",
-                        "delulu"
-                    ].includes(vote)
-                ) {
+    buttons.forEach(
+        button => {
 
-                    return;
+            button.addEventListener(
+                "click",
+                async () => {
 
-                }
+                    const choice =
+                        button.dataset.choice;
 
 
-                const alreadyVoted =
-                    localStorage.getItem(
-                        "plottwisted_vote_001"
-                    );
+                    if (!choice) {
+                        return;
+                    }
 
 
-                if (alreadyVoted) {
+                    if (
+                        localStorage.getItem(
+                            "plottwisted_vote_001"
+                        )
+                    ) {
 
-                    alert(
-                        "You already voted on this case."
-                    );
+                        alert(
+                            "You already voted on this case."
+                        );
 
-                    return;
+                        return;
 
-                }
+                    }
 
 
-                try {
-
-                    voteButtons.forEach(
+                    buttons.forEach(
                         btn => {
                             btn.disabled = true;
                         }
                     );
 
 
-                    await addDoc(
-                        collection(
-                            db,
-                            "signVotes"
-                        ),
-                        {
+                    try {
 
-                            vote:
-                                vote,
+                        await addDoc(
+                            collection(
+                                db,
+                                "signVotes"
+                            ),
+                            {
 
-                            caseId:
-                                "001",
+                                vote:
+                                    choice,
 
-                            createdAt:
-                                serverTimestamp()
+                                caseId:
+                                    "001",
 
-                        }
-                    );
+                                createdAt:
+                                    serverTimestamp()
 
-
-                    localStorage.setItem(
-                        "plottwisted_vote_001",
-                        "true"
-                    );
+                            }
+                        );
 
 
-                    await loadVotes();
+                        localStorage.setItem(
+                            "plottwisted_vote_001",
+                            "true"
+                        );
 
 
-                    alert(
-                        "Your verdict has been recorded."
-                    );
+                        await loadVotes();
 
 
-                } catch (error) {
-
-                    console.error(
-                        "Vote error:",
-                        error
-                    );
+                        alert(
+                            "Your verdict has been recorded."
+                        );
 
 
-                    voteButtons.forEach(
-                        btn => {
-                            btn.disabled = false;
-                        }
-                    );
+                    } catch (error) {
+
+                        console.error(
+                            "Vote error:",
+                            error
+                        );
 
 
-                    alert(
-                        "Unable to record your verdict right now."
-                    );
+                        buttons.forEach(
+                            btn => {
+                                btn.disabled =
+                                    false;
+                            }
+                        );
+
+
+                        alert(
+                            "Unable to record your vote."
+                        );
+
+                    }
 
                 }
+            );
 
-            }
-        );
-
-    }
-);
-
-
-// =====================================================
-// INITIALIZE
-// =====================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    async function () {
-
-        console.log(
-            "PlotTwisted archive starting..."
-        );
-
-
-        // Save buttons
-
-        await saveRecord(
-            COLLECTIONS.confessions,
-            "confessionInput",
-            "submitConfession"
-        );
-
-
-        await saveRecord(
-            COLLECTIONS.hugots,
-            "hugotInput",
-            "submitHugot"
-        );
-
-
-        await saveRecord(
-            COLLECTIONS.unsent,
-            "unsentInput",
-            "submitUnsent"
-        );
-
-
-        // Load existing records
-
-        await loadIndividualLists();
-
-        await loadCommunity();
-
-
-        // Load voting
-
-        await loadVotes();
-
-
-        console.log(
-            "PlotTwisted archive ready."
-        );
-
-    }
-);
-
-
-// =====================================================
-// REFRESH RECORDS WHEN PAGES OPEN
-// =====================================================
-
-const originalOpenInterface =
-    window.openInterface;
-
-
-if (
-    typeof originalOpenInterface ===
-    "function"
-) {
-
-    window.openInterface =
-        async function (id) {
-
-            originalOpenInterface(id);
-
-
-            if (
-                id === "confessions" ||
-                id === "hugot" ||
-                id === "unsent"
-            ) {
-
-                await loadIndividualLists();
-
-            }
-
-        };
+        }
+    );
 
 }
 
 
 // =====================================================
-// REFRESH COMMUNITY WHEN OPENED
+// START
 // =====================================================
 
-const originalShowPage =
-    window.showPage;
+async function startPlotTwisted() {
+
+    console.log(
+        "PlotTwisted Firestore starting..."
+    );
+
+
+    // Force the Victorian record design
+
+    addRecordStyles();
+
+    addCommunityStyles();
+
+
+    // Submission buttons
+
+    setupSubmission(
+        COLLECTIONS.confessions,
+        "confessionInput",
+        "submitConfession"
+    );
+
+
+    setupSubmission(
+        COLLECTIONS.hugots,
+        "hugotInput",
+        "submitHugot"
+    );
+
+
+    setupSubmission(
+        COLLECTIONS.unsent,
+        "unsentInput",
+        "submitUnsent"
+    );
+
+
+    // Existing records
+
+    await loadAllArchives();
+
+    await loadCommunityRecords();
+
+
+    // Voting
+
+    setupVoting();
+
+    await loadVotes();
+
+
+    console.log(
+        "PlotTwisted Firestore ready."
+    );
+
+}
 
 
 if (
-    typeof originalShowPage ===
-    "function"
+    document.readyState === "loading"
 ) {
 
-    window.showPage =
-        async function (id) {
+    document.addEventListener(
+        "DOMContentLoaded",
+        startPlotTwisted,
+        { once: true }
+    );
 
-            originalShowPage(id);
+} else {
 
+    startPlotTwisted();
 
-            if (id === "community") {
-
-                await loadCommunity();
-
-            }
-
-        };
-
-                }
+        }
