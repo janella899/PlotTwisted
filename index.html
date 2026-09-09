@@ -44,11 +44,6 @@
     --body:"Poppins",sans-serif;
 }
 
-
-/* ==========================================
-   RESET
-========================================== */
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -152,7 +147,7 @@ body{
 
 
 /* ==========================================
-   VICTORIAN VINES
+   VINES
 ========================================== */
 
 .vine{
@@ -277,7 +272,7 @@ body{
 
 
 /* ==========================================
-   DECORATIVE CIRCLES
+   CIRCLES
 ========================================== */
 
 .archive-circle{
@@ -310,7 +305,7 @@ body{
 
 
 /* ==========================================
-   BACKGROUND TEXTURE
+   TEXTURE
 ========================================== */
 
 body::before{
@@ -605,7 +600,7 @@ body::before{
 
     box-shadow:
         0 8px 28px rgba(198,161,94,.25);
-    
+
     transform:translateY(-2px);
 }
 
@@ -906,7 +901,6 @@ body::before{
 
 .archive-card:hover{
     transform:translateY(-5px);
-
     border-color:var(--gold-bright);
 
     background:
@@ -1138,26 +1132,40 @@ input:focus{
 
 
 /* ==========================================
-   RECENT RECORDS
+   RECORD SECTION HEADER
 ========================================== */
 
 .records-header{
-    width:min(900px,100%);
-    margin:55px auto 0;
+    width:min(920px,100%);
+    margin:65px auto 0;
 
     display:grid;
-    grid-template-columns:70px 1fr 70px;
+    grid-template-columns:80px 1fr 80px;
 
     align-items:center;
     text-align:center;
+
+    position:relative;
+}
+
+.records-header::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-10px;
+    width:45px;
+    height:1px;
+    transform:translateX(-50%);
+    background:var(--gold);
 }
 
 .records-header h3{
-    margin-top:5px;
+    margin-top:7px;
     font-family:var(--display);
-    font-size:30px;
+    font-size:32px;
     font-weight:400;
     color:#fff0d7;
+    letter-spacing:.4px;
 }
 
 .records-label{
@@ -1171,12 +1179,12 @@ input:focus{
 .records-symbol{
     color:var(--gold-bright);
     font-family:var(--serif);
-    font-size:29px;
+    font-size:30px;
 }
 
 .records-divider{
-    width:min(900px,100%);
-    margin:18px auto 25px;
+    width:min(920px,100%);
+    margin:28px auto 30px;
 
     display:flex;
     align-items:center;
@@ -1207,12 +1215,28 @@ input:focus{
 
 
 /* ==========================================
+   RECORD GRID
+========================================== */
+
+.record-grid{
+    width:min(920px,100%);
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+
+    align-items:stretch;
+}
+
+
+/* ==========================================
    EMPTY RECORD
 ========================================== */
 
 .empty-record{
     grid-column:1 / -1;
-    min-height:210px;
+    min-height:235px;
 
     display:flex;
     flex-direction:column;
@@ -1293,53 +1317,57 @@ input:focus{
 
 
 /* ==========================================
-   VINTAGE SENT RECORDS
+   NEW VICTORIAN RECORD CARDS
 ========================================== */
-
-.record-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
-}
 
 .record{
     position:relative;
 
-    min-height:240px;
+    min-height:265px;
 
-    padding:46px 35px 32px;
+    padding:54px 34px 32px;
 
     background:
         radial-gradient(
-            circle at 12% 15%,
-            rgba(255,255,255,.25),
-            transparent 20%
+            circle at 10% 10%,
+            rgba(255,255,255,.34),
+            transparent 22%
         ),
         radial-gradient(
-            circle at 90% 85%,
-            rgba(105,65,25,.12),
-            transparent 28%
+            circle at 92% 90%,
+            rgba(104,67,29,.13),
+            transparent 30%
+        ),
+        repeating-linear-gradient(
+            0deg,
+            rgba(86,54,25,.025) 0px,
+            rgba(86,54,25,.025) 1px,
+            transparent 1px,
+            transparent 4px
         ),
         linear-gradient(
             135deg,
-            #f0dfbe,
-            #dfc294 48%,
-            #d2b27e
+            #f3e3c3 0%,
+            #ead3a8 46%,
+            #d9bc87 100%
         );
 
     color:var(--ink);
 
-    border:6px solid #a77c45;
+    border:1px solid #a77c45;
 
     box-shadow:
-        0 18px 45px rgba(0,0,0,.42),
-        inset 0 0 35px rgba(70,40,15,.1);
+        0 18px 45px rgba(0,0,0,.4),
+        inset 0 0 35px rgba(70,40,15,.08);
 
     overflow:hidden;
 
-    transform:rotate(-.25deg);
+    transform:rotate(-.35deg);
 
-    transition:.3s;
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
 }
 
 .record:nth-child(even){
@@ -1348,99 +1376,212 @@ input:focus{
 
 .record:hover{
     transform:
-        translateY(-4px)
+        translateY(-7px)
         rotate(0deg);
 
+    border-color:#d5ae67;
+
     box-shadow:
-        0 22px 55px rgba(0,0,0,.5),
-        0 0 18px rgba(198,161,94,.12);
+        0 26px 60px rgba(0,0,0,.5),
+        0 0 28px rgba(198,161,94,.16),
+        inset 0 0 35px rgba(70,40,15,.08);
 }
 
 
-/* inner letter border */
+/* outer gold frame */
 
 .record::before{
     content:"";
 
     position:absolute;
-    inset:11px;
+    inset:8px;
 
-    border:1px solid rgba(83,52,23,.65);
+    border:1px solid rgba(93,60,27,.72);
 
     pointer-events:none;
 }
 
 
-/* vintage corner detail */
+/* inner frame */
 
 .record::after{
-    content:"❦";
+    content:"";
 
     position:absolute;
-    right:18px;
-    bottom:8px;
+    inset:14px;
 
-    color:#765127;
-    font-family:var(--serif);
-    font-size:29px;
+    border:1px dashed rgba(93,60,27,.28);
+
+    pointer-events:none;
 }
 
 
-/* archive stamp */
+/* ==========================================
+   RECORD TOP LABEL
+========================================== */
 
-.record-number{
+.record .record-number{
     position:relative;
-    z-index:2;
+    z-index:5;
 
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
 
-    margin-bottom:19px;
-    padding:5px 12px;
+    margin-bottom:18px;
+    padding:6px 12px;
 
-    border:1px solid #765127;
+    border:1px solid #80602f;
 
-    color:#69491f;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(247,229,193,.88),
+            rgba(222,193,141,.62)
+        );
 
-    font-size:7px;
-    letter-spacing:3px;
-    text-transform:uppercase;
-
-    background:rgba(238,216,177,.55);
-}
-
-
-/* little sent-letter line */
-
-.record-text{
-    position:relative;
-    z-index:2;
-
-    padding:8px 5px 20px;
-
-    border-bottom:1px solid rgba(73,46,20,.3);
-
-    font-family:var(--serif);
-    font-size:21px;
-    line-height:1.6;
-
-    white-space:pre-wrap;
-}
-
-
-/* metadata */
-
-.record-meta{
-    position:relative;
-    z-index:2;
-
-    margin-top:14px;
-
-    color:#725128;
+    color:#63451e;
 
     font-family:var(--body);
     font-size:7px;
-    letter-spacing:2px;
+    font-weight:600;
+    letter-spacing:2.5px;
     text-transform:uppercase;
+
+    box-shadow:
+        0 2px 5px rgba(70,40,15,.1);
+}
+
+.record .record-number::before{
+    content:"";
+    width:5px;
+    height:5px;
+
+    border:1px solid #765127;
+    transform:rotate(45deg);
+}
+
+
+/* ==========================================
+   RECORD MESSAGE
+========================================== */
+
+.record .record-text{
+    position:relative;
+    z-index:4;
+
+    padding:3px 6px 22px;
+
+    border-bottom:1px solid rgba(73,46,20,.35);
+
+    font-family:var(--serif);
+    font-size:22px;
+    line-height:1.55;
+
+    white-space:pre-wrap;
+
+    color:#2b1a1a;
+}
+
+
+/* ==========================================
+   RECORD METADATA
+========================================== */
+
+.record .record-meta{
+    position:relative;
+    z-index:4;
+
+    margin-top:15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+
+    color:#71502a;
+
+    font-family:var(--body);
+    font-size:7px;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+}
+
+.record .record-meta::before{
+    content:"FILED";
+    padding-right:10px;
+    border-right:1px solid rgba(93,60,27,.35);
+}
+
+
+/* ==========================================
+   RECORD WATERMARK
+========================================== */
+
+.record-watermark{
+    position:absolute;
+    right:-28px;
+    bottom:-30px;
+
+    width:160px;
+    height:160px;
+
+    opacity:.12;
+
+    color:#68481f;
+
+    transform:rotate(-15deg);
+
+    pointer-events:none;
+}
+
+.record-watermark svg{
+    width:100%;
+    height:100%;
+}
+
+.record-watermark path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+
+/* ==========================================
+   RECORD CORNER ORNAMENT
+========================================== */
+
+.record-corner{
+    position:absolute;
+    z-index:4;
+
+    color:#765127;
+    font-family:var(--serif);
+    font-size:21px;
+
+    opacity:.75;
+}
+
+.record-corner.top-left{
+    top:17px;
+    left:19px;
+}
+
+.record-corner.top-right{
+    top:17px;
+    right:19px;
+}
+
+.record-corner.bottom-left{
+    bottom:15px;
+    left:19px;
+}
+
+.record-corner.bottom-right{
+    bottom:15px;
+    right:19px;
 }
 
 
@@ -1540,7 +1681,7 @@ input:focus{
 
 
 /* ==========================================
-   ROULETTE
+   LIFE PLOT TWIST ROULETTE
 ========================================== */
 
 .roulette-interface{
@@ -1625,7 +1766,7 @@ input:focus{
 }
 
 .roulette-symbol::after{
-    content:"❦";
+    content:"✦";
     position:absolute;
     inset:-18px;
 
@@ -1640,21 +1781,36 @@ input:focus{
 .roulette-title{
     font-family:var(--script);
     color:var(--gold-bright);
-    font-size:42px;
-    margin-bottom:15px;
+    font-size:44px;
+    margin-bottom:8px;
+}
+
+.roulette-subtitle{
+    max-width:580px;
+    margin:0 auto 25px;
+
+    color:#d5c0aa;
+
+    font-family:var(--body);
+    font-size:9px;
+    letter-spacing:2px;
+    line-height:1.7;
+    text-transform:uppercase;
 }
 
 .roulette-text{
-    min-height:80px;
-    max-width:620px;
+    min-height:95px;
+    max-width:650px;
     margin:auto;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    padding:15px 25px;
+
     font-family:var(--serif);
-    font-size:27px;
+    font-size:28px;
     line-height:1.3;
 
     color:#fff0d7;
@@ -2170,8 +2326,89 @@ footer strong{
     }
 
     .record{
-        min-height:210px;
+        min-height:225px;
+        padding:50px 27px 30px;
     }
+
+    .record .record-text{
+        font-size:20px;
+    }
+
+    .record .record-meta{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:7px;
+    }
+
+    .record .record-meta::before{
+        border-right:0;
+        padding-right:0;
+    }
+
+    .roulette-title{
+        font-size:38px;
+    }
+
+    .roulette-text{
+        font-size:23px;
+        padding:10px;
+    }
+
+}
+
+
+/* ==========================================
+   EXTRA SMALL DEVICES
+========================================== */
+
+@media(max-width:450px){
+
+    .letter{
+        padding:55px 23px;
+        border-width:6px;
+    }
+
+    .letter::before{
+        inset:11px;
+    }
+
+    .letter::after{
+        inset:17px;
+    }
+
+    .letter h1{
+        font-size:55px;
+    }
+
+    .letter-subtitle{
+        font-size:26px;
+    }
+
+    .dear{
+        font-size:20px;
+    }
+
+    .letter-copy{
+        font-size:16px;
+    }
+
+    .records-header h3{
+        font-size:21px;
+    }
+
+    .record{
+        padding:48px 22px 28px;
+    }
+
+    .record .record-text{
+        font-size:19px;
+    }
+
+    .btn{
+        padding:13px 24px;
+        font-size:9px;
+    }
+
 }
 
 </style>
@@ -2180,6 +2417,7 @@ footer strong{
 
 <body>
 
+
 <!-- ==========================================
      VICTORIAN BACKGROUND
 ========================================== -->
@@ -2187,7 +2425,9 @@ footer strong{
 <div class="victorian-background" aria-hidden="true">
 
     <div class="victorian-rose rose-left">
+
         <svg viewBox="0 0 300 300">
+
             <g class="rose-stroke">
 
                 <path d="M150 158
@@ -2242,12 +2482,16 @@ footer strong{
                          C140 283 151 280 158 270"/>
 
             </g>
+
         </svg>
+
     </div>
 
 
     <div class="victorian-rose rose-right">
+
         <svg viewBox="0 0 300 300">
+
             <g class="rose-stroke">
 
                 <path d="M150 158
@@ -2296,12 +2540,16 @@ footer strong{
                          C178 266 157 260 146 245Z"/>
 
             </g>
+
         </svg>
+
     </div>
 
 
     <div class="victorian-rose rose-center">
+
         <svg viewBox="0 0 300 300">
+
             <g class="rose-stroke">
 
                 <circle cx="150" cy="150" r="75"/>
@@ -2321,7 +2569,9 @@ footer strong{
                          C107 112 135 119 150 150Z"/>
 
             </g>
+
         </svg>
+
     </div>
 
 
@@ -2560,8 +2810,6 @@ footer strong{
 
             </div>
 
-
-            <!-- ABOUT ADDED DIRECTLY TO ARCHIVE -->
 
             <div class="archive-card"
                  onclick="showPage('about')">
@@ -3281,11 +3529,11 @@ footer strong{
 
                     <div class="category-symbol">✦</div>
 
-                    <h3>Fate Roulette</h3>
+                    <h3>Life Twist Roulette</h3>
 
                     <p>
-                        Spin the wheel and discover your fictional
-                        plot twist.
+                        Spin the archive and discover an unexpected
+                        possibility for your next chapter.
                     </p>
 
                 </div>
@@ -3312,7 +3560,7 @@ footer strong{
 
 
     <!-- ==========================================
-         ROULETTE
+         LIFE ROULETTE
     ========================================== -->
 
     <div id="roulette" class="interface">
@@ -3331,7 +3579,7 @@ footer strong{
                 </div>
 
                 <h2 class="archive-heading">
-                    Fate <span>Roulette</span>
+                    Life <span>Twist Roulette</span>
                 </h2>
 
                 <div class="gold-rule">
@@ -3351,14 +3599,19 @@ footer strong{
                 </div>
 
                 <div class="roulette-title">
-                    Friends to Lovers?
+                    What Happens Next?
                 </div>
+
+                <p class="roulette-subtitle">
+                    Not every plot twist is about romance.
+                    Sometimes life simply changes the chapter.
+                </p>
 
                 <div id="rouletteText"
                      class="roulette-text">
 
                     The archive has not revealed
-                    your twist yet.
+                    your life twist yet.
 
                 </div>
 
@@ -3367,7 +3620,7 @@ footer strong{
                     onclick="spinRoulette()"
                     style="margin-top:35px;">
 
-                    Reveal the Plot Twist
+                    Reveal the Life Twist
 
                 </button>
 
@@ -3727,8 +3980,9 @@ footer strong{
 
                 <div class="faq-answer">
 
-                    No. Fate Roulette is an entertainment feature.
-                    Its results are fictional plot twists.
+                    No. Life Twist Roulette is an entertainment feature.
+                    Its results are fictional possibilities and are not
+                    predictions of what will actually happen.
 
                 </div>
 
@@ -4059,89 +4313,128 @@ function showPage(id){
 
 
 /* ==========================================
-   FATE ROULETTE
-   FRIENDS TO LOVERS EDITION
+   LIFE TWIST ROULETTE
 ========================================== */
 
 const plotTwists = [
 
-    "You start noticing that your best friend looks at you differently.",
+    "Life unexpectedly gives you a new opportunity.",
 
-    "Your friend is the first person you tell about your crush... and they realize it is them.",
+    "A random conversation changes the way you see something.",
 
-    "A simple late-night conversation suddenly feels different.",
+    "You discover a hobby you never expected to love.",
 
-    "You both joke about dating until one of you stops laughing.",
+    "Someone you have not talked to in a while suddenly reaches out.",
 
-    "Your friend gets jealous when someone else starts getting close to you.",
+    "A plan gets canceled, and the replacement turns out better.",
 
-    "You accidentally become each other's favorite person.",
+    "You say yes to something outside your usual routine.",
 
-    "One day, your friendship starts feeling like something more.",
+    "A small mistake leads to a surprisingly good idea.",
 
-    "You realize you have been falling for your best friend without noticing.",
+    "You meet someone who inspires you to try something new.",
 
-    "Your friend remembers every little detail about you, and you finally notice.",
+    "A forgotten goal suddenly feels possible again.",
 
-    "A 'what if we dated?' joke becomes a serious conversation.",
+    "You receive good news on an ordinary day.",
 
-    "You get paired together for something and suddenly everyone thinks you are a couple.",
+    "Your next chapter starts somewhere you never expected.",
 
-    "Your friends keep teasing you two because the chemistry is obvious.",
+    "An honest conversation makes a friendship stronger.",
 
-    "You both deny having feelings while acting like a couple.",
+    "You finally finish something you have been putting off.",
 
-    "Your best friend becomes the person you want to tell everything to.",
+    "A random recommendation becomes your new favorite thing.",
 
-    "A random moment makes you wonder if your friendship could become something more.",
+    "You get an opportunity to show a skill you did not know you had.",
 
-    "You catch yourself getting nervous whenever your friend gets unusually close.",
+    "An ordinary school day becomes a story you will remember.",
 
-    "Your friend starts treating you differently, and you cannot figure out why.",
+    "You take a different route and discover something interesting.",
 
-    "Someone asks if you are dating. You both say no a little too quickly.",
+    "Someone's kindness restores your faith in people.",
 
-    "You realize your favorite person might also be your favorite love story.",
+    "You realize you have outgrown an old habit.",
 
-    "Your friend confesses first, but neither of you knows what happens next.",
+    "A spontaneous idea becomes your best project yet.",
 
-    "A friendship that everyone thought was platonic starts becoming something else.",
+    "You find yourself laughing at something you once worried about.",
 
-    "You slowly discover that your favorite person might also be your unexpected chapter.",
+    "A quiet day gives you an answer you have been looking for.",
 
-    "One confession changes the way you see your friendship forever.",
+    "You make a decision that future-you will thank you for.",
 
-    "The line between best friends and something more gets dangerously blurry.",
+    "A new responsibility teaches you something valuable.",
 
-    "You both have feelings but are too scared to risk the friendship.",
+    "You unexpectedly become the person someone needed that day.",
 
-    "A late-night chat becomes the conversation neither of you expected.",
+    "A 'no' makes room for a better 'yes.'",
 
-    "You realize you have been saving your best stories for one specific person.",
+    "Your next memorable moment happens without being planned.",
 
-    "Your friend becomes your comfort person, and eventually your person.",
+    "You rediscover something you used to enjoy.",
 
-    "You both realize the friendship was the beginning, not the ending.",
+    "You become brave enough to try something completely new.",
 
-    "The person who knows you best might be the person you never expected to fall for.",
+    "The plot changes, but the new direction makes sense.",
 
-    "A familiar friendship suddenly gets an unfamiliar feeling.",
+    "You discover that a difficult chapter taught you something important.",
 
-    "You notice that every important memory somehow includes the same person.",
+    "A simple invitation leads to an unforgettable experience.",
 
-    "Your best friend becomes the first person you look for in every room.",
+    "You finally speak up about an idea that turns out to matter.",
 
-    "Everyone sees the possibility before the two of you do.",
+    "Something you thought was a setback becomes an unexpected opportunity.",
 
-    "The friendship survives the awkward stage and becomes something unexpectedly beautiful.",
+    "A new person enters your life and teaches you something valuable.",
 
-    "A harmless compliment suddenly stays in your mind all day.",
+    "You surprise yourself by handling a situation better than expected.",
 
-    "You realize the person you always run to might be the person you want beside you.",
+    "A small act of kindness creates a chain of good moments.",
 
-    "The archive records a friendship slowly turning into a love story.",
+    "You find an old dream hiding inside a new opportunity.",
 
-    "Plot twist: the person beside you was part of the love story all along."
+    "Your routine changes after one completely unexpected day.",
+
+    "A school project becomes more meaningful than you expected.",
+
+    "You discover a talent while simply trying something for fun.",
+
+    "Someone gives you advice that changes your perspective.",
+
+    "A coincidence becomes the beginning of an interesting story.",
+
+    "You reconnect with something that once made you happy.",
+
+    "You realize that progress does not always look the way you imagined.",
+
+    "An unexpected challenge reveals how capable you actually are.",
+
+    "You make a new memory on a day that seemed completely ordinary.",
+
+    "A last-minute decision creates your favorite story of the year.",
+
+    "You find yourself in the right place at exactly the right time.",
+
+    "A chapter closes, making space for something new.",
+
+    "You stop waiting for the perfect moment and finally begin.",
+
+    "A forgotten idea returns at exactly the right time.",
+
+    "You discover that the thing you feared changing was what needed to change.",
+
+    "Someone notices a strength in you that you had overlooked.",
+
+    "A casual conversation leads to a useful opportunity.",
+
+    "Your plans change, but the new plan turns out to suit you better.",
+
+    "You unexpectedly become part of something bigger than yourself.",
+
+    "A simple decision creates a surprisingly different future.",
+
+    "The archive records a chapter you never saw coming."
 
 ];
 
