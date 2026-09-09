@@ -4754,6 +4754,530 @@ if(contactForm){
 }
 
 
+/* =====================================================
+   VICTORIAN ARCHIVE RECORDS
+   ===================================================== */
+
+.post-card.archive-record {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255,255,255,.28),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(93,55,20,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #ead9b8,
+            #f0e1c4 45%,
+            #dfc9a0
+        );
+
+    color: #28191a;
+
+    border: 1px solid rgba(198,161,94,.9);
+
+    padding: 7px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35),
+        0 0 0 1px rgba(128,96,47,.45);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    overflow: hidden;
+}
+
+
+.post-card.archive-record:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.45),
+        0 0 25px rgba(198,161,94,.18);
+}
+
+
+/* Inner double frame */
+
+.archive-record .record-inner {
+    position: relative;
+
+    border: 1px solid rgba(128,96,47,.8);
+
+    padding: 22px 22px 18px;
+
+    min-height: 220px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.02)
+        );
+}
+
+
+/* Subtle Victorian corner markings */
+
+.archive-record .record-inner::before,
+.archive-record .record-inner::after {
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+
+    border-color: #80602f;
+    border-style: solid;
+
+    opacity: .7;
+}
+
+
+.archive-record .record-inner::before {
+    top: 8px;
+    left: 8px;
+
+    border-width: 1px 0 0 1px;
+}
+
+
+.archive-record .record-inner::after {
+    right: 8px;
+    bottom: 8px;
+
+    border-width: 0 1px 1px 0;
+}
+
+
+/* Header */
+
+.archive-record .record-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.archive-record .record-stamp {
+    color: #64192d;
+
+    border: 1px solid #80602f;
+
+    padding: 5px 8px;
+
+    font-weight: 600;
+}
+
+
+.archive-record .record-number {
+    color: #80602f;
+
+    white-space: nowrap;
+}
+
+
+/* Archive ornament */
+
+.archive-record .record-ornament {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin: 4px 0 14px;
+
+    color: #80602f;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+}
+
+
+.archive-record .record-ornament span {
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(128,96,47,.7)
+        );
+}
+
+
+.archive-record .record-ornament span:last-child {
+    background:
+        linear-gradient(
+            to left,
+            transparent,
+            rgba(128,96,47,.7)
+        );
+}
+
+
+.archive-record .record-ornament b {
+    font-weight: 500;
+}
+
+
+/* Category */
+
+.archive-record .record-category {
+    text-align: center;
+
+    color: #64192d;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    font-weight: 600;
+
+    margin-bottom: 16px;
+}
+
+
+/* Actual submitted text */
+
+.archive-record .record-content {
+    position: relative;
+
+    padding: 4px 8px 8px;
+}
+
+
+.archive-record .record-message {
+    margin: 0;
+
+    color: #28191a;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size: 20px;
+
+    line-height: 1.65;
+
+    text-align: center;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* Gold divider */
+
+.archive-record .record-divider {
+    position: relative;
+
+    height: 1px;
+
+    margin: 18px 0 13px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(128,96,47,.8),
+            transparent
+        );
+}
+
+
+.archive-record .record-divider::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+
+    background: #ead9b8;
+
+    border:
+        1px solid #80602f;
+}
+
+
+/* Footer */
+
+.archive-record .record-footer {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.archive-record .record-date {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    color: #80602f;
+}
+
+
+.archive-record .footer-label {
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    color: #64192d;
+}
+
+
+.archive-record .record-seal {
+    border: 1px solid #80602f;
+
+    color: #80602f;
+
+    padding: 5px 8px;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+
+    transform: rotate(-2deg);
+}
+
+
+/* Actions */
+
+.archive-record .record-actions {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 16px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid
+        rgba(128,96,47,.35);
+}
+
+
+.archive-record .like-button,
+.archive-record .report-button {
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.archive-record .like-button {
+    color: #64192d;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.archive-record .button-symbol {
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 20px;
+
+    line-height: 1;
+}
+
+
+.archive-record .like-button:hover {
+    color: #80602f;
+
+    transform: translateY(-1px);
+}
+
+
+.archive-record .like-button.is-liked {
+    color: #80602f;
+}
+
+
+.archive-record .like-button:disabled {
+    cursor: default;
+}
+
+
+.archive-record .report-button {
+    color: #80602f;
+}
+
+
+.archive-record .report-button:hover {
+    color: #64192d;
+
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   EMPTY / LOADING RECORD
+   ===================================================== */
+
+.post-card:not(.archive-record) {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(234,217,184,.96),
+            rgba(216,193,153,.96)
+        );
+
+    color: #28191a;
+
+    border:
+        1px solid
+        rgba(198,161,94,.75);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
+}
+
+
+/* =====================================================
+   RESPONSIVE RECORDS
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .post-card.archive-record {
+        padding: 5px;
+    }
+
+
+    .archive-record .record-inner {
+        padding:
+            18px 15px 15px;
+    }
+
+
+    .archive-record .record-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .archive-record .record-number {
+        font-size: 8px;
+    }
+
+
+    .archive-record .record-message {
+        font-size: 18px;
+
+        line-height: 1.55;
+    }
+
+
+    .archive-record .record-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .archive-record .record-actions {
+        flex-wrap: wrap;
+
+        gap: 10px;
+    }
+
+    }
+
 /* ==========================================
    INITIAL STATE
 ========================================== */
