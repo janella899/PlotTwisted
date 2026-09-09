@@ -28,7 +28,6 @@
 
     --paper:#ead9b8;
     --paper-dark:#c8a979;
-    --paper-shadow:#9e784b;
     --ink:#28191a;
 
     --cream:#f2e4cb;
@@ -60,17 +59,13 @@ body{
     overflow-x:hidden;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
-
 body::before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
     z-index:999;
-    opacity:.16;
+    opacity:.13;
     background-image:
         repeating-linear-gradient(
             0deg,
@@ -113,9 +108,7 @@ body::before{
     border-right:2px solid;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAVBAR */
 
 .navbar{
     position:relative;
@@ -168,9 +161,7 @@ body::before{
     color:var(--gold-light);
 }
 
-/* =========================
-   GENERAL
-========================= */
+/* GENERAL */
 
 .page{
     display:none;
@@ -185,6 +176,19 @@ body::before{
 
 .page-inner{
     width:min(1100px,100%);
+    margin:auto;
+}
+
+.interface{
+    display:none;
+}
+
+.interface.active{
+    display:block;
+}
+
+.interface-wrap{
+    width:min(1050px,100%);
     margin:auto;
 }
 
@@ -242,14 +246,7 @@ body::before{
     background:linear-gradient(to left,transparent,var(--gold-dark));
 }
 
-.gold-symbol{
-    color:var(--gold-light);
-    font-family:var(--serif);
-}
-
-/* =========================
-   BUTTONS
-========================= */
+/* BUTTONS */
 
 .btn{
     position:relative;
@@ -257,7 +254,7 @@ body::before{
     justify-content:center;
     align-items:center;
     gap:12px;
-    padding:14px 26px;
+    padding:14px 27px;
     border:1px solid var(--gold);
     background:linear-gradient(145deg,#1c090e,#0b0507);
     color:var(--gold-light);
@@ -280,8 +277,13 @@ body::before{
     transform:translateY(-50%);
 }
 
-.btn::before{left:7px;}
-.btn::after{right:7px;}
+.btn::before{
+    left:7px;
+}
+
+.btn::after{
+    right:7px;
+}
 
 .btn:hover{
     background:var(--wine-deep);
@@ -293,9 +295,7 @@ body::before{
     margin-bottom:35px;
 }
 
-/* =========================
-   OPEN LETTER
-========================= */
+/* OPEN LETTER */
 
 #home{
     padding:0;
@@ -332,7 +332,6 @@ body::before{
     position:absolute;
     inset:16px;
     border:1px solid #79552d;
-    pointer-events:none;
 }
 
 .letter::after{
@@ -340,7 +339,6 @@ body::before{
     position:absolute;
     inset:23px;
     border:1px dashed rgba(92,62,33,.5);
-    pointer-events:none;
 }
 
 .letter-content{
@@ -371,7 +369,6 @@ body::before{
     font-family:var(--display);
     font-size:clamp(55px,10vw,100px);
     font-weight:400;
-    letter-spacing:-2px;
 }
 
 .letter-subtitle{
@@ -437,14 +434,27 @@ body::before{
     z-index:2;
 }
 
-.letter-corner.tl{top:27px;left:32px;}
-.letter-corner.tr{top:27px;right:32px;}
-.letter-corner.bl{bottom:27px;left:32px;}
-.letter-corner.br{bottom:27px;right:32px;}
+.letter-corner.tl{
+    top:27px;
+    left:32px;
+}
 
-/* =========================
-   ARCHIVE MENU
-========================= */
+.letter-corner.tr{
+    top:27px;
+    right:32px;
+}
+
+.letter-corner.bl{
+    bottom:27px;
+    left:32px;
+}
+
+.letter-corner.br{
+    bottom:27px;
+    right:32px;
+}
+
+/* ARCHIVE MENU */
 
 .archive-menu{
     display:none;
@@ -453,77 +463,6 @@ body::before{
 
 .archive-menu.active{
     display:block;
-}
-
-.archive-grid{
-    margin:55px auto 0;
-    width:min(1000px,100%);
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.archive-card{
-    min-height:205px;
-    position:relative;
-    padding:30px 25px;
-    border:1px solid var(--gold-line);
-    background:linear-gradient(145deg,rgba(38,12,19,.9),rgba(12,5,8,.95));
-    text-align:center;
-    cursor:pointer;
-    transition:.35s;
-}
-
-.archive-card::before{
-    content:"";
-    position:absolute;
-    inset:7px;
-    border:1px solid rgba(198,161,94,.2);
-    pointer-events:none;
-}
-
-.archive-card:hover{
-    transform:translateY(-5px);
-    border-color:var(--gold-light);
-    background:linear-gradient(145deg,#3a101c,#100508);
-}
-
-.card-symbol{
-    font-family:var(--serif);
-    color:var(--gold);
-    font-size:28px;
-    margin-bottom:18px;
-}
-
-.archive-card h3{
-    font-family:var(--display);
-    font-size:25px;
-    font-weight:400;
-    color:var(--cream);
-}
-
-.archive-card p{
-    margin-top:10px;
-    color:var(--muted);
-    font-size:10px;
-    line-height:1.7;
-}
-
-/* =========================
-   INTERFACES
-========================= */
-
-.interface{
-    display:none;
-}
-
-.interface.active{
-    display:block;
-}
-
-.interface-wrap{
-    width:min(1050px,100%);
-    margin:auto;
 }
 
 .archive-header{
@@ -570,9 +509,60 @@ body::before{
     font-size:18px;
 }
 
-/* =========================
-   CATEGORY MENU
-========================= */
+.archive-grid{
+    margin:55px auto 0;
+    width:min(1000px,100%);
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.archive-card{
+    min-height:205px;
+    position:relative;
+    padding:30px 25px;
+    border:1px solid var(--gold-line);
+    background:linear-gradient(145deg,rgba(38,12,19,.9),rgba(12,5,8,.95));
+    text-align:center;
+    cursor:pointer;
+    transition:.35s;
+}
+
+.archive-card::before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px solid rgba(198,161,94,.2);
+}
+
+.archive-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold-light);
+    background:linear-gradient(145deg,#3a101c,#100508);
+}
+
+.card-symbol{
+    font-family:var(--serif);
+    color:var(--gold);
+    font-size:28px;
+    margin-bottom:18px;
+}
+
+.archive-card h3{
+    font-family:var(--display);
+    font-size:25px;
+    font-weight:400;
+    color:var(--cream);
+}
+
+.archive-card p{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.7;
+}
+
+/* CATEGORY */
 
 .category-grid{
     display:grid;
@@ -620,9 +610,7 @@ body::before{
     margin-top:7px;
 }
 
-/* =========================
-   PAPER / FORM PANELS
-========================= */
+/* PAPER PANEL */
 
 .paper-panel{
     position:relative;
@@ -659,7 +647,7 @@ body::before{
     margin-bottom:8px;
 }
 
-.paper-panel .panel-subtitle{
+.panel-subtitle{
     color:#73532d;
     font-size:10px;
     letter-spacing:2px;
@@ -701,18 +689,141 @@ input:focus{
     color:var(--gold-light);
 }
 
-/* =========================
-   RECORDS
-========================= */
+/* RECENT RECORDS */
 
-.records-title{
-    margin:45px 0 18px;
+.records-header{
+    width:min(900px,100%);
+    margin:55px auto 0;
+
+    display:grid;
+    grid-template-columns:70px 1fr 70px;
+    align-items:center;
+
     text-align:center;
+}
+
+.records-header h3{
+    margin-top:5px;
+    font-family:var(--display);
+    font-size:30px;
+    font-weight:400;
+    color:var(--cream);
+}
+
+.records-label{
     color:var(--gold);
-    font-size:9px;
+    font-family:var(--body);
+    font-size:8px;
     letter-spacing:4px;
     text-transform:uppercase;
 }
+
+.records-symbol{
+    color:var(--gold);
+    font-family:var(--serif);
+    font-size:27px;
+}
+
+.records-divider{
+    width:min(900px,100%);
+    margin:18px auto 25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+}
+
+.records-divider::before,
+.records-divider::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:linear-gradient(
+        to right,
+        transparent,
+        var(--gold-dark),
+        transparent
+    );
+}
+
+.records-divider span{
+    color:var(--gold);
+    font-family:var(--serif);
+    font-size:15px;
+}
+
+/* EMPTY RECORD */
+
+.empty-record{
+    grid-column:1 / -1;
+    min-height:210px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    padding:40px;
+    border:1px solid var(--gold-line);
+    background:linear-gradient(
+        145deg,
+        rgba(38,12,19,.85),
+        rgba(10,4,7,.95)
+    );
+    text-align:center;
+}
+
+.empty-record::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid rgba(198,161,94,.18);
+}
+
+.empty-record::after{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border:1px dashed rgba(198,161,94,.08);
+}
+
+.empty-symbol{
+    position:relative;
+    z-index:2;
+    color:var(--gold);
+    font-family:var(--serif);
+    font-size:30px;
+    margin-bottom:13px;
+}
+
+.empty-title{
+    position:relative;
+    z-index:2;
+    color:var(--gold-light);
+    font-family:var(--display);
+    font-size:21px;
+    letter-spacing:2px;
+}
+
+.empty-text{
+    position:relative;
+    z-index:2;
+    max-width:500px;
+    margin-top:8px;
+    color:var(--muted);
+    font-family:var(--serif);
+    font-size:17px;
+}
+
+.empty-line{
+    position:relative;
+    z-index:2;
+    margin-top:20px;
+    color:var(--gold-dark);
+    font-size:7px;
+    letter-spacing:3px;
+}
+
+/* ACTUAL RECORDS */
 
 .record-grid{
     display:grid;
@@ -722,12 +833,22 @@ input:focus{
 
 .record{
     position:relative;
-    padding:30px;
+    padding:34px 30px 28px;
     background:
-        linear-gradient(145deg,#ead9b8,#d7bd8d);
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255,255,255,.12),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #ead9b8,
+            #d2b37e
+        );
     color:var(--ink);
-    border:4px solid #a77c45;
-    box-shadow:0 12px 35px rgba(0,0,0,.3);
+    border:5px solid #a77c45;
+    box-shadow:0 14px 40px rgba(0,0,0,.35);
+    overflow:hidden;
 }
 
 .record::before{
@@ -742,64 +863,47 @@ input:focus{
 .record::after{
     content:"❧";
     position:absolute;
-    right:14px;
-    bottom:8px;
+    right:18px;
+    bottom:10px;
     color:#765127;
-    font-size:20px;
+    font-family:var(--serif);
+    font-size:23px;
+}
+
+.record-number{
+    position:relative;
+    z-index:2;
+    margin-bottom:17px;
+    padding-bottom:10px;
+    border-bottom:1px solid rgba(70,45,20,.35);
+    color:#79572f;
+    font-size:7px;
+    letter-spacing:3px;
+    text-transform:uppercase;
 }
 
 .record-text{
+    position:relative;
+    z-index:2;
     font-family:var(--serif);
     font-size:20px;
     line-height:1.55;
 }
 
 .record-meta{
+    position:relative;
+    z-index:2;
     margin-top:20px;
     padding-top:12px;
     border-top:1px solid rgba(73,46,20,.35);
     color:#725128;
     font-family:var(--body);
-    font-size:8px;
+    font-size:7px;
     letter-spacing:2px;
     text-transform:uppercase;
 }
 
-/* =========================
-   CONFESSION CASE FILE
-========================= */
-
-.case-file{
-    margin-top:25px;
-    padding:25px;
-    border:1px solid var(--gold-line);
-    background:#100609;
-}
-
-.case-file-header{
-    display:flex;
-    justify-content:space-between;
-    border-bottom:1px solid rgba(198,161,94,.3);
-    padding-bottom:12px;
-    margin-bottom:18px;
-}
-
-.case-file-header span{
-    color:var(--gold);
-    font-size:8px;
-    letter-spacing:2px;
-}
-
-.case-file-content{
-    color:var(--muted);
-    font-family:var(--serif);
-    font-size:18px;
-    line-height:1.6;
-}
-
-/* =========================
-   VOTING
-========================= */
+/* VOTING */
 
 .vote-panel{
     width:min(800px,100%);
@@ -868,9 +972,7 @@ input:focus{
     transition:1s;
 }
 
-/* =========================
-   ROULETTE
-========================= */
+/* ROULETTE */
 
 .roulette-interface{
     text-align:center;
@@ -960,11 +1062,10 @@ input:focus{
     font-size:27px;
     line-height:1.3;
     color:var(--cream);
+    transition:.3s;
 }
 
-/* =========================
-   COMPATIBILITY
-========================= */
+/* COMPATIBILITY */
 
 .compatibility-box{
     width:min(760px,100%);
@@ -1040,9 +1141,7 @@ input:focus{
     font-size:18px;
 }
 
-/* =========================
-   COMMUNITY
-========================= */
+/* COMMUNITY */
 
 .community-grid{
     display:grid;
@@ -1081,9 +1180,7 @@ input:focus{
     line-height:1.5;
 }
 
-/* =========================
-   RECOMMENDATIONS
-========================= */
+/* RECOMMENDATIONS */
 
 .recommendation-list{
     display:grid;
@@ -1117,9 +1214,7 @@ input:focus{
     line-height:1.7;
 }
 
-/* =========================
-   FAQ
-========================= */
+/* FAQ */
 
 .faq-list{
     width:min(850px,100%);
@@ -1128,6 +1223,10 @@ input:focus{
 
 .faq-item{
     border-top:1px solid rgba(198,161,94,.35);
+}
+
+.faq-item:last-child{
+    border-bottom:1px solid rgba(198,161,94,.35);
 }
 
 .faq-question{
@@ -1162,9 +1261,7 @@ input:focus{
     display:block;
 }
 
-/* =========================
-   ABOUT / CONTACT
-========================= */
+/* INFO */
 
 .info-panel{
     width:min(850px,100%);
@@ -1207,9 +1304,7 @@ input:focus{
     text-align:center;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer{
     padding:30px 7%;
@@ -1225,9 +1320,7 @@ footer strong{
     color:var(--gold-dark);
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:800px){
 
@@ -1291,6 +1384,18 @@ footer strong{
     .page-title{
         font-size:52px;
     }
+
+    .records-header{
+        grid-template-columns:40px 1fr 40px;
+    }
+
+    .records-symbol{
+        font-size:21px;
+    }
+
+    .records-header h3{
+        font-size:25px;
+    }
 }
 </style>
 </head>
@@ -1299,9 +1404,7 @@ footer strong{
 
 <div class="page-frame"></div>
 
-<!-- =========================
-     NAVIGATION
-========================= -->
+<!-- NAVIGATION -->
 
 <nav class="navbar">
 
@@ -1321,9 +1424,7 @@ footer strong{
 </nav>
 
 
-<!-- =========================
-     HOME / ARCHIVE CONTAINER
-========================= -->
+<!-- HOME -->
 
 <section id="home" class="page active">
 
@@ -1398,50 +1499,108 @@ footer strong{
     <div id="storyMenu" class="archive-menu">
 
         <div class="archive-header">
-            <div class="archive-label">PlotTwisted Archive</div>
+
+            <div class="archive-label">
+                PlotTwisted Archive
+            </div>
+
             <h2 class="archive-heading">
                 Choose a <span>Record</span>
             </h2>
 
             <div class="ornament">⁂</div>
+
         </div>
 
         <div class="archive-grid">
 
-            <div class="archive-card" onclick="openInterface('feelingsMenu')">
+            <div class="archive-card"
+                 onclick="openInterface('feelingsMenu')">
+
                 <div class="card-symbol">❦</div>
+
                 <h3>Feelings</h3>
-                <p>Confessions and words that were never meant to stay hidden.</p>
+
+                <p>
+                    Confessions and words that were never meant
+                    to stay hidden.
+                </p>
+
             </div>
 
-            <div class="archive-card" onclick="openInterface('lettersMenu')">
+
+            <div class="archive-card"
+                 onclick="openInterface('lettersMenu')">
+
                 <div class="card-symbol">❧</div>
+
                 <h3>Letters</h3>
-                <p>Unsent thoughts, unfinished messages, and quiet words.</p>
+
+                <p>
+                    Unsent thoughts, unfinished messages,
+                    and quiet words.
+                </p>
+
             </div>
 
-            <div class="archive-card" onclick="openInterface('mysteryMenu')">
+
+            <div class="archive-card"
+                 onclick="openInterface('mysteryMenu')">
+
                 <div class="card-symbol">◇</div>
+
                 <h3>Mysteries</h3>
-                <p>Signs, assumptions, and the thin line between coincidence and delusion.</p>
+
+                <p>
+                    Signs, assumptions, and the thin line between
+                    coincidence and delusion.
+                </p>
+
             </div>
 
-            <div class="archive-card" onclick="openInterface('twistMenu')">
+
+            <div class="archive-card"
+                 onclick="openInterface('twistMenu')">
+
                 <div class="card-symbol">✦</div>
+
                 <h3>Twists</h3>
-                <p>Unexpected outcomes, fate, possibilities, and plot twists.</p>
+
+                <p>
+                    Unexpected outcomes, possibilities,
+                    and plot twists.
+                </p>
+
             </div>
 
-            <div class="archive-card" onclick="showPage('community')">
+
+            <div class="archive-card"
+                 onclick="showPage('community')">
+
                 <div class="card-symbol">⁂</div>
+
                 <h3>Community</h3>
-                <p>Stories submitted by visitors of the archive.</p>
+
+                <p>
+                    Stories submitted by visitors
+                    of the archive.
+                </p>
+
             </div>
 
-            <div class="archive-card" onclick="showPage('recommendations')">
+
+            <div class="archive-card"
+                 onclick="showPage('recommendations')">
+
                 <div class="card-symbol">◆</div>
+
                 <h3>Curated Records</h3>
-                <p>Stories, themes, and recommendations worth exploring.</p>
+
+                <p>
+                    Stories, themes, and recommendations
+                    worth exploring.
+                </p>
+
             </div>
 
         </div>
@@ -1449,38 +1608,64 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         FEELINGS
-    ========================= -->
+    <!-- FEELINGS -->
 
     <div id="feelingsMenu" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openArchive()">
+            <button class="btn back-btn"
+                    onclick="openArchive()">
                 ← Back to Archives
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Category I</div>
-                <h2 class="archive-heading">Feelings</h2>
-                <div class="gold-rule">
-                    <i></i><strong>❦</strong><i></i>
+
+                <div class="archive-label">
+                    Category I
                 </div>
+
+                <h2 class="archive-heading">
+                    Feelings
+                </h2>
+
+                <div class="gold-rule">
+                    <i></i>
+                    <strong>❦</strong>
+                    <i></i>
+                </div>
+
             </div>
 
             <div class="category-grid">
 
-                <div class="category-card" onclick="openInterface('confessions')">
+                <div class="category-card"
+                     onclick="openInterface('confessions')">
+
                     <div class="category-symbol">❦</div>
+
                     <h3>Confessions</h3>
-                    <p>For thoughts that have been waiting to be spoken.</p>
+
+                    <p>
+                        For thoughts that have been waiting
+                        to be spoken.
+                    </p>
+
                 </div>
 
-                <div class="category-card" onclick="openInterface('hugot')">
+
+                <div class="category-card"
+                     onclick="openInterface('hugot')">
+
                     <div class="category-symbol">❧</div>
+
                     <h3>Hugot Corner</h3>
-                    <p>Words inspired by heartbreak, memories, and what-ifs.</p>
+
+                    <p>
+                        Words inspired by memories,
+                        feelings, and what-ifs.
+                    </p>
+
                 </div>
 
             </div>
@@ -1490,25 +1675,35 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         CONFESSIONS
-    ========================= -->
+    <!-- CONFESSIONS -->
 
     <div id="confessions" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openInterface('feelingsMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('feelingsMenu')">
                 ← Back to Feelings
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Record Type — Confidential</div>
-                <h2 class="archive-heading">Confessions</h2>
-                <div class="gold-rule">
-                    <i></i><strong>◇</strong><i></i>
+
+                <div class="archive-label">
+                    Record Type — Confidential
                 </div>
+
+                <h2 class="archive-heading">
+                    Confessions
+                </h2>
+
+                <div class="gold-rule">
+                    <i></i>
+                    <strong>◇</strong>
+                    <i></i>
+                </div>
+
             </div>
+
 
             <div class="paper-panel">
 
@@ -1530,37 +1725,90 @@ footer strong{
 
             </div>
 
-            <div class="records-title">
-                Recently Filed Records
+
+            <!-- RECENTLY FILED -->
+
+            <div class="records-header">
+
+                <div class="records-symbol">❦</div>
+
+                <div>
+                    <div class="records-label">
+                        ARCHIVE COLLECTION
+                    </div>
+
+                    <h3>
+                        Recently Filed Records
+                    </h3>
+                </div>
+
+                <div class="records-symbol">❧</div>
+
             </div>
 
-            <div id="confessionList" class="record-grid"></div>
+            <div class="records-divider">
+                <span>◇</span>
+            </div>
+
+
+            <div id="confessionList" class="record-grid">
+
+                <div class="empty-record">
+
+                    <div class="empty-symbol">
+                        ⁂
+                    </div>
+
+                    <div class="empty-title">
+                        NO RECORDS YET
+                    </div>
+
+                    <div class="empty-text">
+                        The archive is waiting for its first confession.
+                    </div>
+
+                    <div class="empty-line">
+                        — END OF CURRENT FILE —
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- =========================
-         HUGOT
-    ========================= -->
+    <!-- HUGOT -->
 
     <div id="hugot" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openInterface('feelingsMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('feelingsMenu')">
                 ← Back to Feelings
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Record Type — Emotional Archive</div>
-                <h2 class="archive-heading">Hugot <span>Corner</span></h2>
+
+                <div class="archive-label">
+                    Record Type — Emotional Archive
+                </div>
+
+                <h2 class="archive-heading">
+                    Hugot <span>Corner</span>
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>❧</strong><i></i>
+                    <i></i>
+                    <strong>❧</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="paper-panel">
 
@@ -1582,50 +1830,117 @@ footer strong{
 
             </div>
 
-            <div class="records-title">
-                Filed Lines
+
+            <div class="records-header">
+
+                <div class="records-symbol">❧</div>
+
+                <div>
+                    <div class="records-label">
+                        ARCHIVE COLLECTION
+                    </div>
+
+                    <h3>
+                        Recently Filed Lines
+                    </h3>
+                </div>
+
+                <div class="records-symbol">❦</div>
+
             </div>
 
-            <div id="hugotList" class="record-grid"></div>
+            <div class="records-divider">
+                <span>◇</span>
+            </div>
+
+
+            <div id="hugotList" class="record-grid">
+
+                <div class="empty-record">
+
+                    <div class="empty-symbol">
+                        ⁂
+                    </div>
+
+                    <div class="empty-title">
+                        NO RECORDS YET
+                    </div>
+
+                    <div class="empty-text">
+                        The archive is waiting for its first line.
+                    </div>
+
+                    <div class="empty-line">
+                        — END OF CURRENT FILE —
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- =========================
-         LETTERS
-    ========================= -->
+    <!-- LETTERS -->
 
     <div id="lettersMenu" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openArchive()">
+            <button class="btn back-btn"
+                    onclick="openArchive()">
                 ← Back to Archives
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Category II</div>
-                <h2 class="archive-heading">Letters</h2>
+
+                <div class="archive-label">
+                    Category II
+                </div>
+
+                <h2 class="archive-heading">
+                    Letters
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>❧</strong><i></i>
+                    <i></i>
+                    <strong>❧</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="category-grid">
 
-                <div class="category-card" onclick="openInterface('unsent')">
+                <div class="category-card"
+                     onclick="openInterface('unsent')">
+
                     <div class="category-symbol">✧</div>
+
                     <h3>Unsent Messages</h3>
-                    <p>For messages that remained in the drafts.</p>
+
+                    <p>
+                        For messages that remained in the drafts.
+                    </p>
+
                 </div>
 
-                <div class="category-card" onclick="showPage('contact')">
+
+                <div class="category-card"
+                     onclick="showPage('contact')">
+
                     <div class="category-symbol">◇</div>
+
                     <h3>Contact Archive</h3>
-                    <p>Questions, suggestions, and messages for the archivist.</p>
+
+                    <p>
+                        Questions, suggestions, and messages
+                        for the archivist.
+                    </p>
+
                 </div>
 
             </div>
@@ -1635,26 +1950,35 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         UNSENT
-    ========================= -->
+    <!-- UNSENT -->
 
     <div id="unsent" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openInterface('lettersMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('lettersMenu')">
                 ← Back to Letters
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Private Correspondence</div>
-                <h2 class="archive-heading">Unsent <span>Messages</span></h2>
+
+                <div class="archive-label">
+                    Private Correspondence
+                </div>
+
+                <h2 class="archive-heading">
+                    Unsent <span>Messages</span>
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>✧</strong><i></i>
+                    <i></i>
+                    <strong>✧</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="paper-panel">
 
@@ -1676,50 +2000,117 @@ footer strong{
 
             </div>
 
-            <div class="records-title">
-                Unsent Records
+
+            <div class="records-header">
+
+                <div class="records-symbol">✧</div>
+
+                <div>
+                    <div class="records-label">
+                        PRIVATE CORRESPONDENCE
+                    </div>
+
+                    <h3>
+                        Recently Filed Messages
+                    </h3>
+                </div>
+
+                <div class="records-symbol">✧</div>
+
             </div>
 
-            <div id="unsentList" class="record-grid"></div>
+            <div class="records-divider">
+                <span>◇</span>
+            </div>
+
+
+            <div id="unsentList" class="record-grid">
+
+                <div class="empty-record">
+
+                    <div class="empty-symbol">
+                        ❧
+                    </div>
+
+                    <div class="empty-title">
+                        NO LETTERS YET
+                    </div>
+
+                    <div class="empty-text">
+                        No unsent messages have entered the archive.
+                    </div>
+
+                    <div class="empty-line">
+                        — END OF CURRENT FILE —
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- =========================
-         MYSTERIES
-    ========================= -->
+    <!-- MYSTERIES -->
 
     <div id="mysteryMenu" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openArchive()">
+            <button class="btn back-btn"
+                    onclick="openArchive()">
                 ← Back to Archives
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Category III</div>
-                <h2 class="archive-heading">Mysteries</h2>
+
+                <div class="archive-label">
+                    Category III
+                </div>
+
+                <h2 class="archive-heading">
+                    Mysteries
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>◇</strong><i></i>
+                    <i></i>
+                    <strong>◇</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="category-grid">
 
-                <div class="category-card" onclick="openInterface('signs')">
+                <div class="category-card"
+                     onclick="openInterface('signs')">
+
                     <div class="category-symbol">◇</div>
+
                     <h3>Sign or Delusion</h3>
-                    <p>Decide whether the evidence means something—or nothing.</p>
+
+                    <p>
+                        Decide whether the evidence means something—
+                        or nothing.
+                    </p>
+
                 </div>
 
-                <div class="category-card" onclick="showPage('faq')">
+
+                <div class="category-card"
+                     onclick="showPage('faq')">
+
                     <div class="category-symbol">⁂</div>
+
                     <h3>Archive FAQ</h3>
-                    <p>Learn how the archive works.</p>
+
+                    <p>
+                        Learn how the archive works.
+                    </p>
+
                 </div>
 
             </div>
@@ -1729,83 +2120,124 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         SIGNS
-    ========================= -->
+    <!-- SIGNS -->
 
     <div id="signs" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openInterface('mysteryMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('mysteryMenu')">
                 ← Back to Mysteries
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Mystery Record</div>
-                <h2 class="archive-heading">Sign or <span>Delusion?</span></h2>
+
+                <div class="archive-label">
+                    Mystery Record
+                </div>
+
+                <h2 class="archive-heading">
+                    Sign or <span>Delusion?</span>
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>◇</strong><i></i>
+                    <i></i>
+                    <strong>◇</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="paper-panel vote-panel">
 
                 <div class="vote-question">
+
                     Someone remembers the smallest details about you,
                     always finds a reason to talk to you, and somehow
                     appears whenever you need help.
+
                     <br><br>
+
                     Is it a sign?
+
                 </div>
+
 
                 <div class="vote-grid">
 
-                    <button class="vote-option sign-vote" data-choice="sign">
+                    <button
+                        class="vote-option sign-vote"
+                        data-choice="sign">
                         Definitely a Sign
                     </button>
 
-                    <button class="vote-option sign-vote" data-choice="maybe">
+                    <button
+                        class="vote-option sign-vote"
+                        data-choice="maybe">
                         Maybe
                     </button>
 
-                    <button class="vote-option sign-vote" data-choice="delulu">
+                    <button
+                        class="vote-option sign-vote"
+                        data-choice="delulu">
                         Delusion
                     </button>
 
                 </div>
 
+
                 <div class="vote-results">
 
                     <div class="result-row">
+
                         <div class="result-label">
                             <span>Sign</span>
                             <span id="signPercent">0%</span>
                         </div>
+
                         <div class="result-track">
-                            <div id="signBar" class="result-bar"></div>
+                            <div
+                                id="signBar"
+                                class="result-bar">
+                            </div>
                         </div>
+
                     </div>
 
+
                     <div class="result-row">
+
                         <div class="result-label">
                             <span>Maybe</span>
                             <span id="maybePercent">0%</span>
                         </div>
+
                         <div class="result-track">
-                            <div id="maybeBar" class="result-bar"></div>
+                            <div
+                                id="maybeBar"
+                                class="result-bar">
+                            </div>
                         </div>
+
                     </div>
 
+
                     <div class="result-row">
+
                         <div class="result-label">
                             <span>Delusion</span>
                             <span id="deluluPercent">0%</span>
                         </div>
+
                         <div class="result-track">
-                            <div id="deluluBar" class="result-bar"></div>
+                            <div
+                                id="deluluBar"
+                                class="result-bar">
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -1817,39 +2249,68 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         TWISTS
-    ========================= -->
+    <!-- TWISTS -->
 
     <div id="twistMenu" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openArchive()">
+            <button class="btn back-btn"
+                    onclick="openArchive()">
                 ← Back to Archives
             </button>
 
             <div class="archive-header">
-                <div class="archive-label">Category IV</div>
-                <h2 class="archive-heading">Plot <span>Twists</span></h2>
+
+                <div class="archive-label">
+                    Category IV
+                </div>
+
+                <h2 class="archive-heading">
+                    Plot <span>Twists</span>
+                </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>✦</strong><i></i>
+                    <i></i>
+                    <strong>✦</strong>
+                    <i></i>
                 </div>
+
             </div>
+
 
             <div class="category-grid">
 
-                <div class="category-card" onclick="openInterface('roulette')">
-                    <div class="category-symbol">✦</div>
+                <div class="category-card"
+                     onclick="openInterface('roulette')">
+
+                    <div class="category-symbol">
+                        ✦
+                    </div>
+
                     <h3>Fate Roulette</h3>
-                    <p>Spin the wheel and discover your fictional plot twist.</p>
+
+                    <p>
+                        Spin the wheel and discover your fictional
+                        plot twist.
+                    </p>
+
                 </div>
 
-                <div class="category-card" onclick="openInterface('compatibility')">
-                    <div class="category-symbol">❦</div>
+
+                <div class="category-card"
+                     onclick="openInterface('compatibility')">
+
+                    <div class="category-symbol">
+                        ❦
+                    </div>
+
                     <h3>Compatibility Test</h3>
-                    <p>A playful archive calculation for two names.</p>
+
+                    <p>
+                        A playful archive calculation for two names.
+                    </p>
+
                 </div>
 
             </div>
@@ -1859,15 +2320,14 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         ROULETTE
-    ========================= -->
+    <!-- ROULETTE -->
 
     <div id="roulette" class="interface">
 
         <div class="interface-wrap roulette-interface">
 
-            <button class="btn back-btn" onclick="openInterface('twistMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('twistMenu')">
                 ← Back to Twists
             </button>
 
@@ -1882,14 +2342,18 @@ footer strong{
                 </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>✦</strong><i></i>
+                    <i></i>
+                    <strong>✦</strong>
+                    <i></i>
                 </div>
 
             </div>
 
+
             <div class="roulette-box">
 
-                <div id="rouletteIcon" class="roulette-symbol">
+                <div id="rouletteIcon"
+                     class="roulette-symbol">
                     PT
                 </div>
 
@@ -1897,16 +2361,21 @@ footer strong{
                     What happens next?
                 </div>
 
-                <div id="rouletteText" class="roulette-text">
-                    The archive has not revealed your twist yet.
+                <div id="rouletteText"
+                     class="roulette-text">
+
+                    The archive has not revealed
+                    your twist yet.
+
                 </div>
 
                 <button
                     class="btn"
                     onclick="spinRoulette()"
-                    style="margin-top:35px;"
-                >
+                    style="margin-top:35px;">
+
                     Reveal the Plot Twist
+
                 </button>
 
             </div>
@@ -1916,15 +2385,14 @@ footer strong{
     </div>
 
 
-    <!-- =========================
-         COMPATIBILITY
-    ========================= -->
+    <!-- COMPATIBILITY -->
 
     <div id="compatibility" class="interface">
 
         <div class="interface-wrap">
 
-            <button class="btn back-btn" onclick="openInterface('twistMenu')">
+            <button class="btn back-btn"
+                    onclick="openInterface('twistMenu')">
                 ← Back to Twists
             </button>
 
@@ -1939,10 +2407,13 @@ footer strong{
                 </h2>
 
                 <div class="gold-rule">
-                    <i></i><strong>❦</strong><i></i>
+                    <i></i>
+                    <strong>❦</strong>
+                    <i></i>
                 </div>
 
             </div>
+
 
             <div class="compatibility-box">
 
@@ -1966,35 +2437,48 @@ footer strong{
 
                 </div>
 
+
                 <div style="text-align:center;margin-top:25px;">
 
-                    <button class="btn" onclick="calculateCompatibility()">
+                    <button
+                        class="btn"
+                        onclick="calculateCompatibility()">
+
                         Calculate the Record
+
                     </button>
 
                     <button
                         class="btn"
                         onclick="resetCompatibility()"
-                        style="margin-left:8px;"
-                    >
+                        style="margin-left:8px;">
+
                         Clear
+
                     </button>
 
                 </div>
 
-                <div id="compatibilityResult" class="compatibility-result">
 
-                    <div id="resultNames" class="result-names"></div>
+                <div id="compatibilityResult"
+                     class="compatibility-result">
 
-                    <div id="compatibilityNumber" class="compatibility-number">
+                    <div id="resultNames"
+                         class="result-names">
+                    </div>
+
+                    <div id="compatibilityNumber"
+                         class="compatibility-number">
                         0%
                     </div>
 
-                    <div id="fateTitle" class="fate-title">
+                    <div id="fateTitle"
+                         class="fate-title">
                         The Archive Has Spoken
                     </div>
 
-                    <div id="fateMessage" class="fate-message">
+                    <div id="fateMessage"
+                         class="fate-message">
                         Your record is ready to be interpreted.
                     </div>
 
@@ -2009,19 +2493,20 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     FULL COMMUNITY PAGE
-========================= -->
+<!-- COMMUNITY -->
 
 <section id="community" class="page">
 
     <div class="page-inner">
 
-        <button class="btn back-btn" onclick="openArchive()">
+        <button class="btn back-btn"
+                onclick="openArchive()">
             ← Back to Archives
         </button>
 
-        <div class="eyebrow">Public Records</div>
+        <div class="eyebrow">
+            Public Records
+        </div>
 
         <h1 class="page-title">
             The <span>Community</span>
@@ -2033,30 +2518,51 @@ footer strong{
         </p>
 
         <div class="gold-rule">
-            <i></i><strong>⁂</strong><i></i>
+            <i></i>
+            <strong>⁂</strong>
+            <i></i>
         </div>
+
 
         <div class="community-grid">
 
             <div class="community-card">
+
                 <h3>Confessions</h3>
+
                 <div id="communityConfessions">
-                    <p>Records submitted to the confession archive will appear here.</p>
+                    <p>
+                        Records submitted to the confession archive
+                        will appear here.
+                    </p>
                 </div>
+
             </div>
 
+
             <div class="community-card">
+
                 <h3>Hugot</h3>
+
                 <div id="communityHugots">
-                    <p>Filed hugot lines will appear here.</p>
+                    <p>
+                        Filed hugot lines will appear here.
+                    </p>
                 </div>
+
             </div>
 
+
             <div class="community-card">
+
                 <h3>Unsent</h3>
+
                 <div id="communityUnsent">
-                    <p>Anonymous unsent messages will appear here.</p>
+                    <p>
+                        Anonymous unsent messages will appear here.
+                    </p>
                 </div>
+
             </div>
 
         </div>
@@ -2066,19 +2572,20 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     RECOMMENDATIONS
-========================= -->
+<!-- RECOMMENDATIONS -->
 
 <section id="recommendations" class="page">
 
     <div class="page-inner">
 
-        <button class="btn back-btn" onclick="openArchive()">
+        <button class="btn back-btn"
+                onclick="openArchive()">
             ← Back to Archives
         </button>
 
-        <div class="eyebrow">Curated Archive</div>
+        <div class="eyebrow">
+            Curated Archive
+        </div>
 
         <h1 class="page-title">
             Recommended <span>Records</span>
@@ -2090,41 +2597,59 @@ footer strong{
         </p>
 
         <div class="gold-rule">
-            <i></i><strong>❧</strong><i></i>
+            <i></i>
+            <strong>❧</strong>
+            <i></i>
         </div>
+
 
         <div class="recommendation-list">
 
             <div class="recommendation">
+
                 <h3>The Almost Story</h3>
+
                 <p>
                     For stories that never became relationships,
                     friendships, or anything with a proper ending.
                 </p>
+
             </div>
 
+
             <div class="recommendation">
+
                 <h3>The What-If File</h3>
+
                 <p>
                     A record for the possibilities that remain
                     unanswered.
                 </p>
+
             </div>
 
+
             <div class="recommendation">
+
                 <h3>The Coincidence Archive</h3>
+
                 <p>
                     For strange timing, unexpected meetings,
                     and suspiciously perfect coincidences.
                 </p>
+
             </div>
 
+
             <div class="recommendation">
+
                 <h3>The Unfinished Chapter</h3>
+
                 <p>
                     For stories that ended without giving anyone
                     the closure they expected.
                 </p>
+
             </div>
 
         </div>
@@ -2134,83 +2659,114 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     FAQ
-========================= -->
+<!-- FAQ -->
 
 <section id="faq" class="page">
 
     <div class="page-inner">
 
-        <button class="btn back-btn" onclick="openArchive()">
+        <button class="btn back-btn"
+                onclick="openArchive()">
             ← Back to Archives
         </button>
 
-        <div class="eyebrow">Archive Guide</div>
+        <div class="eyebrow">
+            Archive Guide
+        </div>
 
         <h1 class="page-title">
             Frequently Asked <span>Questions</span>
         </h1>
 
-        <div class="ornament">◇</div>
+        <div class="ornament">
+            ◇
+        </div>
+
 
         <div class="faq-list">
 
             <div class="faq-item">
 
-                <button class="faq-question" onclick="toggleFAQ(this)">
+                <button class="faq-question"
+                        onclick="toggleFAQ(this)">
+
                     What is PlotTwisted?
+
                     <span>+</span>
+
                 </button>
 
                 <div class="faq-answer">
-                    PlotTwisted is a fictional archive-style space for
-                    anonymous confessions, unsent messages, hugot lines,
-                    playful mysteries, and plot twists.
+
+                    PlotTwisted is a fictional archive-style space
+                    for anonymous confessions, unsent messages,
+                    hugot lines, playful mysteries, and plot twists.
+
                 </div>
 
             </div>
 
+
             <div class="faq-item">
 
-                <button class="faq-question" onclick="toggleFAQ(this)">
+                <button class="faq-question"
+                        onclick="toggleFAQ(this)">
+
                     Are the roulette results real?
+
                     <span>+</span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     No. Fate Roulette is an entertainment feature.
                     Its results are fictional plot twists.
+
                 </div>
 
             </div>
 
+
             <div class="faq-item">
 
-                <button class="faq-question" onclick="toggleFAQ(this)">
+                <button class="faq-question"
+                        onclick="toggleFAQ(this)">
+
                     Is the compatibility score scientific?
+
                     <span>+</span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     No. The compatibility test is a playful feature
-                    created for entertainment and should not be treated
-                    as a real compatibility assessment.
+                    created for entertainment and should not be
+                    treated as a real compatibility assessment.
+
                 </div>
 
             </div>
 
+
             <div class="faq-item">
 
-                <button class="faq-question" onclick="toggleFAQ(this)">
+                <button class="faq-question"
+                        onclick="toggleFAQ(this)">
+
                     Why is the archive anonymous?
+
                     <span>+</span>
+
                 </button>
 
                 <div class="faq-answer">
+
                     The archive is designed around anonymous storytelling.
                     Avoid submitting passwords, addresses, phone numbers,
                     or other private information.
+
                 </div>
 
             </div>
@@ -2222,39 +2778,45 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     ABOUT
-========================= -->
+<!-- ABOUT -->
 
 <section id="about" class="page">
 
     <div class="page-inner">
 
-        <button class="btn back-btn" onclick="openArchive()">
+        <button class="btn back-btn"
+                onclick="openArchive()">
             ← Back to Archives
         </button>
 
-        <div class="eyebrow">The Archivist</div>
+        <div class="eyebrow">
+            The Archivist
+        </div>
 
         <h1 class="page-title">
             About <span>PlotTwisted</span>
         </h1>
 
-        <div class="ornament">⁂</div>
+        <div class="ornament">
+            ⁂
+        </div>
+
 
         <div class="info-panel">
 
             <h3>A Cabinet of Stories</h3>
 
             <p>
-                PlotTwisted was created as a vintage-inspired digital
-                archive where ordinary thoughts can become extraordinary
-                records.
+                PlotTwisted was created as a vintage-inspired
+                digital archive where ordinary thoughts can become
+                extraordinary records.
             </p>
 
             <p style="margin-top:20px;">
+
                 Every confession, message, theory, and twist becomes
                 another page in an ever-growing collection of stories.
+
             </p>
 
         </div>
@@ -2264,34 +2826,42 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     CONTACT
-========================= -->
+<!-- CONTACT -->
 
 <section id="contact" class="page">
 
     <div class="page-inner">
 
-        <button class="btn back-btn" onclick="openArchive()">
+        <button class="btn back-btn"
+                onclick="openArchive()">
             ← Back to Archives
         </button>
 
-        <div class="eyebrow">Correspondence</div>
+        <div class="eyebrow">
+            Correspondence
+        </div>
 
         <h1 class="page-title">
             Contact the <span>Archivist</span>
         </h1>
 
-        <div class="ornament">❦</div>
+        <div class="ornament">
+            ❦
+        </div>
+
 
         <div class="info-panel">
 
             <h3>Send a Message</h3>
 
             <p style="margin-bottom:25px;">
+
                 Have a suggestion, question, or idea for the archive?
-                Leave a message for the people maintaining the collection.
+                Leave a message for the people maintaining
+                the collection.
+
             </p>
+
 
             <form id="contactForm">
 
@@ -2330,9 +2900,7 @@ footer strong{
 </section>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 
 <footer id="siteFooter">
 
@@ -2347,38 +2915,48 @@ footer strong{
 
 <script>
 
-/* =====================================================
-   NAVIGATION SYSTEM
-===================================================== */
+/* ==========================================
+   NAVIGATION
+========================================== */
 
-const allInterfaces = document.querySelectorAll(".interface");
-const allPages = document.querySelectorAll(".page");
+const allInterfaces =
+    document.querySelectorAll(".interface");
+
+const allPages =
+    document.querySelectorAll(".page");
+
 
 function hideAllInterfaces(){
 
-    allInterfaces.forEach(interfaceBox => {
-        interfaceBox.classList.remove("active");
+    allInterfaces.forEach(item => {
+        item.classList.remove("active");
     });
 
 }
+
 
 function hideAllPages(){
 
-    allPages.forEach(page => {
-        page.classList.remove("active");
+    allPages.forEach(item => {
+        item.classList.remove("active");
     });
 
 }
+
 
 function goHome(){
 
     hideAllInterfaces();
     hideAllPages();
 
-    document.getElementById("home").classList.add("active");
+    document.getElementById("home")
+        .classList.add("active");
 
-    document.getElementById("letterLanding").style.display = "flex";
-    document.getElementById("storyMenu").classList.remove("active");
+    document.getElementById("letterLanding")
+        .style.display = "flex";
+
+    document.getElementById("storyMenu")
+        .classList.remove("active");
 
     window.scrollTo({
         top:0,
@@ -2386,16 +2964,21 @@ function goHome(){
     });
 
 }
+
 
 function openArchive(){
 
     hideAllInterfaces();
     hideAllPages();
 
-    document.getElementById("home").classList.add("active");
+    document.getElementById("home")
+        .classList.add("active");
 
-    document.getElementById("letterLanding").style.display = "none";
-    document.getElementById("storyMenu").classList.add("active");
+    document.getElementById("letterLanding")
+        .style.display = "none";
+
+    document.getElementById("storyMenu")
+        .classList.add("active");
 
     window.scrollTo({
         top:0,
@@ -2403,18 +2986,24 @@ function openArchive(){
     });
 
 }
+
 
 function openInterface(id){
 
     hideAllInterfaces();
     hideAllPages();
 
-    document.getElementById("home").classList.add("active");
+    document.getElementById("home")
+        .classList.add("active");
 
-    document.getElementById("letterLanding").style.display = "none";
-    document.getElementById("storyMenu").classList.remove("active");
+    document.getElementById("letterLanding")
+        .style.display = "none";
 
-    const target = document.getElementById(id);
+    document.getElementById("storyMenu")
+        .classList.remove("active");
+
+    const target =
+        document.getElementById(id);
 
     if(target){
         target.classList.add("active");
@@ -2426,13 +3015,15 @@ function openInterface(id){
     });
 
 }
+
 
 function showPage(id){
 
     hideAllInterfaces();
     hideAllPages();
 
-    const target = document.getElementById(id);
+    const target =
+        document.getElementById(id);
 
     if(target){
         target.classList.add("active");
@@ -2446,9 +3037,9 @@ function showPage(id){
 }
 
 
-/* =====================================================
-   ROULETTE
-===================================================== */
+/* ==========================================
+   FATE ROULETTE
+========================================== */
 
 const plotTwists = [
 
@@ -2552,50 +3143,62 @@ const plotTwists = [
 
 ];
 
+
 function spinRoulette(){
 
-    const text = document.getElementById("rouletteText");
-    const icon = document.getElementById("rouletteIcon");
+    const text =
+        document.getElementById("rouletteText");
+
+    const icon =
+        document.getElementById("rouletteIcon");
 
     if(!text || !icon) return;
 
-    icon.style.transform = "rotate(720deg)";
+    icon.style.transform =
+        "rotate(720deg)";
 
     text.style.opacity = "0";
 
     setTimeout(() => {
 
         const randomIndex =
-            Math.floor(Math.random() * plotTwists.length);
+            Math.floor(
+                Math.random() * plotTwists.length
+            );
 
-        text.textContent = plotTwists[randomIndex];
+        text.textContent =
+            plotTwists[randomIndex];
 
         text.style.opacity = "1";
 
-        icon.style.transform = "rotate(0deg)";
+        icon.style.transform =
+            "rotate(0deg)";
 
     },700);
 
 }
 
 
-/* =====================================================
+/* ==========================================
    COMPATIBILITY
-===================================================== */
+========================================== */
 
 function calculateCompatibility(){
 
     const first =
-        document.getElementById("nameOne").value.trim();
+        document.getElementById("nameOne")
+            .value.trim();
 
     const second =
-        document.getElementById("nameTwo").value.trim();
+        document.getElementById("nameTwo")
+            .value.trim();
 
     if(!first || !second){
 
         alert("Please enter both names.");
 
         return;
+
     }
 
     const combined =
@@ -2603,22 +3206,33 @@ function calculateCompatibility(){
 
     let score = 0;
 
-    for(let i = 0; i < combined.length; i++){
+    for(
+        let i = 0;
+        i < combined.length;
+        i++
+    ){
 
-        score += combined.charCodeAt(i) * (i + 1);
+        score +=
+            combined.charCodeAt(i) * (i + 1);
 
     }
 
     score = score % 101;
 
-    document.getElementById("resultNames").textContent =
+
+    document.getElementById("resultNames")
+        .textContent =
         first + " × " + second;
 
-    document.getElementById("compatibilityNumber").textContent =
+
+    document.getElementById("compatibilityNumber")
+        .textContent =
         score + "%";
+
 
     let title;
     let message;
+
 
     if(score >= 90){
 
@@ -2661,29 +3275,36 @@ function calculateCompatibility(){
 
     }
 
-    document.getElementById("fateTitle").textContent = title;
 
-    document.getElementById("fateMessage").textContent = message;
+    document.getElementById("fateTitle")
+        .textContent = title;
 
-    document.getElementById("compatibilityResult").style.display =
-        "block";
+    document.getElementById("fateMessage")
+        .textContent = message;
+
+    document.getElementById("compatibilityResult")
+        .style.display = "block";
 
 }
+
 
 function resetCompatibility(){
 
-    document.getElementById("nameOne").value = "";
-    document.getElementById("nameTwo").value = "";
+    document.getElementById("nameOne")
+        .value = "";
 
-    document.getElementById("compatibilityResult").style.display =
-        "none";
+    document.getElementById("nameTwo")
+        .value = "";
+
+    document.getElementById("compatibilityResult")
+        .style.display = "none";
 
 }
 
 
-/* =====================================================
-   SIGN / DELUSION VOTING
-===================================================== */
+/* ==========================================
+   SIGN / DELUSION
+========================================== */
 
 let voteCounts = {
     sign:0,
@@ -2691,23 +3312,30 @@ let voteCounts = {
     delulu:0
 };
 
-document.querySelectorAll(".sign-vote").forEach(button => {
 
-    button.addEventListener("click",function(){
+document.querySelectorAll(".sign-vote")
+    .forEach(button => {
 
-        const choice = this.dataset.choice;
+        button.addEventListener(
+            "click",
+            function(){
 
-        if(!voteCounts.hasOwnProperty(choice)){
-            return;
-        }
+                const choice =
+                    this.dataset.choice;
 
-        voteCounts[choice]++;
+                if(!voteCounts.hasOwnProperty(choice)){
+                    return;
+                }
 
-        updateVoteResults();
+                voteCounts[choice]++;
+
+                updateVoteResults();
+
+            }
+        );
 
     });
 
-});
 
 function updateVoteResults(){
 
@@ -2718,59 +3346,74 @@ function updateVoteResults(){
 
     if(total === 0) return;
 
+
     const sign =
-        Math.round((voteCounts.sign / total) * 100);
+        Math.round(
+            (voteCounts.sign / total) * 100
+        );
 
     const maybe =
-        Math.round((voteCounts.maybe / total) * 100);
+        Math.round(
+            (voteCounts.maybe / total) * 100
+        );
 
     const delulu =
-        Math.round((voteCounts.delulu / total) * 100);
+        Math.round(
+            (voteCounts.delulu / total) * 100
+        );
 
-    document.getElementById("signPercent").textContent =
-        sign + "%";
 
-    document.getElementById("maybePercent").textContent =
-        maybe + "%";
+    document.getElementById("signPercent")
+        .textContent = sign + "%";
 
-    document.getElementById("deluluPercent").textContent =
-        delulu + "%";
+    document.getElementById("maybePercent")
+        .textContent = maybe + "%";
 
-    document.getElementById("signBar").style.width =
-        sign + "%";
+    document.getElementById("deluluPercent")
+        .textContent = delulu + "%";
 
-    document.getElementById("maybeBar").style.width =
-        maybe + "%";
 
-    document.getElementById("deluluBar").style.width =
-        delulu + "%";
+    document.getElementById("signBar")
+        .style.width = sign + "%";
+
+    document.getElementById("maybeBar")
+        .style.width = maybe + "%";
+
+    document.getElementById("deluluBar")
+        .style.width = delulu + "%";
 
 }
 
 
-/* =====================================================
+/* ==========================================
    FAQ
-===================================================== */
+========================================== */
 
 function toggleFAQ(button){
 
-    const item = button.parentElement;
+    const item =
+        button.parentElement;
 
     const currentlyOpen =
         item.classList.contains("open");
 
-    document.querySelectorAll(".faq-item").forEach(faq => {
 
-        faq.classList.remove("open");
+    document.querySelectorAll(".faq-item")
+        .forEach(faq => {
 
-        const plus =
-            faq.querySelector(".faq-question span");
+            faq.classList.remove("open");
 
-        if(plus){
-            plus.textContent = "+";
-        }
+            const plus =
+                faq.querySelector(
+                    ".faq-question span"
+                );
 
-    });
+            if(plus){
+                plus.textContent = "+";
+            }
+
+        });
+
 
     if(!currentlyOpen){
 
@@ -2788,44 +3431,53 @@ function toggleFAQ(button){
 }
 
 
-/* =====================================================
+/* ==========================================
    CONTACT
-===================================================== */
+========================================== */
 
 const contactForm =
     document.getElementById("contactForm");
 
+
 if(contactForm){
 
-    contactForm.addEventListener("submit",function(event){
+    contactForm.addEventListener(
+        "submit",
+        function(event){
 
-        event.preventDefault();
+            event.preventDefault();
 
-        alert(
-            "Your correspondence has been prepared for the archive."
-        );
+            alert(
+                "Your correspondence has been prepared for the archive."
+            );
 
-        contactForm.reset();
+            contactForm.reset();
 
-    });
+        }
+    );
 
 }
 
 
-/* =====================================================
+/* ==========================================
    INITIAL STATE
-===================================================== */
+========================================== */
 
-document.addEventListener("DOMContentLoaded",function(){
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-    goHome();
+        goHome();
 
-});
+    }
+);
 
 </script>
 
-<!-- KEEP YOUR FIREBASE / BACKEND CONNECTION -->
+
+<!-- KEEP YOUR FIREBASE CONNECTION -->
+
 <script type="module" src="./script.js"></script>
 
 </body>
-  </html>
+    </html>
